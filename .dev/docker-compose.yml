@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+  disease:
+    image: europe-west3-docker.pkg.dev/gematik-all-infra-prod/demis-dev/portal-disease:latest
+    container_name: portal-disease
+    networks:
+      - demis
+    environment:
+      PORTAL_CSP_HOSTNAME: "auth.ingress.local"
+
+  shell:
+    image: europe-west3-docker.pkg.dev/gematik-all-infra-prod/demis-dev/portal-shell:latest
+    container_name: portal-shell
+    ports:
+      - "8080:8080"
+    networks:
+      - demis
+    depends_on:
+      - disease
+    volumes:
+      - ../config/docker/etc/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    environment:
+      PORTAL_DISEASE_HOSTNAME: "portal-disease"
+      PORTAL_PATHOGEN_HOSTNAME: "portal-disease"
+      PORTAL_CSP_HOSTNAME: "localhost"
+
+networks:
+  demis:
+    name: demis

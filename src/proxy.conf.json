@@ -1,0 +1,64 @@
+{
+  "/gateway/notification": {
+    "target": "https://portal.ingress.local",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/fhir-ui-data-model-translation": {
+    "target": "https://portal.ingress.local",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/bedoccupancy": {
+    "target": "http://localhost:4201",
+    "secure": false,
+    "pathRewrite": {
+      "^/bedoccupancy": ""
+    },
+    "logLevel": "debug"
+  },
+  "/disease": {
+    "target": "http://localhost:4202",
+    "secure": false,
+    "pathRewrite": {
+      "^/disease": ""
+    },
+    "logLevel": "debug"
+  },
+  "/pathogen": {
+    "target": "http://localhost:4203",
+    "secure": false,
+    "pathRewrite": {
+      "^/pathogen": ""
+    },
+    "logLevel": "debug"
+  },
+  "/igs": {
+    "target": "http://localhost:4204",
+    "secure": false,
+    "pathRewrite": {
+      "^/igs": ""
+    },
+    "logLevel": "debug"
+  },
+  "/gateway/igs": {
+    "target": "https://portal.ingress.local",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/surveillance/notification-sequence": {
+    "target": "https://ingress.local",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/services/hospital-locations": {
+    "target": "https://portal.ingress.local",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  }
+}

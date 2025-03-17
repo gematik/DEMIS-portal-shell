@@ -1,0 +1,58 @@
+@use '@angular/material' as mat;
+@import 'demis-color-and-palettes';
+
+// Create palettes for dark theme
+/* stylelint-enable value-keyword-case */
+$demis-notification-portal-dark-primary: mat.m2-define-palette($mat-demis-blue-palette, 400, 100, 600);
+$demis-notification-portal-dark-accent: mat.m2-define-palette($mat-demis-yellow-palette, A400, A200, A700);
+$demis-notification-portal-dark-warn: mat.m2-define-palette(mat.$m2-deep-orange-palette, A200);
+/* stylelint-disable value-keyword-case */
+
+// custom background and foreground palettes
+// according to Angular Material's _theming.scss
+
+$demis-dark-theme-foreground: (
+  base:              $color-demis-white,
+  divider:           rgba($color-demis-white, .12),
+  dividers:          rgba($color-demis-white, .12),
+  disabled:          rgba($color-demis-white, .5),
+  disabled-button:   rgba($color-demis-white, .3),
+  disabled-text:     rgba($color-demis-white, .5),
+  elevation:         $color-demis-black,
+  hint-text:         rgba($color-demis-white, .5),
+  secondary-text:    rgba($color-demis-white, .7),
+  icon:              $color-demis-white,
+  icons:             $color-demis-white,
+  text:              $color-demis-white,
+  slider-min:        $color-demis-white,
+  slider-off:        rgba($color-demis-white, .3),
+  slider-off-active: rgba($color-demis-white, .3),
+  navbar-demis:      $color-demis-white
+);
+$demis-dark-theme-background: (
+  status-bar:               $color-demis-black,
+  app-bar:                  map-get($mat-demis-gray-palette, 900),
+  background:               map-get($mat-demis-gray-palette, 900),
+  hover:                    rgba($color-demis-white, .04),
+  card:                     map-get($mat-demis-gray-palette, 800),
+  dialog:                   map-get($mat-demis-gray-palette, 800),
+  disabled-button:          rgba($color-demis-white, .12),
+  raised-button:            map-get($mat-demis-gray-palette, 800),
+  focused-button:           rgba($color-demis-white, .12),
+  selected-button:          map-get($mat-demis-gray-palette, 900),
+  selected-disabled-button: map-get($mat-demis-gray-palette, 800),
+  disabled-button-toggle:   map-get($mat-demis-gray-palette, 900),
+  unselected-chip:          map-get($mat-demis-gray-palette, 700),
+  disabled-list-option:     map-get($mat-demis-gray-palette, 900),
+  navbar-demis:             $color-demis-blue
+);
+
+// Create our custom dark theme
+$demis-notification-portal-dark-theme: (
+  primary: $demis-notification-portal-dark-primary,
+  accent: $demis-notification-portal-dark-accent,
+  warn: $demis-notification-portal-dark-warn,
+  is-dark: true,
+  foreground: $demis-dark-theme-foreground,
+  background: $demis-dark-theme-background
+);

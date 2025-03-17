@@ -1,0 +1,124 @@
+<mat-toolbar class="app-navbar-demis">
+  <!-- #region PRODUCT LOGO -->
+  @if (env.isLocal) {
+    <img id="img-local-indicator-logo" alt="local indicator Logo" src="assets/images/local-indicator.gif"/>
+  }
+
+  <button mat-button id="home-button" routerLink="/">
+    <mat-icon id="img-demis-logo" svgIcon="demis"></mat-icon>
+    DEMIS
+  </button>
+  <!-- #endregion PRODUCT LOGO -->
+
+  <mat-divider [vertical]="true" class="vertical-section-divider"></mat-divider>
+
+  <!-- #region NAV BAR -->
+  <nav mat-tab-nav-bar class="navbar-tab-group" [tabPanel]="tabPanel">
+    <a id="a-to-homepage" [class.active-tab]="activeTab === C.Tabs.HOME"
+       [class.inactive-tab]="activeTab !== C.Tabs.HOME"
+       mat-tab-link routerLink="./" routerLinkActive="active">
+      {{ C.Labels.START_PAGE_LINK }}
+    </a>
+
+    @if (hasDiseaseNotificationSenderRole) {
+      <a id="a-to-disease" [class.active-tab]="activeTab === C.PathSegments.DISEASE_NOTIFICATION"
+         [class.inactive-tab]="activeTab !== C.PathSegments.DISEASE_NOTIFICATION" mat-tab-link
+         [routerLink]="C.PathSegments.DISEASE_NOTIFICATION" routerLinkActive="active">
+        Krankheit melden
+      </a>
+    }
+
+    @if (showPathogenLinks) {
+      <a id="a-to-pathogen" [class.active-tab]="isPathogenTabActive" [class.inactive-tab]="!isPathogenTabActive"
+         mat-tab-link [routerLink]="C.Tabs.PATHOGEN_TEST_RESULTS" routerLinkActive="active">
+        Erregernachweis melden
+      </a>
+    }
+
+    @if (hasBedOccupencySenderRole) {
+      <a id="a-to-bed-occupancy" [class.active-tab]="activeTab === C.Tabs.BED_OCCUPANCY"
+         [class.inactive-tab]="activeTab !== C.Tabs.BED_OCCUPANCY" mat-tab-link
+         [routerLink]="C.PathSegments.BED_OCCUPANCY"
+         routerLinkActive="active">
+        {{ C.Labels.SUBMIT_BED_OCCUPANCY_LINK }}
+      </a>
+    }
+
+    @if (hasIgsDataSenderRole && hasIgsNotificationSenderRole) {
+      <a id="a-to-sequence-notification" [class.active-tab]="activeTab === C.Tabs.SEQUENCE_NOTIFICATION"
+         [class.inactive-tab]="activeTab !== C.Tabs.SEQUENCE_NOTIFICATION" mat-tab-link
+         [routerLink]="C.PathSegments.SEQUENCE_NOTIFICATION" routerLinkActive="active">
+        IGS
+      </a>
+    }
+  </nav>
+  <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
+  <!-- #endregion NAV BAR -->
+
+  <span class="toolbar-spacer"></span>
+
+  <!-- #region BURGER MENU -->
+  <button mat-icon-button id="btn-burger-menu-in-navbar" [matMenuTriggerFor]="burgerMenu" aria-label="Open burger menu">
+    <mat-icon fontIcon="more_vert"></mat-icon>
+  </button>
+
+  <mat-menu #burgerMenu="matMenu">
+    <!-- ABOUT -->
+    <button mat-menu-item id="a-to-about" [routerLink]="C.PathSegments.ABOUT" routerLinkActive="active">
+      {{ C.Labels.ABOUT_DEMIS_LINK }}
+      {{ version }}
+    </button>
+
+    <!-- DATA ANALYSIS -->
+    <button mat-menu-item id="a-to-data-analyse" (click)="openInNewTab(C.ExternalLinks.DATA_ANALYSIS)">
+      {{ C.Labels.DATA_ANALYSIS_LINK }}
+    </button>
+
+    <!-- HELP (See submenu below for entries) -->
+    <button mat-menu-item id="btn-help-menu-inside-burger-menu" [matMenuTriggerFor]="helpMenu">
+      {{ C.Labels.HELP_LINK }}
+    </button>
+
+    <!-- SITE NOTICE -->
+    <button mat-menu-item id="a-to-site-notice" routerLink="/impressum" routerLinkActive="active">
+      {{ C.Labels.SITE_NOTICE_LINK }}
+    </button>
+
+    <!-- PRIVACY POLICY -->
+    <button mat-menu-item id="a-to-privacy-policy" routerLink="/privacy-policy" routerLinkActive="active">
+      {{ C.Labels.PRIVACY_POLICY }}
+    </button>
+  </mat-menu>
+
+  <!-- HELP SUBMENU -->
+  <mat-menu #helpMenu="matMenu">
+    <!-- KNOWLEDGE DATABASE -->
+    <button mat-menu-item id="a-to-demis-wdb" (click)="openInNewTab(C.ExternalLinks.DEMIS_WDB)">
+      <mat-icon>assessment</mat-icon>
+      {{ C.Labels.DEMIS_KNOWLEDGE_DATABASE_LINK }}
+    </button>
+
+    <!-- SUPPORT -->
+    <button mat-menu-item id="a-to-support" (click)="openInNewTab(C.ExternalLinks.CONTACT_SUPPORT)">
+      <mat-icon>contact_support</mat-icon>
+      {{ C.Labels.SUPPORT_QUESTIONS_LINK }}
+    </button>
+  </mat-menu>
+  <!-- #endregion BURGER MENU -->
+
+  <!-- #region AUTH BUTTON -->
+
+  @if (isLoggedIn()) {
+    <button type="button" mat-button id="btn-navbar-auth_logout" class="btn-navbar-auth" (click)="logout()">
+      Abmelden
+    </button>
+  } @else {
+    <button type="button" mat-button id="btn-navbar-auth_login" class="btn-navbar-auth" (click)="login()">
+      Anmelden
+    </button>
+  }
+  <!-- #endregion AUTH BUTTON -->
+</mat-toolbar>
+
+
+<mat-divider class="navbar-to-content-divider"></mat-divider>

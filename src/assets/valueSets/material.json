@@ -1,0 +1,35 @@
+{
+  "resourceType": "ValueSet",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "valueSet": [
+          "material"
+        ]
+      }
+    ]
+  },
+  "expansion": {
+    "identifier": "9469464d-de64-4372-9cab-f07860aca383",
+    "timestamp": "2021-06-10T09:19:13+00:00",
+    "total": 3,
+    "contains": [
+      {
+        "system": "https://demis.rki.de/fhir/CodeSystem/material",
+        "code": "1",
+        "display": "Stuhl"
+      },
+      {
+        "system": "https://demis.rki.de/fhir/CodeSystem/material",
+        "code": "2",
+        "display": "Urin"
+      },
+      {
+        "system": "https://demis.rki.de/fhir/CodeSystem/material",
+        "code": "3",
+        "display": "Blut"
+      }
+    ]
+  }
+}

@@ -1,0 +1,2308 @@
+{
+  "codeDisplay": {
+    "code": "invp",
+    "display": "Influenzavirus; Meldepflicht nur für den direkten Nachweis",
+    "designations": [
+      {
+        "language": "de",
+        "value": "Influenzavirus"
+      }
+    ]
+  },
+  "materials": [
+    {
+      "code": "258607008",
+      "display": "Bronchoalveolar lavage fluid specimen (specimen)",
+      "designations": []
+    },
+    {
+      "code": "309174004",
+      "display": "Bronchial biopsy specimen (specimen)",
+      "designations": []
+    },
+    {
+      "code": "258446004",
+      "display": "Bronchial fluid specimen (specimen)",
+      "designations": []
+    },
+    {
+      "code": "258498002",
+      "display": "Conjunctival swab (specimen)",
+      "designations": []
+    },
+    {
+      "code": "119401005",
+      "display": "Specimen from conjunctiva (specimen)",
+      "designations": []
+    },
+    {
+      "code": "119400006",
+      "display": "Specimen from cornea (specimen)",
+      "designations": []
+    },
+    {
+      "code": "472894002",
+      "display": "Swab from cornea (specimen)",
+      "designations": []
+    },
+    {
+      "code": "258450006",
+      "display": "Cerebrospinal fluid specimen (specimen)",
+      "designations": []
+    },
+    {
+      "code": "119303007",
+      "display": "Microbial isolate specimen (specimen)",
+      "designations": []
+    },
+    {
+      "code": "258500001",
+      "display": "Nasopharyngeal swab (specimen)",
+      "designations": []
+    },
+    {
+      "code": "122571007",
+      "display": "Pericardial fluid specimen (specimen)",
+      "designations": []
+    },
+    {
+      "code": "410580001",
+      "display": "Respiratory fluid specimen (specimen)",
+      "designations": []
+    },
+    {
+      "code": "430248009",
+      "display": "Specimen from nasopharyngeal structure (specimen)",
+      "designations": []
+    },
+    {
+      "code": "447154002",
+      "display": "Specimen from nose (specimen)",
+      "designations": []
+    },
+    {
+      "code": "119389009",
+      "display": "Specimen from throat (specimen)",
+      "designations": []
+    },
+    {
+      "code": "258529004",
+      "display": "Throat swab (specimen)",
+      "designations": []
+    },
+    {
+      "code": "258606004",
+      "display": "Lower respiratory tract specimen (specimen)",
+      "designations": []
+    },
+    {
+      "code": "258604001",
+      "display": "Upper respiratory specimen (specimen)",
+      "designations": []
+    },
+    {
+      "code": "258609006",
+      "display": "Sputum specimen obtained by aspiration from trachea (specimen)",
+      "designations": []
+    },
+    {
+      "code": "119334006",
+      "display": "Sputum specimen (specimen)",
+      "designations": []
+    },
+    {
+      "code": "119390000",
+      "display": "Specimen from trachea (specimen)",
+      "designations": []
+    },
+    {
+      "code": "445447003",
+      "display": "Specimen from trachea obtained by aspiration (specimen)",
+      "designations": []
+    },
+    {
+      "code": "309164002",
+      "display": "Upper respiratory swab specimen (specimen)",
+      "designations": []
+    },
+    {
+      "code": "472901003",
+      "display": "Swab from nasal sinus (specimen)",
+      "designations": []
+    },
+    {
+      "code": "697989009",
+      "display": "Anterior nares swab (specimen)",
+      "designations": []
+    },
+    {
+      "code": "461911000124106",
+      "display": "Swab specimen from oropharynx (specimen)",
+      "designations": []
+    },
+    {
+      "code": "258411007",
+      "display": "Nasopharyngeal aspirate (specimen)",
+      "designations": []
+    },
+    {
+      "code": "418564007",
+      "display": "Pleural fluid specimen (specimen)",
+      "designations": []
+    },
+    {
+      "code": "122610009",
+      "display": "Specimen from lung obtained by biopsy (specimen)",
+      "designations": []
+    },
+    {
+      "code": "119297000",
+      "display": "Blood specimen (specimen)",
+      "designations": []
+    },
+    {
+      "code": "258580003",
+      "display": "Whole blood specimen (specimen)",
+      "designations": []
+    },
+    {
+      "code": "119339001",
+      "display": "Stool specimen (specimen)",
+      "designations": []
+    },
+    {
+      "code": "122575003",
+      "display": "Urine specimen (specimen)",
+      "designations": []
+    },
+    {
+      "code": "119361006",
+      "display": "Plasma specimen (specimen)",
+      "designations": []
+    },
+    {
+      "code": "119364003",
+      "display": "Serum specimen (specimen)",
+      "designations": []
+    },
+    {
+      "code": "257261003",
+      "display": "Swab (specimen)",
+      "designations": []
+    },
+    {
+      "code": "258469001",
+      "display": "Pharyngeal washings (specimen)",
+      "designations": []
+    }
+  ],
+  "laboratoryTests": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    {
+      "code": "100343-3",
+      "commonName": "Influenza virus B RNA [Presence] in Saliva (oral fluid) by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Saliva",
+      "component": "Influenza virus B RNA"
+    },
+    {
+      "code": "100344-1",
+      "commonName": "Influenza virus A RNA [Presence] in Saliva (oral fluid) by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Saliva",
+      "component": "Influenza virus A RNA"
+    },
+    {
+      "code": "48310-7",
+      "commonName": "Influenza virus A [Presence] in Specimen by Organism specific culture",
+      "methodType": "Organism specific culture",
+      "system": "XXX",
+      "component": "Influenza virus A"
+    },
+    {
+      "code": "22825-4",
+      "commonName": "Influenza virus A Ag [Presence] in Specimen by Immune diffusion (ID)",
+      "methodType": "Immune diffusion",
+      "system": "XXX",
+      "component": "Influenza virus A Ag"
+    },
+    {
+      "code": "22826-2",
+      "commonName": "Influenza virus A identified in Specimen by Bioassay",
+      "methodType": "Bioassay",
+      "system": "XXX",
+      "component": "Influenza virus A identified"
+    },
+    {
+      "code": "22827-0",
+      "commonName": "Influenza virus A subtype [Identifier] in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus A subtype"
+    },
+    {
+      "code": "22828-8",
+      "commonName": "Influenza virus A subtype [Identifier] in Specimen by Immune diffusion (ID)",
+      "methodType": "Immune diffusion",
+      "system": "XXX",
+      "component": "Influenza virus A subtype"
+    },
+    {
+      "code": "50702-0",
+      "commonName": "Influenza virus A matrix protein RNA [Presence] in Isolate by Sequencing",
+      "methodType": "Sequencing",
+      "system": "Isolate",
+      "component": "Influenza virus A matrix protein RNA"
+    },
+    {
+      "code": "23769-3",
+      "commonName": "Porcine influenza virus A Ag [Presence] in Tissue by Immune stain",
+      "methodType": "Immune stain",
+      "system": "Tiss",
+      "component": "Porcine influenza virus A Ag"
+    },
+    {
+      "code": "50704-6",
+      "commonName": "Influenza virus A nucleoprotein RNA [Presence] in Isolate by Sequencing",
+      "methodType": "Sequencing",
+      "system": "Isolate",
+      "component": "Influenza virus A nucleoprotein RNA"
+    },
+    {
+      "code": "50705-3",
+      "commonName": "Influenza virus A non-structural protein RNA [Presence] in Isolate by Sequencing",
+      "methodType": "Sequencing",
+      "system": "Isolate",
+      "component": "Influenza virus A non-structural protein RNA"
+    },
+    {
+      "code": "50706-1",
+      "commonName": "Influenza virus A polymerase A RNA [Presence] in Isolate by Sequencing",
+      "methodType": "Sequencing",
+      "system": "Isolate",
+      "component": "Influenza virus A polymerase A RNA"
+    },
+    {
+      "code": "50707-9",
+      "commonName": "Influenza virus A polymerase B1 cDNA [Presence] in Isolate by Sequencing",
+      "methodType": "Sequencing",
+      "system": "Isolate",
+      "component": "Influenza virus A polymerase B1 cDNA"
+    },
+    {
+      "code": "50708-7",
+      "commonName": "Influenza virus A polymerase B2 RNA [Presence] in Isolate by Sequencing",
+      "methodType": "Sequencing",
+      "system": "Isolate",
+      "component": "Influenza virus A polymerase B2 RNA"
+    },
+    {
+      "code": "50711-1",
+      "commonName": "Influenza virus A polymerase RNA [Identifier] in Isolate by Sequencing",
+      "methodType": "Sequencing",
+      "system": "Isolate",
+      "component": "Influenza virus A polymerase RNA"
+    },
+    {
+      "code": "50712-9",
+      "commonName": "Influenza virus.neuraminidase inhibitor resistance [Susceptibility] Qualitative",
+      "methodType": "",
+      "system": "Isolate",
+      "component": "Influenza virus.neuraminidase inhibitor resistance"
+    },
+    {
+      "code": "50713-7",
+      "commonName": "Influenza virus.neuraminidase inhibitor resistance [Susceptibility] by Genotype method",
+      "methodType": "Genotyping",
+      "system": "Isolate",
+      "component": "Influenza virus.neuraminidase inhibitor resistance"
+    },
+    {
+      "code": "55134-1",
+      "commonName": "Influenza virus A neuraminidase RNA [Identifier] in Isolate by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Isolate",
+      "component": "Influenza virus A neuraminidase RNA"
+    },
+    {
+      "code": "57895-5",
+      "commonName": "Influenza virus A H1.neuraminidase inhibitor resistance [Susceptibility] in Specimen by Genotype method",
+      "methodType": "Genotyping",
+      "system": "XXX",
+      "component": "Influenza virus A H1.neuraminidase inhibitor resistance"
+    },
+    {
+      "code": "57896-3",
+      "commonName": "Influenza virus A 2009 H1N1v.neuraminidase inhibitor resistance [Susceptibility] in Specimen by Genotype method",
+      "methodType": "Genotyping",
+      "system": "XXX",
+      "component": "Influenza virus A 2009 H1N1v.neuraminidase inhibitor resistance"
+    },
+    {
+      "code": "57897-1",
+      "commonName": "Influenza virus A+B.neuraminidase inhibitor resistance [Susceptibility] in Specimen by Genotype method",
+      "methodType": "Genotyping",
+      "system": "XXX",
+      "component": "Influenza virus A+B.neuraminidase inhibitor resistance"
+    },
+    {
+      "code": "95423-0",
+      "commonName": "Influenza virus A and B and SARS-CoV-2 (COVID-19) identified in Respiratory specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Respiratory",
+      "component": "Influenza virus A & Influenza virus B & SARS coronavirus 2 identified"
+    },
+    {
+      "code": "23781-8",
+      "commonName": "Swine influenza virus Ag [Presence] in Tissue by Immunofluorescence",
+      "methodType": "IF",
+      "system": "Tiss",
+      "component": "Swine influenza virus Ag"
+    },
+    {
+      "code": "23782-6",
+      "commonName": "Swine influenza virus Ag [Presence] in Tissue by Immune stain",
+      "methodType": "Immune stain",
+      "system": "Tiss",
+      "component": "Swine influenza virus Ag"
+    },
+    {
+      "code": "31859-2",
+      "commonName": "Influenza virus A Ag [Presence] in Specimen",
+      "methodType": "",
+      "system": "XXX",
+      "component": "Influenza virus A Ag"
+    },
+    {
+      "code": "29721-8",
+      "commonName": "Influenza virus C Ag [Presence] in Specimen by Immunofluorescence",
+      "methodType": "IF",
+      "system": "XXX",
+      "component": "Influenza virus C Ag"
+    },
+    {
+      "code": "31858-4",
+      "commonName": "Influenza virus A Ag [Presence] in Throat",
+      "methodType": "",
+      "system": "Thrt",
+      "component": "Influenza virus A Ag"
+    },
+    {
+      "code": "38381-0",
+      "commonName": "Influenza virus A cDNA [Presence] in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus A cDNA"
+    },
+    {
+      "code": "31860-0",
+      "commonName": "Influenza virus A+B Ag [Presence] in Throat",
+      "methodType": "",
+      "system": "Thrt",
+      "component": "Influenza virus A+B Ag"
+    },
+    {
+      "code": "31861-8",
+      "commonName": "Influenza virus A+B+C Ag [Presence] in Throat",
+      "methodType": "",
+      "system": "Thrt",
+      "component": "Influenza virus A+B+C Ag"
+    },
+    {
+      "code": "55465-9",
+      "commonName": "Influenza virus A H1 2009 pandemic RNA [Presence] in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus A H1 2009 pandemic RNA"
+    },
+    {
+      "code": "31863-4",
+      "commonName": "Influenza virus B Ag [Presence] in Throat",
+      "methodType": "",
+      "system": "Thrt",
+      "component": "Influenza virus B Ag"
+    },
+    {
+      "code": "49521-8",
+      "commonName": "Influenza virus A H1 RNA [Presence] in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus A H1 RNA"
+    },
+    {
+      "code": "60538-6",
+      "commonName": "Influenza virus A H1+H3+B RNA [Presence] in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus A H1+H3+B RNA"
+    },
+    {
+      "code": "33535-6",
+      "commonName": "Influenza virus A+B Ag [Presence] in Nasopharynx",
+      "methodType": "",
+      "system": "Nph",
+      "component": "Influenza virus A+B Ag"
+    },
+    {
+      "code": "57985-4",
+      "commonName": "Influenza virus A H2 RNA [Presence] in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus A H2 RNA"
+    },
+    {
+      "code": "49524-2",
+      "commonName": "Influenza virus A H3 RNA [Presence] in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus A H3 RNA"
+    },
+    {
+      "code": "44795-3",
+      "commonName": "Influenza virus A H5 Asian RNA [Presence] in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus A H5 Asian RNA"
+    },
+    {
+      "code": "38272-1",
+      "commonName": "Influenza virus A H5 RNA [Presence] in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus A H5 RNA"
+    },
+    {
+      "code": "68986-9",
+      "commonName": "Influenza virus A H5a RNA [Presence] in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus A H5a RNA"
+    },
+    {
+      "code": "68987-7",
+      "commonName": "Influenza virus A H5b RNA [Presence] in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus A H5b RNA"
+    },
+    {
+      "code": "39025-2",
+      "commonName": "Influenza virus A hemagglutinin cDNA [Identifier] in Specimen by Sequencing",
+      "methodType": "Sequencing",
+      "system": "XXX",
+      "component": "Influenza virus A hemagglutinin cDNA"
+    },
+    {
+      "code": "39102-9",
+      "commonName": "Influenza virus A hemagglutinin cDNA [Identifier] in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus A hemagglutinin cDNA"
+    },
+    {
+      "code": "39103-7",
+      "commonName": "Influenza virus A neuraminidase cDNA [Identifier] in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus A neuraminidase cDNA"
+    },
+    {
+      "code": "38271-3",
+      "commonName": "Influenza virus A H6 RNA [Presence] in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus A H6 RNA"
+    },
+    {
+      "code": "43874-7",
+      "commonName": "Influenza virus A Ag [Presence] in Nasopharynx",
+      "methodType": "",
+      "system": "Nph",
+      "component": "Influenza virus A Ag"
+    },
+    {
+      "code": "43895-2",
+      "commonName": "Influenza virus B Ag [Presence] in Nasopharynx",
+      "methodType": "",
+      "system": "Nph",
+      "component": "Influenza virus B Ag"
+    },
+    {
+      "code": "44263-2",
+      "commonName": "Influenza virus A RNA [Units/volume] (viral load) in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus A RNA"
+    },
+    {
+      "code": "44264-0",
+      "commonName": "Influenza virus A H5 RNA [Units/volume] (viral load) in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus A H5 RNA"
+    },
+    {
+      "code": "44265-7",
+      "commonName": "Influenza virus A H6 RNA [Units/volume] (viral load) in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus A H6 RNA"
+    },
+    {
+      "code": "44266-5",
+      "commonName": "Influenza virus A H7 RNA [Units/volume] (viral load) in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus A H7 RNA"
+    },
+    {
+      "code": "44558-5",
+      "commonName": "Influenza virus A Ag [Presence] in Nasopharynx by Immunofluorescence",
+      "methodType": "IF",
+      "system": "Nph",
+      "component": "Influenza virus A Ag"
+    },
+    {
+      "code": "44559-3",
+      "commonName": "Influenza virus A Ag [Presence] in Bronchial specimen by Immunofluorescence",
+      "methodType": "IF",
+      "system": "Bronchial",
+      "component": "Influenza virus A Ag"
+    },
+    {
+      "code": "44560-1",
+      "commonName": "Influenza virus A Ag [Presence] in Nose by Immunofluorescence",
+      "methodType": "IF",
+      "system": "Nose",
+      "component": "Influenza virus A Ag"
+    },
+    {
+      "code": "44561-9",
+      "commonName": "Influenza virus A Ag [Presence] in Trachea by Immunofluorescence",
+      "methodType": "IF",
+      "system": "Trac",
+      "component": "Influenza virus A Ag"
+    },
+    {
+      "code": "44562-7",
+      "commonName": "Influenza virus A Ag [Presence] in Bronchial specimen",
+      "methodType": "",
+      "system": "Bronchial",
+      "component": "Influenza virus A Ag"
+    },
+    {
+      "code": "44563-5",
+      "commonName": "Influenza virus A Ag [Presence] in Nose",
+      "methodType": "",
+      "system": "Nose",
+      "component": "Influenza virus A Ag"
+    },
+    {
+      "code": "44564-3",
+      "commonName": "Influenza virus A Ag [Presence] in Nose by Immunoassay",
+      "methodType": "IA",
+      "system": "Nose",
+      "component": "Influenza virus A Ag"
+    },
+    {
+      "code": "44566-8",
+      "commonName": "Influenza virus A+B Ag [Presence] in Bronchial specimen",
+      "methodType": "",
+      "system": "Bronchial",
+      "component": "Influenza virus A+B Ag"
+    },
+    {
+      "code": "44567-6",
+      "commonName": "Influenza virus A+B Ag [Presence] in Nose",
+      "methodType": "",
+      "system": "Nose",
+      "component": "Influenza virus A+B Ag"
+    },
+    {
+      "code": "44571-8",
+      "commonName": "Influenza virus B Ag [Presence] in Nasopharynx by Immunofluorescence",
+      "methodType": "IF",
+      "system": "Nph",
+      "component": "Influenza virus B Ag"
+    },
+    {
+      "code": "44572-6",
+      "commonName": "Influenza virus B Ag [Presence] in Bronchial specimen by Immunofluorescence",
+      "methodType": "IF",
+      "system": "Bronchial",
+      "component": "Influenza virus B Ag"
+    },
+    {
+      "code": "44573-4",
+      "commonName": "Influenza virus B Ag [Presence] in Nose by Immunofluorescence",
+      "methodType": "IF",
+      "system": "Nose",
+      "component": "Influenza virus B Ag"
+    },
+    {
+      "code": "44574-2",
+      "commonName": "Influenza virus B Ag [Presence] in Trachea by Immunofluorescence",
+      "methodType": "IF",
+      "system": "Trac",
+      "component": "Influenza virus B Ag"
+    },
+    {
+      "code": "44575-9",
+      "commonName": "Influenza virus B Ag [Presence] in Nose by Immunoassay",
+      "methodType": "IA",
+      "system": "Nose",
+      "component": "Influenza virus B Ag"
+    },
+    {
+      "code": "44576-7",
+      "commonName": "Influenza virus B Ag [Presence] in Bronchial specimen",
+      "methodType": "",
+      "system": "Bronchial",
+      "component": "Influenza virus B Ag"
+    },
+    {
+      "code": "44577-5",
+      "commonName": "Influenza virus B Ag [Presence] in Nose",
+      "methodType": "",
+      "system": "Nose",
+      "component": "Influenza virus B Ag"
+    },
+    {
+      "code": "95658-1",
+      "commonName": "Influenza virus A H7 Eurasia RNA [Presence] in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus A H7 Eurasia RNA"
+    },
+    {
+      "code": "46082-4",
+      "commonName": "Influenza virus A Ag [Presence] in Nasopharynx by Immunoassay",
+      "methodType": "IA",
+      "system": "Nph",
+      "component": "Influenza virus A Ag"
+    },
+    {
+      "code": "46083-2",
+      "commonName": "Influenza virus B Ag [Presence] in Nasopharynx by Immunoassay",
+      "methodType": "IA",
+      "system": "Nph",
+      "component": "Influenza virus B Ag"
+    },
+    {
+      "code": "38270-5",
+      "commonName": "Influenza virus A H7 RNA [Presence] in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus A H7 RNA"
+    },
+    {
+      "code": "48509-4",
+      "commonName": "Influenza virus A and B RNA [Identifier] in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus A & B RNA"
+    },
+    {
+      "code": "49012-8",
+      "commonName": "Influenza virus A and B identified in Specimen by Bioassay",
+      "methodType": "Bioassay",
+      "system": "XXX",
+      "component": "Influenza virus A & B identified"
+    },
+    {
+      "code": "49520-0",
+      "commonName": "Influenza virus A H1 RNA [Presence] in Isolate by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Isolate",
+      "component": "Influenza virus A H1 RNA"
+    },
+    {
+      "code": "49528-3",
+      "commonName": "Influenza virus A H9 RNA [Presence] in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus A H9 RNA"
+    },
+    {
+      "code": "49522-6",
+      "commonName": "Influenza virus A H3 Ag [Presence] in Isolate by Immunofluorescence",
+      "methodType": "IF",
+      "system": "Isolate",
+      "component": "Influenza virus A H3 Ag"
+    },
+    {
+      "code": "49523-4",
+      "commonName": "Influenza virus A H3 RNA [Presence] in Isolate by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Isolate",
+      "component": "Influenza virus A H3 RNA"
+    },
+    {
+      "code": "99623-1",
+      "commonName": "Influenza virus A N1 RNA [Presence] in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus A N1 RNA"
+    },
+    {
+      "code": "49526-7",
+      "commonName": "Influenza virus A H5 RNA [Presence] in Isolate by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Isolate",
+      "component": "Influenza virus A H5 RNA"
+    },
+    {
+      "code": "49527-5",
+      "commonName": "Influenza virus A H7 RNA [Presence] in Isolate by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Isolate",
+      "component": "Influenza virus A H7 RNA"
+    },
+    {
+      "code": "34487-9",
+      "commonName": "Influenza virus A RNA [Presence] in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus A RNA"
+    },
+    {
+      "code": "49529-1",
+      "commonName": "Influenza virus A Ag [Presence] in Isolate by Immunofluorescence",
+      "methodType": "IF",
+      "system": "Isolate",
+      "component": "Influenza virus A Ag"
+    },
+    {
+      "code": "49531-7",
+      "commonName": "Influenza virus A RNA [Presence] in Isolate by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Isolate",
+      "component": "Influenza virus A RNA"
+    },
+    {
+      "code": "49532-5",
+      "commonName": "Influenza virus A hemagglutinin type RNA [Identifier] in Isolate by Sequencing",
+      "methodType": "Sequencing",
+      "system": "Isolate",
+      "component": "Influenza virus A hemagglutinin type RNA"
+    },
+    {
+      "code": "49534-1",
+      "commonName": "Influenza virus B Ag [Presence] in Isolate by Immunofluorescence",
+      "methodType": "IF",
+      "system": "Isolate",
+      "component": "Influenza virus B Ag"
+    },
+    {
+      "code": "49535-8",
+      "commonName": "Influenza virus B RNA [Presence] in Isolate by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Isolate",
+      "component": "Influenza virus B RNA"
+    },
+    {
+      "code": "49536-6",
+      "commonName": "Influenza virus B RNA [Identifier] in Isolate by Sequencing",
+      "methodType": "Sequencing",
+      "system": "Isolate",
+      "component": "Influenza virus B RNA"
+    },
+    {
+      "code": "49537-4",
+      "commonName": "Influenza virus A and B RNA [Identifier] in Isolate by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Isolate",
+      "component": "Influenza virus A & B RNA"
+    },
+    {
+      "code": "49538-2",
+      "commonName": "Influenza virus identified in Specimen by Shell vial culture",
+      "methodType": "Shell vial culture",
+      "system": "XXX",
+      "component": "Influenza virus identified"
+    },
+    {
+      "code": "50697-2",
+      "commonName": "Influenza virus A Ag [Identifier] in Isolate",
+      "methodType": "",
+      "system": "Isolate",
+      "component": "Influenza virus A Ag"
+    },
+    {
+      "code": "50698-0",
+      "commonName": "Influenza virus A.adamantane resistance [Presence] by Phenotype method",
+      "methodType": "Phenotyping",
+      "system": "Isolate",
+      "component": "Influenza virus A.adamantane resistance"
+    },
+    {
+      "code": "50699-8",
+      "commonName": "Influenza virus A.adamantane resistance [Presence]",
+      "methodType": "",
+      "system": "Isolate",
+      "component": "Influenza virus A.adamantane resistance"
+    },
+    {
+      "code": "50700-4",
+      "commonName": "Influenza virus A.adamantane resistant RNA [Presence] by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Isolate",
+      "component": "Influenza virus A.adamantane resistant RNA"
+    },
+    {
+      "code": "50701-2",
+      "commonName": "Influenza virus A H1 Ag [Presence] in Isolate by Immunofluorescence",
+      "methodType": "IF",
+      "system": "Isolate",
+      "component": "Influenza virus A H1 Ag"
+    },
+    {
+      "code": "50703-8",
+      "commonName": "Influenza virus A.neuraminidase inhibitor resistance [Susceptibility] Qualitative by Phenotype method",
+      "methodType": "Phenotyping",
+      "system": "Isolate",
+      "component": "Influenza virus A.neuraminidase inhibitor resistance"
+    },
+    {
+      "code": "53250-7",
+      "commonName": "Influenza virus A RNA [#/volume] (viral load) in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus A RNA"
+    },
+    {
+      "code": "53251-5",
+      "commonName": "Influenza virus B RNA [#/volume] (viral load) in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus B RNA"
+    },
+    {
+      "code": "55464-2",
+      "commonName": "Influenza virus A swine origin RNA [Presence] in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus A swine origin RNA"
+    },
+    {
+      "code": "54241-5",
+      "commonName": "Influenza virus B Ag [Presence] in Isolate",
+      "methodType": "",
+      "system": "Isolate",
+      "component": "Influenza virus B Ag"
+    },
+    {
+      "code": "54242-3",
+      "commonName": "Influenza virus identified in Isolate",
+      "methodType": "",
+      "system": "Isolate",
+      "component": "Influenza virus identified"
+    },
+    {
+      "code": "54243-1",
+      "commonName": "Influenza virus RNA [Identifier] in Specimen by Probe",
+      "methodType": "Probe",
+      "system": "XXX",
+      "component": "Influenza virus RNA"
+    },
+    {
+      "code": "54244-9",
+      "commonName": "Influenza virus identified in Specimen",
+      "methodType": "",
+      "system": "XXX",
+      "component": "Influenza virus identified"
+    },
+    {
+      "code": "55133-3",
+      "commonName": "Influenza virus A hemagglutinin cDNA [Identifier] in Isolate by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Isolate",
+      "component": "Influenza virus A hemagglutinin cDNA"
+    },
+    {
+      "code": "55463-4",
+      "commonName": "Influenza virus A swine origin RNA [Identifier] in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus A swine origin RNA"
+    },
+    {
+      "code": "24015-0",
+      "commonName": "Influenza virus A+B Ag [Presence] in Specimen",
+      "methodType": "",
+      "system": "XXX",
+      "component": "Influenza virus A+B Ag"
+    },
+    {
+      "code": "62462-7",
+      "commonName": "Influenza virus A+B RNA [Presence] in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus A+B RNA"
+    },
+    {
+      "code": "56024-3",
+      "commonName": "Influenza virus A N1 RNA [Units/volume] (viral load) in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus A N1 RNA"
+    },
+    {
+      "code": "31862-6",
+      "commonName": "Influenza virus A+B+C Ag [Presence] in Specimen",
+      "methodType": "",
+      "system": "XXX",
+      "component": "Influenza virus A+B+C Ag"
+    },
+    {
+      "code": "5860-2",
+      "commonName": "Influenza virus A Ag [Presence] in Throat by Immunoassay",
+      "methodType": "IA",
+      "system": "Thrt",
+      "component": "Influenza virus A Ag"
+    },
+    {
+      "code": "5861-0",
+      "commonName": "Influenza virus A Ag [Presence] in Throat by Immunofluorescence",
+      "methodType": "IF",
+      "system": "Thrt",
+      "component": "Influenza virus A Ag"
+    },
+    {
+      "code": "5862-8",
+      "commonName": "Influenza virus A Ag [Presence] in Specimen by Immunoassay",
+      "methodType": "IA",
+      "system": "XXX",
+      "component": "Influenza virus A Ag"
+    },
+    {
+      "code": "5863-6",
+      "commonName": "Influenza virus A Ag [Presence] in Specimen by Immunofluorescence",
+      "methodType": "IF",
+      "system": "XXX",
+      "component": "Influenza virus A Ag"
+    },
+    {
+      "code": "5864-4",
+      "commonName": "Influenza virus B Ag [Presence] in Throat by Immunoassay",
+      "methodType": "IA",
+      "system": "Thrt",
+      "component": "Influenza virus B Ag"
+    },
+    {
+      "code": "5865-1",
+      "commonName": "Influenza virus B Ag [Presence] in Throat by Immunofluorescence",
+      "methodType": "IF",
+      "system": "Thrt",
+      "component": "Influenza virus B Ag"
+    },
+    {
+      "code": "5866-9",
+      "commonName": "Influenza virus B Ag [Presence] in Specimen by Immunoassay",
+      "methodType": "IA",
+      "system": "XXX",
+      "component": "Influenza virus B Ag"
+    },
+    {
+      "code": "5867-7",
+      "commonName": "Influenza virus B Ag [Presence] in Specimen by Immunofluorescence",
+      "methodType": "IF",
+      "system": "XXX",
+      "component": "Influenza virus B Ag"
+    },
+    {
+      "code": "59423-4",
+      "commonName": "Influenza virus A hemagglutinin type RNA [Identifier] in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus A hemagglutinin type RNA"
+    },
+    {
+      "code": "59424-2",
+      "commonName": "Influenza virus A hemagglutinin type RNA [Identifier] in Isolate by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Isolate",
+      "component": "Influenza virus A hemagglutinin type RNA"
+    },
+    {
+      "code": "60267-2",
+      "commonName": "Influenza virus C RNA [Presence] in Isolate by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Isolate",
+      "component": "Influenza virus C RNA"
+    },
+    {
+      "code": "60494-2",
+      "commonName": "Influenza virus A H1 2009 pandemic and Influenza virus A swine origin RNA [Interpretation] in Specimen Qualitative by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus A H1 2009 pandemic & Influenza virus A swine origin RNA"
+    },
+    {
+      "code": "60530-3",
+      "commonName": "Influenza virus A H9 RNA [Presence] in Isolate by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Isolate",
+      "component": "Influenza virus A H9 RNA"
+    },
+    {
+      "code": "54240-7",
+      "commonName": "Influenza virus Ag [Presence] in Specimen",
+      "methodType": "",
+      "system": "XXX",
+      "component": "Influenza virus Ag"
+    },
+    {
+      "code": "61101-2",
+      "commonName": "Influenza virus A neuraminidase RNA [Type] in Specimen by Sequencing",
+      "methodType": "Sequencing",
+      "system": "XXX",
+      "component": "Influenza virus A neuraminidase RNA"
+    },
+    {
+      "code": "61102-0",
+      "commonName": "Influenza virus A and B Ag [Identifier] in Specimen by Immunofluorescence",
+      "methodType": "IF",
+      "system": "XXX",
+      "component": "Influenza virus A & B Ag"
+    },
+    {
+      "code": "38382-8",
+      "commonName": "Influenza virus B [Presence] in Specimen by Organism specific culture",
+      "methodType": "Organism specific culture",
+      "system": "XXX",
+      "component": "Influenza virus B"
+    },
+    {
+      "code": "31864-2",
+      "commonName": "Influenza virus B Ag [Presence] in Specimen",
+      "methodType": "",
+      "system": "XXX",
+      "component": "Influenza virus B Ag"
+    },
+    {
+      "code": "6435-2",
+      "commonName": "Influenza virus A+B Ag [Presence] in Throat by Immunoassay",
+      "methodType": "IA",
+      "system": "Thrt",
+      "component": "Influenza virus A+B Ag"
+    },
+    {
+      "code": "6436-0",
+      "commonName": "Influenza virus A+B Ag [Presence] in Throat by Immunofluorescence",
+      "methodType": "IF",
+      "system": "Thrt",
+      "component": "Influenza virus A+B Ag"
+    },
+    {
+      "code": "6437-8",
+      "commonName": "Influenza virus A+B Ag [Presence] in Specimen by Immunoassay",
+      "methodType": "IA",
+      "system": "XXX",
+      "component": "Influenza virus A+B Ag"
+    },
+    {
+      "code": "6438-6",
+      "commonName": "Influenza virus A+B Ag [Presence] in Specimen by Immunofluorescence",
+      "methodType": "IF",
+      "system": "XXX",
+      "component": "Influenza virus A+B Ag"
+    },
+    {
+      "code": "6439-4",
+      "commonName": "Influenza virus A+B+C Ag [Presence] in Throat by Immunoassay",
+      "methodType": "IA",
+      "system": "Thrt",
+      "component": "Influenza virus A+B+C Ag"
+    },
+    {
+      "code": "6440-2",
+      "commonName": "Influenza virus A+B+C Ag [Presence] in Throat by Immunofluorescence",
+      "methodType": "IF",
+      "system": "Thrt",
+      "component": "Influenza virus A+B+C Ag"
+    },
+    {
+      "code": "6441-0",
+      "commonName": "Influenza virus A+B+C Ag [Presence] in Specimen by Immunoassay",
+      "methodType": "IA",
+      "system": "XXX",
+      "component": "Influenza virus A+B+C Ag"
+    },
+    {
+      "code": "6442-8",
+      "commonName": "Influenza virus A+B+C Ag [Presence] in Specimen by Immunofluorescence",
+      "methodType": "IF",
+      "system": "XXX",
+      "component": "Influenza virus A+B+C Ag"
+    },
+    {
+      "code": "6601-9",
+      "commonName": "Influenza virus identified in Sputum by Organism specific culture",
+      "methodType": "Organism specific culture",
+      "system": "Sputum",
+      "component": "Influenza virus identified"
+    },
+    {
+      "code": "6602-7",
+      "commonName": "Influenza virus identified in Sputum tracheal aspirate by Organism specific culture",
+      "methodType": "Organism specific culture",
+      "system": "Sptt",
+      "component": "Influenza virus identified"
+    },
+    {
+      "code": "6603-5",
+      "commonName": "Influenza virus identified in Throat by Organism specific culture",
+      "methodType": "Organism specific culture",
+      "system": "Thrt",
+      "component": "Influenza virus identified"
+    },
+    {
+      "code": "6604-3",
+      "commonName": "Influenza virus identified in Specimen by Organism specific culture",
+      "methodType": "Organism specific culture",
+      "system": "XXX",
+      "component": "Influenza virus identified"
+    },
+    {
+      "code": "40982-1",
+      "commonName": "Influenza virus B RNA [Presence] in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus B RNA"
+    },
+    {
+      "code": "74785-7",
+      "commonName": "Influenza virus B Victoria lineage RNA [Presence] in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus B Victoria lineage RNA"
+    },
+    {
+      "code": "72200-9",
+      "commonName": "Influenza virus A neuraminidase segment sequence identifier",
+      "methodType": "Sequencing",
+      "system": "Isolate",
+      "component": "Influenza virus A neuraminidase segment sequence identifier"
+    },
+    {
+      "code": "72201-7",
+      "commonName": "Influenza virus A matrix protein segment sequence identifier",
+      "methodType": "Sequencing",
+      "system": "Isolate",
+      "component": "Influenza virus A matrix protein segment sequence identifier"
+    },
+    {
+      "code": "72356-9",
+      "commonName": "Influenza virus A and B Ag [Identifier] in Specimen by Rapid immunoassay",
+      "methodType": "IA.rapid",
+      "system": "XXX",
+      "component": "Influenza virus A & B Ag"
+    },
+    {
+      "code": "72365-0",
+      "commonName": "Influenza virus A and B Ag [Identifier] in Nose by Immunofluorescence",
+      "methodType": "IF",
+      "system": "Nose",
+      "component": "Influenza virus A & B Ag"
+    },
+    {
+      "code": "72366-8",
+      "commonName": "Influenza virus A and B Ag [Identifier] in Nose by Rapid immunoassay",
+      "methodType": "IA.rapid",
+      "system": "Nose",
+      "component": "Influenza virus A & B Ag"
+    },
+    {
+      "code": "72367-6",
+      "commonName": "Influenza virus A+B Ag [Presence] in Nose by Rapid immunoassay",
+      "methodType": "IA.rapid",
+      "system": "Nose",
+      "component": "Influenza virus A+B Ag"
+    },
+    {
+      "code": "72767-7",
+      "commonName": "Influenza virus A hemagglutinin segment sequence identifier",
+      "methodType": "Sequencing",
+      "system": "Isolate",
+      "component": "Influenza virus A hemagglutinin segment sequence identifier"
+    },
+    {
+      "code": "74038-1",
+      "commonName": "Influenza virus A H1 RNA [Cycle Threshold #] in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus A H1 RNA"
+    },
+    {
+      "code": "74039-9",
+      "commonName": "Influenza virus A H3 RNA [Cycle Threshold #] in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus A H3 RNA"
+    },
+    {
+      "code": "74040-7",
+      "commonName": "Influenza virus A N2 RNA [Cycle Threshold #] in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus A N2 RNA"
+    },
+    {
+      "code": "74784-0",
+      "commonName": "Influenza virus B lineage RNA [Identifier] in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus B lineage RNA"
+    },
+    {
+      "code": "74786-5",
+      "commonName": "Influenza virus B Yamagata lineage RNA [Presence] in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus B Yamagata lineage RNA"
+    },
+    {
+      "code": "31865-9",
+      "commonName": "Influenza virus C Ag [Presence] in Specimen",
+      "methodType": "",
+      "system": "XXX",
+      "component": "Influenza virus C Ag"
+    },
+    {
+      "code": "76077-7",
+      "commonName": "Influenza virus A RNA [Presence] in Bronchoalveolar lavage by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "BAL",
+      "component": "Influenza virus A RNA"
+    },
+    {
+      "code": "76078-5",
+      "commonName": "Influenza virus A RNA [Presence] in Nasopharynx by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Nph",
+      "component": "Influenza virus A RNA"
+    },
+    {
+      "code": "76079-3",
+      "commonName": "Influenza virus B RNA [Presence] in Bronchoalveolar lavage by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "BAL",
+      "component": "Influenza virus B RNA"
+    },
+    {
+      "code": "76080-1",
+      "commonName": "Influenza virus B RNA [Presence] in Nasopharynx by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Nph",
+      "component": "Influenza virus B RNA"
+    },
+    {
+      "code": "77026-3",
+      "commonName": "Influenza virus A H1 RNA [Presence] in Nasopharynx by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Nph",
+      "component": "Influenza virus A H1 RNA"
+    },
+    {
+      "code": "77027-1",
+      "commonName": "Influenza virus A H3 RNA [Presence] in Nasopharynx by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Nph",
+      "component": "Influenza virus A H3 RNA"
+    },
+    {
+      "code": "77028-9",
+      "commonName": "Influenza virus A H1 2009 pandemic RNA [Presence] in Nasopharynx by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Nph",
+      "component": "Influenza virus A H1 2009 pandemic RNA"
+    },
+    {
+      "code": "77383-8",
+      "commonName": "Influenza virus A Ag [Presence] in Bronchoalveolar lavage by Immunofluorescence",
+      "methodType": "IF",
+      "system": "BAL",
+      "component": "Influenza virus A Ag"
+    },
+    {
+      "code": "77384-6",
+      "commonName": "Influenza virus B Ag [Presence] in Bronchoalveolar lavage by Immunofluorescence",
+      "methodType": "IF",
+      "system": "BAL",
+      "component": "Influenza virus B Ag"
+    },
+    {
+      "code": "77605-4",
+      "commonName": "Influenza virus A H5 icA RNA [Cycle Threshold #] in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus A H5 icA RNA"
+    },
+    {
+      "code": "80204-1",
+      "commonName": "Influenza virus A and B identified in Nasopharynx by Shell vial culture",
+      "methodType": "Shell vial culture",
+      "system": "Nph",
+      "component": "Influenza virus A & B identified"
+    },
+    {
+      "code": "80382-5",
+      "commonName": "Influenza virus A Ag [Presence] in Upper respiratory specimen by Rapid immunoassay",
+      "methodType": "IA.rapid",
+      "system": "Respiratory.upper",
+      "component": "Influenza virus A Ag"
+    },
+    {
+      "code": "80383-3",
+      "commonName": "Influenza virus B Ag [Presence] in Upper respiratory specimen by Rapid immunoassay",
+      "methodType": "IA.rapid",
+      "system": "Respiratory.upper",
+      "component": "Influenza virus B Ag"
+    },
+    {
+      "code": "80588-7",
+      "commonName": "Influenza virus A M gene [Presence] in Nasopharynx by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Nph",
+      "component": "Influenza virus A M gene"
+    },
+    {
+      "code": "80589-5",
+      "commonName": "Influenza virus A H1 HA gene [Presence] in Nasopharynx by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Nph",
+      "component": "Influenza virus A H1 HA gene"
+    },
+    {
+      "code": "80590-3",
+      "commonName": "Influenza virus A H3 HA gene [Presence] in Nasopharynx by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Nph",
+      "component": "Influenza virus A H3 HA gene"
+    },
+    {
+      "code": "80591-1",
+      "commonName": "Influenza virus B NS gene [Presence] in Nasopharynx by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Nph",
+      "component": "Influenza virus B NS gene"
+    },
+    {
+      "code": "81305-5",
+      "commonName": "Influenza virus A H1 2009 pandemic RNA [Cycle Threshold #] in Respiratory specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Respiratory",
+      "component": "Influenza virus A H1 2009 pandemic RNA"
+    },
+    {
+      "code": "81307-1",
+      "commonName": "Influenza virus A H7 Eurasia RNA [Cycle Threshold #] in Respiratory specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Respiratory",
+      "component": "Influenza virus A H7 Eurasia RNA"
+    },
+    {
+      "code": "81308-9",
+      "commonName": "Influenza virus A RNA [Cycle Threshold #] in Respiratory specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Respiratory",
+      "component": "Influenza virus A RNA"
+    },
+    {
+      "code": "81309-7",
+      "commonName": "Influenza virus B RNA [Cycle Threshold #] in Respiratory specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Respiratory",
+      "component": "Influenza virus B RNA"
+    },
+    {
+      "code": "81320-4",
+      "commonName": "Influenza virus A H5 Asian RNA [Cycle Threshold #] in Respiratory specimen by Nucleic acid amplification using primer-probe set H5a",
+      "methodType": "Probe.amp.tar.primer-probe set H5a",
+      "system": "Respiratory",
+      "component": "Influenza virus A H5 Asian RNA"
+    },
+    {
+      "code": "81321-2",
+      "commonName": "Influenza virus A H5 Asian RNA [Cycle Threshold #] in Respiratory specimen by Nucleic acid amplification using primer-probe set H5b",
+      "methodType": "Probe.amp.tar.primer-probe set H5b",
+      "system": "Respiratory",
+      "component": "Influenza virus A H5 Asian RNA"
+    },
+    {
+      "code": "81325-3",
+      "commonName": "Influenza virus B Yamagata lineage RNA [Cycle Threshold #] in Respiratory specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Respiratory",
+      "component": "Influenza virus B Yamagata lineage RNA"
+    },
+    {
+      "code": "81327-9",
+      "commonName": "Influenza virus B Victoria lineage RNA [Cycle Threshold #] in Respiratory specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Respiratory",
+      "component": "Influenza virus B Victoria lineage RNA"
+    },
+    {
+      "code": "81428-5",
+      "commonName": "Influenza virus A H7 Eurasia RNA [Presence] in Respiratory specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Respiratory",
+      "component": "Influenza virus A H7 Eurasia RNA"
+    },
+    {
+      "code": "82166-0",
+      "commonName": "Influenza virus A RNA [Presence] in Nasopharynx by NAA with non-probe detection",
+      "methodType": "Non-probe.amp.tar",
+      "system": "Nph",
+      "component": "Influenza virus A RNA"
+    },
+    {
+      "code": "82167-8",
+      "commonName": "Influenza virus A H1 RNA [Presence] in Nasopharynx by NAA with non-probe detection",
+      "methodType": "Non-probe.amp.tar",
+      "system": "Nph",
+      "component": "Influenza virus A H1 RNA"
+    },
+    {
+      "code": "82168-6",
+      "commonName": "Influenza virus A H1 2009 pandemic RNA [Presence] in Nasopharynx by NAA with non-probe detection",
+      "methodType": "Non-probe.amp.tar",
+      "system": "Nph",
+      "component": "Influenza virus A H1 2009 pandemic RNA"
+    },
+    {
+      "code": "82169-4",
+      "commonName": "Influenza virus A H3 RNA [Presence] in Nasopharynx by NAA with non-probe detection",
+      "methodType": "Non-probe.amp.tar",
+      "system": "Nph",
+      "component": "Influenza virus A H3 RNA"
+    },
+    {
+      "code": "82170-2",
+      "commonName": "Influenza virus B RNA [Presence] in Nasopharynx by NAA with non-probe detection",
+      "methodType": "Non-probe.amp.tar",
+      "system": "Nph",
+      "component": "Influenza virus B RNA"
+    },
+    {
+      "code": "82461-5",
+      "commonName": "Influenza virus A and B and H1 2009 pandemic RNA [Identifier] in Upper respiratory specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Respiratory.upper",
+      "component": "Influenza virus A & B & H1 2009 pandemic RNA"
+    },
+    {
+      "code": "85477-8",
+      "commonName": "Influenza virus A RNA [Presence] in Upper respiratory specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Respiratory.upper",
+      "component": "Influenza virus A RNA"
+    },
+    {
+      "code": "85478-6",
+      "commonName": "Influenza virus B RNA [Presence] in Upper respiratory specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Respiratory.upper",
+      "component": "Influenza virus B RNA"
+    },
+    {
+      "code": "85526-2",
+      "commonName": "Influenza virus D PB2 gene [Cycle Threshold #] in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus D PB2 gene"
+    },
+    {
+      "code": "85532-0",
+      "commonName": "Influenza virus A whole genome [Nucleotide sequence] in Isolate by Sequencing",
+      "methodType": "Sequencing",
+      "system": "Isolate",
+      "component": "Influenza virus A whole genome"
+    },
+    {
+      "code": "85535-3",
+      "commonName": "Influenza virus A RNA TCID50 [#/volume] in Specimen",
+      "methodType": "",
+      "system": "XXX",
+      "component": "Influenza virus A RNA tissue culture infective dose 50"
+    },
+    {
+      "code": "85801-9",
+      "commonName": "Influenza virus B Yamagata lineage Ag [Titer] in Isolate by Hemagglutination inhibition",
+      "methodType": "HAI",
+      "system": "Isolate",
+      "component": "Influenza virus B Yamagata lineage Ag"
+    },
+    {
+      "code": "85802-7",
+      "commonName": "Influenza virus A H1 Ag [Titer] in Isolate by Hemagglutination inhibition",
+      "methodType": "HAI",
+      "system": "Isolate",
+      "component": "Influenza virus A H1 Ag"
+    },
+    {
+      "code": "85803-5",
+      "commonName": "Influenza virus A H3 Ag [Titer] in Isolate by Hemagglutination inhibition",
+      "methodType": "HAI",
+      "system": "Isolate",
+      "component": "Influenza virus A H3 Ag"
+    },
+    {
+      "code": "85804-3",
+      "commonName": "Influenza virus A H5 Ag [Titer] in Isolate by Hemagglutination inhibition",
+      "methodType": "HAI",
+      "system": "Isolate",
+      "component": "Influenza virus A H5 Ag"
+    },
+    {
+      "code": "85805-0",
+      "commonName": "Influenza virus A H7 Ag [Titer] in Isolate by Hemagglutination inhibition",
+      "methodType": "HAI",
+      "system": "Isolate",
+      "component": "Influenza virus A H7 Ag"
+    },
+    {
+      "code": "85821-7",
+      "commonName": "Influenza virus B Victoria lineage Ag [Presence] in Isolate by Hemagglutination inhibition",
+      "methodType": "HAI",
+      "system": "Isolate",
+      "component": "Influenza Virus B Victoria lineage Ag"
+    },
+    {
+      "code": "86317-5",
+      "commonName": "Influenza virus A H1 2009 pandemic RNA [Cycle Threshold #] in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus A H1 2009 pandemic RNA"
+    },
+    {
+      "code": "86318-3",
+      "commonName": "Influenza virus B Yamagata lineage Ag [Presence] in Isolate by Hemagglutination inhibition",
+      "methodType": "HAI",
+      "system": "Isolate",
+      "component": "Influenza Virus B Yamagata lineage Ag"
+    },
+    {
+      "code": "86565-9",
+      "commonName": "Influenza virus A Ag [Presence] in Tissue by Immunofluorescence",
+      "methodType": "IF",
+      "system": "Tiss",
+      "component": "Influenza virus A Ag"
+    },
+    {
+      "code": "86568-3",
+      "commonName": "Influenza virus A RNA [Presence] in Cerebral spinal fluid by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "CSF",
+      "component": "Influenza virus A RNA"
+    },
+    {
+      "code": "86569-1",
+      "commonName": "Influenza virus A RNA [Presence] in Tissue by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Tiss",
+      "component": "Influenza virus A RNA"
+    },
+    {
+      "code": "86571-7",
+      "commonName": "Influenza virus B RNA [Presence] in Cerebral spinal fluid by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "CSF",
+      "component": "Influenza virus B RNA"
+    },
+    {
+      "code": "86572-5",
+      "commonName": "Influenza virus B RNA [Presence] in Tissue by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Tiss",
+      "component": "Influenza virus B RNA"
+    },
+    {
+      "code": "87714-2",
+      "commonName": "Influenza virus A M gene [Nucleotide sequence] in Isolate by Sequencing",
+      "methodType": "Sequencing",
+      "system": "Isolate",
+      "component": "Influenza virus A M gene"
+    },
+    {
+      "code": "87715-9",
+      "commonName": "Influenza virus A HA gene [Nucleotide sequence] in Isolate by Sequencing",
+      "methodType": "Sequencing",
+      "system": "Isolate",
+      "component": "Influenza virus A HA gene"
+    },
+    {
+      "code": "87716-7",
+      "commonName": "Influenza virus A NA gene [Nucleotide sequence] in Isolate by Sequencing",
+      "methodType": "Sequencing",
+      "system": "Isolate",
+      "component": "Influenza virus A NA gene"
+    },
+    {
+      "code": "88187-0",
+      "commonName": "Influenza virus A subtype [Identifier] in Cornea or Conjunctiva by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Cornea/Conjunctiva",
+      "component": "Influenza virus A subtype"
+    },
+    {
+      "code": "88193-8",
+      "commonName": "Influenza virus A RNA [Presence] in Cornea or Conjunctiva by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Cornea/Conjunctiva",
+      "component": "Influenza virus A RNA"
+    },
+    {
+      "code": "88194-6",
+      "commonName": "Influenza virus B Ag [Presence] in Tissue by Immunofluorescence",
+      "methodType": "IF",
+      "system": "Tiss",
+      "component": "Influenza virus B Ag"
+    },
+    {
+      "code": "88195-3",
+      "commonName": "Influenza virus B RNA [Presence] in Cornea or Conjunctiva by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Cornea/Conjunctiva",
+      "component": "Influenza virus B RNA"
+    },
+    {
+      "code": "88200-1",
+      "commonName": "Influenza virus identified in Cornea or Conjunctiva by Organism specific culture",
+      "methodType": "Organism specific culture",
+      "system": "Cornea/Conjunctiva",
+      "component": "Influenza virus identified"
+    },
+    {
+      "code": "88568-1",
+      "commonName": "Influenza virus identified in Lower respiratory specimen by Organism specific culture",
+      "methodType": "Organism specific culture",
+      "system": "Respiratory.lower",
+      "component": "Influenza virus identified"
+    },
+    {
+      "code": "88592-1",
+      "commonName": "Influenza virus B RNA [Presence] in Lower respiratory specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Respiratory.lower",
+      "component": "Influenza virus B RNA"
+    },
+    {
+      "code": "88596-2",
+      "commonName": "Influenza virus B RNA [Presence] in Pericardial fluid by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Pericard fld",
+      "component": "Influenza virus B RNA"
+    },
+    {
+      "code": "88599-6",
+      "commonName": "Influenza virus A RNA [Presence] in Lower respiratory specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Respiratory.lower",
+      "component": "Influenza virus A RNA"
+    },
+    {
+      "code": "88600-2",
+      "commonName": "Influenza virus A RNA [Presence] in Pericardial fluid by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Pericard fld",
+      "component": "Influenza virus A RNA"
+    },
+    {
+      "code": "88835-4",
+      "commonName": "Influenza virus A swine origin RNA [Cycle Threshold #] in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus A swine origin RNA"
+    },
+    {
+      "code": "88904-8",
+      "commonName": "Influenza virus A Ag [Presence] in Lower respiratory specimen by Immunofluorescence",
+      "methodType": "IF",
+      "system": "Respiratory.lower",
+      "component": "Influenza virus A Ag"
+    },
+    {
+      "code": "88905-5",
+      "commonName": "Influenza virus B Ag [Presence] in Lower respiratory specimen by Immunofluorescence",
+      "methodType": "IF",
+      "system": "Respiratory.lower",
+      "component": "Influenza virus B Ag"
+    },
+    {
+      "code": "90885-5",
+      "commonName": "Influenza virus D RNA [Cycle Threshold #] in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus D RNA"
+    },
+    {
+      "code": "90886-3",
+      "commonName": "Influenza virus B RNA [Cycle Threshold #] in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus B RNA"
+    },
+    {
+      "code": "91072-9",
+      "commonName": "Influenza virus A subtype [Identifier] in Lower respiratory specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Respiratory.lower",
+      "component": "Influenza virus A subtype"
+    },
+    {
+      "code": "91771-6",
+      "commonName": "Influenza virus A subtype [Identifier] in Upper respiratory specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Respiratory.upper",
+      "component": "Influenza virus A subtype"
+    },
+    {
+      "code": "91772-4",
+      "commonName": "Influenza virus identified in Upper respiratory specimen by Organism specific culture",
+      "methodType": "Organism specific culture",
+      "system": "Respiratory.upper",
+      "component": "Influenza virus identified"
+    },
+    {
+      "code": "92141-1",
+      "commonName": "Influenza virus B RNA [Presence] in Respiratory specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Respiratory",
+      "component": "Influenza virus B RNA"
+    },
+    {
+      "code": "92142-9",
+      "commonName": "Influenza virus A RNA [Presence] in Respiratory specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Respiratory",
+      "component": "Influenza virus A RNA"
+    },
+    {
+      "code": "92808-5",
+      "commonName": "Influenza virus A H3 RNA [Presence] in Upper respiratory specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Respiratory.upper",
+      "component": "Influenza virus A H3 RNA"
+    },
+    {
+      "code": "92809-3",
+      "commonName": "Influenza virus A H1 RNA [Presence] in Upper respiratory specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Respiratory.upper",
+      "component": "Influenza virus A H1 RNA"
+    },
+    {
+      "code": "92976-0",
+      "commonName": "Influenza virus B RNA [Presence] in Lower respiratory specimen by NAA with non-probe detection",
+      "methodType": "Non-probe.amp.tar",
+      "system": "Respiratory.lower",
+      "component": "Influenza virus B RNA"
+    },
+    {
+      "code": "92977-8",
+      "commonName": "Influenza virus A RNA [Presence] in Lower respiratory specimen by NAA with non-probe detection",
+      "methodType": "Non-probe.amp.tar",
+      "system": "Respiratory.lower",
+      "component": "Influenza virus A RNA"
+    },
+    {
+      "code": "93759-9",
+      "commonName": "Influenza virus A PB2 gene [Nucleotide sequence] in Isolate by Sequencing",
+      "methodType": "Sequencing",
+      "system": "Isolate",
+      "component": "Influenza virus A PB2 gene"
+    },
+    {
+      "code": "93760-7",
+      "commonName": "Influenza virus A PB1 gene [Nucleotide sequence] in Isolate by Sequencing",
+      "methodType": "Sequencing",
+      "system": "Isolate",
+      "component": "Influenza virus A PB1 gene"
+    },
+    {
+      "code": "93761-5",
+      "commonName": "Influenza virus A PA gene [Nucleotide sequence] in Isolate by Sequencing",
+      "methodType": "Sequencing",
+      "system": "Isolate",
+      "component": "Influenza virus A PA gene"
+    },
+    {
+      "code": "93762-3",
+      "commonName": "Influenza virus A NP gene [Nucleotide sequence] in Isolate by Sequencing",
+      "methodType": "Sequencing",
+      "system": "Isolate",
+      "component": "Influenza virus A NP gene"
+    },
+    {
+      "code": "93763-1",
+      "commonName": "Influenza virus A NS1 gene [Nucleotide sequence] in Isolate by Sequencing",
+      "methodType": "Sequencing",
+      "system": "Isolate",
+      "component": "Influenza virus A NS1 gene"
+    },
+    {
+      "code": "94394-4",
+      "commonName": "Influenza virus A H3 RNA [Presence] in Lower respiratory specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Respiratory.lower",
+      "component": "Influenza virus A H3 RNA"
+    },
+    {
+      "code": "94395-1",
+      "commonName": "Influenza virus A H1 2009 pandemic RNA [Presence] in Lower respiratory specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Respiratory.lower",
+      "component": "Influenza virus A H1 2009 pandemic RNA"
+    },
+    {
+      "code": "94396-9",
+      "commonName": "Influenza virus A H1 RNA [Presence] in Lower respiratory specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "Respiratory.lower",
+      "component": "Influenza virus A H1 RNA"
+    },
+    {
+      "code": "62860-2",
+      "commonName": "Influenza virus C RNA [Presence] in Specimen by NAA with probe detection",
+      "methodType": "Probe.amp.tar",
+      "system": "XXX",
+      "component": "Influenza virus C RNA"
+    },
+    {
+      "code": "41461-5",
+      "commonName": "Virus identified in Specimen",
+      "methodType": "",
+      "system": "XXX",
+      "component": "Virus identified"
+    },
+    {
+      "code": "92253-4",
+      "commonName": "Microorganism identified in Isolate or Specimen by Molecular genetics method",
+      "methodType": "Molgen",
+      "system": "Isolate/Specimen",
+      "component": "Microorganism identified"
+    }
+  ],
+  "methods": [
+    {
+      "code": "67122001",
+      "display": "Acid fast stain method (procedure)",
+      "designations": []
+    },
+    {
+      "code": "127785005",
+      "display": "Administration of substance to produce immunity, either active or passive (procedure)",
+      "designations": []
+    },
+    {
+      "code": "409611004",
+      "display": "Aerobic blood culture (procedure)",
+      "designations": []
+    },
+    {
+      "code": "117033003",
+      "display": "Aerobic microbial culture (procedure)",
+      "designations": []
+    },
+    {
+      "code": "88221005",
+      "display": "Affinity chromatography measurement (procedure)",
+      "designations": []
+    },
+    {
+      "code": "88629000",
+      "display": "Agar dilution minimum inhibitory concentration susceptibility test for anaerobes (procedure)",
+      "designations": []
+    },
+    {
+      "code": "359821004",
+      "display": "Agglutination assay (procedure)",
+      "designations": []
+    },
+    {
+      "code": "409612006",
+      "display": "Anaerobic blood culture (procedure)",
+      "designations": []
+    },
+    {
+      "code": "117034009",
+      "display": "Anaerobic microbial culture (procedure)",
+      "designations": []
+    },
+    {
+      "code": "104232004",
+      "display": "Antibiotic sensitivity, agar diffusion method (procedure)",
+      "designations": []
+    },
+    {
+      "code": "359867004",
+      "display": "Antibiotic sensitivity, disk method (procedure)",
+      "designations": []
+    },
+    {
+      "code": "250507002",
+      "display": "Antibody titer measurement (procedure)",
+      "designations": []
+    },
+    {
+      "code": "121276004",
+      "display": "Antigen assay (procedure)",
+      "designations": []
+    },
+    {
+      "code": "14788002",
+      "display": "Antimicrobial susceptibility test (procedure)",
+      "designations": []
+    },
+    {
+      "code": "359788000",
+      "display": "Antinuclear antibody measurement (procedure)",
+      "designations": []
+    },
+    {
+      "code": "104233009",
+      "display": "Antiviral susceptibility test (procedure)",
+      "designations": []
+    },
+    {
+      "code": "22642004",
+      "display": "Bacterial bacteriophage typing (procedure)",
+      "designations": []
+    },
+    {
+      "code": "104178000",
+      "display": "Bacterial culture (procedure)",
+      "designations": []
+    },
+    {
+      "code": "58779000",
+      "display": "Bioassay (procedure)",
+      "designations": []
+    },
+    {
+      "code": "39334004",
+      "display": "Broth microdilution susceptibility test (procedure)",
+      "designations": []
+    },
+    {
+      "code": "121898003",
+      "display": "Coliform bacteria viability count (procedure)",
+      "designations": []
+    },
+    {
+      "code": "29703006",
+      "display": "Complement assay (procedure)",
+      "designations": []
+    },
+    {
+      "code": "104336004",
+      "display": "Complement component, antigen measurement (procedure)",
+      "designations": []
+    },
+    {
+      "code": "69207009",
+      "display": "Complement fixation test (procedure)",
+      "designations": []
+    },
+    {
+      "code": "703690001",
+      "display": "Confirmatory technique (qualifier value)",
+      "designations": []
+    },
+    {
+      "code": "165771000",
+      "display": "Coombs test - anti-human globulin (procedure)",
+      "designations": []
+    },
+    {
+      "code": "37586002",
+      "display": "Counterimmunoelectrophoresis measurement (procedure)",
+      "designations": []
+    },
+    {
+      "code": "359872008",
+      "display": "Disk diffusion susceptibility test (procedure)",
+      "designations": []
+    },
+    {
+      "code": "73512001",
+      "display": "Electron microscopic study (procedure)",
+      "designations": []
+    },
+    {
+      "code": "252395007",
+      "display": "Electron microscopy of feces (procedure)",
+      "designations": []
+    },
+    {
+      "code": "426053009",
+      "display": "Elek test (procedure)",
+      "designations": []
+    },
+    {
+      "code": "414111007",
+      "display": "Enzyme immunoassay method (procedure)",
+      "designations": []
+    },
+    {
+      "code": "76978006",
+      "display": "Enzyme-linked immunosorbent assay (procedure)",
+      "designations": []
+    },
+    {
+      "code": "313406008",
+      "display": "Fatty acid measurement (procedure)",
+      "designations": []
+    },
+    {
+      "code": "426329006",
+      "display": "Fluorescence in situ hybridization (procedure)",
+      "designations": []
+    },
+    {
+      "code": "3967008",
+      "display": "Fluorescence polarization immunoassay (procedure)",
+      "designations": []
+    },
+    {
+      "code": "30662005",
+      "display": "Fluorescent immunoassay (procedure)",
+      "designations": []
+    },
+    {
+      "code": "363779003",
+      "display": "Genotype determination (procedure)",
+      "designations": []
+    },
+    {
+      "code": "104208006",
+      "display": "Giemsa stain method (procedure)",
+      "designations": []
+    },
+    {
+      "code": "104234003",
+      "display": "Gradient strip susceptibility test (procedure)",
+      "designations": []
+    },
+    {
+      "code": "85000002",
+      "display": "Hemagglutination assay (procedure)",
+      "designations": []
+    },
+    {
+      "code": "34733005",
+      "display": "Hemagglutination inhibition assay (procedure)",
+      "designations": []
+    },
+    {
+      "code": "714797009",
+      "display": "Histologic test (procedure)",
+      "designations": []
+    },
+    {
+      "code": "414464004",
+      "display": "Immunoassay method (procedure)",
+      "designations": []
+    },
+    {
+      "code": "37310002",
+      "display": "Immunoblot assay (procedure)",
+      "designations": []
+    },
+    {
+      "code": "13269000",
+      "display": "Immunocytochemical stain (procedure)",
+      "designations": []
+    },
+    {
+      "code": "32623009",
+      "display": "Immunodiffusion measurement (procedure)",
+      "designations": []
+    },
+    {
+      "code": "406867009",
+      "display": "Immunofluorescent stain method (procedure)",
+      "designations": []
+    },
+    {
+      "code": "31651002",
+      "display": "Immunoglobulin A measurement (procedure)",
+      "designations": []
+    },
+    {
+      "code": "250758002",
+      "display": "Immunoglobulin G index measurement (procedure)",
+      "designations": []
+    },
+    {
+      "code": "45293001",
+      "display": "Immunoglobulin G measurement (procedure)",
+      "designations": []
+    },
+    {
+      "code": "45764000",
+      "display": "Immunoglobulin M measurement (procedure)",
+      "designations": []
+    },
+    {
+      "code": "117617002",
+      "display": "Immunohistochemistry procedure (procedure)",
+      "designations": []
+    },
+    {
+      "code": "43657008",
+      "display": "Latex agglutination test (procedure)",
+      "designations": []
+    },
+    {
+      "code": "104157003",
+      "display": "Light microscopy (procedure)",
+      "designations": []
+    },
+    {
+      "code": "8959002",
+      "display": "Mass spectrometry measurement (procedure)",
+      "designations": []
+    },
+    {
+      "code": "118119003",
+      "display": "Measurement of microbial antibody (procedure)",
+      "designations": []
+    },
+    {
+      "code": "61594008",
+      "display": "Microbial culture (procedure)",
+      "designations": []
+    },
+    {
+      "code": "117259009",
+      "display": "Microscopy (procedure) ",
+      "designations": []
+    },
+    {
+      "code": "782518009",
+      "display": "Modified carbapenem inactivation technique (qualifier value)",
+      "designations": []
+    },
+    {
+      "code": "116148004",
+      "display": "Molecular genetics procedure (procedure)",
+      "designations": []
+    },
+    {
+      "code": "34146008",
+      "display": "Mouse toxin neutralization test (procedure)",
+      "designations": []
+    },
+    {
+      "code": "69363007",
+      "display": "Nucleic acid amplification (procedure)",
+      "designations": []
+    },
+    {
+      "code": "398545005",
+      "display": "Nucleic acid assay (procedure)",
+      "designations": []
+    },
+    {
+      "code": "384715000",
+      "display": "Nucleic acid hybridization procedure (procedure)",
+      "designations": []
+    },
+    {
+      "code": "117245002",
+      "display": "Nucleic acid probe method with target amplification (procedure)",
+      "designations": []
+    },
+    {
+      "code": "117040002",
+      "display": "Nucleic acid sequencing (procedure)",
+      "designations": []
+    },
+    {
+      "code": "117321004",
+      "display": "Orcein stain method (procedure)",
+      "designations": []
+    },
+    {
+      "code": "104172004",
+      "display": "Organism specific culture (procedure)",
+      "designations": []
+    },
+    {
+      "code": "363778006",
+      "display": "Phenotype determination (procedure)",
+      "designations": []
+    },
+    {
+      "code": "405262001",
+      "display": "Point of care testing (procedure)",
+      "designations": []
+    },
+    {
+      "code": "252326002",
+      "display": "Polyacrylamide gel electrophoresis (procedure)",
+      "designations": []
+    },
+    {
+      "code": "4613005",
+      "display": "Radioimmunoassay (procedure)",
+      "designations": []
+    },
+    {
+      "code": "708099001",
+      "display": "Rapid immunoassay technique (qualifier value)",
+      "designations": []
+    },
+    {
+      "code": "90603004",
+      "display": "Restriction fragment length polymorphism analysis (procedure)",
+      "designations": []
+    },
+    {
+      "code": "56857008",
+      "display": "Serum neutralization test (procedure)",
+      "designations": []
+    },
+    {
+      "code": "127790008",
+      "display": "Staining method (procedure)",
+      "designations": []
+    },
+    {
+      "code": "122443003",
+      "display": "Toxin assay (procedure)",
+      "designations": []
+    },
+    {
+      "code": "252403005",
+      "display": "Toxin detection (procedure)",
+      "designations": []
+    },
+    {
+      "code": "12717000",
+      "display": "Viral culture (procedure)",
+      "designations": []
+    },
+    {
+      "code": "39624002",
+      "display": "Viral neutralization test (procedure)",
+      "designations": []
+    },
+    {
+      "code": "115418004",
+      "display": "Viral Sequencing (procedure)",
+      "designations": []
+    }
+  ]
+}

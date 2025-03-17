@@ -1,0 +1,74 @@
+@use '@angular/material' as mat;
+
+:host {
+  height: fit-content;
+}
+
+.tile-card {
+  cursor: pointer;
+  height: 100%;
+  max-width: 480px;
+  min-width: 240px;
+
+  > * {
+    margin: auto;
+  }
+
+  .tile-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    .tile-logo {
+      height: 160px;
+      aspect-ratio: 1/1;
+      padding: 16px;
+    }
+
+    .tile-title-text {
+      margin-bottom: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+
+      div {
+        font-size: 24px;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .tile-content {
+    height: fit-content;
+    margin-bottom: 16px;
+
+    .tile-content-paragraphs {
+      height: fit-content;
+      margin-bottom: 24px;
+
+      .tile-content-paragraph {
+        font-size: 14px;
+        letter-spacing: 0.25;
+      }
+    }
+  }
+
+  .tile-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+
+.animated {
+  transition: transform 0.2s;
+  margin: 0 auto;
+  margin: 16px;
+
+  &:hover {
+    @include mat.elevation(5);
+    transform: scale(1.025);
+    background-color: var(--color-demis-focused-background);
+  }
+}

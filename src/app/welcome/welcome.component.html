@@ -1,0 +1,44 @@
+@if (environment?.featureFlags?.FEATURE_FLAG_NEW_STARTPAGE_DESIGN) {
+  <div id="new-welcome-container" class="container">
+    <div>
+      <div id="welcome-texts-container">
+        <h2 id="welcome-demis-heading">Willkommen bei DEMIS</h2>
+        <p class="welcome-demis-text">{{ AppConstants.InfoTexts.ABOUT_NEW }}</p>
+        <p class="welcome-demis-text">{{ AppConstants.InfoTexts.KNOWLEDGE_DATABASE }}
+          <a target="_blank" rel="noopener noreferrer"
+             href="{{AppConstants.ExternalLinks.DEMIS_WDB}}">{{ AppConstants.Labels.DEMIS_KNOWLEDGE_DATABASE_LINK }}</a>
+        </p>
+      </div>
+      @if (!isAuthenticated()) {
+        <button type="button" mat-button id="btn-welcome-auth-login" (click)="login()">
+          Anmelden
+          <mat-icon class="logIn-btn_chevron-right">chevron_right</mat-icon>
+        </button>
+
+      }
+    </div>
+    <div id="welcome-tiles-container" class="row">
+      @for (tile of tiles; track $index) {
+        @if ((tile.renderingCondition === undefined) || (!!tile.renderingCondition)) {
+          <app-welcome-tile-new class="column" id="welcome-tile-{{ tile.config.id }}" [config]="tile.config"
+                                [animated]="true"
+                                (tileViewInitialized)="adjustTileContentHeights()"></app-welcome-tile-new>
+        }
+      }
+    </div>
+  </div>
+} @else {
+  <div id="{{ tileContainerId }}" class="container d-flex flex-md-row flex-column justify">
+    @for (tile of tiles; track $index) {
+      @if ((tile.renderingCondition === undefined) || (!!tile.renderingCondition)) {
+        <app-welcome-tile id="welcome-tile-{{ tile.config.id }}" [config]="tile.config" [animated]="true"
+                          (tileViewInitialized)="adjustTileContentHeights()"></app-welcome-tile>
+      }
+    }
+  </div>
+}
+
+@if (isAuthenticated()) {
+  <div id="start-username">Eingeloggt als {{ userInfo().username }}</div>
+}
+

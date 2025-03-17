@@ -1,0 +1,47 @@
+/*
+ Copyright (c) 2025 gematik GmbH
+ Licensed under the EUPL, Version 1.2 or - as soon they will be approved by
+ the European Commission - subsequent versions of the EUPL (the "Licence");
+ You may not use this work except in compliance with the Licence.
+    You may obtain a copy of the Licence at:
+    https://joinup.ec.europa.eu/software/page/eupl
+        Unless required by applicable law or agreed to in writing, software
+ distributed under the Licence is distributed on an "AS IS" basis,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the Licence for the specific language governing permissions and
+ limitations under the Licence.
+ */
+
+import { NgZone } from '@angular/core';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { start as singleSpaStart } from 'single-spa';
+import { enableProdMode, getSingleSpaExtraProviders } from 'single-spa-angular';
+import { environment } from './environments/environment';
+
+import { DemisAppModule as AppModule } from './app/app.module';
+
+singleSpaStart();
+
+const appId = 'demis-notification-portal-mf-shell';
+const PORTAL_CONFIG_ERROR: string = 'PORTAL_CONFIG_ERROR';
+
+fetch(environment.pathToEnvironment)
+  .then(response => response.json())
+  .then(config => {
+    (<any>window).config = config;
+
+    sessionStorage.removeItem(PORTAL_CONFIG_ERROR);
+
+    if (environment.isProduction) {
+      enableProdMode();
+    }
+
+    platformBrowserDynamic(getSingleSpaExtraProviders())
+      .bootstrapModule(AppModule)
+      .then(module => {
+        const rootZone = module.injector.get(NgZone);
+
+        (rootZone as any)['_inner']._properties[appId] = true;
+      })
+      .catch(err => console.error(err));
+  });

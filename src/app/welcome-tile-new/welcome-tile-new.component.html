@@ -1,0 +1,23 @@
+<div>
+  <mat-card id="tile-card-{{ config.id }}"
+            [ngClass]="{ 'tile-card': true, animated }"
+            (click)="router.navigateByUrl(config.destinationRouterLink)"
+            [attr.title]="config.tooltip">
+    <div id="tile-content-{{ config.id }}" class="tile-content">
+      <img id="tile-logo-{{ config.id }}" class="tile-logo"
+           [attr.src]="config.logoImage.src"
+           [attr.alt]="config.logoImage.alt" />
+      <div id="tile-row-{{ config.id }}" class="tile-row">
+        <div id="tile-title-{{ config.id }}" class="tile-title">
+          <p>{{ config.titleTextRows[0] + ' melden' }}</p>
+        </div>
+        <div id="tile-title-text-{{ config.id }}" class="tile-title-text">
+          <p>{{ config.contentParagraphs[0] }}</p>
+        </div>
+      </div>
+      <mat-icon id="tile-icon_chevron-right-logo-{{ config.id }}" class="tile-icon_chevron-right">chevron_right
+      </mat-icon>
+    </div>
+  </mat-card>
+</div>
+

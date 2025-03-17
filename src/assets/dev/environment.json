@@ -1,0 +1,39 @@
+{
+  "production": false,
+  "pathToGateway": "/gateway/notification",
+  "gatewayPaths": {
+    "laboratory": "/api/ng/notification/laboratory",
+    "hospitalization": "/api/ng/notification/hospitalization",
+    "bedOccupancy": "/api/ng/reports/bedOccupancy",
+    "hospitalLocations": "/api/ng/services/hospital-locations",
+    "pathogen": "/api/ng/notification/pathogen",
+    "disease": "/api/ng/notification/disease"
+  },
+  "identityProviders": [
+    {
+      "baseUrl": "https://auth.ingress.local",
+      "tenant": "demis",
+      "issuers": [
+        "https://auth.ingress.local/realms/HOSPITAL"
+      ]
+    },
+    {
+      "baseUrl": "https://auth.ingress.local",
+      "tenant": "demis-portal",
+      "clientId": "meldeportal",
+      "clientIdInternet": "meldeportal-internet",
+      "meldungDNS": "https://meldung.ingress.local",
+      "issuers": [
+        "https://auth.ingress.local/realms/PORTAL"
+      ]
+    }
+  ],
+  "ngxLoggerConfig": {
+    "level": 1,
+    "disableConsoleLogging": false
+  },
+  "featureFlags": {
+    "CONFIG_TOKEN_INJECTION_ENABLED": true,
+    "FEATURE_FLAG_NEW_STARTPAGE_DESIGN": true
+  }
+}
