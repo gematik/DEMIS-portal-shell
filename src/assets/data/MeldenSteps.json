@@ -1,0 +1,19 @@
+[
+  {
+    "title": "Welche Art von Test wurde durchgeführt und soll gemeldet werden?",
+    "text": "Bitte wählen Sie aus.",
+    "step": "testCase",
+    "options": [
+      {
+        "id": "A",
+        "label": "Antigen",
+        "description": "Antigen Schnelltest"
+      },
+      {
+        "id": "P",
+        "label": "PCR",
+        "description": "PCR Schnelltest"
+      }
+    ]
+  }
+]

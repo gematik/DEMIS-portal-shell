@@ -1,0 +1,120 @@
+//#region GlobalImports
+
+// Nur bootstraps grid-system nutzen
+@import 'node_modules/bootstrap/scss/bootstrap-grid';
+
+// Colors and Palettes
+@import 'styles/demis-color-and-palettes';
+
+//#endregion GlobalImports
+
+//#region Custom-Themes
+
+:root {
+  --two-column-length: 5
+}
+
+//#endregion Custom-Themes
+
+//#region GlobalStyles
+
+html,
+body,
+app-root,
+.app-frame {
+  box-sizing: border-box;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  height: 100%;
+  margin: 0;
+  background-color: unset !important;
+
+}
+
+//#endregion GlobalStyles
+
+//#region MaterialStyles
+
+.mat-sidenav, .mat-drawer {
+  border-right-color: $color-demis-stroke !important;
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+// //#endregion MaterialStyles
+
+app-side-navigation {
+  min-height: 100%;
+
+  app-paste-box {
+    margin: 3rem;
+  }
+}
+
+.justify {
+  justify-content: center;
+}
+
+// information icon
+.material-icons.md-48 {
+  margin-top: 5px;
+  margin-right: 5px;
+  color: #005eb8;
+}
+
+// navbar styling - must stay here atm to work for other microfrontends
+.app-navbar-demis {
+  .mat-mdc-tab-link > span.mdc-tab__content > span.mdc-tab__text-label {
+    color: var(--color-demis-black);
+    letter-spacing: 0;
+  }
+
+  .mat-mdc-button {
+    //Home (DEMIS-Button)
+    .mdc-button__label {
+      //font-family: Verdana, sans-serif;
+      //font-size: 17px;
+      //font-weight: 700;
+      //letter-spacing: 0;
+      color: var(--gem-demis-primary-color);
+    }
+
+    &:hover {
+      background-color: #F9F9F9;
+      border-radius: 0;
+    }
+  }
+
+  //SubNav ("Krankheit melden",...)
+  .mat-mdc-tab-link {
+    //.mdc-tab__text-label {
+    //  font-family: Verdana, sans-serif;
+    //  font-size: 14px;
+    //  line-height: 19px;
+    //}
+
+    &:hover {
+      background-color: #F9F9F9;
+    }
+  }
+
+  #btn-burger-menu-in-navbar {
+    .mat-mdc-button-persistent-ripple {
+      border-radius: 0;
+    }
+  }
+
+  //"abmelden"/"anmelden"
+  .btn-navbar-auth {
+    .mdc-button__label {
+      //font-family: Verdana, sans-serif;
+      //font-weight: 400;
+      //font-size: 14px;
+      //line-height: 28px;
+    }
+
+    &:hover {
+      background-color: #F9F9F9;
+      border-radius: 0;
+    }
+  }
+}

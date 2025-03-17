@@ -1,0 +1,62 @@
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+.mat-toolbar {
+  height: auto;
+  //TODO: workaround: --mat-app-background-color: #faf9fd; is set explicitly and unset makes it white again/default which will be default in future
+  background-color: var(--color-demis-white);
+}
+
+.app-navbar-demis {
+  .active-tab {
+    border-bottom: 3px solid var(--color-demis-blue);
+    border-radius: 0;
+    font-weight: bold;
+  }
+
+  .inactive-tab {
+    border-bottom: 3px solid transparent;
+    border-radius: 0;
+  }
+
+  .vertical-section-divider {
+    border-right-color: var(--color-demis-stroke);
+    border-right-width: 1px;
+    border-right-style: solid;
+    height: 40px;
+    margin-left: 32px;
+    margin-right: 32px;
+  }
+}
+
+#img-local-indicator-logo {
+  height: 32px;
+  width: auto;
+  margin-right: 8px;
+}
+
+#home-button {
+  display: inline-flex;
+  cursor: pointer;
+  padding-left: 16px;
+  padding-right: 16px;
+  height: 48px;
+  font-size: 22px;
+  align-items: center;
+  justify-content: center;
+
+  #img-demis-logo {
+    color: var(--color-demis-blue);
+    margin-right: 8px;
+    height: 24px;
+    width: auto;
+  }
+}
+
+.navbar-to-content-divider {
+  border-color: var(--color-demis-gray);
+  margin-top: -1px;
+  position: relative;
+  z-index: 999;
+}

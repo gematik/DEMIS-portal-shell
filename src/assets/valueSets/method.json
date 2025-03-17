@@ -1,0 +1,65 @@
+{
+  "resourceType": "ValueSet",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "valueSet": [
+          "method"
+        ]
+      }
+    ]
+  },
+  "expansion": {
+    "identifier": "f30e0a3f-9162-48ae-9b80-45b51b7f5ffc",
+    "timestamp": "2021-06-10T09:18:08+00:00",
+    "total": 9,
+    "contains": [
+      {
+        "system": "https://demis.rki.de/fhir/CodeSystem/method",
+        "code": "1221",
+        "display": "Antikörpernachweis gegen Phase-2-Antigene mittels KBR (einzelner deutlich erhöhter Wert)"
+      },
+      {
+        "system": "https://demis.rki.de/fhir/CodeSystem/method",
+        "code": "1222",
+        "display": "Chlamydiales-Antikörpernachweis mittels KBR (einzelner deutlich erhöhter Wert)"
+      },
+      {
+        "system": "https://demis.rki.de/fhir/CodeSystem/method",
+        "code": "1223",
+        "display": "Antikörpernachweis mittels IFT (einzelner deutlich erhöhter Wert)"
+      },
+      {
+        "system": "https://demis.rki.de/fhir/CodeSystem/method",
+        "code": "1224",
+        "display": "IgA-Antikörpernachweis (einzelner deutlich erhöhter Wert)"
+      },
+      {
+        "system": "https://demis.rki.de/fhir/CodeSystem/method",
+        "code": "1225",
+        "display": "IgG-Antikörpernachweis (einzelner deutlich erhöhter Wert)"
+      },
+      {
+        "system": "https://demis.rki.de/fhir/CodeSystem/method",
+        "code": "1226",
+        "display": "IgM-Antikörpernachweis (einzelner deutlich erhöhter Wert)"
+      },
+      {
+        "system": "https://demis.rki.de/fhir/CodeSystem/method",
+        "code": "1227",
+        "display": "PGL-1-Antikörpernachweis (einzelner deutlich erhöhter Wert)"
+      },
+      {
+        "system": "https://demis.rki.de/fhir/CodeSystem/method",
+        "code": "1228",
+        "display": "Anti-Dengue-Serotypen-IgM-Antikörper (einzelner deutlich erhöhter Wert)"
+      },
+      {
+        "system": "https://demis.rki.de/fhir/CodeSystem/method",
+        "code": "1229",
+        "display": "IgG-Antikörpernachweis (einzelner deutlich erhöhter Wert) bei negativer IgG-Avidität und positivem IgM-Antikörpernachweis"
+      }
+    ]
+  }
+}

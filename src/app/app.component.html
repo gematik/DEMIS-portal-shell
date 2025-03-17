@@ -1,0 +1,15 @@
+<div class="mat-typography app-frame mat-app-background d-flex flex-column flex-grow-1">
+  <app-navbar class="app-header" [title]="title"></app-navbar>
+
+  <div data-cy="main-content" class="content__container--layout" style="position: relative">
+
+    <gem-demis-max-height-content-container>
+      <router-outlet></router-outlet>
+      @if (environment?.featureFlags?.FEATURE_FLAG_NEW_STARTPAGE_DESIGN && isActiveTabHome()) {
+        <img class="demis-logo" ngSrc="assets/icons/demis_background.svg" [priority]="true" alt="DEMIS-background-logo"
+             height="1101"
+             width="1061">
+      }
+    </gem-demis-max-height-content-container>
+  </div>
+</div>
