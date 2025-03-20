@@ -9,7 +9,7 @@
            [attr.alt]="config.logoImage.alt" />
       <div id="tile-row-{{ config.id }}" class="tile-row">
         <div id="tile-title-{{ config.id }}" class="tile-title">
-          <p>{{ config.titleTextRows[0] + ' melden' }}</p>
+          <p>{{ config.titleTextRows.join(' ') }}</p>
         </div>
         <div id="tile-title-text-{{ config.id }}" class="tile-title-text">
           <p>{{ config.contentParagraphs[0] }}</p>

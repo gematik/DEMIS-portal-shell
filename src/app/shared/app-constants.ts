@@ -64,6 +64,7 @@ export namespace AppConstants {
     DISEASE = 'Meldung von meldepflichtigen Infektionskrankheiten (z.B. bei Verdacht, Erkrankung oder Tod) gemäß Infektionsschutzgesetz (§ 6 IfSG)',
     PATHOGEN = 'Meldung von Nachweisen von Krankheitserregern (inkl. positive Schnelltestergebnisse) gemäß Infektionsschutzgesetz (§ 7 Abs. 1 IfSG)',
     SEQUENCE_NOTIFICATION = 'Meldung von Sequenz- und Sequenzmetadaten gemäß Infektionsschutzgesetz (§13 Abs. 3 IfSG)',
+    SEQUENCE_NOTIFICATION_NEW_DESIGN = 'Übermittlung von Sequenz- und Sequenzmetadaten gemäß Infektionsschutzgesetz (§13 Abs. 3 IfSG)',
   }
 
   export namespace Titles {
@@ -72,6 +73,7 @@ export namespace AppConstants {
     export const DISEASE = ['Krankheit', 'melden'];
     export const PATHOGEN = ['Erregernachweis', 'melden'];
     export const SEQUENCE_NOTIFICATION = ['IGS', ''];
+    export const SEQUENCE_NOTIFICATION_NEW_DESIGN = ['Integrierte genomische Surveillance', '(IGS)'];
   }
 
   export enum Messages {

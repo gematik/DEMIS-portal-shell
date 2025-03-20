@@ -114,6 +114,10 @@ export class WelcomeComponent implements OnInit, OnDestroy {
     return this.userInfo().permissions.hasIgsDataSenderRole && this.userInfo().permissions.hasIgsNotificationSenderRole;
   }
 
+  get newDesignIsActivated() {
+    return environment?.featureFlags?.FEATURE_FLAG_NEW_STARTPAGE_DESIGN;
+  }
+
   get tiles(): WelcomeTileInfo[] {
     return [
       // About (Mehr über DEMIS erfahren)
@@ -185,14 +189,16 @@ export class WelcomeComponent implements OnInit, OnDestroy {
         renderingCondition: this.showIGSTile,
         config: {
           id: 'sequence-notification',
-          titleTextRows: AppConstants.Titles.SEQUENCE_NOTIFICATION,
+          titleTextRows: this.newDesignIsActivated ? AppConstants.Titles.SEQUENCE_NOTIFICATION_NEW_DESIGN : AppConstants.Titles.SEQUENCE_NOTIFICATION,
           tooltip: AppConstants.Tooltips.UPLOAD_INFO,
           destinationRouterLink: `/${AppConstants.PathSegments.SEQUENCE_NOTIFICATION}`,
           logoImage: {
             src: 'assets/images/IGS.svg',
             alt: 'Logo für die Sequenz Übermittlung',
           },
-          contentParagraphs: [AppConstants.InfoTexts.SEQUENCE_NOTIFICATION],
+          contentParagraphs: this.newDesignIsActivated
+            ? [AppConstants.InfoTexts.SEQUENCE_NOTIFICATION_NEW_DESIGN]
+            : [AppConstants.InfoTexts.SEQUENCE_NOTIFICATION],
           buttonLabel: 'Melden',
         },
       },
