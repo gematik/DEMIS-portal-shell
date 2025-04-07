@@ -3,44 +3,53 @@
 // Nur bootstraps grid-system nutzen
 @import 'node_modules/bootstrap/scss/bootstrap-grid';
 
-// Colors and Palettes
+// Deprecated
 @import 'styles/demis-color-and-palettes';
-
+// Colors and Palettes
+@import 'styles/colors';
 //#endregion GlobalImports
 
-//#region Custom-Themes
 
 :root {
-  --two-column-length: 5
+  --two-column-length: 5;
 }
 
-//#endregion Custom-Themes
-
 //#region GlobalStyles
-
 html,
 body,
 app-root,
 .app-frame {
+  font-family: Verdana, sans-serif;
   box-sizing: border-box;
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
   height: 100%;
   margin: 0;
+  letter-spacing: normal;
   background-color: unset !important;
+}
 
+//TODO: moved here from pathogen; needed for all h2 spacing between e.g. Einrichtung and above text paragraph
+// needs to be fixed because it needs overrides at other places e.g. homepage/welcome-tile
+h2 {
+  padding-top: 15px;
 }
 
 //#endregion GlobalStyles
 
 //#region MaterialStyles
-
 .mat-sidenav, .mat-drawer {
   border-right-color: $color-demis-stroke !important;
   border-top-right-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
 }
 
-// //#endregion MaterialStyles
+//background-color needs extra override for IGS content
+.mat-app-background {
+  background-color: unset !important;
+}
+
+.mat-drawer-container {
+  background-color: unset !important;
+}
 
 app-side-navigation {
   min-height: 100%;
@@ -65,56 +74,42 @@ app-side-navigation {
 .app-navbar-demis {
   .mat-mdc-tab-link > span.mdc-tab__content > span.mdc-tab__text-label {
     color: var(--color-demis-black);
-    letter-spacing: 0;
+  }
+}
+
+//moved here from bed-occupancy
+.mat-mdc-table {
+  background-color: var(--color-demis-white) !important;
+}
+
+// Custom styles for the mdc-checkbox (unsets background-color, delets ruler, padding and hover-overlay)
+.mat-mdc-form-field-type-checkbox {
+  .mdc-text-field--filled {
+    background-color: unset !important;
   }
 
-  .mat-mdc-button {
-    //Home (DEMIS-Button)
-    .mdc-button__label {
-      //font-family: Verdana, sans-serif;
-      //font-size: 17px;
-      //font-weight: 700;
-      //letter-spacing: 0;
-      color: var(--gem-demis-primary-color);
+  .mat-mdc-text-field-wrapper {
+    padding: 0;
+
+    .mat-mdc-form-field-focus-overlay {
+      display: none;
     }
 
-    &:hover {
-      background-color: #F9F9F9;
-      border-radius: 0;
+    .mdc-line-ripple {
+      display: none;
     }
-  }
 
-  //SubNav ("Krankheit melden",...)
-  .mat-mdc-tab-link {
-    //.mdc-tab__text-label {
-    //  font-family: Verdana, sans-serif;
-    //  font-size: 14px;
-    //  line-height: 19px;
-    //}
-
-    &:hover {
-      background-color: #F9F9F9;
+    .mat-mdc-form-field-infix {
+      padding: 0 !important;
+      min-height: unset;
     }
   }
+}
 
-  #btn-burger-menu-in-navbar {
-    .mat-mdc-button-persistent-ripple {
-      border-radius: 0;
-    }
-  }
-
-  //"abmelden"/"anmelden"
-  .btn-navbar-auth {
-    .mdc-button__label {
-      //font-family: Verdana, sans-serif;
-      //font-weight: 400;
-      //font-size: 14px;
-      //line-height: 28px;
-    }
-
-    &:hover {
-      background-color: #F9F9F9;
-      border-radius: 0;
-    }
+//TODO: analyze why this component needs specific override
+// Burger-Menu items font style override
+.mat-mdc-menu-content {
+  .mat-mdc-menu-item {
+    font-family: Verdana, sans-serif;
   }
 }
