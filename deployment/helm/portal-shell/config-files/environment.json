@@ -1,0 +1,8 @@
+{{- $environment := dict -}}
+{{- $_ := set $environment "production" (.Values.config.production | required ".Values.config.production is required.") -}}
+{{- $_ := set $environment "pathToGateway" (.Values.config.pathToGateway | required ".Values.config.pathToGateway is required.") -}}
+{{- $_ := set $environment "gatewayPaths" (.Values.config.gatewayPaths | required ".Values.config.gatewayPaths is required.") -}}
+{{- $_ := set $environment "identityProviders" (.Values.config.idp | required ".Values.config.idp is required.") -}}
+{{- $_ := set $environment "ngxLoggerConfig" (.Values.config.ngxLoggerConfig | required ".Values.config.ngxLoggerConfig is required.") -}}
+{{- $_ := set $environment "featureFlags" (.Values.config.featureFlags | required ".Values.config.featureFlags is required.") -}}
+{{- $environment | toPrettyJson -}}

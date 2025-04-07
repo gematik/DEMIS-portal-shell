@@ -12,21 +12,10 @@
  limitations under the Licence.
  */
 
-import { AuthType } from 'src/app/shared/models/notifications/auth/enums/auth-type.enum';
 import { HttpHeaders } from '@angular/common/http';
 import { NgxLoggerLevel } from 'ngx-logger';
 
 declare let window: any;
-
-export type SmcbAuth = {
-  host: string;
-  client_id: string | undefined;
-  realm: string;
-  redirect_uri: string;
-  response_type: string;
-  scope: string;
-  nonce: string;
-};
 
 interface IdentityProvider {
   baseUrl: string;
@@ -80,26 +69,15 @@ interface KeyCloakConfig {
   meldungDNS: string | undefined;
 }
 
-interface ComfortClient extends SmcbAuth {
-  keycloakInitOptionLocation: string;
-  keycloak: KeyCloakConfig;
-  authType: AuthType;
-  smcbURL: string;
-}
-
 export class DynamicEnvironment {
   public headers: HttpHeaders;
   public local: boolean = false;
   public pathToEnvironment: string = 'environment.json';
-  public pathToIgsService: string = 'PATH TO IGS SERVICE NOT DEFINED';
   public bypassComfortClient: boolean = false;
-  public production = false;
 
   constructor() {
     this.headers = new HttpHeaders({
-      'app-key': 'bd2aca3d5b433868146e41f89ccbd1c7',
       'Content-Type': 'application/json',
-      'x-real-ip': '123.123.123.123',
     });
   }
 
@@ -131,10 +109,6 @@ export class DynamicEnvironment {
     return this.config?.pathToGateway;
   }
 
-  public get pathToLaboratory(): string {
-    return this.gatewayPaths?.laboratory;
-  }
-
   public get pathToHospitalization(): string {
     return this.gatewayPaths?.hospitalization;
   }
@@ -161,28 +135,8 @@ export class DynamicEnvironment {
     return this.identityProviderDemis?.issuers;
   }
 
-  public get issuersIbm(): string[] | undefined {
-    return this.identityProviderIbm?.issuers;
-  }
-
   public get issuersDemisPortal(): string[] | undefined {
     return this.identityProviderDemisPortal?.issuers;
-  }
-
-  public get baseOauthUrl(): string | undefined {
-    return this.issuersIbm ? `${this.issuersIbm[0]}/protocol/openid-connect` : undefined;
-  }
-
-  // configs
-
-  public get keycloakConfigGematik(): KeyCloakConfig {
-    return {
-      realm: 'gematik',
-      url: this.gematikIssuer?.split('/realm')[0],
-      clientId: this.identityProviderIbm?.clientId,
-      clientIdInternet: undefined,
-      meldungDNS: undefined,
-    };
   }
 
   // abe stand 6.10.2023 working Config for providers- delete when keyclock adapted
@@ -200,32 +154,6 @@ export class DynamicEnvironment {
     };
   }
 
-  public get smcbAuth(): SmcbAuth {
-    return {
-      host: 'id.certify.demo.ubirch.com',
-      client_id: this.keycloakConfigGematik?.clientId,
-      realm: this.keycloakConfigGematik?.realm,
-      redirect_uri: `${this.gematikIssuer}/.well-known/openid-configuration`,
-      response_type: 'token',
-      scope: 'openid',
-      nonce: 'random-value',
-    };
-  }
-
-  public get cardsPath(): string {
-    return this.comfortClient.smcbURL + '/Institution/Cards';
-  }
-
-  public get comfortClient(): ComfortClient {
-    return {
-      keycloakInitOptionLocation: './assets/keycloak/silent-check-sso.html',
-      keycloak: this.keycloakConfigGematik,
-      authType: AuthType.SMCB,
-      smcbURL: `/api`,
-      ...this.smcbAuth,
-    };
-  }
-
   public get featureFlags(): any {
     return this.config.featureFlags;
   }
@@ -233,16 +161,6 @@ export class DynamicEnvironment {
   private get identityProviderDemis(): IdentityProvider | undefined {
     const demisTenant = this.identityProviders?.filter(provider => provider.tenant === 'demis' && !provider.hasOwnProperty('clientId'));
     return demisTenant ? demisTenant[0] : undefined;
-  }
-
-  private get identityProviderIbm(): IdentityProvider | undefined {
-    const ibmTenant = this.identityProviders?.filter(provider => provider.tenant === 'ibm');
-    return ibmTenant ? ibmTenant[0] : undefined;
-  }
-
-  private get gematikIssuer(): string | undefined {
-    const gematikIssuer = this.issuersIbm?.filter(l => l.includes('gematik'));
-    return gematikIssuer ? gematikIssuer[0] : undefined;
   }
 
   private get identityProviderDemisPortal(): IdentityProvider | undefined {

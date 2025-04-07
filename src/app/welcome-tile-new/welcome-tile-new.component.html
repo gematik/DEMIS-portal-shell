@@ -8,11 +8,11 @@
            [attr.src]="config.logoImage.src"
            [attr.alt]="config.logoImage.alt" />
       <div id="tile-row-{{ config.id }}" class="tile-row">
-        <div id="tile-title-{{ config.id }}" class="tile-title">
-          <p>{{ config.titleTextRows.join(' ') }}</p>
-        </div>
+        <h2 id="tile-title-{{ config.id }}" class="tile-title">
+          {{ config.titleTextRows.join(' ') }}
+        </h2>
         <div id="tile-title-text-{{ config.id }}" class="tile-title-text">
-          <p>{{ config.contentParagraphs[0] }}</p>
+          {{ config.contentParagraphs[0] }}
         </div>
       </div>
       <mat-icon id="tile-icon_chevron-right-logo-{{ config.id }}" class="tile-icon_chevron-right">chevron_right

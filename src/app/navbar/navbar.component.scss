@@ -9,6 +9,27 @@
 }
 
 .app-navbar-demis {
+  //SubNav ("Krankheit melden",...)
+  .mat-mdc-tab-link {
+    &:hover {
+      background-color: #F9F9F9;
+    }
+  }
+
+  #btn-burger-menu-in-navbar {
+    .mat-mdc-button-persistent-ripple {
+      border-radius: 0;
+    }
+  }
+
+  //"abmelden"/"anmelden"
+  .btn-navbar-auth {
+    &:hover {
+      background-color: #F9F9F9;
+      border-radius: 0;
+    }
+  }
+
   .active-tab {
     border-bottom: 3px solid var(--color-demis-blue);
     border-radius: 0;
@@ -42,15 +63,24 @@
   padding-left: 16px;
   padding-right: 16px;
   height: 48px;
-  font-size: 22px;
   align-items: center;
   justify-content: center;
+  //Callout bold
+  font-size: 16px;
+  line-height: 21px;
+  font-weight: 700;
+  color: var(--color-primary);
 
   #img-demis-logo {
-    color: var(--color-demis-blue);
+    color: var(--color-primary);
     margin-right: 8px;
     height: 24px;
     width: auto;
+  }
+
+  &:hover {
+    background-color: #F9F9F9;
+    border-radius: 0;
   }
 }
 

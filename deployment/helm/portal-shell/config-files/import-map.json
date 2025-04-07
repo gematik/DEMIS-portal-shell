@@ -1,0 +1,3 @@
+{{- $imports := dict -}}
+{{- $_ := set $imports "imports" (.Values.config.importMap | required ".Values.config.importMap is required.") -}}
+{{- $imports | toPrettyJson -}}

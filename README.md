@@ -98,8 +98,8 @@ npm run build
 Alternatively, a Docker-based development environment is available in the repository under the folder `.dev`. All you need is to build the Docker Image and then run the `npm` commands:
 
 ```sh
-docker build -t portaldev -f .dev/Dockerfile .dev/
-docker run --rm -it -v .://project  portaldev
+docker build -t portal-shell -f .dev/Dockerfile .dev/
+docker run --rm -it -v .://project  portal-shell
 npm install
 npm run build
 ```
