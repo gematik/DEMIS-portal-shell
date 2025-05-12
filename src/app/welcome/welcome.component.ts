@@ -1,24 +1,26 @@
 /*
- Copyright (c) 2025 gematik GmbH
- Licensed under the EUPL, Version 1.2 or - as soon they will be approved by
- the European Commission - subsequent versions of the EUPL (the "Licence");
- You may not use this work except in compliance with the Licence.
-    You may obtain a copy of the Licence at:
-    https://joinup.ec.europa.eu/software/page/eupl
-        Unless required by applicable law or agreed to in writing, software
- distributed under the Licence is distributed on an "AS IS" basis,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the Licence for the specific language governing permissions and
- limitations under the Licence.
+    Copyright (c) 2025 gematik GmbH
+    Licensed under the EUPL, Version 1.2 or - as soon they will be approved by the
+    European Commission – subsequent versions of the EUPL (the "Licence").
+    You may not use this work except in compliance with the Licence.
+    You find a copy of the Licence in the "Licence" file or at
+    https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the Licence is distributed on an "AS IS" basis,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either expressed or implied.
+    In case of changes by gematik find details in the "Readme" file.
+    See the Licence for the specific language governing permissions and limitations under the Licence.
+    *******
+    For additional notes and disclaimer from gematik and in case of changes by gematik find details in the "Readme" file.
  */
 
 import { Component, computed, HostListener, inject, OnDestroy, OnInit, signal } from '@angular/core';
-import { AppConstants } from 'src/app/shared/app-constants';
+import { AppConstants, isNewDesignActivated, isNonNominalNotificationActivated } from 'src/app/shared/app-constants';
 import { Subject, takeUntil } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/services';
 import { MessageDialogService } from '@gematik/demis-portal-core-library';
-import { WelcomeTileComponent, WelcomeTileConfig } from '../welcome-tile/welcome-tile.component';
+import { WelcomeTileComponent } from '../welcome-tile/welcome-tile.component';
 import { NGXLogger } from 'ngx-logger';
 import { CommonModule } from '@angular/common';
 import { EqualHeightService } from 'src/app/shared/services/equal-height.service';
@@ -26,6 +28,9 @@ import { WelcomeTileNewComponent } from '../welcome-tile-new/welcome-tile-new.co
 import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
+import { UrlTree } from '@angular/router';
+import PATHOGEN_NON_NOMINAL = AppConstants.Titles.PATHOGEN_NON_NOMINAL;
+import DISEASE_NON_NOMINAL = AppConstants.Titles.DISEASE_NON_NOMINAL;
 
 declare type UserPermissions = {
   hasBedOccupencySenderRole: boolean;
@@ -53,9 +58,25 @@ const INITIAL_USER_INFORMATION: UserInfo = {
   },
 };
 
-declare type WelcomeTileInfo = {
+export declare type WelcomeTileInfo = {
   config: WelcomeTileConfig;
   renderingCondition?: boolean;
+};
+
+export declare type LogoImage = {
+  src: string;
+  alt: string;
+};
+
+export declare type WelcomeTileConfig = {
+  id: string;
+  titleTextRows: string[];
+  tooltip: string;
+  destinationRouterLink: string | UrlTree;
+  logoImage?: LogoImage;
+  contentParagraphs: string[];
+  buttonLabel?: string;
+  subTiles?: WelcomeTileInfo[];
 };
 
 @Component({
@@ -114,15 +135,21 @@ export class WelcomeComponent implements OnInit, OnDestroy {
     return this.userInfo().permissions.hasIgsDataSenderRole && this.userInfo().permissions.hasIgsNotificationSenderRole;
   }
 
-  get newDesignIsActivated() {
-    return environment?.featureFlags?.FEATURE_FLAG_NEW_STARTPAGE_DESIGN;
+  get showNonNominalTile() {
+    //TODO add check for user role
+    return this.isNonNominalNotificationActivated() && this.showPathogenTile;
+  }
+
+  get showNonNominalSubTiles() {
+    //TODO add check for user role
+    return this.showNonNominalTile;
   }
 
   get tiles(): WelcomeTileInfo[] {
     return [
       // About (Mehr über DEMIS erfahren)
       {
-        renderingCondition: !environment?.featureFlags?.FEATURE_FLAG_NEW_STARTPAGE_DESIGN,
+        renderingCondition: !isNewDesignActivated(),
         config: {
           id: 'about',
           titleTextRows: AppConstants.Titles.ABOUT,
@@ -141,11 +168,11 @@ export class WelcomeComponent implements OnInit, OnDestroy {
         renderingCondition: this.userInfo().permissions.hasDiseaseNotificationSenderRole,
         config: {
           id: 'disease',
-          titleTextRows: AppConstants.Titles.DISEASE,
+          titleTextRows: isNonNominalNotificationActivated() ? AppConstants.Titles.DISEASE_NEW : AppConstants.Titles.DISEASE,
           tooltip: AppConstants.Tooltips.CLICK_TO_REPORT,
           destinationRouterLink: `/${AppConstants.PathSegments.DISEASE_NOTIFICATION}`,
           logoImage: {
-            src: 'assets/images/hospitalisierung.png',
+            src: isNonNominalNotificationActivated() ? 'assets/images/disease-new.svg' : 'assets/images/hospitalisierung.png',
             alt: 'Logo der Erkrankungsmeldung',
           },
           contentParagraphs: [AppConstants.InfoTexts.DISEASE],
@@ -157,15 +184,52 @@ export class WelcomeComponent implements OnInit, OnDestroy {
         renderingCondition: this.showPathogenTile,
         config: {
           id: 'pathogen',
-          titleTextRows: AppConstants.Titles.PATHOGEN,
+          titleTextRows: isNonNominalNotificationActivated() ? AppConstants.Titles.PATHOGEN_NEW : AppConstants.Titles.PATHOGEN,
           tooltip: AppConstants.Tooltips.CLICK_TO_REPORT,
           destinationRouterLink: `/${AppConstants.PathSegments.PATHOGEN_NOTIFICATION}`,
           logoImage: {
-            src: 'assets/images/erregernachweis_mikroskop.svg',
+            src: isNonNominalNotificationActivated() ? 'assets/images/pathogen-new.svg' : 'assets/images/erregernachweis_mikroskop.svg',
             alt: 'Logo Erregernachweis melden',
           },
           contentParagraphs: [AppConstants.InfoTexts.PATHOGEN],
           buttonLabel: 'Melden',
+        },
+      },
+      // §7.3-er Meldungen
+      {
+        renderingCondition: this.showNonNominalTile,
+        config: {
+          id: 'non-nominal',
+          titleTextRows: AppConstants.Titles.NON_NOMINAL,
+          tooltip: AppConstants.Tooltips.CLICK_TO_OPEN,
+          destinationRouterLink: `/${AppConstants.PathSegments.PATHOGEN_NOTIFICATION}`,
+          logoImage: {
+            src: 'assets/images/non-nominal.svg',
+            alt: 'Logo Erregernachweis melden',
+          },
+          contentParagraphs: [AppConstants.InfoTexts.NON_NOMINAL],
+          subTiles: [
+            {
+              renderingCondition: this.showNonNominalSubTiles,
+              config: {
+                id: 'pathogen-non-nominal',
+                titleTextRows: PATHOGEN_NON_NOMINAL,
+                tooltip: AppConstants.Tooltips.CLICK_TO_REPORT,
+                destinationRouterLink: `/${AppConstants.PathSegments.PATHOGEN_NOTIFICATION}`,
+                contentParagraphs: [AppConstants.InfoTexts.PATHOGEN_NON_NOMINAL],
+              },
+            },
+            {
+              renderingCondition: this.showNonNominalSubTiles,
+              config: {
+                id: 'disease-non-nominal',
+                titleTextRows: DISEASE_NON_NOMINAL,
+                tooltip: AppConstants.Tooltips.CLICK_TO_REPORT,
+                destinationRouterLink: `/${AppConstants.PathSegments.DISEASE_NOTIFICATION}`,
+                contentParagraphs: [AppConstants.InfoTexts.DISEASE_NON_NOMINAL],
+              },
+            },
+          ],
         },
       },
       // Bed Occupancy (Bettenbelegung melden)
@@ -177,7 +241,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
           tooltip: AppConstants.Tooltips.CLICK_TO_REPORT,
           destinationRouterLink: `/${AppConstants.PathSegments.BED_OCCUPANCY}`,
           logoImage: {
-            src: 'assets/images/Krankenhaus-Bett.svg',
+            src: isNonNominalNotificationActivated() ? 'assets/images/bedoccupancy-new.svg' : 'assets/images/Krankenhaus-Bett.svg',
             alt: 'Logo der Bettenbelegung Meldung',
           },
           contentParagraphs: [AppConstants.InfoTexts.BED_OCCUPANCY],
@@ -189,14 +253,14 @@ export class WelcomeComponent implements OnInit, OnDestroy {
         renderingCondition: this.showIGSTile,
         config: {
           id: 'sequence-notification',
-          titleTextRows: this.newDesignIsActivated ? AppConstants.Titles.SEQUENCE_NOTIFICATION_NEW_DESIGN : AppConstants.Titles.SEQUENCE_NOTIFICATION,
+          titleTextRows: isNonNominalNotificationActivated() ? AppConstants.Titles.SEQUENCE_NOTIFICATION_NEW : AppConstants.Titles.SEQUENCE_NOTIFICATION,
           tooltip: AppConstants.Tooltips.UPLOAD_INFO,
           destinationRouterLink: `/${AppConstants.PathSegments.SEQUENCE_NOTIFICATION}`,
           logoImage: {
-            src: 'assets/images/IGS.svg',
-            alt: 'Logo für die Sequenz Übermittlung',
+            src: isNonNominalNotificationActivated() ? 'assets/images/igs-new.svg' : 'assets/images/IGS.svg',
+            alt: 'Logo der Bettenbelegung Meldung',
           },
-          contentParagraphs: this.newDesignIsActivated
+          contentParagraphs: isNewDesignActivated()
             ? [AppConstants.InfoTexts.SEQUENCE_NOTIFICATION_NEW_DESIGN]
             : [AppConstants.InfoTexts.SEQUENCE_NOTIFICATION],
           buttonLabel: 'Melden',
@@ -241,4 +305,6 @@ export class WelcomeComponent implements OnInit, OnDestroy {
 
   protected readonly environment = environment;
   protected readonly AppConstants = AppConstants;
+  protected readonly isNewDesignActivated = isNewDesignActivated;
+  protected readonly isNonNominalNotificationActivated = isNonNominalNotificationActivated;
 }

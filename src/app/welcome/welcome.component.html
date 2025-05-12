@@ -1,4 +1,4 @@
-@if (environment?.featureFlags?.FEATURE_FLAG_NEW_STARTPAGE_DESIGN) {
+@if (isNewDesignActivated()) {
   <div id="new-welcome-container" class="container">
     <div>
       <div id="welcome-texts-container">
@@ -19,8 +19,9 @@
     </div>
     <div id="welcome-tiles-container" class="row">
       @for (tile of tiles; track $index) {
-        @if ((tile.renderingCondition === undefined) || (!!tile.renderingCondition)) {
-          <app-welcome-tile-new class="column" id="welcome-tile-{{ tile.config.id }}" [config]="tile.config"
+        @if ((tile.renderingCondition === undefined) || tile.renderingCondition) {
+          <app-welcome-tile-new class="column" id="welcome-tile-{{ tile.config.id }}"
+                                [config]="tile.config"
                                 [animated]="true"
                                 (tileViewInitialized)="adjustTileContentHeights()"></app-welcome-tile-new>
         }
@@ -30,7 +31,7 @@
 } @else {
   <div id="{{ tileContainerId }}" class="container d-flex flex-md-row flex-column justify">
     @for (tile of tiles; track $index) {
-      @if ((tile.renderingCondition === undefined) || (!!tile.renderingCondition)) {
+      @if ((tile.renderingCondition === undefined) || tile.renderingCondition) {
         <app-welcome-tile id="welcome-tile-{{ tile.config.id }}" [config]="tile.config" [animated]="true"
                           (tileViewInitialized)="adjustTileContentHeights()"></app-welcome-tile>
       }

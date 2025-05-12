@@ -1,3 +1,5 @@
+@import 'src/styles/colors';
+
 .toolbar-spacer {
   flex: 1 1 auto;
 }
@@ -5,14 +7,13 @@
 .mat-toolbar {
   height: auto;
   //TODO: workaround: --mat-app-background-color: #faf9fd; is set explicitly and unset makes it white again/default which will be default in future
-  background-color: var(--color-demis-white);
+  background-color: $color-white;
 }
-
 .app-navbar-demis {
   //SubNav ("Krankheit melden",...)
   .mat-mdc-tab-link {
     &:hover {
-      background-color: #F9F9F9;
+      background-color: $color-neutral-lighter;
     }
   }
 
@@ -25,13 +26,13 @@
   //"abmelden"/"anmelden"
   .btn-navbar-auth {
     &:hover {
-      background-color: #F9F9F9;
+      background-color: $color-neutral-lighter;
       border-radius: 0;
     }
   }
 
   .active-tab {
-    border-bottom: 3px solid var(--color-demis-blue);
+    border-bottom: 3px solid $color-secondary-dark100;
     border-radius: 0;
     font-weight: bold;
   }
@@ -79,7 +80,7 @@
   }
 
   &:hover {
-    background-color: #F9F9F9;
+    background-color: $color-neutral-lighter;
     border-radius: 0;
   }
 }
