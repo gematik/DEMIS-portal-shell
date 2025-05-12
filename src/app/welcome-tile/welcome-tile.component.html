@@ -1,7 +1,9 @@
-<mat-card id="tile-card-{{ config.id }}" [ngClass]="{ 'tile-card': true, animated }" (click)="router.navigateByUrl(config.destinationRouterLink)"
-  [attr.title]="config.tooltip">
+<mat-card id="tile-card-{{ config.id }}" [ngClass]="{ 'tile-card': true, animated }"
+          (click)="router.navigateByUrl(config.destinationRouterLink)"
+          [attr.title]="config.tooltip">
   <mat-card-title id="tile-title-{{ config.id }}" class="tile-title">
-    <img mat-card-image id="tile-logo-{{ config.id }}" class="tile-logo" [attr.src]="config.logoImage.src" [attr.alt]="config.logoImage.alt" />
+    <img mat-card-image id="tile-logo-{{ config.id }}" class="tile-logo" [attr.src]="config.logoImage?.src"
+         [attr.alt]="config.logoImage?.alt" />
 
     <div id="tile-title-text-{{ config.id }}" class="tile-title-text">
       @for (titleText of config.titleTextRows; track titleText) {
@@ -13,7 +15,8 @@
   <mat-card-content id="tile-content-{{ config.id }}" class="tile-content">
     <div id="tile-content-paragraphs-{{ config.id }}" class="tile-content-paragraphs">
       @for (paragraphContent of config.contentParagraphs; track $index) {
-      <p id="tile-content-paragraph-{{ config.id }}-{{ $index }}" class="tile-content-paragraph">{{ paragraphContent }}</p>
+        <p id="tile-content-paragraph-{{ config.id }}-{{ $index }}"
+           class="tile-content-paragraph">{{ paragraphContent }}</p>
       }
     </div>
   </mat-card-content>

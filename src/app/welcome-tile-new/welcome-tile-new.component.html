@@ -1,23 +1,51 @@
 <div>
   <mat-card id="tile-card-{{ config.id }}"
-            [ngClass]="{ 'tile-card': true, animated }"
-            (click)="router.navigateByUrl(config.destinationRouterLink)"
+            [ngClass]="{ 'tile-card': true, 'animated': animated && !isExpanded() }"
+            (click)="handleTileClick()"
             [attr.title]="config.tooltip">
-    <div id="tile-content-{{ config.id }}" class="tile-content">
+    <div id="tile-content-{{ config.id }}" class="tile-content no-text-select">
       <img id="tile-logo-{{ config.id }}" class="tile-logo"
-           [attr.src]="config.logoImage.src"
-           [attr.alt]="config.logoImage.alt" />
+           [attr.src]="config?.logoImage.src"
+           [attr.alt]="config?.logoImage.alt"/>
       <div id="tile-row-{{ config.id }}" class="tile-row">
         <h2 id="tile-title-{{ config.id }}" class="tile-title">
           {{ config.titleTextRows.join(' ') }}
         </h2>
-        <div id="tile-title-text-{{ config.id }}" class="tile-title-text">
+        <p id="tile-title-text-{{ config.id }}" class="tile-title-text">
           {{ config.contentParagraphs[0] }}
-        </div>
+        </p>
       </div>
-      <mat-icon id="tile-icon_chevron-right-logo-{{ config.id }}" class="tile-icon_chevron-right">chevron_right
+      <mat-icon
+        id="tile-icon_{{ getIconType() }}-{{ config.id }}"
+        class="tile-icon">
+        {{ getIconName() }}
       </mat-icon>
     </div>
+    @if (isNonNominalNotificationActivated() && isTileExpandable() && isExpanded()) {
+      <div class="sub-tiles-container">
+        @for (subTile of config.subTiles; track $index) {
+          @if (this.subTile.renderingCondition) {
+            <button (click)="navigateTo(subTile.config.destinationRouterLink)"
+                    class="sub-tile-button"
+                    [title]="subTile.config.tooltip"
+                    id="sub-tile-button-{{ subTile.config.id }}">
+              <div class="tile-content">
+                <div class="tile-row">
+                  <h3 class="sub-tile-heading">
+                    {{ subTile.config.titleTextRows }}
+                  </h3>
+                  <p class="sub-tile-text">
+                    {{ subTile.config.contentParagraphs[0] }}
+                  </p>
+                </div>
+                <mat-icon id="tile-icon_chevron-right-logo-{{ subTile.config.id }}" class="tile-icon">chevron_right
+                </mat-icon>
+              </div>
+            </button>
+          }
+        }
+      </div>
+    }
   </mat-card>
 </div>
 

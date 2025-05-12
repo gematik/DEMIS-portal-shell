@@ -27,6 +27,10 @@ app-root,
   background-color: unset !important;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  color: $color-primary;
+}
+
 //TODO: moved here from pathogen; needed for all h2 spacing between e.g. Einrichtung and above text paragraph
 // needs to be fixed because it needs overrides at other places e.g. homepage/welcome-tile
 h2 {
@@ -67,7 +71,7 @@ app-side-navigation {
 .material-icons.md-48 {
   margin-top: 5px;
   margin-right: 5px;
-  color: #005eb8;
+  color: $color-primary;
 }
 
 // navbar styling - must stay here atm to work for other microfrontends
@@ -77,12 +81,14 @@ app-side-navigation {
   }
 }
 
+//<div class="app-navbar-demis mat-mdc-tab-link"><span "mdc-tab__content"><span class="mdc-tab__text-label">
+
 //moved here from bed-occupancy
 .mat-mdc-table {
   background-color: var(--color-demis-white) !important;
 }
 
-// Custom styles for the mdc-checkbox (unsets background-color, delets ruler, padding and hover-overlay)
+// Custom styles for the mdc-checkbox (unsets background-color, deletes ruler, padding and hover-overlay)
 .mat-mdc-form-field-type-checkbox {
   .mdc-text-field--filled {
     background-color: unset !important;
@@ -111,5 +117,71 @@ app-side-navigation {
 .mat-mdc-menu-content {
   .mat-mdc-menu-item {
     font-family: Verdana, sans-serif;
+  }
+}
+
+// Button Styles
+.btn {
+  padding-right: 14px;
+  padding-left: 14px;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 36px;
+
+  &.style {
+    border-radius: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+
+  &.paste {
+    padding: 8px 16px !important;
+    align-items: center;
+    cursor: pointer;
+    border: 1px $color-primary solid;
+  }
+
+  &.back[disabled] {
+    opacity: 0 !important;
+  }
+
+  &.forward {
+    margin-left: 10px;
+    border: 1px $color-primary solid;
+  }
+
+  &.color:hover {
+    background-color: #f1f4f4;
+  }
+
+  &.color {
+    background-color: transparent;
+    color: $color-primary !important;
+  }
+
+  &.dark--color {
+    background-color: $color-primary;
+    color: var(--color-white) !important;
+  }
+
+  &.dark--color:disabled {
+    background: var(--color-neutral-light);
+    color: var(--color-neutral-dark) !important;
+  }
+}
+
+.btn__icon {
+  &.margin--left {
+    margin-left: 12px;
+  }
+
+  &.margin--right {
+    margin-right: 12px;
+  }
+
+  &.rotate {
+    transform: rotate(-38deg);
+    margin-bottom: 5px;
   }
 }
