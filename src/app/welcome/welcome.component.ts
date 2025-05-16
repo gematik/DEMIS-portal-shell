@@ -172,7 +172,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
           tooltip: AppConstants.Tooltips.CLICK_TO_REPORT,
           destinationRouterLink: `/${AppConstants.PathSegments.DISEASE_NOTIFICATION}`,
           logoImage: {
-            src: isNonNominalNotificationActivated() ? 'assets/images/disease-new.svg' : 'assets/images/hospitalisierung.png',
+            src: isNewDesignActivated() ? 'assets/images/disease-new.svg' : 'assets/images/hospitalisierung.png',
             alt: 'Logo der Erkrankungsmeldung',
           },
           contentParagraphs: [AppConstants.InfoTexts.DISEASE],
@@ -188,7 +188,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
           tooltip: AppConstants.Tooltips.CLICK_TO_REPORT,
           destinationRouterLink: `/${AppConstants.PathSegments.PATHOGEN_NOTIFICATION}`,
           logoImage: {
-            src: isNonNominalNotificationActivated() ? 'assets/images/pathogen-new.svg' : 'assets/images/erregernachweis_mikroskop.svg',
+            src: isNewDesignActivated() ? 'assets/images/pathogen-new.svg' : 'assets/images/erregernachweis_mikroskop.svg',
             alt: 'Logo Erregernachweis melden',
           },
           contentParagraphs: [AppConstants.InfoTexts.PATHOGEN],
@@ -241,7 +241,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
           tooltip: AppConstants.Tooltips.CLICK_TO_REPORT,
           destinationRouterLink: `/${AppConstants.PathSegments.BED_OCCUPANCY}`,
           logoImage: {
-            src: isNonNominalNotificationActivated() ? 'assets/images/bedoccupancy-new.svg' : 'assets/images/Krankenhaus-Bett.svg',
+            src: isNewDesignActivated() ? 'assets/images/bedoccupancy-new.svg' : 'assets/images/Krankenhaus-Bett.svg',
             alt: 'Logo der Bettenbelegung Meldung',
           },
           contentParagraphs: [AppConstants.InfoTexts.BED_OCCUPANCY],
@@ -257,7 +257,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
           tooltip: AppConstants.Tooltips.UPLOAD_INFO,
           destinationRouterLink: `/${AppConstants.PathSegments.SEQUENCE_NOTIFICATION}`,
           logoImage: {
-            src: isNonNominalNotificationActivated() ? 'assets/images/igs-new.svg' : 'assets/images/IGS.svg',
+            src: isNewDesignActivated() ? 'assets/images/igs-new.svg' : 'assets/images/IGS.svg',
             alt: 'Logo der Bettenbelegung Meldung',
           },
           contentParagraphs: isNewDesignActivated()

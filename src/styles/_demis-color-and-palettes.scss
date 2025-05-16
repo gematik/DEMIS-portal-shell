@@ -2,8 +2,8 @@
 @import './colors';
 
 // deprecated, use _colors.scss instead
-:root{
-  --color-demis-blue: rgb(0, 94, 184);
+:root {
+  //--color-demis-blue: rgb(0, 94, 184);
   --color-demis-gray: rgb(145, 157, 157);
   --color-demis-white: rgb(255, 255, 255);
   --color-demis-black: rgb(0, 3, 3);
@@ -19,8 +19,6 @@
   --gem-demis-success-color: green;
 }
 
-// DEMIS-Blau: Pantone 300 C https://www.pantone.com/color-finder/300-C
-$color-demis-blue: var(--color-demis-blue);
 
 $color-demis-primary: var(--gem-demis-primary-color);
 
@@ -38,31 +36,31 @@ $color-demis-stroke: var(--color-demis-stroke);
 // Palette Generator: https://material.io/design/color/#tools-for-picking-colors
 
 $mat-demis-gray-palette: (
-  50:   #eaeded,
-  100:  #d1d4d4,
-  200:  #b3b8b8,
-  300:  $color-demis-gray,
-  400:  #788989,
-  500:  #5f7575,
-  600:  #546666,
-  700:  #455253,
-  800:  #374040,
-  900:  #272b2b,
+  50: #eaeded,
+  100: #d1d4d4,
+  200: #b3b8b8,
+  300: $color-demis-gray,
+  400: #788989,
+  500: #5f7575,
+  600: #546666,
+  700: #455253,
+  800: #374040,
+  900: #272b2b,
   A100: #d4d4d4,
   A200: #b3b8b8,
   A400: #788989,
   A700: #455253,
   contrast: (
-    50:   rgba($color-demis-black, .87),
-    100:  rgba($color-demis-black, .87),
-    200:  rgba($color-demis-black, .87),
-    300:  rgba($color-demis-black, .87),
-    400:  rgba($color-demis-black, .87),
-    500:  rgba($color-demis-black, .87),
-    600:  $color-demis-white,
-    700:  $color-demis-white,
-    800:  $color-demis-white,
-    900:  $color-demis-white,
+    50: rgba($color-demis-black, .87),
+    100: rgba($color-demis-black, .87),
+    200: rgba($color-demis-black, .87),
+    300: rgba($color-demis-black, .87),
+    400: rgba($color-demis-black, .87),
+    500: rgba($color-demis-black, .87),
+    600: $color-demis-white,
+    700: $color-demis-white,
+    800: $color-demis-white,
+    900: $color-demis-white,
     A100: rgba($color-demis-black, .87),
     A200: rgba($color-demis-black, .87),
     A400: rgba($color-demis-black, .87),
@@ -73,31 +71,31 @@ $mat-demis-gray-palette: (
 // #endregion DEMIS-Colors-and-Palettes
 
 $mat-demis-primary-palette: (
-  50:   #D1D9FF,
-  100:  #BDC8FF,
-  200:  #ADBBFF,
-  300:  #7A91FF,
-  400:  #4D6AFF,
-  500:  #022BF7,
-  600:  #0025DB,
-  700:  #001994,
-  800:  #000E52,
-  900:  #000624,
+  50: #D1D9FF,
+  100: #BDC8FF,
+  200: #ADBBFF,
+  300: #7A91FF,
+  400: #4D6AFF,
+  500: #022BF7,
+  600: #0025DB,
+  700: #001994,
+  800: #000E52,
+  900: #000624,
   A100: #b9dcf8,
   A200: #8cc6f4,
   A400: #3a9fed,
   A700: #0470ca,
   contrast: (
-    50:   rgba($color-demis-black, .87),
-    100:  rgba($color-demis-black, .87),
-    200:  rgba($color-demis-black, .87),
-    300:  rgba($color-demis-black, .87),
-    400:  rgba($color-demis-black, .87),
-    500:  rgba($color-demis-black, .87),
-    600:  $color-demis-white,
-    700:  $color-demis-white,
-    800:  $color-demis-white,
-    900:  $color-demis-white,
+    50: rgba($color-demis-black, .87),
+    100: rgba($color-demis-black, .87),
+    200: rgba($color-demis-black, .87),
+    300: rgba($color-demis-black, .87),
+    400: rgba($color-demis-black, .87),
+    500: rgba($color-demis-black, .87),
+    600: $color-demis-white,
+    700: $color-demis-white,
+    800: $color-demis-white,
+    900: $color-demis-white,
     A100: rgba($color-demis-black, .87),
     A200: rgba($color-demis-black, .87),
     A400: rgba($color-demis-black, .87),

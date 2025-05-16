@@ -9,6 +9,8 @@
 @import 'styles/colors';
 //#endregion GlobalImports
 
+$button-border-radius: 24px;
+
 
 :root {
   --two-column-length: 5;
@@ -120,16 +122,22 @@ app-side-navigation {
   }
 }
 
+app-paste-box {
+  div {
+    border-radius: 16px !important;
+  }
+}
+
 // Button Styles
 .btn {
-  padding-right: 14px;
-  padding-left: 14px;
+  padding-right: 14px !important;
+  padding-left: 14px !important;
   font-weight: 500;
   font-size: 15px;
   line-height: 36px;
 
   &.style {
-    border-radius: 0;
+    border-radius: 24px !important;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -184,4 +192,9 @@ app-side-navigation {
     transform: rotate(-38deg);
     margin-bottom: 5px;
   }
+}
+
+.mat-mdc-unelevated-button,
+.mat-mdc-outlined-button {
+  border-radius: $button-border-radius !important;
 }
