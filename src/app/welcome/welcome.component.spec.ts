@@ -34,8 +34,6 @@ describe('WelcomeComponent', () => {
   const tokenChangedSubject = new Subject<void>();
   const isAuthenticatedSubject = new BehaviorSubject(true);
 
-  (window as any)['config'] = TestSetup.CONFIG;
-
   const createComponent = () => {
     fixture = MockRender(WelcomeComponent);
     component = fixture.point.componentInstance;
@@ -57,96 +55,135 @@ describe('WelcomeComponent', () => {
       .mock(MatButtonModule)
       .provide({
         provide: AuthService,
-        useValue: { ...MockService(AuthService), $tokenChanged: tokenChangedSubject, $isAuthenticated: isAuthenticatedSubject } as AuthService,
+        useValue: {
+          ...MockService(AuthService),
+          $tokenChanged: tokenChangedSubject,
+          $isAuthenticated: isAuthenticatedSubject,
+        } as AuthService,
       })
       .provide({ provide: OidcSecurityService, useValue: MockService(OidcSecurityService) })
   );
-
-  it('should create', () => {
-    createComponent();
-    spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').and.returnValue(of(''));
-    expect(component).toBeTruthy();
-  });
-
-  TestSetup.JWT_ROLES.forEach(parameter => {
-    it(`check if role(s) ${parameter.roles.join(',')} shows tile ${parameter.tile}`, () => {
-      createComponent();
-      spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').and.returnValue(of(''));
-      fixture.point.injector.get(AuthService).$isAuthenticated = isAuthenticatedSubject;
-      spyOn(fixture.point.injector.get(AuthService), 'checkRole').and.callFake((role: string) => parameter.roles.includes(role));
-      fixture.point.injector.get(AuthService).$tokenChanged.next();
-      ngMocks.flushTestBed();
-      createComponent();
-      const tile = getTile(parameter.tile);
-      expect(!!tile).toBeTruthy();
+  describe('Tests for tiles in old design', () => {
+    beforeEach(() => {
+      let config = TestSetup.CONFIG;
+      config.featureFlags.FEATURE_FLAG_NEW_STARTPAGE_DESIGN = false;
+      (window as any)['config'] = config;
     });
 
-    it(`${!parameter.doNegativeTest ? 'deactivated -- ' : ''}check if tile ${parameter.tile} is removed if role(s) ${parameter.roles.join(
-      ','
-    )} is missing`, () => {
-      if (parameter.doNegativeTest) {
+    it('should call adjustTileContentHeights on window resize', () => {
+      createComponent();
+      const contentContainers = document.getElementById(component.tileContainerId)?.getElementsByClassName('tile-content-paragraphs');
+      expect(contentContainers).toBeTruthy();
+      const adjustElementParentHeightsSpy = spyOn(TestBed.inject(EqualHeightService), 'adjustElementParentHeights');
+      window.dispatchEvent(new Event('resize'));
+      expect(adjustElementParentHeightsSpy).toHaveBeenCalledWith(contentContainers as HTMLCollectionOf<Element>);
+    });
+
+    it('should silently do nothing on window resize, when there are no tiles to adjust', () => {
+      createComponent();
+      const contentContainers = document.getElementById(component.tileContainerId)?.getElementsByTagName('app-welcome-tile') as HTMLCollectionOf<Element>;
+      for (let index = contentContainers.length - 1; index >= 0; index--) {
+        contentContainers[index].parentNode?.removeChild(contentContainers[index]);
+      }
+      const adjustElementParentHeightsSpy = spyOn(TestBed.inject(EqualHeightService), 'adjustElementParentHeights');
+      window.dispatchEvent(new Event('resize'));
+      expect(adjustElementParentHeightsSpy).not.toHaveBeenCalled();
+    });
+    it('should use correct logo paths old', () => {
+      createComponent();
+      console.log('TestSetup.CONFIG:', TestSetup.CONFIG);
+      const pathogenTile = component.tiles.find(tile => tile.config.id === 'pathogen');
+      expect(pathogenTile?.config.logoImage?.src).toBe('assets/images/erregernachweis_mikroskop.svg');
+
+      const bedOccupancyTile = component.tiles.find(tile => tile.config.id === 'bed-occupancy');
+      expect(bedOccupancyTile?.config.logoImage?.src).toBe('assets/images/Krankenhaus-Bett.svg');
+
+      const diseaseTile = component.tiles.find(tile => tile.config.id === 'disease');
+      expect(diseaseTile?.config.logoImage?.src).toBe('assets/images/hospitalisierung.png');
+    });
+  });
+  describe('Tests for tiles in new design', () => {
+    beforeEach(() => {
+      let config = TestSetup.CONFIG;
+      config.featureFlags.FEATURE_FLAG_NEW_STARTPAGE_DESIGN = true;
+      (window as any)['config'] = config;
+    });
+
+    it('should create', () => {
+      createComponent();
+      spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').and.returnValue(of(''));
+      expect(component).toBeTruthy();
+    });
+    it('should use correct logo paths', () => {
+      createComponent();
+      const pathogenTile = component.tiles.find(tile => tile.config.id === 'pathogen');
+      expect(pathogenTile?.config.logoImage?.src).toBe('assets/images/pathogen-new.svg');
+
+      const bedOccupancyTile = component.tiles.find(tile => tile.config.id === 'bed-occupancy');
+      expect(bedOccupancyTile?.config.logoImage?.src).toBe('assets/images/bedoccupancy-new.svg');
+
+      const diseaseTile = component.tiles.find(tile => tile.config.id === 'disease');
+      expect(diseaseTile?.config.logoImage?.src).toBe('assets/images/disease-new.svg');
+    });
+    TestSetup.JWT_ROLES.forEach(parameter => {
+      it(`check if role(s) ${parameter.roles.join(',')} shows tile ${parameter.tile}`, () => {
         createComponent();
         spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').and.returnValue(of(''));
-        spyOn(fixture.point.injector.get(AuthService), 'checkRole').and.returnValue(false);
+        fixture.point.injector.get(AuthService).$isAuthenticated = isAuthenticatedSubject;
+        spyOn(fixture.point.injector.get(AuthService), 'checkRole').and.callFake((role: string) => parameter.roles.includes(role));
         fixture.point.injector.get(AuthService).$tokenChanged.next();
         ngMocks.flushTestBed();
         createComponent();
         const tile = getTile(parameter.tile);
-        expect(!!tile).toBeFalsy();
-      }
-    });
-  });
+        expect(!!tile).toBeTruthy();
+      });
 
-  ['igs-sequence-data-sender', 'igs-sequence-data-sender-fasta-only'].forEach(presentRole => {
-    it(`Should show title welcome-tile-sequence-notification if only ${presentRole} is present`, () => {
+      it(`${!parameter.doNegativeTest ? 'deactivated -- ' : ''}check if tile ${parameter.tile} is removed if role(s) ${parameter.roles.join(
+        ','
+      )} is missing`, () => {
+        if (parameter.doNegativeTest) {
+          createComponent();
+          spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').and.returnValue(of(''));
+          spyOn(fixture.point.injector.get(AuthService), 'checkRole').and.returnValue(false);
+          fixture.point.injector.get(AuthService).$tokenChanged.next();
+          ngMocks.flushTestBed();
+          createComponent();
+          const tile = getTile(parameter.tile);
+          expect(!!tile).toBeFalsy();
+        }
+      });
+    });
+
+    ['igs-sequence-data-sender', 'igs-sequence-data-sender-fasta-only'].forEach(presentRole => {
+      it(`Should show title welcome-tile-sequence-notification if only ${presentRole} is present`, () => {
+        createComponent();
+        spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').and.returnValue(of(''));
+        fixture.point.injector.get(AuthService).$isAuthenticated = isAuthenticatedSubject;
+        spyOn(fixture.point.injector.get(AuthService), 'checkRole').and.callFake(
+          (role: string) => presentRole === role || 'igs-notification-data-sender' === role
+        );
+        fixture.point.injector.get(AuthService).$tokenChanged.next();
+        ngMocks.flushTestBed();
+        createComponent();
+        const tile = getTile(`welcome-tile-sequence-notification`);
+        expect(!!tile).toBeTruthy();
+      });
+    });
+    it('should check portal config when there is a PORTAL_CONFIG_ERROR in session storage', () => {
+      spyOn(sessionStorage, 'getItem').and.callFake((key: string) => {
+        if (key === 'PORTAL_CONFIG_ERROR') {
+          return 'something went wrong';
+        }
+        throw new Error('no key');
+      });
       createComponent();
-      spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').and.returnValue(of(''));
-      fixture.point.injector.get(AuthService).$isAuthenticated = isAuthenticatedSubject;
-      spyOn(fixture.point.injector.get(AuthService), 'checkRole').and.callFake(
-        (role: string) => presentRole === role || 'igs-notification-data-sender' === role
+      expect(errorSpy.calls.count()).withContext('should have been called once').toBe(1);
+      const args = errorSpy.calls.argsFor(0);
+      expect(args[0].errorTitle()).toBe('Fehler beim Laden der Konfiguration');
+      expect(args[0].errors().length).toBe(1);
+      expect(args[0].errors()[0].message).toBe(
+        'Achtung: Die Konfiguration konnte nicht geladen werden. Bitte die Anwendung neu starten. Falls der Fehler weiterhin auftritt, kontaktieren Sie bitte den Support.'
       );
-      fixture.point.injector.get(AuthService).$tokenChanged.next();
-      ngMocks.flushTestBed();
-      createComponent();
-      const tile = getTile(`welcome-tile-sequence-notification`);
-      expect(!!tile).toBeTruthy();
     });
-  });
-
-  it('should call adjustTileContentHeights on window resize', () => {
-    createComponent();
-    const contentContainers = document.getElementById(component.tileContainerId)?.getElementsByClassName('tile-content-paragraphs');
-    expect(contentContainers).toBeTruthy();
-    const adjustElementParentHeightsSpy = spyOn(TestBed.inject(EqualHeightService), 'adjustElementParentHeights');
-    window.dispatchEvent(new Event('resize'));
-    expect(adjustElementParentHeightsSpy).toHaveBeenCalledWith(contentContainers as HTMLCollectionOf<Element>);
-  });
-
-  it('should silently do nothing on window resize, when there are no tiles to adjust', () => {
-    createComponent();
-    const contentContainers = document.getElementById(component.tileContainerId)?.getElementsByTagName('app-welcome-tile') as HTMLCollectionOf<Element>;
-    for (let index = contentContainers.length - 1; index >= 0; index--) {
-      contentContainers[index].parentNode?.removeChild(contentContainers[index]);
-    }
-    const adjustElementParentHeightsSpy = spyOn(TestBed.inject(EqualHeightService), 'adjustElementParentHeights');
-    window.dispatchEvent(new Event('resize'));
-    expect(adjustElementParentHeightsSpy).not.toHaveBeenCalled();
-  });
-
-  it('should check portal config when there is a PORTAL_CONFIG_ERROR in session storage', () => {
-    spyOn(sessionStorage, 'getItem').and.callFake((key: string) => {
-      if (key === 'PORTAL_CONFIG_ERROR') {
-        return 'something went wrong';
-      }
-      throw new Error('no key');
-    });
-    createComponent();
-    expect(errorSpy.calls.count()).withContext('should have been called once').toBe(1);
-    const args = errorSpy.calls.argsFor(0);
-    expect(args[0].errorTitle()).toBe('Fehler beim Laden der Konfiguration');
-    expect(args[0].errors().length).toBe(1);
-    expect(args[0].errors()[0].message).toBe(
-      'Achtung: Die Konfiguration konnte nicht geladen werden. Bitte die Anwendung neu starten. Falls der Fehler weiterhin auftritt, kontaktieren Sie bitte den Support.'
-    );
   });
 });

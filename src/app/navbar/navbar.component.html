@@ -10,15 +10,15 @@
   </button>
   <!-- #endregion PRODUCT LOGO -->
 
-  <mat-divider [vertical]="true" class="vertical-section-divider"></mat-divider>
-
   <!-- #region NAV BAR -->
   <nav mat-tab-nav-bar class="navbar-tab-group" [tabPanel]="tabPanel">
-    <a id="a-to-homepage" [class.active-tab]="activeTab === C.Tabs.HOME"
-       [class.inactive-tab]="activeTab !== C.Tabs.HOME"
-       mat-tab-link routerLink="./" routerLinkActive="active">
-      {{ C.Labels.START_PAGE_LINK }}
-    </a>
+    @if(isLoggedIn()){
+      <a id="a-to-homepage" [class.active-tab]="activeTab === C.Tabs.HOME"
+         [class.inactive-tab]="activeTab !== C.Tabs.HOME"
+         mat-tab-link routerLink="./" routerLinkActive="active">
+        {{ C.Labels.START_PAGE_LINK }}
+      </a>
+    }
 
     @if (hasDiseaseNotificationSenderRole) {
       <a id="a-to-disease" [class.active-tab]="activeTab === C.PathSegments.DISEASE_NOTIFICATION"

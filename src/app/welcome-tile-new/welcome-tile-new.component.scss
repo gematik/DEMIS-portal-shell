@@ -54,7 +54,7 @@ $breakpoint-screen: 768px;
 }
 
 .tile-title {
-  color: var(--gem-demis-primary-color);
+  color: var(--color-primary);
   font-weight: 700;
   margin-bottom: 5px;
   padding-top: 0;
@@ -74,7 +74,7 @@ $breakpoint-screen: 768px;
 }
 
 .tile-icon {
-  color: var(--gem-demis-primary-color);
+  color: var(--color-primary);
   align-self: center;
   width: 48px;
   height: 48px;
@@ -114,7 +114,7 @@ $breakpoint-screen: 768px;
 }
 
 .sub-tile-heading {
-  color: var(--gem-demis-primary-color);
+  color: var(--color-primary);
   font-size: 15px;
   font-style: normal;
   font-weight: 700;

@@ -5,50 +5,39 @@
 }
 
 .mat-toolbar {
-  height: auto;
   //TODO: workaround: --mat-app-background-color: #faf9fd; is set explicitly and unset makes it white again/default which will be default in future
   background-color: $color-white;
 }
-.app-navbar-demis {
-  //SubNav ("Krankheit melden",...)
-  .mat-mdc-tab-link {
+
+.navbar-tab-group {
+  a {
+    font-family: Verdana, sans-serif;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+
     &:hover {
       background-color: $color-neutral-lighter;
     }
   }
 
-  #btn-burger-menu-in-navbar {
-    .mat-mdc-button-persistent-ripple {
-      border-radius: 0;
-    }
-  }
 
   //"abmelden"/"anmelden"
   .btn-navbar-auth {
+    font-size: 17px;
+
     &:hover {
       background-color: $color-neutral-lighter;
-      border-radius: 0;
     }
   }
 
   .active-tab {
-    border-bottom: 3px solid $color-secondary-dark100;
-    border-radius: 0;
     font-weight: bold;
   }
 
   .inactive-tab {
     border-bottom: 3px solid transparent;
-    border-radius: 0;
-  }
-
-  .vertical-section-divider {
-    border-right-color: var(--color-demis-stroke);
-    border-right-width: 1px;
-    border-right-style: solid;
-    height: 40px;
-    margin-left: 32px;
-    margin-right: 32px;
   }
 }
 
@@ -63,25 +52,26 @@
   cursor: pointer;
   padding-left: 16px;
   padding-right: 16px;
-  height: 48px;
+  height: 55px;
   align-items: center;
   justify-content: center;
   //Callout bold
-  font-size: 16px;
-  line-height: 21px;
+  font-size: 28px;
+  line-height: 34px;
   font-weight: 700;
-  color: var(--color-primary);
+  color: var(--color-demis-blue);
 
   #img-demis-logo {
-    color: var(--color-primary);
+    color: var(--color-demis-blue);
     margin-right: 8px;
-    height: 24px;
-    width: auto;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    height: 45px;
+    width: 45px;
   }
 
   &:hover {
     background-color: $color-neutral-lighter;
-    border-radius: 0;
   }
 }
 
