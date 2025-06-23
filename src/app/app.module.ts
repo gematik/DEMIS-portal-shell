@@ -53,6 +53,7 @@ import { KcStorageService } from 'src/app/services/kc-storage.service';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import { WelcomeTileComponent } from './welcome-tile/welcome-tile.component';
 import { NgOptimizedImage } from '@angular/common';
+import { InfoBannerSectionComponent } from './info-banner-section/info-banner-section.component';
 
 export function initIconLoaderService(iconLoaderService: IconLoaderService) {
   return (): Promise<void> => {
@@ -101,6 +102,7 @@ const authFactory = (configService: KcConfigService) => {
     WelcomeTileComponent,
     MaxHeightContentContainerComponent,
     NgOptimizedImage,
+    InfoBannerSectionComponent,
   ],
   providers: [
     OidcSecurityService,
@@ -112,7 +114,7 @@ const authFactory = (configService: KcConfigService) => {
     { provide: MAT_DATE_LOCALE, useValue: LOCALE_ID_DE },
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
-      useValue: { appearance: 'fill' },
+      useValue: { appearance: 'outline' },
     },
     {
       provide: HTTP_INTERCEPTORS,

@@ -1,0 +1,20 @@
+@if (stageIndicatorBannerConfig) {
+<div id="demis-portal-banner-section-stage-indicator" class="banner-section banner-section-stage-indicator">
+  <div id="demis-portal-banner-list-stage-indicator" class="banner-list">
+    <app-info-banner-content [config]="stageIndicatorBannerConfig"></app-info-banner-content>
+  </div>
+</div>
+}
+
+@if (infoBannerConfigs.length > 0) {
+<div id="demis-portal-banner-section-general" class="banner-section banner-section-{{ compoundType }}">
+  <div id="demis-portal-banner-list-general" class="banner-list">
+    @for (config of infoBannerConfigs; track config.id; let first = $first) {
+    @if (!first) {
+    <mat-divider></mat-divider>
+    }
+    <app-info-banner-content [config]="config"></app-info-banner-content>
+    }
+  </div>
+</div>
+}

@@ -1,0 +1,31 @@
+<div id="demis-portal-banner-container-{{ bannerId }}" class="banner-container">
+  <div id="demis-portal-banner-content-wrapper-{{ bannerId }}" class="banner-content-wrapper">
+    <div id="demis-portal-banner-icon-wrapper-{{ bannerId }}" class="banner-icon-wrapper">
+      <mat-icon id="demis-portal-banner-icon-{{ bannerId }}" class="banner-icon banner-icon-{{ bannerType }}">
+        {{ bannerIcon }}
+      </mat-icon>
+    </div>
+
+    <div id="demis-portal-banner-{{ bannerId }}" class="banner-content" [innerHTML]="bannerContent"></div>
+  </div>
+
+  @if (hasActions) {
+  <div id="demis-portal-banner-action-bar-wrapper-{{ bannerId }}" class="banner-action-bar-wrapper">
+    <div id="demis-portal-banner-action-bar-{{ bannerId }}" class="banner-action-bar">
+      @if (moreInfoUrl) {
+      <a mat-button id="demis-portal-banner-more-btn-{{ bannerId }}" class="banner-action-btn" target="_blank"
+        rel="noopener noreferrer" [href]="moreInfoUrl">
+        <span>Mehr erfahren</span>
+      </a>
+      }
+
+      @if(isClosable) {
+      <button mat-button id="demis-portal-banner-close-btn-{{ bannerId }}" class="banner-action-btn" type="button"
+        (click)="onCloseBanner()">
+        <span>Schließen</span>
+      </button>
+      }
+    </div>
+  </div>
+  }
+</div>

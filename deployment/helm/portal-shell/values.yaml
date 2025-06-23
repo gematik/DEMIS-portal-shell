@@ -42,7 +42,29 @@ config:
     pathogen: /api/ng/notification/pathogen
     disease: /api/ng/notification/disease
   files: {}
-  featureFlags: {}
+  featureFlags:
+    FEATURE_FLAG_PORTAL_INFOBANNER: false
+  ## Information Banners to be shown above the navigation bar in the portal
+  ## 
+  ## E.g.
+  ## infoBanners:
+  ##   - id         # [required]  string;              UUID of the banner
+  ##     type       # [required]  string;              either 'info' or 'warning'
+  ##     content    # [required]  string;              the information content as markdown
+  ##     shownIn    # [optional]  string | string[];   either 'all' or 'shell' or an array of a combination of members of the enum AppConstants.PathSegments; default is 'all'
+  ##     startsAt   # [optional]  string;              datetime as ISO String (in the format YYYY-MM-DDThh:mm:ssZ); defines the date and time the shell starts to show the banner
+  ##     endsAt     # [optional]  string;              datetime as ISO String (in the format YYYY-MM-DDThh:mm:ssZ); defines the date and time (inclusive) the shell ends to show the banner
+  ##     moreInfo   # [optional]  string;              a web link to more information, triggers the "more info" button when set
+  ##     closable   # [optional]  boolean;             whether the banner can be closed by the user, default is true
+  infoBanners: []
+  ## Show a visual indicator in the DEMIS portal on what stage the user is currently working on
+  ##
+  ## E.g.
+  ## stageIndicator:
+  ##   content            # [required]  string;  the content of the stage indicator as markdown
+  ##   moreInfo           # [optional]  string;  a web link to more information, triggers the "more info" button when set
+  ##   demisHomeLogoFile  # [optional]  string;  the file name of the DEMIS logo to be shown on the home button in the navbar; default is 'DEMIS.svg'
+  stageIndicator: {}
   ngxLoggerConfig:
     level: 1
     disableConsoleLogging: false

@@ -25,6 +25,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { AuthService } from './services/auth.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { AppConstants, isNewDesignActivated } from './shared/app-constants';
+import { NavigationStateStore } from './services/navigation-state.service';
 
 @Component({
   selector: 'app-root',
@@ -47,6 +48,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private readonly router = inject(Router);
   private readonly unsubscriber = new Subject<void>();
   isActiveTabHome: WritableSignal<boolean> = signal(false);
+  private readonly navigationStateStore = inject(NavigationStateStore);
 
   constructor() {
     // "initLogger()" is used to instantiate a singleton object of NgxLogger
@@ -59,6 +61,7 @@ export class AppComponent implements OnInit, OnDestroy {
         takeUntil(this.unsubscriber)
       )
       .subscribe(routerEvent => {
+        this.navigationStateStore.setLastNavigationEnd(routerEvent);
         const activeTab = this.router.routerState.snapshot.url.substring(1);
         this.isActiveTabHome.set(activeTab.includes(AppConstants.Tabs.HOME));
       });
@@ -73,6 +76,7 @@ export class AppComponent implements OnInit, OnDestroy {
     } else {
       this.initializeKeycloakAuthorization();
     }
+    this.logger.debug('AppComponent initialized with the following environment', environment);
   }
 
   ngOnDestroy() {

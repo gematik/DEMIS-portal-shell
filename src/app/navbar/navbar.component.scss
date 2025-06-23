@@ -22,6 +22,26 @@
     }
   }
 
+  #btn-non-nominal {
+    height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 21px;
+    padding-top: 3px;
+    font-size: 17px;
+  }
+
+  .mat-icon {
+    font-size: 24px;
+    margin-bottom: 8px;
+  }
+
+  #btn-burger-menu-in-navbar {
+    .mat-mdc-button-persistent-ripple {
+      border-radius: 0;
+    }
+  }
 
   //"abmelden"/"anmelden"
   .btn-navbar-auth {
@@ -50,24 +70,18 @@
 #home-button {
   display: inline-flex;
   cursor: pointer;
-  padding-left: 16px;
-  padding-right: 16px;
+  padding-left: 4px;
+  padding-right: 4px;
   height: 55px;
   align-items: center;
   justify-content: center;
   //Callout bold
-  font-size: 28px;
   line-height: 34px;
-  font-weight: 700;
-  color: var(--color-demis-blue);
 
   #img-demis-logo {
-    color: var(--color-demis-blue);
-    margin-right: 8px;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    height: 45px;
-    width: 45px;
+    margin: 0;
+    margin-top: 14px;
+    height: 48px;
   }
 
   &:hover {

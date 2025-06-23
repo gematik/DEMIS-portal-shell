@@ -14,36 +14,43 @@
     For additional notes and disclaimer from gematik and in case of changes by gematik find details in the "Readme" file.
  */
 
+import { AppConstants } from '../app/shared/app-constants';
+
 export class TestSetup {
   static CONFIG = {
     featureFlags: {
       CONFIG_TOKEN_INJECTION_ENABLED: true,
       FEATURE_FLAG_NEW_STARTPAGE_DESIGN: true,
       FEATURE_FLAG_NON_NOMINAL_NOTIFICATION: true,
+      FEATURE_FLAG_PORTAL_INFOBANNER: true,
     },
   };
 
   static JWT_ROLES = [
     {
-      roles: ['bed-occupancy-sender'],
+      roles: [AppConstants.Roles.BED_OCCUPANCY_SENDER],
       link: 'a-to-bed-occupancy',
       tile: 'welcome-tile-bed-occupancy',
       doNegativeTest: true,
     },
     {
-      roles: ['pathogen-notification-sender'],
+      roles: [AppConstants.Roles.PATHOGEN_NOTIFICATION_SENDER],
       link: 'a-to-pathogen',
       tile: 'welcome-tile-pathogen',
       doNegativeTest: true,
     },
     {
-      roles: ['disease-notification-sender'],
+      roles: [AppConstants.Roles.DISEASE_NOTIFICATION_SENDER],
       link: 'a-to-disease',
       tile: 'welcome-tile-disease',
       doNegativeTest: true,
     },
     {
-      roles: ['igs-sequence-data-sender', 'igs-sequence-data-sender-fasta-only', 'igs-notification-data-sender'],
+      roles: [
+        AppConstants.Roles.IGS_SEQUENCE_DATA_SENDER,
+        AppConstants.Roles.IGS_NOTIFICATION_DATA_SENDER_FASTA_ONLY,
+        AppConstants.Roles.IGS_NOTIFICATION_DATA_SENDER,
+      ],
       link: 'a-to-sequence-notification',
       tile: 'welcome-tile-sequence-notification',
       doNegativeTest: true,

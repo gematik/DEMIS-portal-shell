@@ -48,7 +48,7 @@ const protectedRoutes: Routes = [
   {
     path: AppConstants.PathSegments.BED_OCCUPANCY,
     canActivate: [kcAuthGuard, roleGuard],
-    data: { role: 'bed-occupancy-sender' },
+    data: { role: AppConstants.Roles.BED_OCCUPANCY_SENDER },
     children: [
       {
         path: '**',
@@ -60,7 +60,19 @@ const protectedRoutes: Routes = [
   {
     path: AppConstants.PathSegments.PATHOGEN_NOTIFICATION,
     canActivate: [kcAuthGuard, roleGuard],
-    data: { role: 'pathogen-notification-sender' },
+    data: { role: AppConstants.Roles.PATHOGEN_NOTIFICATION_SENDER },
+    children: [
+      {
+        path: '**',
+        loadChildren: () => import('src/app/spa-host/spa-host.module').then(m => m.SpaHostModule),
+        data: { app: 'notification-portal-mf-pathogen' },
+      },
+    ],
+  },
+  {
+    path: AppConstants.PathSegments.PATHOGEN_NOTIFICATION_NON_NOMINAL,
+    canActivate: [kcAuthGuard, roleGuard],
+    data: { role: AppConstants.Roles.PATHOGEN_NOTIFICATION_NON_NOMINAL_SENDER },
     children: [
       {
         path: '**',
@@ -72,7 +84,19 @@ const protectedRoutes: Routes = [
   {
     path: AppConstants.PathSegments.DISEASE_NOTIFICATION,
     canActivate: [kcAuthGuard, roleGuard],
-    data: { role: 'disease-notification-sender' },
+    data: { role: AppConstants.Roles.DISEASE_NOTIFICATION_SENDER },
+    children: [
+      {
+        path: '**',
+        loadChildren: () => import('src/app/spa-host/spa-host.module').then(m => m.SpaHostModule),
+        data: { app: 'notification-portal-mf-disease' },
+      },
+    ],
+  },
+  {
+    path: AppConstants.PathSegments.DISEASE_NOTIFICATION_NON_NOMINAL,
+    canActivate: [kcAuthGuard, roleGuard],
+    data: { role: AppConstants.Roles.DISEASE_NOTIFICATION_NON_NOMINAL_SENDER },
     children: [
       {
         path: '**',
@@ -84,7 +108,7 @@ const protectedRoutes: Routes = [
   {
     path: AppConstants.PathSegments.SEQUENCE_NOTIFICATION,
     canActivate: [kcAuthGuard, roleGuard],
-    data: { role: 'igs-notification-data-sender' },
+    data: { role: AppConstants.Roles.IGS_NOTIFICATION_DATA_SENDER },
     children: [
       {
         path: '**',
