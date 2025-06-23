@@ -1,6 +1,6 @@
 {
   "name": "portal-shell",
-  "version": "1.0.8-snapshot",
+  "version": "1.2.5-snapshot",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -30,10 +30,12 @@
     "@angular/platform-browser-dynamic": "18.2.13",
     "@angular/router": "18.2.13",
     "@auth0/angular-jwt": "5.2.0",
-    "@gematik/demis-portal-core-library": "1.3.1",
+    "@gematik/demis-portal-core-library": "1.3.6",
+    "@ngrx/signals": "18.1.1",
     "angular-auth-oidc-client": "18.0.1",
     "bootstrap": "5.3.3",
     "import-map-overrides": "3.1.1",
+    "marked": "15.0.12",
     "material-icons": "1.13.14",
     "ngx-logger": "5.0.12",
     "ngx-toastr": "19.0.0",

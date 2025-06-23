@@ -15,14 +15,14 @@
  */
 
 import { Component, inject, Input, OnDestroy, OnInit, Signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router } from '@angular/router';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { filter, Subject, takeUntil } from 'rxjs';
 import { AuthService } from 'src/app/services';
-import { AppConstants } from 'src/app/shared/app-constants';
+import { AppConstants, isNonNominalNotificationActivated } from 'src/app/shared/app-constants';
 import { environment } from 'src/environments/environment';
 import { PackageJsonService } from '../services/package-json.service';
-import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-navbar',
@@ -44,6 +44,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
   showPathogenLinks: boolean = false;
   hasIgsDataSenderRole: boolean = false;
   hasIgsNotificationSenderRole: boolean = false;
+  // Nonnominal users always have both roles so there is no need to distinguish between pathogen and disease. Same goes for welcome tile
+  isNonNominalTabActive: boolean = false;
+  showNonNominalLinks: boolean = false;
 
   readonly packageJson = inject(PackageJsonService);
   private readonly oidcSecurityService = inject(OidcSecurityService);
@@ -57,9 +60,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
         filter(event => event instanceof NavigationEnd),
         takeUntil(this.unsubscriber)
       )
-      .subscribe(routerEvent => {
+      .subscribe(() => {
         this.activeTab = this.router.routerState.snapshot.url.substring(1);
-        this.isPathogenTabActive = this.activeTab.includes(this.C.Tabs.PATHOGEN_TEST_RESULTS);
+        this.isPathogenTabActive = this.activeTab.includes(this.C.Tabs.PATHOGEN_TEST_RESULTS) && !this.activeTab.includes(this.C.PathSegments.NON_NOMINAL);
+        this.isNonNominalTabActive = this.activeTab.includes(this.C.PathSegments.NON_NOMINAL);
       });
     this.isLoggedIn = toSignal(this.ssoAuthService.$isAuthenticated, { initialValue: false });
     this.ssoAuthService.$tokenChanged.pipe(takeUntil(this.unsubscriber)).subscribe(() => {
@@ -69,17 +73,38 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.setRoleControl();
   }
 
+  get FEATURE_FLAG_PORTAL_INFOBANNER() {
+    return !!environment.featureFlags?.FEATURE_FLAG_PORTAL_INFOBANNER;
+  }
+
+  navigateToDiseaseNonNominal() {
+    this.router.navigateByUrl('/disease-notification/7_3/non-nominal');
+  }
+
+  navigateToDisease() {
+    this.router.navigateByUrl('/disease-notification');
+  }
+
   get version() {
     return this.packageJson.version;
   }
 
+  get demisLogoUrl() {
+    // Use the environment configuration to get the DEMIS logo URL
+    return `assets/images/${environment.stageIndicator?.demisHomeLogoFile || 'DEMIS.svg'}`;
+  }
+
   setRoleControl() {
-    this.hasBedOccupencySenderRole = this.ssoAuthService.checkRole('bed-occupancy-sender');
-    this.hasDiseaseNotificationSenderRole = this.ssoAuthService.checkRole('disease-notification-sender');
-    this.showPathogenLinks = this.ssoAuthService.checkRole('pathogen-notification-sender');
+    this.hasBedOccupencySenderRole = this.ssoAuthService.checkRole(AppConstants.Roles.BED_OCCUPANCY_SENDER);
+    this.hasDiseaseNotificationSenderRole = this.ssoAuthService.checkRole(AppConstants.Roles.DISEASE_NOTIFICATION_SENDER);
+    this.showPathogenLinks = this.ssoAuthService.checkRole(AppConstants.Roles.PATHOGEN_NOTIFICATION_SENDER);
+    this.showNonNominalLinks =
+      this.ssoAuthService.checkRole(AppConstants.Roles.PATHOGEN_NOTIFICATION_NON_NOMINAL_SENDER) &&
+      this.ssoAuthService.checkRole(AppConstants.Roles.DISEASE_NOTIFICATION_NON_NOMINAL_SENDER);
     this.hasIgsDataSenderRole =
-      this.ssoAuthService.checkRole('igs-sequence-data-sender') || this.ssoAuthService.checkRole('igs-sequence-data-sender-fasta-only');
-    this.hasIgsNotificationSenderRole = this.ssoAuthService.checkRole('igs-notification-data-sender');
+      this.ssoAuthService.checkRole(AppConstants.Roles.IGS_SEQUENCE_DATA_SENDER) ||
+      this.ssoAuthService.checkRole(AppConstants.Roles.IGS_NOTIFICATION_DATA_SENDER_FASTA_ONLY);
+    this.hasIgsNotificationSenderRole = this.ssoAuthService.checkRole(AppConstants.Roles.IGS_NOTIFICATION_DATA_SENDER);
   }
 
   ngOnInit(): void {
@@ -104,4 +129,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.unsubscriber.next();
     this.unsubscriber.complete();
   }
+
+  protected readonly isNonNominalNotificationActivated = isNonNominalNotificationActivated;
 }

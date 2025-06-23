@@ -1,18 +1,21 @@
+@if (FEATURE_FLAG_PORTAL_INFOBANNER) {
+  <app-info-banner-section></app-info-banner-section>
+}
+
 <mat-toolbar class="app-navbar-demis">
   <!-- #region PRODUCT LOGO -->
   @if (env.isLocal) {
-    <img id="img-local-indicator-logo" alt="local indicator Logo" src="assets/images/local-indicator.gif"/>
+    <img id="img-local-indicator-logo" alt="local indicator Logo" src="assets/images/local-indicator.gif" />
   }
 
   <button mat-button id="home-button" routerLink="/">
-    <mat-icon id="img-demis-logo" svgIcon="demis"></mat-icon>
-    DEMIS
+    <img id="img-demis-logo" src="{{ demisLogoUrl }}" alt="DEMIS" />
   </button>
   <!-- #endregion PRODUCT LOGO -->
 
   <!-- #region NAV BAR -->
   <nav mat-tab-nav-bar class="navbar-tab-group" [tabPanel]="tabPanel">
-    @if(isLoggedIn()){
+    @if (isLoggedIn()) {
       <a id="a-to-homepage" [class.active-tab]="activeTab === C.Tabs.HOME"
          [class.inactive-tab]="activeTab !== C.Tabs.HOME"
          mat-tab-link routerLink="./" routerLinkActive="active">
@@ -23,7 +26,7 @@
     @if (hasDiseaseNotificationSenderRole) {
       <a id="a-to-disease" [class.active-tab]="activeTab === C.PathSegments.DISEASE_NOTIFICATION"
          [class.inactive-tab]="activeTab !== C.PathSegments.DISEASE_NOTIFICATION" mat-tab-link
-         [routerLink]="C.PathSegments.DISEASE_NOTIFICATION" routerLinkActive="active">
+         (click)=navigateToDisease() routerLinkActive="active">
         Krankheit melden
       </a>
     }
@@ -33,6 +36,19 @@
          mat-tab-link [routerLink]="C.PathSegments.PATHOGEN_NOTIFICATION" routerLinkActive="active">
         Erregernachweis melden
       </a>
+    }
+
+    @if (isNonNominalNotificationActivated() && (showNonNominalLinks)) {
+      <button id="btn-non-nominal" mat-button [matMenuTriggerFor]="menu" [class.active-tab]="isNonNominalTabActive"
+              [class.inactive-tab]="!isNonNominalTabActive">§7 Abs.3 IfSG melden
+        <mat-icon iconPositionEnd fontIcon="arrow_drop_down" class="btn__icon"></mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <a id="a-to-pathogen-non-nominal" mat-menu-item
+           [routerLink]="C.PathSegments.PATHOGEN_NOTIFICATION_NON_NOMINAL">Erregernachweis</a>
+        <a id="a-to-disease-non-nominal" mat-menu-item (click)="navigateToDiseaseNonNominal()">Ärztliche
+          Ergänzungsmeldung</a>
+      </mat-menu>
     }
 
     @if (hasBedOccupencySenderRole) {

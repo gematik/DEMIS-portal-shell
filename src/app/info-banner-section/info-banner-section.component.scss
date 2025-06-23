@@ -1,0 +1,48 @@
+:host {
+  --border-distance: 16px;
+  --banner-margin: 2px;
+  --banner-bottom-margin: 8px;
+}
+
+.banner-section {
+  padding: var(--border-distance);
+  border-width: 3px;
+  border-style: solid;
+  box-shadow: 0px 4px 4px 0px #00000040;
+  margin: var(--banner-margin);
+  margin-bottom: var(--banner-bottom-margin);
+  max-height: 20vh;
+  overflow: auto;
+  scrollbar-gutter: stable both-edges;
+  background-color: var(--color-white);
+
+  &-info {
+    border-color: var(--color-primary);
+  }
+
+  &-warning {
+    border-color: var(--color-error-dark);
+  }
+
+  &-stage-indicator {
+    border-color: var(--color-primary);
+    background-color: var(--color-neutral-light);
+    position: relative;
+    top: var(--banner-bottom-margin);
+    margin-top: calc(-1 * var(--banner-bottom-margin) + var(--banner-margin));
+  }
+
+  .banner-list {
+    max-width: 1172px;
+    margin: 0 auto;
+  }
+}
+
+.mat-divider {
+  margin-bottom: var(--border-distance);
+}
+
+#demis-portal-banner-section-general {
+  z-index: 999;
+  position: relative;
+}

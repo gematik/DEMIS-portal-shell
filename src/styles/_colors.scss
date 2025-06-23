@@ -21,6 +21,8 @@
   --color-secondary-dark80: #42659F;
   --color-secondary-dark60: #8DA5C4;
   --color-secondary-dark40: #ADBFD9;
+  --color-secondary-dark20: #EAF6FF;
+
 
   /* Success */
   --color-success-dark: #00766E;
@@ -33,9 +35,16 @@
   --color-warning-light: #F5E9E4;
 
   /* Error */
-  --color-error-dark: #DA4548;
+  --color-error-dark: #B3261E;
   --color-error-medium: #ED6C71;
   --color-error-light: #FAE3E5;
+
+  --mdc-outlined-text-field-label-text-color: var(--color-black);
+  --mdc-outlined-text-field-hover-label-text-color: var(--color-black);
+  --mdc-outlined-text-field-focus-label-text-color: var(--color-black);
+  --mdc-outlined-text-field-outline-color: var(--color-primary);
+  --mdc-outlined-text-field-hover-outline-color: var(--color-primary);
+  --mdc-outlined-text-field-focus-outline-color: var(--color-primary);
 }
 
 /* SCSS Variables using CSS Variables */

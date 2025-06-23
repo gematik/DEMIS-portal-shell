@@ -25,15 +25,25 @@ export function isNonNominalNotificationActivated(): boolean {
 }
 
 export namespace AppConstants {
-  export enum PathSegments {
+  export enum ShellPathSegments {
     ABOUT = 'about',
+    SITE_NOTICE = 'impressum',
+    PRIVACY_POLICY = 'privacy-policy',
+    WELCOME = 'welcome',
+  }
+
+  export enum PathSegments {
+    ABOUT = ShellPathSegments.ABOUT,
     BED_OCCUPANCY = 'bed-occupancy',
     DISEASE_NOTIFICATION = 'disease-notification',
-    SITE_NOTICE = 'impressum',
+    SITE_NOTICE = ShellPathSegments.SITE_NOTICE,
     PATHOGEN_NOTIFICATION = 'pathogen-notification',
-    PRIVACY_POLICY = 'privacy-policy',
+    NON_NOMINAL = '/7_3/non-nominal',
+    PATHOGEN_NOTIFICATION_NON_NOMINAL = 'pathogen-notification/7_3/non-nominal',
+    DISEASE_NOTIFICATION_NON_NOMINAL = 'disease-notification/7_3/non-nominal',
+    PRIVACY_POLICY = ShellPathSegments.PRIVACY_POLICY,
     SEQUENCE_NOTIFICATION = 'sequence_notification',
-    WELCOME = 'welcome',
+    WELCOME = ShellPathSegments.WELCOME,
   }
 
   export enum Tabs {
@@ -44,7 +54,7 @@ export namespace AppConstants {
   }
 
   export enum ExternalLinks {
-    DATA_ANALYSIS = 'http://go.gematik.de/demisanalyse',
+    DATA_ANALYSIS = 'https://go.gematik.de/demisanalyse',
     DEMIS_WDB = 'https://wiki.gematik.de/display/DSKB',
     CONTACT_SUPPORT = 'https://go.gematik.de/demis-support',
   }
@@ -101,5 +111,16 @@ export namespace AppConstants {
     //TODO richtige Texte hier
     CLICK_TO_OPEN = 'Klicken Sie, um die § 7.3 Kacheln zu sehen',
     UPLOAD_INFO = 'Klicken Sie, um einen neuen Fall hoch zu laden',
+  }
+
+  export enum Roles {
+    BED_OCCUPANCY_SENDER = 'bed-occupancy-sender',
+    DISEASE_NOTIFICATION_SENDER = 'disease-notification-sender',
+    PATHOGEN_NOTIFICATION_SENDER = 'pathogen-notification-sender',
+    PATHOGEN_NOTIFICATION_NON_NOMINAL_SENDER = 'pathogen-notification-nonnominal-sender',
+    DISEASE_NOTIFICATION_NON_NOMINAL_SENDER = 'disease-notification-nonnominal-sender',
+    IGS_SEQUENCE_DATA_SENDER = 'igs-sequence-data-sender',
+    IGS_NOTIFICATION_DATA_SENDER = 'igs-notification-data-sender',
+    IGS_NOTIFICATION_DATA_SENDER_FASTA_ONLY = 'igs-sequence-data-sender-fasta-only',
   }
 }

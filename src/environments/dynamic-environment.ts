@@ -16,6 +16,7 @@
 
 import { HttpHeaders } from '@angular/common/http';
 import { NgxLoggerLevel } from 'ngx-logger';
+import { AppConstants } from 'src/app/shared/app-constants';
 
 declare let window: any;
 
@@ -38,6 +39,7 @@ export interface FeatureFlags {
   CONFIG_TOKEN_INJECTION_ENABLED?: boolean;
   FEATURE_FLAG_NEW_STARTPAGE_DESIGN?: boolean;
   FEATURE_FLAG_NON_NOMINAL_NOTIFICATION?: boolean;
+  FEATURE_FLAG_PORTAL_INFOBANNER?: boolean;
 }
 
 interface GatewayPaths {
@@ -61,6 +63,8 @@ export interface GatewayConfiguration {
   igsPaths: IgsPaths;
   identityProviders: IdentityProvider[];
   featureFlags: FeatureFlags;
+  infoBanners: EnvFileInfoBannerConfig[];
+  stageIndicator: EnvFileStageIndicator;
   ngxLoggerConfig: NgxLoggerConfig;
 }
 
@@ -71,6 +75,73 @@ interface KeyCloakConfig {
   clientIdInternet: string | undefined;
   meldungDNS: string | undefined;
 }
+
+/**
+ * Configuration for the info banners shown in the application.
+ */
+export interface EnvFileInfoBannerConfig {
+  // UUID of the banner
+  id: string;
+  // choosable type of the banner for general information banners
+  type: 'info' | 'warning';
+  // the content formatted as Markdown
+  content: string;
+  // defines the pages where the banner is shown
+  shownIn?: 'all' | 'shell' | AppConstants.PathSegments[];
+  // datetime as ISO String (in the format YYYY-MM-DDThh:mm:ssZ); defines the date and time the shell starts to show the banner
+  startsAt?: string;
+  // datetime as ISO String (in the format YYYY-MM-DDThh:mm:ssZ); defines the date and time (inclusive) the shell ends to show the banner
+  endsAt?: string;
+  // URL to more information
+  moreInfo?: string;
+  // is the banner closable
+  closable?: boolean;
+}
+
+/**
+ * Combnined type for all possible banner types.
+ *
+ * This type is derived from the EnvFileInfoBannerConfig interface and enhanced by special banner types, that are distinguishable,
+ * but not choosbale via stage config.
+ */
+export declare type InfoBannerType = (Pick<EnvFileInfoBannerConfig, 'type'> extends { type: infer U } ? U : never) | 'stage-indicator';
+
+// Intermediate types to do type manipulations with and derive the final UiInfoBannerConfig type
+declare type _InfoBannerConfigDefaultables = Pick<EnvFileInfoBannerConfig, 'closable' | 'shownIn'>;
+declare type _InfoBannerConfigWithoutDefaultables = Omit<EnvFileInfoBannerConfig, keyof _InfoBannerConfigDefaultables | 'type'>;
+declare type _InfoBannerConfigOverwriteExtension = { [Property in keyof _InfoBannerConfigDefaultables]-?: _InfoBannerConfigDefaultables[Property] };
+declare type _CompoundType = _InfoBannerConfigWithoutDefaultables & _InfoBannerConfigOverwriteExtension & { type: InfoBannerType };
+
+/**
+ * InfoBannerConfig is a type that transforms the EnvFileInfoBannerConfig interface
+ * by ensuring that the 'closable' and 'shownIn' properties are required.
+ * This is done by using type manipulations offered by TypeScript.
+ */
+export declare type InfoBannerConfig = { [Property in keyof _CompoundType]: _CompoundType[Property] };
+
+/**
+ * Interface for the stage indicator configuration.
+ */
+export interface EnvFileStageIndicator {
+  // content of the stage indicator banner, formatted as Markdown
+  content: string;
+  // URL to more information
+  moreInfo?: string;
+  // the file name of the DEMIS logo to be shown on the home button in the navbar
+  demisHomeLogoFile?: string;
+}
+
+declare type _StageIndicatorPropertiesToBeRequired = Pick<EnvFileStageIndicator, 'content' | 'demisHomeLogoFile'>;
+declare type _StageIndicatorPropertiesToBeOptional = Pick<EnvFileStageIndicator, 'moreInfo'>;
+declare type _StageIndicatorRequired = { [Property in keyof _StageIndicatorPropertiesToBeRequired]-?: _StageIndicatorPropertiesToBeRequired[Property] };
+declare type _StageIndicator = _StageIndicatorRequired & _StageIndicatorPropertiesToBeOptional;
+
+/**
+ * StageIndicator is a type that transforms the EnvFileStageIndicator interface
+ * by ensuring that all properties are required.
+ * This is done by using type manipulations offered by TypeScript.
+ */
+export declare type StageIndicator = { [Property in keyof _StageIndicator]: _StageIndicator[Property] };
 
 export class DynamicEnvironment {
   public headers: HttpHeaders;
@@ -159,6 +230,39 @@ export class DynamicEnvironment {
 
   public get featureFlags(): any {
     return this.config?.featureFlags;
+  }
+
+  /**
+   * Returns the configuration for the info banners.
+   */
+  public get infoBanners(): InfoBannerConfig[] {
+    if (this.config?.infoBanners) {
+      return this.config?.infoBanners.map(
+        bannerConfig =>
+          ({
+            ...bannerConfig,
+            closable: bannerConfig.closable ?? true,
+            shownIn: bannerConfig.shownIn ?? 'all',
+          }) as InfoBannerConfig
+      );
+    }
+
+    return [];
+  }
+
+  /**
+   * Returns the configuration for the stage indicator.
+   */
+  public get stageIndicator(): StageIndicator | undefined {
+    if (this.config?.stageIndicator?.content) {
+      return {
+        content: this.config?.stageIndicator?.content,
+        moreInfo: this.config?.stageIndicator?.moreInfo,
+        demisHomeLogoFile: this.config?.stageIndicator?.demisHomeLogoFile || 'DEMIS.svg',
+      };
+    }
+
+    return undefined;
   }
 
   private get identityProviderDemis(): IdentityProvider | undefined {

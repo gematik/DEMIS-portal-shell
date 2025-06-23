@@ -38,6 +38,7 @@ declare type UserPermissions = {
   hasDiseaseNotificationSenderRole: boolean;
   hasIgsDataSenderRole: boolean;
   hasIgsNotificationSenderRole: boolean;
+  hasNonNominalNotificationSenderRole: boolean;
 };
 
 declare type UserInfo = {
@@ -55,6 +56,7 @@ const INITIAL_USER_INFORMATION: UserInfo = {
     hasDiseaseNotificationSenderRole: false,
     hasIgsDataSenderRole: false,
     hasIgsNotificationSenderRole: false,
+    hasNonNominalNotificationSenderRole: false,
   },
 };
 
@@ -136,12 +138,10 @@ export class WelcomeComponent implements OnInit, OnDestroy {
   }
 
   get showNonNominalTile() {
-    //TODO add check for user role
-    return this.isNonNominalNotificationActivated() && this.showPathogenTile;
+    return this.isNonNominalNotificationActivated() && this.userInfo().permissions.hasNonNominalNotificationSenderRole;
   }
 
   get showNonNominalSubTiles() {
-    //TODO add check for user role
     return this.showNonNominalTile;
   }
 
@@ -215,7 +215,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
                 id: 'pathogen-non-nominal',
                 titleTextRows: PATHOGEN_NON_NOMINAL,
                 tooltip: AppConstants.Tooltips.CLICK_TO_REPORT,
-                destinationRouterLink: `/${AppConstants.PathSegments.PATHOGEN_NOTIFICATION}`,
+                destinationRouterLink: `/${AppConstants.PathSegments.PATHOGEN_NOTIFICATION_NON_NOMINAL}`,
                 contentParagraphs: [AppConstants.InfoTexts.PATHOGEN_NON_NOMINAL],
               },
             },
@@ -276,11 +276,16 @@ export class WelcomeComponent implements OnInit, OnDestroy {
       isAuthenticated: this.authService.isAuthenticated(),
       username: determinedUsername ?? 'unknown',
       permissions: {
-        hasBedOccupencySenderRole: this.authService.checkRole('bed-occupancy-sender'),
-        hasPathogenNotificationRole: this.authService.checkRole('pathogen-notification-sender'),
-        hasDiseaseNotificationSenderRole: this.authService.checkRole('disease-notification-sender'),
-        hasIgsDataSenderRole: this.authService.checkRole('igs-sequence-data-sender') || this.authService.checkRole('igs-sequence-data-sender-fasta-only'),
-        hasIgsNotificationSenderRole: this.authService.checkRole('igs-notification-data-sender'),
+        hasBedOccupencySenderRole: this.authService.checkRole(AppConstants.Roles.BED_OCCUPANCY_SENDER),
+        hasPathogenNotificationRole: this.authService.checkRole(AppConstants.Roles.PATHOGEN_NOTIFICATION_SENDER),
+        hasDiseaseNotificationSenderRole: this.authService.checkRole(AppConstants.Roles.DISEASE_NOTIFICATION_SENDER),
+        hasIgsDataSenderRole:
+          this.authService.checkRole(AppConstants.Roles.IGS_SEQUENCE_DATA_SENDER) ||
+          this.authService.checkRole(AppConstants.Roles.IGS_NOTIFICATION_DATA_SENDER_FASTA_ONLY),
+        hasIgsNotificationSenderRole: this.authService.checkRole(AppConstants.Roles.IGS_NOTIFICATION_DATA_SENDER),
+        hasNonNominalNotificationSenderRole:
+          this.authService.checkRole(AppConstants.Roles.PATHOGEN_NOTIFICATION_NON_NOMINAL_SENDER) &&
+          this.authService.checkRole(AppConstants.Roles.DISEASE_NOTIFICATION_NON_NOMINAL_SENDER),
       },
     };
 

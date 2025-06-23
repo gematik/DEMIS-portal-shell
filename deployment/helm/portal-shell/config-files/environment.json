@@ -5,4 +5,6 @@
 {{- $_ := set $environment "identityProviders" (.Values.config.idp | required ".Values.config.idp is required.") -}}
 {{- $_ := set $environment "ngxLoggerConfig" (.Values.config.ngxLoggerConfig | required ".Values.config.ngxLoggerConfig is required.") -}}
 {{- $_ := set $environment "featureFlags" (.Values.config.featureFlags | required ".Values.config.featureFlags is required.") -}}
+{{- $_ := set $environment "infoBanners" (.Values.config.infoBanners | required ".Values.config.infoBanners is required.") -}}
+{{- $_ := set $environment "stageIndicator" (.Values.config.stageIndicator | required ".Values.config.stageIndicator is required.") -}}
 {{- $environment | toPrettyJson -}}

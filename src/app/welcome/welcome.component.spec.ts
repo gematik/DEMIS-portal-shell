@@ -27,6 +27,7 @@ import { AuthService } from '../services/auth.service';
 import { EqualHeightService } from '../shared/services/equal-height.service';
 import { WelcomeTileComponent } from '../welcome-tile/welcome-tile.component';
 import { WelcomeComponent } from './welcome.component';
+import { AppConstants } from '../shared/app-constants';
 
 describe('WelcomeComponent', () => {
   let fixture: MockedComponentFixture<WelcomeComponent>;
@@ -91,7 +92,7 @@ describe('WelcomeComponent', () => {
     });
     it('should use correct logo paths old', () => {
       createComponent();
-      console.log('TestSetup.CONFIG:', TestSetup.CONFIG);
+      // console.log('TestSetup.CONFIG:', TestSetup.CONFIG);
       const pathogenTile = component.tiles.find(tile => tile.config.id === 'pathogen');
       expect(pathogenTile?.config.logoImage?.src).toBe('assets/images/erregernachweis_mikroskop.svg');
 
@@ -130,7 +131,7 @@ describe('WelcomeComponent', () => {
         createComponent();
         spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').and.returnValue(of(''));
         fixture.point.injector.get(AuthService).$isAuthenticated = isAuthenticatedSubject;
-        spyOn(fixture.point.injector.get(AuthService), 'checkRole').and.callFake((role: string) => parameter.roles.includes(role));
+        spyOn(fixture.point.injector.get(AuthService), 'checkRole').and.callFake((role: string) => parameter.roles.includes(role as AppConstants.Roles));
         fixture.point.injector.get(AuthService).$tokenChanged.next();
         ngMocks.flushTestBed();
         createComponent();
@@ -154,13 +155,13 @@ describe('WelcomeComponent', () => {
       });
     });
 
-    ['igs-sequence-data-sender', 'igs-sequence-data-sender-fasta-only'].forEach(presentRole => {
+    [AppConstants.Roles.IGS_SEQUENCE_DATA_SENDER, AppConstants.Roles.IGS_NOTIFICATION_DATA_SENDER_FASTA_ONLY].forEach(presentRole => {
       it(`Should show title welcome-tile-sequence-notification if only ${presentRole} is present`, () => {
         createComponent();
         spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').and.returnValue(of(''));
         fixture.point.injector.get(AuthService).$isAuthenticated = isAuthenticatedSubject;
         spyOn(fixture.point.injector.get(AuthService), 'checkRole').and.callFake(
-          (role: string) => presentRole === role || 'igs-notification-data-sender' === role
+          (role: string) => presentRole === role || AppConstants.Roles.IGS_NOTIFICATION_DATA_SENDER === role
         );
         fixture.point.injector.get(AuthService).$tokenChanged.next();
         ngMocks.flushTestBed();
