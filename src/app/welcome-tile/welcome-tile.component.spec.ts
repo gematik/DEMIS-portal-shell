@@ -17,12 +17,21 @@
 import { WelcomeTileComponent } from './welcome-tile.component';
 import { MockBuilder, MockedComponentFixture, MockRender } from 'ng-mocks';
 import { WelcomeTileConfig } from '../welcome/welcome.component';
+import { Router } from '@angular/router';
+import { TestBed } from '@angular/core/testing';
 
 describe('WelcomeTileComponent', () => {
   let fixture: MockedComponentFixture<WelcomeTileComponent, Partial<WelcomeTileComponent>>;
   let component: WelcomeTileComponent;
 
-  beforeEach(() => MockBuilder(WelcomeTileComponent));
+  let router: Router;
+
+  beforeEach(() => {
+    return MockBuilder(WelcomeTileComponent).provide({
+      provide: Router,
+      useValue: { navigateByUrl: jasmine.createSpy('navigateByUrl') },
+    });
+  });
 
   const initConfig: WelcomeTileConfig = {
     id: 'test-id',
@@ -40,6 +49,7 @@ describe('WelcomeTileComponent', () => {
   beforeEach(() => {
     fixture = MockRender(WelcomeTileComponent, { config: initConfig });
     component = fixture.point.componentInstance;
+    router = TestBed.inject(Router);
   });
 
   it('should create', () => {
@@ -54,5 +64,91 @@ describe('WelcomeTileComponent', () => {
     expect(component.config.logoImage).toBe(initConfig.logoImage);
     expect(component.config.contentParagraphs).toBe(initConfig.contentParagraphs);
     expect(component.config.buttonLabel).toBe(initConfig.buttonLabel);
+  });
+
+  describe('changeIsExpandedState', () => {
+    it('should toggle isExpanded state', () => {
+      expect(component.isExpanded()).toBeFalse();
+
+      component.changeIsExpandedState();
+      expect(component.isExpanded()).toBeTrue();
+
+      component.changeIsExpandedState();
+      expect(component.isExpanded()).toBeFalse();
+    });
+  });
+
+  describe('handleTileClick', () => {
+    it('should change expanded state when tile is expandable', () => {
+      spyOn(component, 'isTileExpandable').and.returnValue(true);
+      spyOn(component, 'changeIsExpandedState');
+
+      component.handleTileClick();
+
+      expect(component.changeIsExpandedState).toHaveBeenCalled();
+      expect(router.navigateByUrl).not.toHaveBeenCalled();
+    });
+
+    it('should navigate to destination when tile is not expandable', () => {
+      spyOn(component, 'isTileExpandable').and.returnValue(false);
+      component.config.destinationRouterLink = '/test-route';
+
+      component.handleTileClick();
+
+      expect(router.navigateByUrl).toHaveBeenCalledWith('/test-route');
+    });
+  });
+
+  describe('navigateTo', () => {
+    it('should navigate to the given destination', () => {
+      const destination = '/subtile-route';
+
+      component.navigateTo(destination);
+
+      expect(router.navigateByUrl).toHaveBeenCalledWith(destination);
+    });
+  });
+  describe('getIconName', () => {
+    it('should return chevron_right when tile is not expandable', () => {
+      spyOn(component, 'isTileExpandable').and.returnValue(false);
+
+      expect(component.getIconName()).toBe('chevron_right');
+    });
+
+    it('should return keyboard_arrow_up when tile is expandable and expanded', () => {
+      spyOn(component, 'isTileExpandable').and.returnValue(true);
+      component.isExpanded.set(true);
+
+      expect(component.getIconName()).toBe('keyboard_arrow_up');
+    });
+
+    it('should return keyboard_arrow_down when tile is expandable and not expanded', () => {
+      spyOn(component, 'isTileExpandable').and.returnValue(true);
+      component.isExpanded.set(false);
+
+      expect(component.getIconName()).toBe('keyboard_arrow_down');
+    });
+  });
+
+  describe('getIconType', () => {
+    it('should return chevron-right-logo when tile is not expandable', () => {
+      spyOn(component, 'isTileExpandable').and.returnValue(false);
+
+      expect(component.getIconType()).toBe('chevron-right-logo');
+    });
+
+    it('should return chevron-up-logo when tile is expandable and expanded', () => {
+      spyOn(component, 'isTileExpandable').and.returnValue(true);
+      component.isExpanded.set(true);
+
+      expect(component.getIconType()).toBe('chevron-up-logo');
+    });
+
+    it('should return chevron-down-logo when tile is expandable and not expanded', () => {
+      spyOn(component, 'isTileExpandable').and.returnValue(true);
+      component.isExpanded.set(false);
+
+      expect(component.getIconType()).toBe('chevron-down-logo');
+    });
   });
 });

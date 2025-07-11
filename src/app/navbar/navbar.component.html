@@ -27,20 +27,20 @@
       <a id="a-to-disease" [class.active-tab]="activeTab === C.PathSegments.DISEASE_NOTIFICATION"
          [class.inactive-tab]="activeTab !== C.PathSegments.DISEASE_NOTIFICATION" mat-tab-link
          (click)=navigateToDisease() routerLinkActive="active">
-        Krankheit melden
+        Krankheit (§ 6 IfSG)
       </a>
     }
 
     @if (showPathogenLinks) {
       <a id="a-to-pathogen" [class.active-tab]="isPathogenTabActive" [class.inactive-tab]="!isPathogenTabActive"
          mat-tab-link [routerLink]="C.PathSegments.PATHOGEN_NOTIFICATION" routerLinkActive="active">
-        Erregernachweis melden
+        Erregernachweis (§ 7 Abs. 1 IfSG)
       </a>
     }
 
     @if (isNonNominalNotificationActivated() && (showNonNominalLinks)) {
       <button id="btn-non-nominal" mat-button [matMenuTriggerFor]="menu" [class.active-tab]="isNonNominalTabActive"
-              [class.inactive-tab]="!isNonNominalTabActive">§7 Abs.3 IfSG melden
+              [class.inactive-tab]="!isNonNominalTabActive">§ 7 Abs. 3 IfSG
         <mat-icon iconPositionEnd fontIcon="arrow_drop_down" class="btn__icon"></mat-icon>
       </button>
       <mat-menu #menu="matMenu">

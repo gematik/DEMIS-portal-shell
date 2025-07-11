@@ -16,12 +16,8 @@
 
 import { environment } from '../../environments/environment';
 
-export function isNewDesignActivated(): boolean {
-  return environment?.featureFlags?.FEATURE_FLAG_NEW_STARTPAGE_DESIGN ?? false;
-}
-
 export function isNonNominalNotificationActivated(): boolean {
-  return (isNewDesignActivated() && environment.featureFlags?.FEATURE_FLAG_NON_NOMINAL_NOTIFICATION) ?? false;
+  return environment.featureFlags?.FEATURE_FLAG_NON_NOMINAL_NOTIFICATION ?? false;
 }
 
 export namespace AppConstants {
@@ -38,9 +34,9 @@ export namespace AppConstants {
     DISEASE_NOTIFICATION = 'disease-notification',
     SITE_NOTICE = ShellPathSegments.SITE_NOTICE,
     PATHOGEN_NOTIFICATION = 'pathogen-notification',
-    NON_NOMINAL = '/7_3/non-nominal',
-    PATHOGEN_NOTIFICATION_NON_NOMINAL = 'pathogen-notification/7_3/non-nominal',
-    DISEASE_NOTIFICATION_NON_NOMINAL = 'disease-notification/7_3/non-nominal',
+    NON_NOMINAL = '/7.3/non-nominal',
+    PATHOGEN_NOTIFICATION_NON_NOMINAL = 'pathogen-notification/7.3/non-nominal',
+    DISEASE_NOTIFICATION_NON_NOMINAL = 'disease-notification/7.3/non-nominal',
     PRIVACY_POLICY = ShellPathSegments.PRIVACY_POLICY,
     SEQUENCE_NOTIFICATION = 'sequence_notification',
     WELCOME = ShellPathSegments.WELCOME,
@@ -67,38 +63,35 @@ export namespace AppConstants {
     SITE_NOTICE_LINK = 'Impressum',
     PRIVACY_POLICY = 'Datenschutzerklärung',
     START_PAGE_LINK = 'Startseite',
-    SUBMIT_BED_OCCUPANCY_LINK = 'Bettenbelegung melden',
+    SUBMIT_BED_OCCUPANCY_LINK = 'Bettenbelegung',
     SUPPORT_QUESTIONS_LINK = 'Supportanfragen',
   }
 
   export enum InfoTexts {
-    ABOUT = 'Das Deutsche Elektronische Melde- und Informationssystem für den Infektionsschutz (DEMIS) ermöglicht die elektronische Meldung von melde­pflichtigen Infektionskrankheiten an das zuständige Gesundheitsamt.',
-    ABOUT_NEW = 'Das Deutsche Elektronische Melde- und Informationssystem für den Infektionsschutz (DEMIS) ermöglicht bundesweit die elektronische Meldung gemäß Infektionsschutzgesetz (IfSG). Über das DEMIS-Meldeportal können Meldepflichtige Meldungen gemäß IfSG über ein Online-Formular absetzen.',
+    ABOUT = 'Das Deutsche Elektronische Melde- und Informationssystem für den Infektionsschutz (DEMIS) ermöglicht bundesweit die elektronische Meldung gemäß Infektionsschutzgesetz (IfSG). Über das DEMIS-Meldeportal können Meldepflichtige Meldungen gemäß IfSG über ein Online-Formular absetzen.',
     KNOWLEDGE_DATABASE = 'Nähere Informationen zu DEMIS finden Sie hier:',
-    BED_OCCUPANCY = 'Meldung der Krankenhausbettenbelegung gemäß Infektionsschutzgesetz (§ 13 Abs. 7 IfSG)',
-    DISEASE = 'Meldung von meldepflichtigen Infektionskrankheiten (z.B. bei Verdacht, Erkrankung oder Tod) gemäß Infektionsschutzgesetz (§ 6 Abs. 1 IfSG)',
-    PATHOGEN = 'Meldung von Nachweisen von Krankheitserregern (inkl. positive Schnelltestergebnisse) gemäß Infektionsschutzgesetz (§ 7 Abs. 1 IfSG)',
-    NON_NOMINAL = 'Krankheit oder Erregernachweis melden für nichtnamentliche Meldungen: Chlamydia trachomatis, Echinococcus sp., HIV, Neisseria gonorrhoeae, Toxoplasma gondii und Treponema pallidum',
-    PATHOGEN_NON_NOMINAL = 'Meldepflichtige Infektionskrankheiten (z.B. bei Verdacht, Erkrankung oder Tod)',
-    DISEASE_NON_NOMINAL = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam eirmod tempor invidunt ut.',
-    SEQUENCE_NOTIFICATION = 'Meldung von Sequenz- und Sequenzmetadaten gemäß Infektionsschutzgesetz (§ 13 Abs. 3 IfSG)',
-    SEQUENCE_NOTIFICATION_NEW_DESIGN = 'Übermittlung von Sequenz- und Sequenzmetadaten gemäß Infektionsschutzgesetz (§ 13 Abs. 3 IfSG)',
+    BED_OCCUPANCY = 'Meldung der Krankenhausbettenbelegung gemäß § 13 Abs. 7 IfSG',
+    DISEASE = 'Meldung von meldepflichtigen Infektionskrankheiten (z.B. bei Verdacht, Erkrankung oder Tod) gemäß § 6 Abs. 1 Nr. 1 und 1a IfSG sowie § 6 Abs. 2 IfSG',
+    PATHOGEN = 'Meldung eines Nachweises von Krankheitserregern (inkl. positive Schnelltestergebnisse) gemäß § 7 Abs. 1 IfSG',
+    NON_NOMINAL = 'Meldung eines Erregernachweises oder ärztliche Ergänzung gemäß § 7 Abs. 3 IfSG: C. trachomatis (L1-L3), Echinococcus spp., HIV, N. gonorrhoeae, T. gondii & T. pallidum',
+    PATHOGEN_NON_NOMINAL = 'Meldung von meldepflichtigen Infektionskrankheiten gemäß § 7 Abs. 3 IfSG',
+    DISEASE_NON_NOMINAL = 'Meldung eines Nachweises von Krankheitserregern gemäß § 7 Abs. 3 IfSG',
+    SEQUENCE_NOTIFICATION = 'Übermittlung von Sequenz- und Sequenzmetadaten für die Integrierte Genomische Surveillance gemäß § 13 Abs. 3 IfSG',
   }
 
   export namespace Titles {
-    export const ABOUT = ['Was ist DEMIS?', ''];
-    export const BED_OCCUPANCY = ['Bettenbelegung', 'melden'];
+    export const BED_OCCUPANCY = ['Bettenbelegung'];
     export const DISEASE = ['Krankheit', 'melden'];
-    export const DISEASE_NEW = ['Krankheitsmeldung § 6 Abs. 1 IfSG'];
+    export const DISEASE_NEW = ['Meldung einer Krankheit gemäß § 6 IfSG'];
     export const PATHOGEN = ['Erregernachweis', 'melden'];
-    export const PATHOGEN_NEW = ['Erregernachweise § 7 Abs. 1 IfSG'];
-    export const NON_NOMINAL = ['§ 7 Abs. 3 IfSG'];
-    export const PATHOGEN_NON_NOMINAL = ['Erregernachweis melden (§ 7.3)'];
-    export const DISEASE_NON_NOMINAL = ['Ärztliche Ergänzungsmeldung (§ 7.3)'];
+    export const PATHOGEN_NEW = ['Meldung eines Erregernachweises gemäß § 7 Abs. 1 IfSG'];
+    export const NON_NOMINAL = ['Meldung gemäß § 7 Abs. 3 IfSG'];
+    export const PATHOGEN_NON_NOMINAL = ['Erregernachweis melden'];
+    export const DISEASE_NON_NOMINAL = ['Ärztliche Ergänzungsmeldung'];
     export const PATHOGEN_ANONYMOUS = ['Erregernachweis melden (Anonym)'];
     export const DISEASE_ANONYMOUS = ['Ärztliche Ergänzungsmeldung (Anonym)'];
     export const SEQUENCE_NOTIFICATION = ['IGS'];
-    export const SEQUENCE_NOTIFICATION_NEW = ['Integrierte genomische Surveillance', '(IGS)'];
+    export const SEQUENCE_NOTIFICATION_NEW = ['Integrierte Genomische Surveillance', '(IGS)'];
   }
 
   export enum Messages {
@@ -106,10 +99,9 @@ export namespace AppConstants {
   }
 
   export enum Tooltips {
-    ABOUT = 'Klicken Sie, um mehr über das DEMIS-System zu erfahren',
     CLICK_TO_REPORT = 'Klicken Sie, um einen neuen Fall zu melden',
     //TODO richtige Texte hier
-    CLICK_TO_OPEN = 'Klicken Sie, um die § 7.3 Kacheln zu sehen',
+    CLICK_TO_OPEN = 'Klicken Sie, um zur Auswahl der Meldungsart zu kommen',
     UPLOAD_INFO = 'Klicken Sie, um einen neuen Fall hoch zu laden',
   }
 

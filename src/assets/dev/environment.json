@@ -13,7 +13,10 @@
     {
       "baseUrl": "https://auth.ingress.local",
       "tenant": "demis",
-      "issuers": ["https://auth.ingress.local/realms/HOSPITAL"]
+      "issuers": [
+        "https://auth.ingress.local/realms/HOSPITAL",
+        "https://auth.ingress.local/realms/LAB"
+      ]
     },
     {
       "baseUrl": "https://auth.ingress.local",
@@ -21,7 +24,9 @@
       "clientId": "meldeportal",
       "clientIdInternet": "meldeportal-internet",
       "meldungDNS": "https://meldung.ingress.local",
-      "issuers": ["https://auth.ingress.local/realms/PORTAL"]
+      "issuers": [
+        "https://auth.ingress.local/realms/PORTAL"
+      ]
     }
   ],
   "ngxLoggerConfig": {
@@ -30,8 +35,7 @@
   },
   "featureFlags": {
     "CONFIG_TOKEN_INJECTION_ENABLED": true,
-    "FEATURE_FLAG_NEW_STARTPAGE_DESIGN": true,
-    "FEATURE_FLAG_NON_NOMINAL_NOTIFICATION": false,
+    "FEATURE_FLAG_NON_NOMINAL_NOTIFICATION": true,
     "FEATURE_FLAG_PORTAL_INFOBANNER": true
   },
   "infoBanners": [

@@ -2,11 +2,18 @@
 
 # Release portal-shell
 
+## Release 1.2.6
+
+- logo and text adaptions for § 7.3
+- added "Finanziert von der Europäischen Union" logo to landing page
+
 ## Release 1.2.5
 - changed default color for input outlines and input labels
 - added functionality to show information banners above the top navigation bar (FEATURE_FLAG_PORTAL_INFOBANNER)
 - added functionality to show a stage indicator banner above the top navigation bar, to highlight dedicated stages (FEATURE_FLAG_PORTAL_INFOBANNER)
 - Updated Readme license disclaimer
+- Include new roles for §7.3 notification (non nominal)
+- Routing for §7.3 notification (non nominal) to portal-pathogen & portal-disease
 
 ## Release 1.2.4
 - Updated Portal-Core Library version

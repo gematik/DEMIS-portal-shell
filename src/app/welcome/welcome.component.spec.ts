@@ -14,7 +14,6 @@
     For additional notes and disclaimer from gematik and in case of changes by gematik find details in the "Readme" file.
  */
 
-import { TestBed } from '@angular/core/testing';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MessageDialogService } from '@gematik/demis-portal-core-library';
@@ -40,7 +39,7 @@ describe('WelcomeComponent', () => {
     component = fixture.point.componentInstance;
   };
 
-  const getTile = (tile: string) => {
+  const getElementById = (tile: string) => {
     const selector = `#${tile}`;
     return fixture.point.nativeElement.querySelector(selector);
   };
@@ -64,49 +63,9 @@ describe('WelcomeComponent', () => {
       })
       .provide({ provide: OidcSecurityService, useValue: MockService(OidcSecurityService) })
   );
-  describe('Tests for tiles in old design', () => {
+  describe('Tests for tiles', () => {
     beforeEach(() => {
       let config = TestSetup.CONFIG;
-      config.featureFlags.FEATURE_FLAG_NEW_STARTPAGE_DESIGN = false;
-      (window as any)['config'] = config;
-    });
-
-    it('should call adjustTileContentHeights on window resize', () => {
-      createComponent();
-      const contentContainers = document.getElementById(component.tileContainerId)?.getElementsByClassName('tile-content-paragraphs');
-      expect(contentContainers).toBeTruthy();
-      const adjustElementParentHeightsSpy = spyOn(TestBed.inject(EqualHeightService), 'adjustElementParentHeights');
-      window.dispatchEvent(new Event('resize'));
-      expect(adjustElementParentHeightsSpy).toHaveBeenCalledWith(contentContainers as HTMLCollectionOf<Element>);
-    });
-
-    it('should silently do nothing on window resize, when there are no tiles to adjust', () => {
-      createComponent();
-      const contentContainers = document.getElementById(component.tileContainerId)?.getElementsByTagName('app-welcome-tile') as HTMLCollectionOf<Element>;
-      for (let index = contentContainers.length - 1; index >= 0; index--) {
-        contentContainers[index].parentNode?.removeChild(contentContainers[index]);
-      }
-      const adjustElementParentHeightsSpy = spyOn(TestBed.inject(EqualHeightService), 'adjustElementParentHeights');
-      window.dispatchEvent(new Event('resize'));
-      expect(adjustElementParentHeightsSpy).not.toHaveBeenCalled();
-    });
-    it('should use correct logo paths old', () => {
-      createComponent();
-      // console.log('TestSetup.CONFIG:', TestSetup.CONFIG);
-      const pathogenTile = component.tiles.find(tile => tile.config.id === 'pathogen');
-      expect(pathogenTile?.config.logoImage?.src).toBe('assets/images/erregernachweis_mikroskop.svg');
-
-      const bedOccupancyTile = component.tiles.find(tile => tile.config.id === 'bed-occupancy');
-      expect(bedOccupancyTile?.config.logoImage?.src).toBe('assets/images/Krankenhaus-Bett.svg');
-
-      const diseaseTile = component.tiles.find(tile => tile.config.id === 'disease');
-      expect(diseaseTile?.config.logoImage?.src).toBe('assets/images/hospitalisierung.png');
-    });
-  });
-  describe('Tests for tiles in new design', () => {
-    beforeEach(() => {
-      let config = TestSetup.CONFIG;
-      config.featureFlags.FEATURE_FLAG_NEW_STARTPAGE_DESIGN = true;
       (window as any)['config'] = config;
     });
 
@@ -118,13 +77,13 @@ describe('WelcomeComponent', () => {
     it('should use correct logo paths', () => {
       createComponent();
       const pathogenTile = component.tiles.find(tile => tile.config.id === 'pathogen');
-      expect(pathogenTile?.config.logoImage?.src).toBe('assets/images/pathogen-new.svg');
+      expect(pathogenTile?.config.logoImage?.src).toBe('assets/images/pathogen.svg');
 
       const bedOccupancyTile = component.tiles.find(tile => tile.config.id === 'bed-occupancy');
-      expect(bedOccupancyTile?.config.logoImage?.src).toBe('assets/images/bedoccupancy-new.svg');
+      expect(bedOccupancyTile?.config.logoImage?.src).toBe('assets/images/bedoccupancy.svg');
 
       const diseaseTile = component.tiles.find(tile => tile.config.id === 'disease');
-      expect(diseaseTile?.config.logoImage?.src).toBe('assets/images/disease-new.svg');
+      expect(diseaseTile?.config.logoImage?.src).toBe('assets/images/disease.svg');
     });
     TestSetup.JWT_ROLES.forEach(parameter => {
       it(`check if role(s) ${parameter.roles.join(',')} shows tile ${parameter.tile}`, () => {
@@ -135,7 +94,7 @@ describe('WelcomeComponent', () => {
         fixture.point.injector.get(AuthService).$tokenChanged.next();
         ngMocks.flushTestBed();
         createComponent();
-        const tile = getTile(parameter.tile);
+        const tile = getElementById(parameter.tile);
         expect(!!tile).toBeTruthy();
       });
 
@@ -149,7 +108,7 @@ describe('WelcomeComponent', () => {
           fixture.point.injector.get(AuthService).$tokenChanged.next();
           ngMocks.flushTestBed();
           createComponent();
-          const tile = getTile(parameter.tile);
+          const tile = getElementById(parameter.tile);
           expect(!!tile).toBeFalsy();
         }
       });
@@ -166,10 +125,44 @@ describe('WelcomeComponent', () => {
         fixture.point.injector.get(AuthService).$tokenChanged.next();
         ngMocks.flushTestBed();
         createComponent();
-        const tile = getTile(`welcome-tile-sequence-notification`);
+        const tile = getElementById(`welcome-tile-sequence-notification`);
         expect(!!tile).toBeTruthy();
       });
     });
+
+    it('should show welcome-tile-non-nominal when both non-nominal roles are present', () => {
+      createComponent();
+      spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').and.returnValue(of(''));
+      fixture.point.injector.get(AuthService).$isAuthenticated = isAuthenticatedSubject;
+      spyOn(fixture.point.injector.get(AuthService), 'checkRole').and.callFake(
+        (role: string) =>
+          role === AppConstants.Roles.PATHOGEN_NOTIFICATION_NON_NOMINAL_SENDER || role === AppConstants.Roles.DISEASE_NOTIFICATION_NON_NOMINAL_SENDER
+      );
+      fixture.point.injector.get(AuthService).$tokenChanged.next();
+      ngMocks.flushTestBed();
+      createComponent();
+      let tile = getElementById(`welcome-tile-non-nominal`) as HTMLElement;
+      expect(!!tile).toBeTruthy();
+      tile.click();
+    });
+
+    [AppConstants.Roles.PATHOGEN_NOTIFICATION_NON_NOMINAL_SENDER, AppConstants.Roles.DISEASE_NOTIFICATION_NON_NOMINAL_SENDER].forEach(presentRole => {
+      it(`should not show welcome-tile-non-nominal when only one ${presentRole} is present`, () => {
+        createComponent();
+        spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').and.returnValue(of(''));
+        fixture.point.injector.get(AuthService).$isAuthenticated = isAuthenticatedSubject;
+        spyOn(fixture.point.injector.get(AuthService), 'checkRole').and.callFake(
+          (role: string) =>
+            role === AppConstants.Roles.PATHOGEN_NOTIFICATION_NON_NOMINAL_SENDER || role === AppConstants.Roles.DISEASE_NOTIFICATION_NON_NOMINAL_SENDER
+        );
+        fixture.point.injector.get(AuthService).$tokenChanged.next();
+        ngMocks.flushTestBed();
+        createComponent();
+        const tile = getElementById(`welcome-tile-non-nominal`);
+        expect(!!tile).toBeTruthy();
+      });
+    });
+
     it('should check portal config when there is a PORTAL_CONFIG_ERROR in session storage', () => {
       spyOn(sessionStorage, 'getItem').and.callFake((key: string) => {
         if (key === 'PORTAL_CONFIG_ERROR') {

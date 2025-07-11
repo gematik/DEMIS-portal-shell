@@ -26,6 +26,7 @@ config:
       tenant: demis
       issuers:
         - https://auth.ingress.local/realms/HOSPITAL
+        - https://auth.ingress.local/realms/LAB
     - baseUrl: https://auth.ingress.local
       tenant: demis-portal
       clientId: meldeportal
@@ -44,8 +45,9 @@ config:
   files: {}
   featureFlags:
     FEATURE_FLAG_PORTAL_INFOBANNER: false
+    FEATURE_FLAG_NON_NOMINAL_NOTIFICATION: false
   ## Information Banners to be shown above the navigation bar in the portal
-  ## 
+  ##
   ## E.g.
   ## infoBanners:
   ##   - id         # [required]  string;              UUID of the banner

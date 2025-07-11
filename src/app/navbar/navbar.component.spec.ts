@@ -45,7 +45,7 @@ describe('Navbar Test', () => {
     component = fixture.point.componentInstance;
   };
 
-  const getLink = (id: string) => {
+  const getElementbyId = (id: string) => {
     const selector = `#${id}`;
     return fixture.point.nativeElement.querySelector(selector);
   };
@@ -93,12 +93,12 @@ describe('Navbar Test', () => {
 
   //Test if menu-entries are correctly shown depending on user roles
   TestSetup.JWT_ROLES.forEach(parameter => {
-    it(`check if role ${parameter.roles.join(',')} shows tile ${parameter.link}`, () => {
+    it(`check if role ${parameter.roles.join(',')} shows menu entry ${parameter.link}`, () => {
       createComponent();
       spyOn(fixture.point.injector.get(AuthService), 'checkRole').and.callFake(role => parameter.roles.includes(role as AppConstants.Roles));
       ngMocks.flushTestBed();
       createComponent();
-      const link = getLink(parameter.link);
+      const link = getElementbyId(parameter.link);
       expect(!!link).toBeTruthy();
     });
 
@@ -110,7 +110,7 @@ describe('Navbar Test', () => {
         spyOn(fixture.point.injector.get(AuthService), 'checkRole').and.callFake(() => false);
         ngMocks.flushTestBed();
         createComponent();
-        const link = getLink(parameter.link);
+        const link = getElementbyId(parameter.link);
         expect(!!link).toBeFalsy();
       }
     });
@@ -124,7 +124,7 @@ describe('Navbar Test', () => {
       );
       ngMocks.flushTestBed();
       createComponent();
-      const link = getLink(`a-to-sequence-notification`);
+      const link = getElementbyId(`a-to-sequence-notification`);
       expect(!!link).toBeTruthy();
     });
   });
@@ -162,7 +162,7 @@ describe('Navbar Test', () => {
     menuItem.click();
     fixture.detectChanges();
 
-    expect(router.navigateByUrl).toHaveBeenCalledWith('/disease-notification/7_3/non-nominal');
+    expect(router.navigateByUrl).toHaveBeenCalledWith('/disease-notification/7.3/non-nominal');
   });
 
   it('should have no active tab when initially loaded', () => {

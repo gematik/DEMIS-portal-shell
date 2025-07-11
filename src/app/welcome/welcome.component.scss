@@ -1,5 +1,11 @@
+.page-wrapper {
+  min-height: calc(100vh - 142px); //navbar height + footer height
+  display: flex;
+  flex-direction: column;
+}
 
-#new-welcome-container {
+.container, #new-welcome-container {
+  flex: 1;
   max-width: 60vw;
   align-items: center;
   flex-direction: column;
@@ -20,21 +26,32 @@
   max-width: 980px;
 }
 
-#start-username {
-  color: #aaa;
-  text-align: right;
-  font-size: 12px;
-  width: auto;
-  height: auto;
-  padding-right: 20px;
-  position: unset;
+.unauthenticated {
+  position: absolute;
+  bottom: 0;
+}
 
-  //moves "eingeloggt als" to bottom right for wider screens
-  @media only screen and (min-width: 1024px) {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-  }
+.footer {
+  width: 100%;
+  z-index: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.EU-logo {
+  display: flex;
+  gap: 20px;
+}
+
+.authenticated-as {
+  color: #aaa;
+  font-size: 12px;
+  text-align: right;
+  display: flex;
+  padding-right: 10px;
+  margin-bottom: 5px;
 }
 
 #btn-welcome-auth-login {
@@ -77,5 +94,3 @@
   font-size: 24px;
   font-weight: 700;
 }
-
-

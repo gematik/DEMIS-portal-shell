@@ -20,7 +20,6 @@ export class TestSetup {
   static CONFIG = {
     featureFlags: {
       CONFIG_TOKEN_INJECTION_ENABLED: true,
-      FEATURE_FLAG_NEW_STARTPAGE_DESIGN: true,
       FEATURE_FLAG_NON_NOMINAL_NOTIFICATION: true,
       FEATURE_FLAG_PORTAL_INFOBANNER: true,
     },

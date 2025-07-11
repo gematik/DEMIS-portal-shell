@@ -1,74 +1,153 @@
 @use '@angular/material' as mat;
 
+$breakpoint-screen: 768px;
+
 :host {
-  height: fit-content;
+  display: flex;
+  justify-content: center;
+  margin: 12px 0;
 }
 
 .tile-card {
   cursor: pointer;
-  height: 100%;
-  max-width: 480px;
-  min-width: 240px;
-
-  > * {
-    margin: auto;
+  min-height: 120px;
+  width: min(70vw, 980px);
+  padding: 25px;
+  border-radius: 24px;
+  border: 1px solid var(--color-neutral-medium);
+  position: relative;
+  justify-content: center;
+  @media screen and (max-width: $breakpoint-screen) {
+    width: min(80vw, 768px);
   }
+}
 
-  .tile-title {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    
-    .tile-logo {
-      height: 160px;
-      aspect-ratio: 1/1;
-      padding: 16px;
-    }
+.tile-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
 
-    .tile-title-text {
-      margin-bottom: 1rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-
-      div {
-        font-size: 24px;
-        font-weight: 500;
-      }
-    }
-  }
-
-  .tile-content {
-    height: fit-content;
-    margin-bottom: 16px;
-
-    .tile-content-paragraphs {
-      height: fit-content;
-      margin-bottom: 24px;
-
-      .tile-content-paragraph {
-        font-size: 14px;
-        letter-spacing: 0.25;
-      }
-    }
-  }
-
-  .tile-actions {
-    display: flex;
-    flex-direction: row;
+.tile-logo {
+  display: none;
+  @media screen and (min-width: $breakpoint-screen) {
+    display: block;
+    margin-right: 25px;
     justify-content: center;
+    align-items: center;
+    //remove when flag FEATURE_FLAG_NON_NOMINAL_NOTIFICATION is removed
+    height: 48px;
+    width: 48px;
+  }
+}
+
+.tile-row {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  text-align: left;
+  min-width: 100px;
+  overflow-wrap: break-word;
+}
+
+.tile-title {
+  color: var(--color-primary);
+  font-weight: 700;
+  margin-bottom: 5px;
+  padding-top: 0;
+  @media screen and (max-width: $breakpoint-screen) {
+    font-size: 15px;
+  }
+}
+
+.tile-title-text {
+  display: block;
+  font-size: 16px;
+  line-height: 21px;
+  margin-bottom: 0;
+  @media screen and (max-width: $breakpoint-screen) {
+    font-size: 14px;
+  }
+}
+
+.tile-icon {
+  color: var(--color-primary);
+  align-self: center;
+  width: 48px;
+  height: 48px;
+  font-size: 48px;
+  flex-shrink: 0;
+}
+
+.sub-tiles-container {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 30px;
+}
+
+.sub-tile-button {
+  border-radius: 24px;
+  border: 1px solid var(--color-neutral-medium);
+  padding: 15px 24px;
+  margin-top: 20px;
+  align-items: center;
+  background-color: var(--color-white);
+  cursor: pointer;
+  min-width: 350px;
+  flex: 1 1 calc(50% - 30px);
+  min-height: 120px;
+
+  @media screen and (max-width: $breakpoint-screen) {
+    flex: 1 1 100%;
+    font-size: 15px;
+    padding: 15px 12px;
+    min-width: auto;
+  }
+
+  &:hover {
+    @include mat.elevation(2);
+    background-color: var(--color-neutral-lighter);
+  }
+}
+
+.sub-tile-heading {
+  color: var(--color-primary);
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px;
+  letter-spacing: -0.5px;
+  padding-top: 0;
+  margin-bottom: 11px;
+  @media screen and (max-width: $breakpoint-screen) {
+    font-size: 14px;
+  }
+}
+
+.sub-tile-text {
+  line-height: 18px;
+  font-size: 13px;
+  margin-bottom: 0;
+  @media screen and (max-width: $breakpoint-screen) {
+    font-size: 12px;
   }
 }
 
 .animated {
-  transition: transform 0.2s;
-  margin: 0 auto;
-  margin: 16px;
+  transition: all 0.2s ease-in-out;
 
   &:hover {
-    @include mat.elevation(5);
-    transform: scale(1.025);
-    background-color: var(--color-demis-focused-background);
+    @include mat.elevation(2);
+    background-color: var(--color-neutral-lighter);
   }
+}
+
+.no-text-select {
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE 10+ and Edge */
+  user-select: none; /* Standard syntax */
 }
