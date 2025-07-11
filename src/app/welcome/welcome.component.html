@@ -1,9 +1,9 @@
-@if (isNewDesignActivated()) {
+<div [ngClass]="{ 'page-wrapper': isAuthenticated() }">
   <div id="new-welcome-container" class="container">
     <div>
       <div id="welcome-texts-container">
         <h2 id="welcome-demis-heading">Willkommen bei DEMIS</h2>
-        <p class="welcome-demis-text">{{ AppConstants.InfoTexts.ABOUT_NEW }}</p>
+        <p class="welcome-demis-text">{{ AppConstants.InfoTexts.ABOUT }}</p>
         <p class="welcome-demis-text">{{ AppConstants.InfoTexts.KNOWLEDGE_DATABASE }}
           <a target="_blank" rel="noopener noreferrer"
              href="{{AppConstants.ExternalLinks.DEMIS_WDB}}">{{ AppConstants.Labels.DEMIS_KNOWLEDGE_DATABASE_LINK }}</a>
@@ -14,32 +14,37 @@
           Anmelden
           <mat-icon class="logIn-btn_chevron-right">chevron_right</mat-icon>
         </button>
-
       }
     </div>
     <div id="welcome-tiles-container" class="row">
       @for (tile of tiles; track $index) {
         @if ((tile.renderingCondition === undefined) || tile.renderingCondition) {
-          <app-welcome-tile-new class="column" id="welcome-tile-{{ tile.config.id }}"
+          <app-welcome-tile class="column" id="welcome-tile-{{ tile.config.id }}"
                                 [config]="tile.config"
-                                [animated]="true"
-                                (tileViewInitialized)="adjustTileContentHeights()"></app-welcome-tile-new>
+                                [animated]="true"></app-welcome-tile>
         }
       }
     </div>
   </div>
-} @else {
-  <div id="{{ tileContainerId }}" class="container d-flex flex-md-row flex-column justify">
-    @for (tile of tiles; track $index) {
-      @if ((tile.renderingCondition === undefined) || tile.renderingCondition) {
-        <app-welcome-tile id="welcome-tile-{{ tile.config.id }}" [config]="tile.config" [animated]="true"
-                          (tileViewInitialized)="adjustTileContentHeights()"></app-welcome-tile>
-      }
-    }
-  </div>
-}
+</div>
 
 @if (isAuthenticated()) {
-  <div id="start-username">Eingeloggt als {{ userInfo().username }}</div>
+  <footer class="footer">
+    <div class="EU-logo">
+      <img ngSrc="assets/images/EU-logo.jpg" [priority]="true"
+           alt="Finanziert von der Europäischen Union"
+           height="78"
+           width="300"
+      >
+    </div>
+    <div class="authenticated-as" id="start-username">Eingeloggt als {{ userInfo().username }}</div>
+  </footer>
+} @else {
+  <div class="unauthenticated">
+    <img ngSrc="assets/images/EU-logo.jpg" [priority]="true"
+         alt="Finanziert von der Europäischen Union"
+         height="78"
+         width="300"
+    >
+  </div>
 }
-

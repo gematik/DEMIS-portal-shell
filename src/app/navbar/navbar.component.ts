@@ -78,7 +78,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   navigateToDiseaseNonNominal() {
-    this.router.navigateByUrl('/disease-notification/7_3/non-nominal');
+    this.router.navigateByUrl('/disease-notification/7.3/non-nominal');
   }
 
   navigateToDisease() {

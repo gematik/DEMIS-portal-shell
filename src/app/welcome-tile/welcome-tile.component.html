@@ -1,29 +1,53 @@
-<mat-card id="tile-card-{{ config.id }}" [ngClass]="{ 'tile-card': true, animated }"
-          (click)="router.navigateByUrl(config.destinationRouterLink)"
-          [attr.title]="config.tooltip">
-  <mat-card-title id="tile-title-{{ config.id }}" class="tile-title">
-    <img mat-card-image id="tile-logo-{{ config.id }}" class="tile-logo" [attr.src]="config.logoImage?.src"
-         [attr.alt]="config.logoImage?.alt" />
-
-    <div id="tile-title-text-{{ config.id }}" class="tile-title-text">
-      @for (titleText of config.titleTextRows; track titleText) {
-        <div>{{ !!titleText ? titleText : '&nbsp;' }}</div>
-      }
+<div>
+  <mat-card id="tile-card-{{ config.id }}"
+            [ngClass]="{ 'tile-card': true, 'animated': animated && !isExpanded() }"
+            (click)="handleTileClick()"
+            (keydown.enter)="handleTileClick()"
+            tabindex="0"
+            [attr.title]="config.tooltip">
+    <div id="tile-content-{{ config.id }}" class="tile-content no-text-select">
+      <img id="tile-logo-{{ config.id }}" class="tile-logo"
+           [attr.src]="config?.logoImage.src"
+           [attr.alt]="config?.logoImage.alt"/>
+      <div id="tile-row-{{ config.id }}" class="tile-row">
+        <h2 id="tile-title-{{ config.id }}" class="tile-title">
+          {{ config.titleTextRows.join(' ') }}
+        </h2>
+        <p id="tile-title-text-{{ config.id }}" class="tile-title-text">
+          {{ config.contentParagraphs[0] }}
+        </p>
+      </div>
+      <mat-icon
+        id="tile-icon_{{ getIconType() }}-{{ config.id }}"
+        class="tile-icon">
+        {{ getIconName() }}
+      </mat-icon>
     </div>
-  </mat-card-title>
+    @if (isNonNominalNotificationActivated() && isTileExpandable() && isExpanded()) {
+      <div class="sub-tiles-container">
+        @for (subTile of config.subTiles; track $index) {
+          @if (this.subTile.renderingCondition) {
+            <button (click)="navigateTo(subTile.config.destinationRouterLink)"
+                    class="sub-tile-button"
+                    [title]="subTile.config.tooltip"
+                    id="sub-tile-button-{{ subTile.config.id }}">
+              <div class="tile-content">
+                <div class="tile-row">
+                  <h3 class="sub-tile-heading">
+                    {{ subTile.config.titleTextRows }}
+                  </h3>
+                  <p class="sub-tile-text">
+                    {{ subTile.config.contentParagraphs[0] }}
+                  </p>
+                </div>
+                <mat-icon id="tile-icon_chevron-right-logo-{{ subTile.config.id }}" class="tile-icon">chevron_right
+                </mat-icon>
+              </div>
+            </button>
+          }
+        }
+      </div>
+    }
+  </mat-card>
+</div>
 
-  <mat-card-content id="tile-content-{{ config.id }}" class="tile-content">
-    <div id="tile-content-paragraphs-{{ config.id }}" class="tile-content-paragraphs">
-      @for (paragraphContent of config.contentParagraphs; track $index) {
-        <p id="tile-content-paragraph-{{ config.id }}-{{ $index }}"
-           class="tile-content-paragraph">{{ paragraphContent }}</p>
-      }
-    </div>
-  </mat-card-content>
-
-  <mat-card-actions id="tile-actions-{{ config.id }}" class="tile-actions">
-    <button mat-button id="action-button-{{ config.id }}" color="primary">
-      {{ config.buttonLabel }}
-    </button>
-  </mat-card-actions>
-</mat-card>

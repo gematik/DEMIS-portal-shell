@@ -37,7 +37,6 @@ interface NgxLoggerConfig {
 
 export interface FeatureFlags {
   CONFIG_TOKEN_INJECTION_ENABLED?: boolean;
-  FEATURE_FLAG_NEW_STARTPAGE_DESIGN?: boolean;
   FEATURE_FLAG_NON_NOMINAL_NOTIFICATION?: boolean;
   FEATURE_FLAG_PORTAL_INFOBANNER?: boolean;
 }
@@ -110,7 +109,10 @@ export declare type InfoBannerType = (Pick<EnvFileInfoBannerConfig, 'type'> exte
 declare type _InfoBannerConfigDefaultables = Pick<EnvFileInfoBannerConfig, 'closable' | 'shownIn'>;
 declare type _InfoBannerConfigWithoutDefaultables = Omit<EnvFileInfoBannerConfig, keyof _InfoBannerConfigDefaultables | 'type'>;
 declare type _InfoBannerConfigOverwriteExtension = { [Property in keyof _InfoBannerConfigDefaultables]-?: _InfoBannerConfigDefaultables[Property] };
-declare type _CompoundType = _InfoBannerConfigWithoutDefaultables & _InfoBannerConfigOverwriteExtension & { type: InfoBannerType };
+declare type _CompoundType = _InfoBannerConfigWithoutDefaultables &
+  _InfoBannerConfigOverwriteExtension & {
+    type: InfoBannerType;
+  };
 
 /**
  * InfoBannerConfig is a type that transforms the EnvFileInfoBannerConfig interface

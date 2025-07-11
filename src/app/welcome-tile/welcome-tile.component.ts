@@ -15,29 +15,60 @@
  */
 
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, computed, inject, Input, Signal, signal, WritableSignal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { Router, RouterModule, UrlTree } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { MatIcon } from '@angular/material/icon';
 import { WelcomeTileConfig } from '../welcome/welcome.component';
+import { isNonNominalNotificationActivated } from '../shared/app-constants';
 
 @Component({
   selector: 'app-welcome-tile',
   standalone: true,
-  imports: [CommonModule, MatCardModule, RouterModule, MatButtonModule],
+  imports: [CommonModule, MatCardModule, RouterModule, MatButtonModule, MatIcon],
   templateUrl: './welcome-tile.component.html',
   styleUrl: './welcome-tile.component.scss',
 })
-export class WelcomeTileComponent implements AfterViewInit {
+export class WelcomeTileComponent {
   @Input({ required: true }) config: WelcomeTileConfig;
   @Input() animated: boolean = false;
   @Input() contentHeight?: string;
-  @Output() tileViewInitialized = new EventEmitter<void>();
+
+  isExpanded: WritableSignal<boolean> = signal(false);
+  isTileExpandable: Signal<boolean> = computed(() => !!this.config.subTiles && this.config.subTiles.length > 0);
 
   router = inject(Router);
 
-  ngAfterViewInit(): void {
-    // This is done, so that the parent component can react to the initialization of the tile view
-    this.tileViewInitialized.emit();
+  changeIsExpandedState(): void {
+    this.isExpanded.update(prev => !prev);
   }
+
+  handleTileClick(): void {
+    if (this.isTileExpandable()) {
+      this.changeIsExpandedState();
+    } else {
+      this.navigateTo(this.config.destinationRouterLink as string);
+    }
+  }
+
+  navigateTo(destination: string): void {
+    this.router.navigateByUrl(destination);
+  }
+
+  getIconName(): string {
+    if (!this.isTileExpandable()) {
+      return 'chevron_right';
+    }
+    return this.isExpanded() ? 'keyboard_arrow_up' : 'keyboard_arrow_down';
+  }
+
+  getIconType(): string {
+    if (!this.isTileExpandable()) {
+      return 'chevron-right-logo';
+    }
+    return this.isExpanded() ? 'chevron-up-logo' : 'chevron-down-logo';
+  }
+
+  protected readonly isNonNominalNotificationActivated = isNonNominalNotificationActivated;
 }

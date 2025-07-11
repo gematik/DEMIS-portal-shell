@@ -51,9 +51,9 @@ import { AuthService } from 'src/app/services/auth.service';
 import { KcConfigService } from 'src/app/services/kc-config.service';
 import { KcStorageService } from 'src/app/services/kc-storage.service';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
-import { WelcomeTileComponent } from './welcome-tile/welcome-tile.component';
 import { NgOptimizedImage } from '@angular/common';
 import { InfoBannerSectionComponent } from './info-banner-section/info-banner-section.component';
+import { WelcomeTileComponent } from './welcome-tile/welcome-tile.component';
 
 export function initIconLoaderService(iconLoaderService: IconLoaderService) {
   return (): Promise<void> => {

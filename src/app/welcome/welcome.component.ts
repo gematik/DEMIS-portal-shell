@@ -14,17 +14,16 @@
     For additional notes and disclaimer from gematik and in case of changes by gematik find details in the "Readme" file.
  */
 
-import { Component, computed, HostListener, inject, OnDestroy, OnInit, signal } from '@angular/core';
-import { AppConstants, isNewDesignActivated, isNonNominalNotificationActivated } from 'src/app/shared/app-constants';
+import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { AppConstants, isNonNominalNotificationActivated } from 'src/app/shared/app-constants';
 import { Subject, takeUntil } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/services';
 import { MessageDialogService } from '@gematik/demis-portal-core-library';
-import { WelcomeTileComponent } from '../welcome-tile/welcome-tile.component';
 import { NGXLogger } from 'ngx-logger';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { EqualHeightService } from 'src/app/shared/services/equal-height.service';
-import { WelcomeTileNewComponent } from '../welcome-tile-new/welcome-tile-new.component';
+import { WelcomeTileComponent } from '../welcome-tile/welcome-tile.component';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
@@ -86,7 +85,7 @@ export declare type WelcomeTileConfig = {
   templateUrl: './welcome.component.html',
   styleUrls: ['./welcome.component.scss'],
   standalone: true,
-  imports: [CommonModule, WelcomeTileComponent, WelcomeTileNewComponent, MatButton, MatIcon],
+  imports: [CommonModule, WelcomeTileComponent, MatButton, MatIcon, NgOptimizedImage],
 })
 export class WelcomeComponent implements OnInit, OnDestroy {
   private readonly oidcSecurityService = inject(OidcSecurityService);
@@ -94,9 +93,6 @@ export class WelcomeComponent implements OnInit, OnDestroy {
   private readonly equalHeightService = inject(EqualHeightService);
   userInfo = signal<UserInfo>(INITIAL_USER_INFORMATION);
   readonly isAuthenticated = computed(() => this.userInfo().isAuthenticated);
-
-  readonly tileContainerId = 'demis-welcome-tiles-container';
-  tileContentHeight: string | undefined = undefined;
 
   private unsubscriber = new Subject<void>();
   private authService = inject(AuthService);
@@ -111,18 +107,6 @@ export class WelcomeComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.unsubscriber.next();
     this.unsubscriber.complete();
-  }
-
-  @HostListener('window:resize', ['$event'])
-  adjustTileContentHeights() {
-    const contentContainers = document.getElementById(this.tileContainerId)?.getElementsByClassName('tile-content-paragraphs');
-
-    if (!contentContainers || contentContainers.length === 0) {
-      this.logger.debug('No content containers found for adjusting tile content heights.');
-      return;
-    }
-
-    this.equalHeightService.adjustElementParentHeights(contentContainers);
   }
 
   login(): void {
@@ -147,22 +131,6 @@ export class WelcomeComponent implements OnInit, OnDestroy {
 
   get tiles(): WelcomeTileInfo[] {
     return [
-      // About (Mehr über DEMIS erfahren)
-      {
-        renderingCondition: !isNewDesignActivated(),
-        config: {
-          id: 'about',
-          titleTextRows: AppConstants.Titles.ABOUT,
-          tooltip: AppConstants.Tooltips.ABOUT,
-          destinationRouterLink: `/${AppConstants.PathSegments.ABOUT}`,
-          logoImage: {
-            src: 'assets/images/logos/DEMIS_Bildmarke_RGB_72dpi.png',
-            alt: 'DEMIS Logo',
-          },
-          contentParagraphs: [AppConstants.InfoTexts.ABOUT],
-          buttonLabel: 'Mehr über DEMIS erfahren',
-        },
-      },
       // Disease (Krankheit melden)
       {
         renderingCondition: this.userInfo().permissions.hasDiseaseNotificationSenderRole,
@@ -172,7 +140,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
           tooltip: AppConstants.Tooltips.CLICK_TO_REPORT,
           destinationRouterLink: `/${AppConstants.PathSegments.DISEASE_NOTIFICATION}`,
           logoImage: {
-            src: isNewDesignActivated() ? 'assets/images/disease-new.svg' : 'assets/images/hospitalisierung.png',
+            src: 'assets/images/disease.svg',
             alt: 'Logo der Erkrankungsmeldung',
           },
           contentParagraphs: [AppConstants.InfoTexts.DISEASE],
@@ -188,7 +156,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
           tooltip: AppConstants.Tooltips.CLICK_TO_REPORT,
           destinationRouterLink: `/${AppConstants.PathSegments.PATHOGEN_NOTIFICATION}`,
           logoImage: {
-            src: isNewDesignActivated() ? 'assets/images/pathogen-new.svg' : 'assets/images/erregernachweis_mikroskop.svg',
+            src: 'assets/images/pathogen.svg',
             alt: 'Logo Erregernachweis melden',
           },
           contentParagraphs: [AppConstants.InfoTexts.PATHOGEN],
@@ -225,7 +193,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
                 id: 'disease-non-nominal',
                 titleTextRows: DISEASE_NON_NOMINAL,
                 tooltip: AppConstants.Tooltips.CLICK_TO_REPORT,
-                destinationRouterLink: `/${AppConstants.PathSegments.DISEASE_NOTIFICATION}`,
+                destinationRouterLink: `/${AppConstants.PathSegments.DISEASE_NOTIFICATION_NON_NOMINAL}`,
                 contentParagraphs: [AppConstants.InfoTexts.DISEASE_NON_NOMINAL],
               },
             },
@@ -241,7 +209,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
           tooltip: AppConstants.Tooltips.CLICK_TO_REPORT,
           destinationRouterLink: `/${AppConstants.PathSegments.BED_OCCUPANCY}`,
           logoImage: {
-            src: isNewDesignActivated() ? 'assets/images/bedoccupancy-new.svg' : 'assets/images/Krankenhaus-Bett.svg',
+            src: 'assets/images/bedoccupancy.svg',
             alt: 'Logo der Bettenbelegung Meldung',
           },
           contentParagraphs: [AppConstants.InfoTexts.BED_OCCUPANCY],
@@ -257,12 +225,10 @@ export class WelcomeComponent implements OnInit, OnDestroy {
           tooltip: AppConstants.Tooltips.UPLOAD_INFO,
           destinationRouterLink: `/${AppConstants.PathSegments.SEQUENCE_NOTIFICATION}`,
           logoImage: {
-            src: isNewDesignActivated() ? 'assets/images/igs-new.svg' : 'assets/images/IGS.svg',
+            src: 'assets/images/igs.svg',
             alt: 'Logo der Bettenbelegung Meldung',
           },
-          contentParagraphs: isNewDesignActivated()
-            ? [AppConstants.InfoTexts.SEQUENCE_NOTIFICATION_NEW_DESIGN]
-            : [AppConstants.InfoTexts.SEQUENCE_NOTIFICATION],
+          contentParagraphs: [AppConstants.InfoTexts.SEQUENCE_NOTIFICATION],
           buttonLabel: 'Melden',
         },
       },
@@ -310,6 +276,5 @@ export class WelcomeComponent implements OnInit, OnDestroy {
 
   protected readonly environment = environment;
   protected readonly AppConstants = AppConstants;
-  protected readonly isNewDesignActivated = isNewDesignActivated;
   protected readonly isNonNominalNotificationActivated = isNonNominalNotificationActivated;
 }

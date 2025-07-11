@@ -24,7 +24,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 // don't shorten the import, or all tests will break
 import { AuthService } from './services/auth.service';
 import { NavigationEnd, Router } from '@angular/router';
-import { AppConstants, isNewDesignActivated } from './shared/app-constants';
+import { AppConstants } from './shared/app-constants';
 import { NavigationStateStore } from './services/navigation-state.service';
 
 @Component({
@@ -125,5 +125,4 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   protected readonly environment = environment;
-  protected readonly isNewDesignActivated = isNewDesignActivated;
 }
