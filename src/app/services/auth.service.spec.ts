@@ -16,34 +16,35 @@
 
 import { TestBed } from '@angular/core/testing';
 
-import { AuthService } from './auth.service';
 import { EventTypes, OidcClientNotification, OidcSecurityService, PublicEventsService } from 'angular-auth-oidc-client';
-import { instance, mock, when } from 'ts-mockito';
-import { of, Subject } from 'rxjs';
+import { MockBuilder, MockReset } from 'ng-mocks';
 import { NGXLogger } from 'ngx-logger';
+import { of, Subject } from 'rxjs';
+import { AuthService } from './auth.service';
 
 describe('AuthServiceService', () => {
   let service: AuthService;
   const TEST_ROLE = 'test_role';
 
-  let mockOidcSecurityService: OidcSecurityService;
-  let mockPublicEventsService: PublicEventsService;
-  let mockNgxLogger: NGXLogger;
   const publicEventSubject = new Subject<OidcClientNotification<any>>();
+
+  beforeEach(() =>
+    MockBuilder(AuthService)
+      .mock(OidcSecurityService, {
+        getAccessToken: jasmine.createSpy().and.returnValue(of('')),
+      })
+      .mock(PublicEventsService, {
+        registerForEvents: jasmine.createSpy().and.returnValue(publicEventSubject),
+      })
+      .mock(NGXLogger)
+  );
+
   beforeEach(() => {
-    mockOidcSecurityService = mock(OidcSecurityService);
-    mockPublicEventsService = mock(PublicEventsService);
-    mockNgxLogger = mock(NGXLogger);
-    TestBed.configureTestingModule({
-      providers: [
-        { provide: OidcSecurityService, useFactory: () => instance(mockOidcSecurityService) },
-        { provide: PublicEventsService, useFactory: () => instance(mockPublicEventsService) },
-        { provide: NGXLogger, useFactory: () => instance(mockNgxLogger) },
-      ],
-    });
-    when(mockOidcSecurityService.getAccessToken()).thenReturn(of(''));
-    when(mockPublicEventsService.registerForEvents()).thenReturn(publicEventSubject);
     service = TestBed.inject(AuthService);
+  });
+
+  afterEach(() => {
+    MockReset();
   });
 
   it('should be created !!', () => {
@@ -55,7 +56,11 @@ describe('AuthServiceService', () => {
     expect(tokenBefore).toBe('');
     expect(service.checkRole(TEST_ROLE)).toBeFalsy();
     const newToken = createToken(TEST_ROLE);
-    when(mockOidcSecurityService.getAccessToken()).thenReturn(of(newToken));
+
+    // Update the mock to return the new token
+    const oidcService = TestBed.inject(OidcSecurityService);
+    (oidcService.getAccessToken as jasmine.Spy).and.returnValue(of(newToken));
+
     // Check if $tokenChange is fired, too
     service.$tokenChanged.subscribe(() => {
       done();

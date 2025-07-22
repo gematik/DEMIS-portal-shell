@@ -1,32 +1,32 @@
 <div>
-  <mat-card id="tile-card-{{ config.id }}"
-            [ngClass]="{ 'tile-card': true, 'animated': animated && !isExpanded() }"
+  <mat-card id="tile-card-{{ config().id }}"
+            [ngClass]="{ 'tile-card': true, 'animated': animated() && !isExpanded() }"
             (click)="handleTileClick()"
             (keydown.enter)="handleTileClick()"
             tabindex="0"
-            [attr.title]="config.tooltip">
-    <div id="tile-content-{{ config.id }}" class="tile-content no-text-select">
-      <img id="tile-logo-{{ config.id }}" class="tile-logo"
-           [attr.src]="config?.logoImage.src"
-           [attr.alt]="config?.logoImage.alt"/>
-      <div id="tile-row-{{ config.id }}" class="tile-row">
-        <h2 id="tile-title-{{ config.id }}" class="tile-title">
-          {{ config.titleTextRows.join(' ') }}
+            [attr.title]="config().tooltip">
+    <div id="tile-content-{{ config().id }}" class="tile-content no-text-select">
+      <img id="tile-logo-{{ config().id }}" class="tile-logo"
+           [attr.src]="config()?.logoImage.src"
+           [attr.alt]="config()?.logoImage.alt"/>
+      <div id="tile-row-{{ config().id }}" class="tile-row">
+        <h2 id="tile-title-{{ config().id }}" class="tile-title">
+          {{ config().titleTextRows.join(' ') }}
         </h2>
-        <p id="tile-title-text-{{ config.id }}" class="tile-title-text">
-          {{ config.contentParagraphs[0] }}
+        <p id="tile-title-text-{{ config().id }}" class="tile-title-text">
+          {{ config().contentParagraphs[0] }}
         </p>
       </div>
       <mat-icon
-        id="tile-icon_{{ getIconType() }}-{{ config.id }}"
+        id="tile-icon_{{ getIconType() }}-{{ config().id }}"
         class="tile-icon">
         {{ getIconName() }}
       </mat-icon>
     </div>
     @if (isNonNominalNotificationActivated() && isTileExpandable() && isExpanded()) {
       <div class="sub-tiles-container">
-        @for (subTile of config.subTiles; track $index) {
-          @if (this.subTile.renderingCondition) {
+        @for (subTile of config().subTiles; track $index) {
+          @if (subTile.renderingCondition) {
             <button (click)="navigateTo(subTile.config.destinationRouterLink)"
                     class="sub-tile-button"
                     [title]="subTile.config.tooltip"

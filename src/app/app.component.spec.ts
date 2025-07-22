@@ -14,20 +14,35 @@
     For additional notes and disclaimer from gematik and in case of changes by gematik find details in the "Readme" file.
  */
 
-import { AppComponent } from './app.component';
-import { NGXLoggerMock } from 'ngx-logger/testing';
+import { Component } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { MaxHeightContentContainerComponent } from '@gematik/demis-portal-core-library';
 import { AuthenticatedResult, OidcSecurityService } from 'angular-auth-oidc-client';
-import { AuthService } from './services';
 import { MockBuilder, MockedComponentFixture, MockRender, MockService } from 'ng-mocks';
 import { NGXLogger } from 'ngx-logger';
-import { DemisAppModule } from './app.module';
-import { JwtHelperService } from '@auth0/angular-jwt';
+import { NGXLoggerMock } from 'ngx-logger/testing';
 import { BehaviorSubject, of } from 'rxjs';
 import { TestSetup } from '../test/test-setup';
-import { NavigationEnd, Router } from '@angular/router';
+import { ComponentInputs } from '../test/utils/input-signal-types';
+import { AppComponent } from './app.component';
+import { DemisAppModule } from './app.module';
+import { NavbarComponent } from './navbar/navbar.component';
+import { AuthService } from './services';
+
+// Mock component with automatic input handling
+@Component({
+  selector: 'gem-demis-max-height-content-container',
+  template: '<ng-content></ng-content>',
+  inputs: ['elementSelectorsToSubtract'], // Automatic input handling
+})
+class MockMaxHeightContentContainerComponent implements Partial<ComponentInputs<MaxHeightContentContainerComponent>> {
+  // All InputSignals are automatically available as @Input properties
+  // No manual type definition required!
+}
 
 describe('AppComponent', () => {
-  let fixture: MockedComponentFixture<AppComponent, AppComponent>;
+  let fixture: MockedComponentFixture<AppComponent, ComponentInputs<AppComponent>>;
   let component: AppComponent;
 
   const mockRouter = {
@@ -42,7 +57,10 @@ describe('AppComponent', () => {
   beforeEach(() => ((window as any)['config'] = TestSetup.CONFIG));
 
   beforeEach(() =>
-    MockBuilder(AppComponent, DemisAppModule)
+    MockBuilder(AppComponent)
+      .keep(DemisAppModule)
+      .replace(MaxHeightContentContainerComponent, MockMaxHeightContentContainerComponent)
+      .mock(NavbarComponent)
       .mock(AuthService)
       .mock(JwtHelperService)
       .provide({ provide: Router, useValue: mockRouter })

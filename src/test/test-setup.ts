@@ -17,7 +17,7 @@
 import { AppConstants } from '../app/shared/app-constants';
 
 export class TestSetup {
-  static CONFIG = {
+  static readonly CONFIG = {
     featureFlags: {
       CONFIG_TOKEN_INJECTION_ENABLED: true,
       FEATURE_FLAG_NON_NOMINAL_NOTIFICATION: true,
@@ -25,7 +25,7 @@ export class TestSetup {
     },
   };
 
-  static JWT_ROLES = [
+  static readonly JWT_ROLES = [
     {
       roles: [AppConstants.Roles.BED_OCCUPANCY_SENDER],
       link: 'a-to-bed-occupancy',

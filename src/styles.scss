@@ -1,12 +1,11 @@
 //#region GlobalImports
 
 // Nur bootstraps grid-system nutzen
-@import 'node_modules/bootstrap/scss/bootstrap-grid';
+@use 'node_modules/bootstrap/scss/bootstrap-grid';
 
-// Deprecated
-@import 'styles/demis-color-and-palettes';
-// Colors and Palettes
-@import 'styles/colors';
+// Colors and Palettes FIRST (needed for theme)
+@use 'styles/demis-color-and-palettes';
+@use 'styles/colors';
 //#endregion GlobalImports
 
 $button-border-radius: 24px;
@@ -30,7 +29,7 @@ app-root,
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: $color-primary;
+  color: colors.$color-primary;
 }
 
 //TODO: moved here from pathogen; needed for all h2 spacing between e.g. Einrichtung and above text paragraph
@@ -43,7 +42,7 @@ h2 {
 
 //#region MaterialStyles
 .mat-sidenav, .mat-drawer {
-  border-right-color: $color-demis-stroke !important;
+  border-right-color: demis-color-and-palettes.$color-demis-stroke !important;
   border-top-right-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
 }
@@ -73,7 +72,7 @@ app-side-navigation {
 .material-icons.md-48 {
   margin-top: 5px;
   margin-right: 5px;
-  color: $color-primary;
+  color: colors.$color-primary;
 }
 
 // navbar styling - must stay here atm to work for other microfrontends
@@ -147,7 +146,7 @@ app-paste-box {
     padding: 8px 16px !important;
     align-items: center;
     cursor: pointer;
-    border: 1px $color-primary solid;
+    border: 1px colors.$color-primary solid;
   }
 
   &.back[disabled] {
@@ -156,7 +155,7 @@ app-paste-box {
 
   &.forward {
     margin-left: 10px;
-    border: 1px $color-primary solid;
+    border: 1px colors.$color-primary solid;
   }
 
   &.color:hover {
@@ -165,11 +164,11 @@ app-paste-box {
 
   &.color {
     background-color: transparent;
-    color: $color-primary !important;
+    color: colors.$color-primary !important;
   }
 
   &.dark--color {
-    background-color: $color-primary;
+    background-color: colors.$color-primary;
     color: var(--color-white) !important;
   }
 

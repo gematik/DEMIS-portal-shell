@@ -1,13 +1,15 @@
 @use '@angular/material' as mat;
-@import './demis-color-and-palettes';
+@use './demis-color-and-palettes' as palettes;
 
-// Import the Angular Material typography mixin
+// Include Angular Material core styles FIRST
 @include mat.core();
 
 // Create palettes and typography for demis-theme
-$demis-notification-portal-light-primary: mat.m2-define-palette($mat-demis-primary-palette, 800, 400, 900);
-$demis-notification-portal-light-accent: mat.m2-define-palette($mat-demis-primary-palette, 800, 400, 900);
-$demis-notification-portal-light-warn: mat.m2-define-palette($mat-demis-primary-palette, 800, 400, 900);
+$demis-notification-portal-light-primary: mat.m2-define-palette(palettes.$mat-demis-primary-palette, 800, 400, 900);
+$demis-notification-portal-light-accent: mat.m2-define-palette(palettes.$mat-demis-primary-palette, 800, 400, 900);
+$demis-notification-portal-light-warn: mat.m2-define-palette(palettes.$mat-demis-primary-palette, 800, 400, 900);
+
+// Define typography
 $demis-typography: mat.m2-define-typography-config(
   //h1 - Title1
   $headline-5: mat.m2-define-typography-level(24px, 32px, 400, 'Verdana, sans-serif', 0),
@@ -18,7 +20,7 @@ $demis-typography: mat.m2-define-typography-config(
     //h4 - Callout
   $subtitle-2: mat.m2-define-typography-level(16px, 21px, 400, 'Verdana, sans-serif', 0),
     //body - Body
-  $body-1: mat.m2-define-typography-level(14px, 19px, 400, 'Verdana, sans-serif' 0),
+  $body-1: mat.m2-define-typography-level(14px, 19px, 400, 'Verdana, sans-serif', 0),
     //footnote
   $body-2: mat.m2-define-typography-level(13px, 18px, 400, 'Verdana, sans-serif', 0),
     //caption - Caption1
@@ -26,59 +28,8 @@ $demis-typography: mat.m2-define-typography-config(
     //button
   $button: mat.m2-define-typography-level(14px, 19px, 400, 'Verdana, sans-serif', 0),
 );
-/* stylelint-disable value-keyword-case */
 
-// custom background and foreground palettes
-// according to Angular Material's _theming.scss
-// TODO: update and check if still relevant/working
-$demis-light-theme-foreground: (
-  base: map-get($mat-demis-gray-palette, 900),
-  divider: rgba($color-demis-black, .12),
-  dividers: rgba($color-demis-black, .12),
-  disabled: rgba($color-demis-black, .38),
-  disabled-button: rgba(map-get($mat-demis-gray-palette, 900), .26),
-  disabled-text: rgba($color-demis-black, .38),
-  elevation: map-get($mat-demis-gray-palette, 900),
-  hint-text: rgba($color-demis-black, .38),
-  secondary-text: rgba($color-demis-black, .54),
-  icon: rgba(map-get($mat-demis-gray-palette, 900), .54),
-  icons: rgba(map-get($mat-demis-gray-palette, 900), .54),
-  text: rgba($color-demis-black, .38),
-  slider-min: rgba(map-get($mat-demis-gray-palette, 900), .87),
-  slider-off: rgba(map-get($mat-demis-gray-palette, 900), .26),
-  slider-off-active: rgba(map-get($mat-demis-gray-palette, 900), .38),
-  navbar-demis: $color-demis-white
-);
-$demis-light-theme-background: (
-  status-bar:$color-demis-white,
-  app-bar: $color-demis-white,
-  // Dieser Wert wird auch für CheckBox Haken als .theme-demis-light .mat-checkbox-checkmark-path genutzt
-  background: $color-demis-white,
-  hover: rgba(map-get($mat-demis-gray-palette, 900), .04),
-  card: $color-demis-white,
-  dialog: $color-demis-white,
-  disabled-button: rgba(map-get($mat-demis-gray-palette, 900), .12),
-  raised-button: $color-demis-white,
-  focused-button: rgba($color-demis-black, .12),
-  selected-button: map-get($mat-demis-gray-palette, 300),
-  selected-disabled-button: map-get($mat-demis-gray-palette, 400),
-  disabled-button-toggle: map-get($mat-demis-gray-palette, 200),
-  unselected-chip: map-get($mat-demis-gray-palette, 300),
-  disabled-list-option: map-get($mat-demis-gray-palette, 200),
-  navbar-demis: $color-demis-blue
-);
-
-// Create the light theme
-$demis-notification-portal-light-theme: (
-  primary: $demis-notification-portal-light-primary,
-  accent: $demis-notification-portal-light-accent,
-  warn: $demis-notification-portal-light-warn,
-  foreground: $demis-light-theme-foreground,
-  background: $demis-light-theme-background
-);
-
-
-// Define demis-theme, important
+// Define the main theme  
 $demis-theme: mat.m2-define-light-theme((
   color: (
     primary: $demis-notification-portal-light-primary,
@@ -88,7 +39,7 @@ $demis-theme: mat.m2-define-light-theme((
   density: 0,
 ));
 
-// Apply the custom typography
+// Apply the theme styles
 @include mat.core-theme($demis-theme);
 @include mat.all-component-themes($demis-theme);
 @include mat.typography-hierarchy($demis-typography);

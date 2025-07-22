@@ -19,5 +19,6 @@ import { Component } from '@angular/core';
   selector: 'app-site-notice',
   templateUrl: './site-notice.component.html',
   styleUrls: ['./site-notice.component.scss'],
+  standalone: false,
 })
 export class SiteNoticeComponent {}

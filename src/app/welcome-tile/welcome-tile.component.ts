@@ -15,7 +15,7 @@
  */
 
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject, Input, Signal, signal, WritableSignal } from '@angular/core';
+import { Component, computed, inject, Signal, signal, WritableSignal, input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { Router, RouterModule } from '@angular/router';
@@ -25,18 +25,20 @@ import { isNonNominalNotificationActivated } from '../shared/app-constants';
 
 @Component({
   selector: 'app-welcome-tile',
-  standalone: true,
   imports: [CommonModule, MatCardModule, RouterModule, MatButtonModule, MatIcon],
   templateUrl: './welcome-tile.component.html',
   styleUrl: './welcome-tile.component.scss',
 })
 export class WelcomeTileComponent {
-  @Input({ required: true }) config: WelcomeTileConfig;
-  @Input() animated: boolean = false;
-  @Input() contentHeight?: string;
+  readonly config = input.required<WelcomeTileConfig>();
+  readonly animated = input<boolean>(false);
+  readonly contentHeight = input<string>();
 
   isExpanded: WritableSignal<boolean> = signal(false);
-  isTileExpandable: Signal<boolean> = computed(() => !!this.config.subTiles && this.config.subTiles.length > 0);
+  isTileExpandable: Signal<boolean> = computed(() => {
+    const config = this.config();
+    return !!config.subTiles && config.subTiles.length > 0;
+  });
 
   router = inject(Router);
 
@@ -48,7 +50,7 @@ export class WelcomeTileComponent {
     if (this.isTileExpandable()) {
       this.changeIsExpandedState();
     } else {
-      this.navigateTo(this.config.destinationRouterLink as string);
+      this.navigateTo(this.config().destinationRouterLink as string);
     }
   }
 

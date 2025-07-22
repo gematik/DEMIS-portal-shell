@@ -19,9 +19,10 @@ import { MockBuilder, MockedComponentFixture, MockRender } from 'ng-mocks';
 import { WelcomeTileConfig } from '../welcome/welcome.component';
 import { Router } from '@angular/router';
 import { TestBed } from '@angular/core/testing';
+import { ComponentInputs } from '../../test/utils/input-signal-types';
 
 describe('WelcomeTileComponent', () => {
-  let fixture: MockedComponentFixture<WelcomeTileComponent, Partial<WelcomeTileComponent>>;
+  let fixture: MockedComponentFixture<WelcomeTileComponent, ComponentInputs<WelcomeTileComponent>>;
   let component: WelcomeTileComponent;
 
   let router: Router;
@@ -57,13 +58,13 @@ describe('WelcomeTileComponent', () => {
   });
 
   it('should have initial config', () => {
-    expect(component.config.id).toBe(initConfig.id);
-    expect(component.config.titleTextRows).toBe(initConfig.titleTextRows);
-    expect(component.config.tooltip).toBe(initConfig.tooltip);
-    expect(component.config.destinationRouterLink).toBe(initConfig.destinationRouterLink);
-    expect(component.config.logoImage).toBe(initConfig.logoImage);
-    expect(component.config.contentParagraphs).toBe(initConfig.contentParagraphs);
-    expect(component.config.buttonLabel).toBe(initConfig.buttonLabel);
+    expect(component.config().id).toBe(initConfig.id);
+    expect(component.config().titleTextRows).toEqual(initConfig.titleTextRows);
+    expect(component.config().tooltip).toBe(initConfig.tooltip);
+    expect(component.config().destinationRouterLink).toBe(initConfig.destinationRouterLink);
+    expect(component.config().logoImage).toEqual(initConfig.logoImage);
+    expect(component.config().contentParagraphs).toEqual(initConfig.contentParagraphs);
+    expect(component.config().buttonLabel).toBe(initConfig.buttonLabel);
   });
 
   describe('changeIsExpandedState', () => {
@@ -91,7 +92,7 @@ describe('WelcomeTileComponent', () => {
 
     it('should navigate to destination when tile is not expandable', () => {
       spyOn(component, 'isTileExpandable').and.returnValue(false);
-      component.config.destinationRouterLink = '/test-route';
+      component.config().destinationRouterLink = '/test-route';
 
       component.handleTileClick();
 

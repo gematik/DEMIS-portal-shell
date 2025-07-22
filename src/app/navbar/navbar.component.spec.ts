@@ -20,7 +20,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
-import { MockBuilder, MockedComponentFixture, MockInstance, MockRender, MockService, ngMocks } from 'ng-mocks';
+import { MockBuilder, MockedComponentFixture, MockInstance, MockProvider, MockRender, MockService, ngMocks } from 'ng-mocks';
 import { BehaviorSubject, ReplaySubject, Subject } from 'rxjs';
 import { TestSetup } from '../../test/test-setup';
 import { AuthService } from '../services';
@@ -29,6 +29,8 @@ import { PackageJsonService } from '../services/package-json.service';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AppConstants } from '../shared/app-constants';
 import { InfoBannerSectionComponent } from '../info-banner-section/info-banner-section.component';
+import { provideHttpClient } from '@angular/common/http';
+import { OidcSecurityService } from 'angular-auth-oidc-client';
 
 describe('Navbar Test', () => {
   let component: NavbarComponent;
@@ -72,6 +74,7 @@ describe('Navbar Test', () => {
       .keep(MatMenuModule)
       .keep(PackageJsonService)
       .keep(NoopAnimationsModule)
+      .provide(MockProvider(OidcSecurityService))
       .provide({
         provide: AuthService,
         useValue: {
@@ -91,7 +94,7 @@ describe('Navbar Test', () => {
     expect(component).toBeTruthy();
   });
 
-  //Test if menu-entries are correctly shown depending on user roles
+  // Test if menu-entries are correctly shown depending on user roles
   TestSetup.JWT_ROLES.forEach(parameter => {
     it(`check if role ${parameter.roles.join(',')} shows menu entry ${parameter.link}`, () => {
       createComponent();

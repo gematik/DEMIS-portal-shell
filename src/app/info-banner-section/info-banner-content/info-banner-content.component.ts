@@ -15,7 +15,7 @@
  */
 
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { InfoBannerStorageService } from 'src/app/services/info-banner-storage.service';
@@ -24,22 +24,21 @@ import { InfoBannerConfig, InfoBannerType } from 'src/environments/dynamic-envir
 
 @Component({
   selector: 'app-info-banner-content',
-  standalone: true,
   imports: [CommonModule, MatButtonModule, MatIconModule],
   templateUrl: './info-banner-content.component.html',
   styleUrl: './info-banner-content.component.scss',
 })
 export class InfoBannerContentComponent {
-  @Input({ required: true }) private config!: InfoBannerConfig;
+  readonly config = input.required<InfoBannerConfig>();
   private readonly markdownService = inject(MarkdownService);
   private readonly infoBannerStorageService = inject(InfoBannerStorageService);
 
   get bannerId(): string {
-    return this.config.id;
+    return this.config().id;
   }
 
   get bannerType(): InfoBannerType {
-    return this.config.type;
+    return this.config().type;
   }
 
   get bannerIcon(): string {
@@ -47,15 +46,15 @@ export class InfoBannerContentComponent {
   }
 
   get bannerContent(): string {
-    return this.markdownService.convertToSanitizedHtml(this.config.content); // Convert markdown content to sanitized HTML
+    return this.markdownService.convertToSanitizedHtml(this.config().content); // Convert markdown content to sanitized HTML
   }
 
   get isClosable(): boolean {
-    return this.config.closable;
+    return this.config().closable;
   }
 
   get moreInfoUrl(): string | undefined {
-    return this.config.moreInfo;
+    return this.config().moreInfo;
   }
 
   get hasActions(): boolean {

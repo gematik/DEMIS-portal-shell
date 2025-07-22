@@ -14,7 +14,7 @@
     For additional notes and disclaimer from gematik and in case of changes by gematik find details in the "Readme" file.
  */
 
-import { Component, inject, Input, OnDestroy, OnInit, Signal } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, Signal, input } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router } from '@angular/router';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
@@ -28,9 +28,10 @@ import { PackageJsonService } from '../services/package-json.service';
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
+  standalone: false,
 })
 export class NavbarComponent implements OnInit, OnDestroy {
-  @Input() title: string;
+  readonly title = input<string>();
 
   activeTab: string = '';
   isLoggedIn: Signal<boolean>;

@@ -84,7 +84,6 @@ export declare type WelcomeTileConfig = {
   selector: 'app-welcome',
   templateUrl: './welcome.component.html',
   styleUrls: ['./welcome.component.scss'],
-  standalone: true,
   imports: [CommonModule, WelcomeTileComponent, MatButton, MatIcon, NgOptimizedImage],
 })
 export class WelcomeComponent implements OnInit, OnDestroy {
