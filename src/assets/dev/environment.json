@@ -37,23 +37,5 @@
     "CONFIG_TOKEN_INJECTION_ENABLED": true,
     "FEATURE_FLAG_NON_NOMINAL_NOTIFICATION": true,
     "FEATURE_FLAG_PORTAL_INFOBANNER": true
-  },
-  "infoBanners": [
-    {
-      "id": "e00265fe-4ce1-4966-be9a-e01c50fc1e1a",
-      "type": "warning",
-      "content": "Eine Warnung"
-    },
-    {
-      "id": "e00265fe-4ce1-4966-be9a-e01c50fc1e1b",
-      "type": "info",
-      "content": "Eine Info",
-      "closable": true
-    }
-  ],
-  "stageIndicator": {
-    "content": "**Achtung:** Sie befinden sich auf der DEMIS Testumgebung (QS). Bitte verwenden Sie keine personenbezogenen Daten.",
-    "moreInfo": "https://wiki.gematik.de/x/JQC7CQ",
-    "demisHomeLogoFile": "DEMIS-red.svg"
   }
 }

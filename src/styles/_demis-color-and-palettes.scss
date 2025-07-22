@@ -1,5 +1,5 @@
 // #region DEMIS-Colors-and-Palettes
-@import './colors';
+@use './colors' as colors;
 
 // deprecated, use _colors.scss instead
 :root {

@@ -2,6 +2,10 @@
 
 # Release portal-shell
 
+## Release 1.2.7
+
+- Upgraded to Angular 19
+
 ## Release 1.2.6
 
 - logo and text adaptions for § 7.3

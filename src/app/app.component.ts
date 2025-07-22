@@ -31,6 +31,7 @@ import { NavigationStateStore } from './services/navigation-state.service';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
+  standalone: false,
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'DEMIS-Meldeportal';
@@ -40,11 +41,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private authenticatedSubscription: Subscription;
   private authChangedSubscription: Subscription;
-  private jwtHelper = new JwtHelperService();
+  private readonly jwtHelper = new JwtHelperService();
 
-  private logger = inject(NGXLogger);
-  private oidcSecurityService = inject(OidcSecurityService);
-  private authService = inject(AuthService);
+  private readonly logger = inject(NGXLogger);
+  private readonly oidcSecurityService = inject(OidcSecurityService);
+  private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
   private readonly unsubscriber = new Subject<void>();
   isActiveTabHome: WritableSignal<boolean> = signal(false);
@@ -80,10 +81,10 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (!!this.authenticatedSubscription) {
+    if (this.authenticatedSubscription) {
       this.authenticatedSubscription.unsubscribe();
     }
-    if (!!this.authChangedSubscription) {
+    if (this.authChangedSubscription) {
       this.authChangedSubscription.unsubscribe();
     }
     this.unsubscriber.next();

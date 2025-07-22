@@ -32,7 +32,6 @@ import { InfoBannerContentComponent } from './info-banner-content/info-banner-co
  */
 @Component({
   selector: 'app-info-banner-section',
-  standalone: true,
   imports: [CommonModule, MatDividerModule, InfoBannerContentComponent],
   templateUrl: './info-banner-section.component.html',
   styleUrl: './info-banner-section.component.scss',

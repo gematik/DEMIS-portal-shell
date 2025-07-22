@@ -14,11 +14,15 @@
     For additional notes and disclaimer from gematik and in case of changes by gematik find details in the "Readme" file.
  */
 
-import { Component } from '@angular/core';
+import { MockRender } from 'ng-mocks';
 
-@Component({
-  selector: 'app-about',
-  templateUrl: './about.component.html',
-  standalone: false,
-})
-export class AboutComponent {}
+/**
+ * Extrahiert automatisch die InputSignal-Typen einer Komponente für ng-mocks.
+ *
+ * @example
+ * ```typescript
+ * type MyComponentInputs = ComponentInputs<MyComponent>;
+ * let fixture: MockedComponentFixture<MyComponent, MyComponentInputs>;
+ * ```
+ */
+export type ComponentInputs<T> = Parameters<typeof MockRender<T>>[1];

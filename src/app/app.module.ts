@@ -15,7 +15,7 @@
  */
 
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { NgModule, inject, provideAppInitializer } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
@@ -125,12 +125,10 @@ const authFactory = (configService: KcConfigService) => {
       provide: AbstractSecurityStorage,
       useClass: KcStorageService,
     },
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initIconLoaderService,
-      deps: [IconLoaderService],
-      multi: true,
-    },
+    provideAppInitializer(() => {
+      const initializerFn = initIconLoaderService(inject(IconLoaderService));
+      return initializerFn();
+    }),
     provideHttpClient(withInterceptorsFromDi()),
   ],
 })

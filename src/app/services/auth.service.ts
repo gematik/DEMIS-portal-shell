@@ -14,7 +14,7 @@
     For additional notes and disclaimer from gematik and in case of changes by gematik find details in the "Readme" file.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { EventTypes, OidcSecurityService, PublicEventsService } from 'angular-auth-oidc-client';
@@ -38,23 +38,24 @@ export interface Token {
   providedIn: 'root',
 })
 export class AuthService {
+  private readonly oidcSecurityService = inject(OidcSecurityService);
+  private readonly logger = inject(NGXLogger);
+  private readonly router = inject(Router);
+
   private _isAuthenticted = false;
   public $isAuthenticated = new BehaviorSubject<boolean>(false);
   public $tokenChanged = new Subject<void>();
   private token: Token | undefined | null;
   private useInjectedToken = false;
   private encodedToken = '';
-  private jwtHelperService = new JwtHelperService();
+  private readonly jwtHelperService = new JwtHelperService();
 
   private checkAuthSubscription: Subscription;
   unprotectedURLs: string[] = [...unprotectedRoutes.filter(p => !!p.path && p.path !== AppConstants.PathSegments.WELCOME).map(r => r.path as string)];
 
-  constructor(
-    private oidcSecurityService: OidcSecurityService,
-    publicEventsService: PublicEventsService,
-    private logger: NGXLogger,
-    private router: Router
-  ) {
+  constructor() {
+    const publicEventsService = inject(PublicEventsService);
+
     this.$isAuthenticated.next(false);
     this.refreshToken();
     publicEventsService.registerForEvents().subscribe(e => {
@@ -84,7 +85,7 @@ export class AuthService {
   }
 
   setToken(encodedToken: string): void {
-    if (!!encodedToken) {
+    if (encodedToken) {
       this.token = this.jwtHelperService.decodeToken(encodedToken);
       this.encodedToken = encodedToken;
       (window as any)['token'] = encodedToken;
@@ -133,7 +134,7 @@ export class AuthService {
   }
 
   checkLogin() {
-    if (!!this.checkAuthSubscription) {
+    if (this.checkAuthSubscription) {
       this.checkAuthSubscription.unsubscribe();
     }
     this.checkAuthSubscription = this.oidcSecurityService
