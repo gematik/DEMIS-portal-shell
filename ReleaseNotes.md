@@ -2,12 +2,16 @@
 
 # Release portal-shell
 
-## Release 1.2.7
+## Release 1.3.0
+- Added sub-tiles and routing for follow-up notification (FEATURE_FLAG_FOLLOW_UP_NOTIFICATION)
+- resized "Finanziert von der Europäischen Union" logo
+- Switched to the library implementation of the DEMIS theme using Portal-Theme
+- Add new API endpoints activated by feature flag FEATURE_FLAG_NEW_API_ENDPOINTS
 
+## Release 1.2.7
 - Upgraded to Angular 19
 
 ## Release 1.2.6
-
 - logo and text adaptions for § 7.3
 - added "Finanziert von der Europäischen Union" logo to landing page
 

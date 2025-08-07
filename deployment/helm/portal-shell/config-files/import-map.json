@@ -1,3 +1,4 @@
+{{- $endpointsRoot := ternary .Values.config.newApiEndpoints .Values.config (eq (.Values.config.featureFlags.FEATURE_FLAG_NEW_API_ENDPOINTS | toString) "true" ) }}
 {{- $imports := dict -}}
-{{- $_ := set $imports "imports" (.Values.config.importMap | required ".Values.config.importMap is required.") -}}
+{{- $_ := set $imports "imports" ((deepCopy $endpointsRoot.importMap | mergeOverwrite (deepCopy .Values.config.importMap) ) | required ".Values.config.importMap is required.") -}}
 {{- $imports | toPrettyJson -}}

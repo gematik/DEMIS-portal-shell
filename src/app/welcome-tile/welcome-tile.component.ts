@@ -15,12 +15,12 @@
  */
 
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject, Signal, signal, WritableSignal, input } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
+import { WelcomeTileConfig } from '../welcome/welcome.component';
+import { Router, RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { Router, RouterModule } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
-import { WelcomeTileConfig } from '../welcome/welcome.component';
 import { isNonNominalNotificationActivated } from '../shared/app-constants';
 
 @Component({
@@ -33,22 +33,18 @@ export class WelcomeTileComponent {
   readonly config = input.required<WelcomeTileConfig>();
   readonly animated = input<boolean>(false);
   readonly contentHeight = input<string>();
+  readonly isExpanded = input(false);
+  readonly toggle = output<void>();
+  readonly router = inject(Router);
 
-  isExpanded: WritableSignal<boolean> = signal(false);
-  isTileExpandable: Signal<boolean> = computed(() => {
+  isTileExpandable(): boolean {
     const config = this.config();
     return !!config.subTiles && config.subTiles.length > 0;
-  });
-
-  router = inject(Router);
-
-  changeIsExpandedState(): void {
-    this.isExpanded.update(prev => !prev);
   }
 
   handleTileClick(): void {
     if (this.isTileExpandable()) {
-      this.changeIsExpandedState();
+      this.toggle.emit();
     } else {
       this.navigateTo(this.config().destinationRouterLink as string);
     }

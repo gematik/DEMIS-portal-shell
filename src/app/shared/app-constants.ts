@@ -20,6 +20,10 @@ export function isNonNominalNotificationActivated(): boolean {
   return environment.featureFlags?.FEATURE_FLAG_NON_NOMINAL_NOTIFICATION ?? false;
 }
 
+export function isFollowUpNotificationActivated(): boolean {
+  return environment.featureFlags?.FEATURE_FLAG_FOLLOW_UP_NOTIFICATION ?? false;
+}
+
 export namespace AppConstants {
   export enum ShellPathSegments {
     ABOUT = 'about',
@@ -35,6 +39,7 @@ export namespace AppConstants {
     SITE_NOTICE = ShellPathSegments.SITE_NOTICE,
     PATHOGEN_NOTIFICATION = 'pathogen-notification',
     NON_NOMINAL = '/7.3/non-nominal',
+    PATHOGEN_NOTIFICATION_FOLLOW_UP = 'pathogen-notification/7.1/follow-up',
     PATHOGEN_NOTIFICATION_NON_NOMINAL = 'pathogen-notification/7.3/non-nominal',
     DISEASE_NOTIFICATION_NON_NOMINAL = 'disease-notification/7.3/non-nominal',
     PRIVACY_POLICY = ShellPathSegments.PRIVACY_POLICY,
@@ -73,6 +78,8 @@ export namespace AppConstants {
     BED_OCCUPANCY = 'Meldung der Krankenhausbettenbelegung gemäß § 13 Abs. 7 IfSG',
     DISEASE = 'Meldung von meldepflichtigen Infektionskrankheiten (z.B. bei Verdacht, Erkrankung oder Tod) gemäß § 6 Abs. 1 Nr. 1 und 1a IfSG sowie § 6 Abs. 2 IfSG',
     PATHOGEN = 'Meldung eines Nachweises von Krankheitserregern (inkl. positive Schnelltestergebnisse) gemäß § 7 Abs. 1 IfSG',
+    PATHOGEN_SHORT = 'Meldung eines Nachweises von Krankheitserregern gemäß § 7 Abs. 1 IfSG',
+    PATHOGEN_FOLLOW_UP = 'Nichtnamentliche Folgemeldung eines Erregernachweises gemäß § 7 Abs. 1 IfSG',
     NON_NOMINAL = 'Meldung eines Erregernachweises oder ärztliche Ergänzung gemäß § 7 Abs. 3 IfSG: C. trachomatis (L1-L3), Echinococcus spp., HIV, N. gonorrhoeae, T. gondii & T. pallidum',
     PATHOGEN_NON_NOMINAL = 'Meldung von meldepflichtigen Infektionskrankheiten gemäß § 7 Abs. 3 IfSG',
     DISEASE_NON_NOMINAL = 'Meldung eines Nachweises von Krankheitserregern gemäß § 7 Abs. 3 IfSG',
@@ -81,10 +88,8 @@ export namespace AppConstants {
 
   export namespace Titles {
     export const BED_OCCUPANCY = ['Bettenbelegung'];
-    export const DISEASE = ['Krankheit', 'melden'];
-    export const DISEASE_NEW = ['Meldung einer Krankheit gemäß § 6 IfSG'];
-    export const PATHOGEN = ['Erregernachweis', 'melden'];
-    export const PATHOGEN_NEW = ['Meldung eines Erregernachweises gemäß § 7 Abs. 1 IfSG'];
+    export const DISEASE = ['Meldung einer Krankheit gemäß § 6 IfSG'];
+    export const PATHOGEN = ['Meldung eines Erregernachweises gemäß § 7 Abs. 1 IfSG'];
     export const NON_NOMINAL = ['Meldung gemäß § 7 Abs. 3 IfSG'];
     export const PATHOGEN_NON_NOMINAL = ['Erregernachweis melden'];
     export const DISEASE_NON_NOMINAL = ['Ärztliche Ergänzungsmeldung'];
@@ -100,7 +105,6 @@ export namespace AppConstants {
 
   export enum Tooltips {
     CLICK_TO_REPORT = 'Klicken Sie, um einen neuen Fall zu melden',
-    //TODO richtige Texte hier
     CLICK_TO_OPEN = 'Klicken Sie, um zur Auswahl der Meldungsart zu kommen',
     UPLOAD_INFO = 'Klicken Sie, um einen neuen Fall hoch zu laden',
   }

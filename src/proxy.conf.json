@@ -5,7 +5,31 @@
     "logLevel": "debug",
     "changeOrigin": true
   },
+  "/gateway/pathogen": {
+    "target": "https://portal.ingress.local",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/gateway/disease": {
+    "target": "https://portal.ingress.local",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/gateway/bedoccupancy": {
+    "target": "https://portal.ingress.local",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
   "/fhir-ui-data-model-translation": {
+    "target": "https://portal.ingress.local",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/translation/ui-data-model": {
     "target": "https://portal.ingress.local",
     "secure": false,
     "logLevel": "debug",
@@ -19,11 +43,27 @@
     },
     "logLevel": "debug"
   },
+  "/portal/bedoccupancy": {
+    "target": "http://localhost:4201",
+    "secure": false,
+    "pathRewrite": {
+      "^/portal/bedoccupancy": ""
+    },
+    "logLevel": "debug"
+  },
   "/disease": {
     "target": "http://localhost:4202",
     "secure": false,
     "pathRewrite": {
       "^/disease": ""
+    },
+    "logLevel": "debug"
+  },
+  "/portal/disease": {
+    "target": "http://localhost:4202",
+    "secure": false,
+    "pathRewrite": {
+      "^/portal/disease": ""
     },
     "logLevel": "debug"
   },
@@ -35,11 +75,27 @@
     },
     "logLevel": "debug"
   },
+  "/portal/pathogen": {
+    "target": "http://localhost:4203",
+    "secure": false,
+    "pathRewrite": {
+      "^/portal/pathogen": ""
+    },
+    "logLevel": "debug"
+  },
   "/igs": {
     "target": "http://localhost:4204",
     "secure": false,
     "pathRewrite": {
       "^/igs": ""
+    },
+    "logLevel": "debug"
+  },
+  "/portal/igs": {
+    "target": "http://localhost:4204",
+    "secure": false,
+    "pathRewrite": {
+      "^/portal/igs": ""
     },
     "logLevel": "debug"
   },
@@ -56,6 +112,12 @@
     "logLevel": "debug"
   },
   "/services/hospital-locations": {
+    "target": "https://portal.ingress.local",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/directory/hospital": {
     "target": "https://portal.ingress.local",
     "secure": false,
     "logLevel": "debug",

@@ -5,11 +5,11 @@
 <mat-toolbar class="app-navbar-demis">
   <!-- #region PRODUCT LOGO -->
   @if (env.isLocal) {
-    <img id="img-local-indicator-logo" alt="local indicator Logo" src="assets/images/local-indicator.gif" />
+    <img id="img-local-indicator-logo" alt="local indicator Logo" src="assets/images/local-indicator.gif"/>
   }
 
   <button mat-button id="home-button" routerLink="/">
-    <img id="img-demis-logo" src="{{ demisLogoUrl }}" alt="DEMIS" />
+    <img id="img-demis-logo" src="{{ demisLogoUrl }}" alt="DEMIS"/>
   </button>
   <!-- #endregion PRODUCT LOGO -->
 
@@ -31,15 +31,30 @@
       </a>
     }
 
-    @if (showPathogenLinks) {
+    @if (!isFollowUpNotificationActivated() && (showPathogenLinks)) {
       <a id="a-to-pathogen" [class.active-tab]="isPathogenTabActive" [class.inactive-tab]="!isPathogenTabActive"
          mat-tab-link [routerLink]="C.PathSegments.PATHOGEN_NOTIFICATION" routerLinkActive="active">
         Erregernachweis (§ 7 Abs. 1 IfSG)
       </a>
     }
 
+    @if (isFollowUpNotificationActivated() && (showPathogenLinks)) {
+      <button id="btn-pathogen" class="navbar-menu-btn" mat-button [matMenuTriggerFor]="menu"
+              [class.active-tab]="isPathogenTabActive"
+              [class.inactive-tab]="!isPathogenTabActive">Erregernachweis (§ 7 Abs. 1 IfSG)
+        <mat-icon iconPositionEnd fontIcon="arrow_drop_down" class="btn__icon"></mat-icon>
+      </button>
+      <mat-menu #menu="matMenu" class="menu-width_pathogen">
+        <a id="a-to-pathogen-nominal"
+           mat-menu-item [routerLink]="C.PathSegments.PATHOGEN_NOTIFICATION">Erregernachweis</a>
+        <a id="a-to-pathogen-follow-up" mat-menu-item [routerLink]="C.PathSegments.PATHOGEN_NOTIFICATION_FOLLOW_UP">Nichtnamentliche
+          Folgemeldung</a>
+      </mat-menu>
+    }
+
     @if (isNonNominalNotificationActivated() && (showNonNominalLinks)) {
-      <button id="btn-non-nominal" mat-button [matMenuTriggerFor]="menu" [class.active-tab]="isNonNominalTabActive"
+      <button class="navbar-menu-btn" id="btn-non-nominal" mat-button [matMenuTriggerFor]="menu"
+              [class.active-tab]="isNonNominalTabActive"
               [class.inactive-tab]="!isNonNominalTabActive">§ 7 Abs. 3 IfSG
         <mat-icon iconPositionEnd fontIcon="arrow_drop_down" class="btn__icon"></mat-icon>
       </button>
@@ -50,6 +65,7 @@
           Ergänzungsmeldung</a>
       </mat-menu>
     }
+
 
     @if (hasBedOccupencySenderRole) {
       <a id="a-to-bed-occupancy" [class.active-tab]="activeTab === C.Tabs.BED_OCCUPANCY"

@@ -39,6 +39,7 @@ export interface FeatureFlags {
   CONFIG_TOKEN_INJECTION_ENABLED?: boolean;
   FEATURE_FLAG_NON_NOMINAL_NOTIFICATION?: boolean;
   FEATURE_FLAG_PORTAL_INFOBANNER?: boolean;
+  FEATURE_FLAG_FOLLOW_UP_NOTIFICATION?: boolean;
 }
 
 interface GatewayPaths {
