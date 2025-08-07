@@ -22,6 +22,7 @@ export class TestSetup {
       CONFIG_TOKEN_INJECTION_ENABLED: true,
       FEATURE_FLAG_NON_NOMINAL_NOTIFICATION: true,
       FEATURE_FLAG_PORTAL_INFOBANNER: true,
+      FEATURE_FLAG_FOLLOW_UP_NOTIFICATION: true,
     },
   };
 
@@ -30,12 +31,6 @@ export class TestSetup {
       roles: [AppConstants.Roles.BED_OCCUPANCY_SENDER],
       link: 'a-to-bed-occupancy',
       tile: 'welcome-tile-bed-occupancy',
-      doNegativeTest: true,
-    },
-    {
-      roles: [AppConstants.Roles.PATHOGEN_NOTIFICATION_SENDER],
-      link: 'a-to-pathogen',
-      tile: 'welcome-tile-pathogen',
       doNegativeTest: true,
     },
     {

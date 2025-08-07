@@ -7,8 +7,8 @@
             [attr.title]="config().tooltip">
     <div id="tile-content-{{ config().id }}" class="tile-content no-text-select">
       <img id="tile-logo-{{ config().id }}" class="tile-logo"
-           [attr.src]="config()?.logoImage.src"
-           [attr.alt]="config()?.logoImage.alt"/>
+           [attr.src]="config()?.logoImage!.src"
+           [attr.alt]="config()?.logoImage!.alt"/>
       <div id="tile-row-{{ config().id }}" class="tile-row">
         <h2 id="tile-title-{{ config().id }}" class="tile-title">
           {{ config().titleTextRows.join(' ') }}
@@ -23,11 +23,11 @@
         {{ getIconName() }}
       </mat-icon>
     </div>
-    @if (isNonNominalNotificationActivated() && isTileExpandable() && isExpanded()) {
+    @if (isTileExpandable() && isExpanded()) {
       <div class="sub-tiles-container">
         @for (subTile of config().subTiles; track $index) {
           @if (subTile.renderingCondition) {
-            <button (click)="navigateTo(subTile.config.destinationRouterLink)"
+            <button (click)="navigateTo(subTile.config?.destinationRouterLink)"
                     class="sub-tile-button"
                     [title]="subTile.config.tooltip"
                     id="sub-tile-button-{{ subTile.config.id }}">

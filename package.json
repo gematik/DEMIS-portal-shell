@@ -1,6 +1,6 @@
 {
   "name": "portal-shell",
-  "version": "1.2.5-snapshot",
+  "version": "1.2.8-snapshot",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -31,7 +31,8 @@
     "@angular/platform-browser-dynamic": "19.2.14",
     "@angular/router": "19.2.14",
     "@auth0/angular-jwt": "5.2.0",
-    "@gematik/demis-portal-core-library": "2.0.2",
+    "@gematik/demis-portal-core-library": "2.0.3",
+    "@gematik/demis-portal-theme-library": "1.0.1",
     "@ngrx/signals": "19.2.1",
     "angular-auth-oidc-client": "19.0.1",
     "bootstrap": "5.3.7",

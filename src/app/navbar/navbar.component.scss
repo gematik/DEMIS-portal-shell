@@ -1,12 +1,16 @@
-@use 'src/styles/colors' as colors;
-
 .toolbar-spacer {
   flex: 1 1 auto;
 }
 
 .mat-toolbar {
-  //TODO: workaround: --mat-app-background-color: #faf9fd; is set explicitly and unset makes it white again/default which will be default in future
-  background-color: colors.$color-white;
+  // TODO: workaround: --mat-app-background-color: #faf9fd; is set explicitly and unset makes it white again/default which will be default in future
+  background-color: var(--color-white);
+}
+
+
+// sets submenu width to button width
+::ng-deep .menu-width_pathogen {
+  min-width: 336px !important;
 }
 
 .navbar-tab-group {
@@ -18,11 +22,11 @@
     line-height: 22px;
 
     &:hover {
-      background-color: colors.$color-neutral-lighter;
+      background-color: var(--color-neutral-lighter);
     }
   }
 
-  #btn-non-nominal {
+  .navbar-menu-btn {
     height: 48px;
     display: inline-flex;
     align-items: center;
@@ -48,7 +52,7 @@
     font-size: 17px;
 
     &:hover {
-      background-color: colors.$color-neutral-lighter;
+      background-color: var(--color-neutral-lighter);
     }
   }
 
@@ -85,7 +89,7 @@
   }
 
   &:hover {
-    background-color: colors.$color-neutral-lighter;
+    background-color: var(--color-neutral-lighter);
   }
 }
 

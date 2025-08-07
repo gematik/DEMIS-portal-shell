@@ -14,13 +14,13 @@
     For additional notes and disclaimer from gematik and in case of changes by gematik find details in the "Readme" file.
  */
 
-import { Component, inject, OnDestroy, OnInit, Signal, input } from '@angular/core';
+import { Component, inject, input, OnDestroy, OnInit, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router } from '@angular/router';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { filter, Subject, takeUntil } from 'rxjs';
 import { AuthService } from 'src/app/services';
-import { AppConstants, isNonNominalNotificationActivated } from 'src/app/shared/app-constants';
+import { AppConstants, isFollowUpNotificationActivated, isNonNominalNotificationActivated } from 'src/app/shared/app-constants';
 import { environment } from 'src/environments/environment';
 import { PackageJsonService } from '../services/package-json.service';
 
@@ -132,4 +132,5 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   protected readonly isNonNominalNotificationActivated = isNonNominalNotificationActivated;
+  protected readonly isFollowUpNotificationActivated = isFollowUpNotificationActivated;
 }

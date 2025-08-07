@@ -85,6 +85,51 @@ describe('WelcomeComponent', () => {
       const diseaseTile = component.tiles.find(tile => tile.config.id === 'disease');
       expect(diseaseTile?.config.logoImage?.src).toBe('assets/images/disease.svg');
     });
+
+    it('should open a expandable tile, then open another expandable tile and close the first one', () => {
+      createComponent();
+      spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').and.returnValue(of(''));
+      fixture.point.injector.get(AuthService).$isAuthenticated = isAuthenticatedSubject;
+
+      spyOn(fixture.point.injector.get(AuthService), 'checkRole').and.callFake((role: string) => {
+        return [
+          AppConstants.Roles.PATHOGEN_NOTIFICATION_SENDER,
+          AppConstants.Roles.PATHOGEN_NOTIFICATION_NON_NOMINAL_SENDER,
+          AppConstants.Roles.DISEASE_NOTIFICATION_NON_NOMINAL_SENDER,
+        ].includes(role as AppConstants.Roles);
+      });
+
+      fixture.point.injector.get(AuthService).$tokenChanged.next();
+      ngMocks.flushTestBed();
+      createComponent();
+
+      // Make sure we have at least two tiles to test with
+      expect(
+        component.tiles.filter(t => t.renderingCondition && Array.isArray(t.config.subTiles) && t.config.subTiles.length > 0).length
+      ).toBeGreaterThanOrEqual(2);
+
+      // Initially no tile should be expanded
+      expect(component.expandedTileIndex()).toBeNull();
+
+      const nonNominalTileIndex = component.tiles.findIndex(tile => tile.config.id === 'non-nominal');
+      const pathogenTileIndex = component.tiles.findIndex(
+        tile => Array.isArray(tile.config.subTiles) && tile.config.subTiles.length > 0 && tile.config.id === 'pathogen'
+      );
+
+      // Expand the non-nominal tile
+      component.changeExpandedStateForTile(nonNominalTileIndex);
+      fixture.detectChanges();
+      expect(component.expandedTileIndex()).toBe(nonNominalTileIndex);
+
+      // Expand the pathogen tile
+      component.changeExpandedStateForTile(pathogenTileIndex);
+      fixture.detectChanges();
+
+      // The non-nominal tile should be closed and only the second should be expanded
+      expect(component.expandedTileIndex()).toBe(pathogenTileIndex);
+      expect(component.expandedTileIndex()).not.toBe(nonNominalTileIndex);
+    });
+
     TestSetup.JWT_ROLES.forEach(parameter => {
       it(`check if role(s) ${parameter.roles.join(',')} shows tile ${parameter.tile}`, () => {
         createComponent();

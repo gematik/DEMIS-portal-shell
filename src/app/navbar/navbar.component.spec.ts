@@ -29,7 +29,6 @@ import { PackageJsonService } from '../services/package-json.service';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AppConstants } from '../shared/app-constants';
 import { InfoBannerSectionComponent } from '../info-banner-section/info-banner-section.component';
-import { provideHttpClient } from '@angular/common/http';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
 
 describe('Navbar Test', () => {
@@ -60,7 +59,7 @@ describe('Navbar Test', () => {
       },
     },
     navigateByUrl: jasmine.createSpy('navigateByUrl'),
-    createUrlTree: jasmine.createSpy('createUrlTree').and.returnValue('/mock-url-tree'),
+    createUrlTree: jasmine.createSpy('createUrlTree'),
     navigate: jasmine.createSpy('navigate'),
     serializeUrl: jasmine.createSpy('serializeUrl').and.callFake((urlTree: any) => urlTree),
   };
@@ -166,6 +165,21 @@ describe('Navbar Test', () => {
     fixture.detectChanges();
 
     expect(router.navigateByUrl).toHaveBeenCalledWith('/disease-notification/7.3/non-nominal');
+  });
+  it('should display the pathogen menu items', async () => {
+    createComponent();
+    spyOn(fixture.point.injector.get(AuthService), 'checkRole').and.callFake((role: string) => AppConstants.Roles.PATHOGEN_NOTIFICATION_SENDER === role);
+    ngMocks.flushTestBed();
+    createComponent();
+
+    const button = fixture.point.nativeElement.querySelector('#btn-pathogen');
+    button.click();
+    fixture.detectChanges();
+
+    const menuItemFollowUp = document.querySelector('#a-to-pathogen-follow-up') as HTMLElement;
+    expect(menuItemFollowUp).toBeTruthy();
+    const menuItemNominal = document.querySelector('#a-to-pathogen-nominal') as HTMLElement;
+    expect(menuItemNominal).toBeTruthy();
   });
 
   it('should have no active tab when initially loaded', () => {

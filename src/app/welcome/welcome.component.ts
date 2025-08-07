@@ -15,7 +15,7 @@
  */
 
 import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
-import { AppConstants, isNonNominalNotificationActivated } from 'src/app/shared/app-constants';
+import { AppConstants, isFollowUpNotificationActivated, isNonNominalNotificationActivated } from 'src/app/shared/app-constants';
 import { Subject, takeUntil } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/services';
@@ -73,7 +73,7 @@ export declare type WelcomeTileConfig = {
   id: string;
   titleTextRows: string[];
   tooltip: string;
-  destinationRouterLink: string | UrlTree;
+  destinationRouterLink?: string | UrlTree;
   logoImage?: LogoImage;
   contentParagraphs: string[];
   buttonLabel?: string;
@@ -92,10 +92,15 @@ export class WelcomeComponent implements OnInit, OnDestroy {
   private readonly equalHeightService = inject(EqualHeightService);
   userInfo = signal<UserInfo>(INITIAL_USER_INFORMATION);
   readonly isAuthenticated = computed(() => this.userInfo().isAuthenticated);
+  readonly expandedTileIndex = signal<number | null>(null);
 
   private unsubscriber = new Subject<void>();
   private authService = inject(AuthService);
   private messageDialogService = inject(MessageDialogService);
+
+  changeExpandedStateForTile(index: number) {
+    this.expandedTileIndex.update(current => (current === index ? null : index));
+  }
 
   ngOnInit() {
     this.authService.$tokenChanged.pipe(takeUntil(this.unsubscriber)).subscribe(() => this.refreshUserInfo());
@@ -128,6 +133,10 @@ export class WelcomeComponent implements OnInit, OnDestroy {
     return this.showNonNominalTile;
   }
 
+  get showFollowUpTile() {
+    return this.isFollowUpNotificationActivated() && this.showPathogenTile;
+  }
+
   get tiles(): WelcomeTileInfo[] {
     return [
       // Disease (Krankheit melden)
@@ -135,7 +144,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
         renderingCondition: this.userInfo().permissions.hasDiseaseNotificationSenderRole,
         config: {
           id: 'disease',
-          titleTextRows: isNonNominalNotificationActivated() ? AppConstants.Titles.DISEASE_NEW : AppConstants.Titles.DISEASE,
+          titleTextRows: AppConstants.Titles.DISEASE,
           tooltip: AppConstants.Tooltips.CLICK_TO_REPORT,
           destinationRouterLink: `/${AppConstants.PathSegments.DISEASE_NOTIFICATION}`,
           logoImage: {
@@ -148,10 +157,10 @@ export class WelcomeComponent implements OnInit, OnDestroy {
       },
       // Pathogen (Erregernachweis melden)
       {
-        renderingCondition: this.showPathogenTile,
+        renderingCondition: this.showPathogenTile && !this.showFollowUpTile,
         config: {
           id: 'pathogen',
-          titleTextRows: isNonNominalNotificationActivated() ? AppConstants.Titles.PATHOGEN_NEW : AppConstants.Titles.PATHOGEN,
+          titleTextRows: AppConstants.Titles.PATHOGEN,
           tooltip: AppConstants.Tooltips.CLICK_TO_REPORT,
           destinationRouterLink: `/${AppConstants.PathSegments.PATHOGEN_NOTIFICATION}`,
           logoImage: {
@@ -160,6 +169,41 @@ export class WelcomeComponent implements OnInit, OnDestroy {
           },
           contentParagraphs: [AppConstants.InfoTexts.PATHOGEN],
           buttonLabel: 'Melden',
+        },
+      },
+      {
+        renderingCondition: this.showFollowUpTile,
+        config: {
+          id: 'pathogen',
+          titleTextRows: AppConstants.Titles.PATHOGEN,
+          tooltip: AppConstants.Tooltips.CLICK_TO_OPEN,
+          logoImage: {
+            src: 'assets/images/pathogen.svg',
+            alt: 'Logo Erregernachweis melden',
+          },
+          contentParagraphs: [AppConstants.InfoTexts.PATHOGEN],
+          subTiles: [
+            {
+              renderingCondition: this.showFollowUpTile,
+              config: {
+                id: 'pathogen-nominal',
+                titleTextRows: PATHOGEN_NON_NOMINAL,
+                tooltip: AppConstants.Tooltips.CLICK_TO_REPORT,
+                destinationRouterLink: `/${AppConstants.PathSegments.PATHOGEN_NOTIFICATION}`,
+                contentParagraphs: [AppConstants.InfoTexts.PATHOGEN_SHORT],
+              },
+            },
+            {
+              renderingCondition: this.showFollowUpTile,
+              config: {
+                id: 'pathogen-follow-up',
+                titleTextRows: ['Nichtnamentliche Folgemeldungen'],
+                tooltip: AppConstants.Tooltips.CLICK_TO_REPORT,
+                destinationRouterLink: `/${AppConstants.PathSegments.PATHOGEN_NOTIFICATION_FOLLOW_UP}`,
+                contentParagraphs: [AppConstants.InfoTexts.PATHOGEN_FOLLOW_UP],
+              },
+            },
+          ],
         },
       },
       // §7.3-er Meldungen
@@ -276,4 +320,5 @@ export class WelcomeComponent implements OnInit, OnDestroy {
   protected readonly environment = environment;
   protected readonly AppConstants = AppConstants;
   protected readonly isNonNominalNotificationActivated = isNonNominalNotificationActivated;
+  protected readonly isFollowUpNotificationActivated = isFollowUpNotificationActivated;
 }

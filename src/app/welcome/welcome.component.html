@@ -17,11 +17,14 @@
       }
     </div>
     <div id="welcome-tiles-container" class="row">
-      @for (tile of tiles; track $index) {
+      @for (tile of tiles; let index = $index; track index) {
         @if ((tile.renderingCondition === undefined) || tile.renderingCondition) {
           <app-welcome-tile class="column" id="welcome-tile-{{ tile.config.id }}"
-                                [config]="tile.config"
-                                [animated]="true"></app-welcome-tile>
+                            [config]="tile.config"
+                            [animated]="true"
+                            [isExpanded]="expandedTileIndex() === index"
+                            (toggle)="changeExpandedStateForTile(index)">
+          </app-welcome-tile>
         }
       }
     </div>
@@ -33,8 +36,8 @@
     <div class="EU-logo">
       <img ngSrc="assets/images/EU-logo.jpg" [priority]="true"
            alt="Finanziert von der Europäischen Union"
-           height="78"
-           width="300"
+           height="48"
+           width="185"
       >
     </div>
     <div class="authenticated-as" id="start-username">Eingeloggt als {{ userInfo().username }}</div>
@@ -43,8 +46,8 @@
   <div class="unauthenticated">
     <img ngSrc="assets/images/EU-logo.jpg" [priority]="true"
          alt="Finanziert von der Europäischen Union"
-         height="78"
-         width="300"
+         height="48"
+         width="185"
     >
   </div>
 }
