@@ -1,53 +1,41 @@
 <div [ngClass]="{ 'page-wrapper': isAuthenticated() }">
-  <div id="new-welcome-container" class="container">
-    <div>
-      <div id="welcome-texts-container">
-        <h2 id="welcome-demis-heading">Willkommen bei DEMIS</h2>
-        <p class="welcome-demis-text">{{ AppConstants.InfoTexts.ABOUT }}</p>
-        <p class="welcome-demis-text">{{ AppConstants.InfoTexts.KNOWLEDGE_DATABASE }}
-          <a target="_blank" rel="noopener noreferrer"
-             href="{{AppConstants.ExternalLinks.DEMIS_WDB}}">{{ AppConstants.Labels.DEMIS_KNOWLEDGE_DATABASE_LINK }}</a>
-        </p>
-      </div>
-      @if (!isAuthenticated()) {
+  <gem-demis-max-height-content-container [elementSelectorsToSubtract]="['app-navbar', 'footer']">
+    <div id="new-welcome-container" class="container">
+      <div>
+        <div id="welcome-texts-container">
+          <h2 id="welcome-demis-heading">Willkommen bei DEMIS</h2>
+          <p class="welcome-demis-text">{{ AppConstants.InfoTexts.ABOUT }}</p>
+          <p class="welcome-demis-text">{{ AppConstants.InfoTexts.KNOWLEDGE_DATABASE }}
+            <a target="_blank" rel="noopener noreferrer" href="{{AppConstants.ExternalLinks.DEMIS_WDB}}">{{
+              AppConstants.Labels.DEMIS_KNOWLEDGE_DATABASE_LINK }}</a>
+          </p>
+        </div>
+        @if (!isAuthenticated()) {
         <button type="button" mat-button id="btn-welcome-auth-login" (click)="login()">
           Anmelden
           <mat-icon class="logIn-btn_chevron-right">chevron_right</mat-icon>
         </button>
-      }
-    </div>
-    <div id="welcome-tiles-container" class="row">
-      @for (tile of tiles; let index = $index; track index) {
-        @if ((tile.renderingCondition === undefined) || tile.renderingCondition) {
-          <app-welcome-tile class="column" id="welcome-tile-{{ tile.config.id }}"
-                            [config]="tile.config"
-                            [animated]="true"
-                            [isExpanded]="expandedTileIndex() === index"
-                            (toggle)="changeExpandedStateForTile(index)">
-          </app-welcome-tile>
         }
-      }
+      </div>
+      <div id="welcome-tiles-container" class="row">
+        @for (tile of tiles; let index = $index; track index) {
+        @if ((tile.renderingCondition === undefined) || tile.renderingCondition) {
+        <app-welcome-tile class="column" id="welcome-tile-{{ tile.config.id }}" [config]="tile.config" [animated]="true"
+          [isExpanded]="expandedTileIndex() === index" (toggle)="changeExpandedStateForTile(index)">
+        </app-welcome-tile>
+        }
+        }
+      </div>
     </div>
-  </div>
-</div>
+  </gem-demis-max-height-content-container>
 
-@if (isAuthenticated()) {
-  <footer class="footer">
+  <footer class="footer bottom-positioned">
     <div class="EU-logo">
-      <img ngSrc="assets/images/EU-logo.jpg" [priority]="true"
-           alt="Finanziert von der Europäischen Union"
-           height="48"
-           width="185"
-      >
+      <img ngSrc="assets/images/EU-logo.jpg" [priority]="true" alt="Finanziert von der Europäischen Union" height="48"
+        width="185">
     </div>
+    @if (isAuthenticated()) {
     <div class="authenticated-as" id="start-username">Eingeloggt als {{ userInfo().username }}</div>
+    }
   </footer>
-} @else {
-  <div class="unauthenticated">
-    <img ngSrc="assets/images/EU-logo.jpg" [priority]="true"
-         alt="Finanziert von der Europäischen Union"
-         height="48"
-         width="185"
-    >
-  </div>
-}
+</div>

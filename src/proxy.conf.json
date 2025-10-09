@@ -117,6 +117,12 @@
     "logLevel": "debug",
     "changeOrigin": true
   },
+  "/destination-lookup/v1": {
+    "target": "https://portal.ingress.local",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
   "/directory/hospital": {
     "target": "https://portal.ingress.local",
     "secure": false,

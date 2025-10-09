@@ -1,5 +1,4 @@
 .page-wrapper {
-  min-height: calc(100vh - 142px); //navbar height + footer height
   display: flex;
   flex-direction: column;
 }
@@ -26,7 +25,7 @@
   max-width: 980px;
 }
 
-.unauthenticated {
+.bottom-positioned {
   position: absolute;
   bottom: 0;
 }

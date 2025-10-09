@@ -2,6 +2,17 @@
 
 # Release portal-shell
 
+## Release 1.4.0
+
+- Fixed layout issues in the welcome component when information banners are displayed
+- Fixed layout issues with the footer and the tiles
+- Upgraded dependencies
+- Added test:coverage npm script to run a single test run with coverage report
+- Added destination-lookup route to proxy configuration
+- add configmap checksum as annotation to force pod restart on configmap change
+- Update @angular-devkit/build-angular to 19.2.17
+- Resolved focus issue with navbar menu buttons
+
 ## Release 1.3.0
 - Added sub-tiles and routing for follow-up notification (FEATURE_FLAG_FOLLOW_UP_NOTIFICATION)
 - resized "Finanziert von der Europäischen Union" logo

@@ -19,7 +19,7 @@ import { AppConstants, isFollowUpNotificationActivated, isNonNominalNotification
 import { Subject, takeUntil } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/services';
-import { MessageDialogService } from '@gematik/demis-portal-core-library';
+import { MaxHeightContentContainerComponent, MessageDialogService } from '@gematik/demis-portal-core-library';
 import { NGXLogger } from 'ngx-logger';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { EqualHeightService } from 'src/app/shared/services/equal-height.service';
@@ -84,7 +84,7 @@ export declare type WelcomeTileConfig = {
   selector: 'app-welcome',
   templateUrl: './welcome.component.html',
   styleUrls: ['./welcome.component.scss'],
-  imports: [CommonModule, WelcomeTileComponent, MatButton, MatIcon, NgOptimizedImage],
+  imports: [CommonModule, WelcomeTileComponent, MatButton, MatIcon, NgOptimizedImage, MaxHeightContentContainerComponent],
 })
 export class WelcomeComponent implements OnInit, OnDestroy {
   private readonly oidcSecurityService = inject(OidcSecurityService);
@@ -94,9 +94,9 @@ export class WelcomeComponent implements OnInit, OnDestroy {
   readonly isAuthenticated = computed(() => this.userInfo().isAuthenticated);
   readonly expandedTileIndex = signal<number | null>(null);
 
-  private unsubscriber = new Subject<void>();
-  private authService = inject(AuthService);
-  private messageDialogService = inject(MessageDialogService);
+  private readonly unsubscriber = new Subject<void>();
+  private readonly authService = inject(AuthService);
+  private readonly messageDialogService = inject(MessageDialogService);
 
   changeExpandedStateForTile(index: number) {
     this.expandedTileIndex.update(current => (current === index ? null : index));

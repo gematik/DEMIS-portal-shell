@@ -63,6 +63,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
       )
       .subscribe(() => {
         this.activeTab = this.router.routerState.snapshot.url.substring(1);
+
+        if (this.activeTab.includes(this.C.Tabs.HOME)) {
+          this.blurActiveMenuButtons();
+        }
         this.isPathogenTabActive = this.activeTab.includes(this.C.Tabs.PATHOGEN_TEST_RESULTS) && !this.activeTab.includes(this.C.PathSegments.NON_NOMINAL);
         this.isNonNominalTabActive = this.activeTab.includes(this.C.PathSegments.NON_NOMINAL);
       });
@@ -72,6 +76,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
     });
 
     this.setRoleControl();
+  }
+
+  blurActiveMenuButtons(): void {
+    const menuButtons = document.querySelectorAll('.navbar-menu-btn');
+    menuButtons.forEach((button: any) => {
+      if (button.blur) {
+        button.blur();
+      }
+    });
   }
 
   get FEATURE_FLAG_PORTAL_INFOBANNER() {

@@ -14,8 +14,8 @@
     For additional notes and disclaimer from gematik and in case of changes by gematik find details in the "Readme" file.
  */
 
-// Karma configuration file for local single run with full coverage reporting
-// Combines single run execution with comprehensive coverage reports
+// Karma configuration file for coverage testing
+// Based on karma.single-run.conf.js with enhanced coverage reporting
 
 module.exports = function (config) {
   config.set({
@@ -28,6 +28,7 @@ module.exports = function (config) {
       require('karma-coverage'),
       require('karma-sonarqube-unit-reporter'),
       require('@angular-devkit/build-angular/plugins/karma'),
+      require('karma-junit-reporter'),
     ],
     client: {
       jasmine: {
@@ -45,7 +46,12 @@ module.exports = function (config) {
     coverageReporter: {
       dir: require('path').join(__dirname, './coverage'),
       subdir: '.',
-      reporters: [{ type: 'html' }, { type: 'lcovonly' }, { type: 'text-summary' }, { type: 'cobertura' }],
+      reporters: [{ type: 'html' }, { type: 'text-summary' }, { type: 'lcovonly', file: 'lcov.info' }],
+    },
+    junitReporter: {
+      outputDir: require('path').join(__dirname, './coverage'),
+      outputFile: `TEST-${require('./package.json').name}.xml`,
+      useBrowserName: false,
     },
     sonarQubeUnitReporter: {
       sonarQubeVersion: 'LATEST',
@@ -55,7 +61,7 @@ module.exports = function (config) {
       testFilePattern: '.spec.ts',
       useBrowserName: false,
     },
-    reporters: ['progress', 'coverage', 'sonarqubeUnit'],
+    reporters: ['progress', 'coverage', 'junit', 'sonarqubeUnit'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,

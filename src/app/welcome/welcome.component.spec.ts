@@ -16,17 +16,17 @@
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MessageDialogService } from '@gematik/demis-portal-core-library';
+import { MaxHeightContentContainerComponent, MessageDialogService } from '@gematik/demis-portal-core-library';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { MockBuilder, MockedComponentFixture, MockRender, MockService, ngMocks } from 'ng-mocks';
 import { NGXLogger } from 'ngx-logger';
 import { BehaviorSubject, of, Subject } from 'rxjs';
 import { TestSetup } from '../../test/test-setup';
 import { AuthService } from '../services/auth.service';
+import { AppConstants } from '../shared/app-constants';
 import { EqualHeightService } from '../shared/services/equal-height.service';
 import { WelcomeTileComponent } from '../welcome-tile/welcome-tile.component';
 import { WelcomeComponent } from './welcome.component';
-import { AppConstants } from '../shared/app-constants';
 
 describe('WelcomeComponent', () => {
   let fixture: MockedComponentFixture<WelcomeComponent>;
@@ -48,6 +48,7 @@ describe('WelcomeComponent', () => {
 
   beforeEach(() =>
     MockBuilder([WelcomeComponent, WelcomeTileComponent])
+      .keep(MaxHeightContentContainerComponent)
       .mock(NGXLogger)
       .mock(EqualHeightService)
       .mock(MessageDialogService, { error: errorSpy })
