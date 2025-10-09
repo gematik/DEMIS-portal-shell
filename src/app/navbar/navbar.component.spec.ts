@@ -224,4 +224,35 @@ describe('Navbar Test', () => {
     expect(component.isPathogenTabActive).toBeFalse();
     expect(component.isNonNominalTabActive).toBeTrue();
   });
+
+  it('should blur all elements with class navbar-menu-btn', () => {
+    createComponent();
+    const btn1 = document.createElement('button');
+    btn1.classList.add('navbar-menu-btn');
+    const btn2 = document.createElement('button');
+    btn2.classList.add('navbar-menu-btn');
+
+    fixture.point.nativeElement.appendChild(btn1);
+    fixture.point.nativeElement.appendChild(btn2);
+
+    const spy1 = spyOn(btn1, 'blur');
+    const spy2 = spyOn(btn2, 'blur');
+
+    component.blurActiveMenuButtons();
+
+    expect(spy1).toHaveBeenCalledTimes(1);
+    expect(spy2).toHaveBeenCalledTimes(1);
+  });
+
+  it('should not throw if an element lacks a blur function', () => {
+    createComponent();
+    const div = document.createElement('div');
+    div.classList.add('navbar-menu-btn');
+    (div as any).blur = undefined;
+    fixture.point.nativeElement.appendChild(div);
+
+    expect(() => component.blurActiveMenuButtons()).not.toThrow();
+
+    div.remove();
+  });
 });
