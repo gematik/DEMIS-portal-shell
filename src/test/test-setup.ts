@@ -22,7 +22,8 @@ export class TestSetup {
       CONFIG_TOKEN_INJECTION_ENABLED: true,
       FEATURE_FLAG_NON_NOMINAL_NOTIFICATION: true,
       FEATURE_FLAG_PORTAL_INFOBANNER: true,
-      FEATURE_FLAG_FOLLOW_UP_NOTIFICATION: true,
+      FEATURE_FLAG_FOLLOW_UP_NOTIFICATION_PORTAL_PATHOGEN: true,
+      FEATURE_FLAG_FOLLOW_UP_NOTIFICATION_PORTAL_DISEASE: true,
     },
   };
 
@@ -34,12 +35,6 @@ export class TestSetup {
       doNegativeTest: true,
     },
     {
-      roles: [AppConstants.Roles.DISEASE_NOTIFICATION_SENDER],
-      link: 'a-to-disease',
-      tile: 'welcome-tile-disease',
-      doNegativeTest: true,
-    },
-    {
       roles: [
         AppConstants.Roles.IGS_SEQUENCE_DATA_SENDER,
         AppConstants.Roles.IGS_NOTIFICATION_DATA_SENDER_FASTA_ONLY,
@@ -47,6 +42,41 @@ export class TestSetup {
       ],
       link: 'a-to-sequence-notification',
       tile: 'welcome-tile-sequence-notification',
+      doNegativeTest: true,
+    },
+  ];
+
+  static readonly JWT_ROLES_EXPANDABLE_TILES = [
+    {
+      id: 'disease',
+      roles: [AppConstants.Roles.DISEASE_NOTIFICATION_SENDER],
+      tile: 'welcome-tile-disease',
+      subTiles: [
+        {
+          tile: 'sub-tile-button-disease-nominal',
+          link: '/disease-notification',
+        },
+        {
+          tile: 'sub-tile-button-disease-follow-up',
+          link: 'disease-notification/6.1/follow-up',
+        },
+      ],
+      doNegativeTest: true,
+    },
+    {
+      id: 'pathogen',
+      roles: [AppConstants.Roles.PATHOGEN_NOTIFICATION_SENDER],
+      tile: 'welcome-tile-pathogen',
+      subTiles: [
+        {
+          tile: 'sub-tile-button-pathogen-nominal',
+          link: '/pathogen-notification',
+        },
+        {
+          tile: 'sub-tile-button-pathogen-follow-up',
+          link: 'pathogen-notification/7.1/follow-up',
+        },
+      ],
       doNegativeTest: true,
     },
   ];

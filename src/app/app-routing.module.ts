@@ -106,6 +106,18 @@ const protectedRoutes: Routes = [
     ],
   },
   {
+    path: AppConstants.PathSegments.DISEASE_NOTIFICATION_FOLLOW_UP,
+    canActivate: [kcAuthGuard, roleGuard],
+    data: { role: AppConstants.Roles.DISEASE_NOTIFICATION_SENDER },
+    children: [
+      {
+        path: '**',
+        loadChildren: () => import('src/app/spa-host/spa-host.module').then(m => m.SpaHostModule),
+        data: { app: 'notification-portal-mf-disease' },
+      },
+    ],
+  },
+  {
     path: AppConstants.PathSegments.DISEASE_NOTIFICATION_NON_NOMINAL,
     canActivate: [kcAuthGuard, roleGuard],
     data: { role: AppConstants.Roles.DISEASE_NOTIFICATION_NON_NOMINAL_SENDER },

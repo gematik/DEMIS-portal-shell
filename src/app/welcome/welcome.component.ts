@@ -15,7 +15,13 @@
  */
 
 import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
-import { AppConstants, isFollowUpNotificationActivated, isNonNominalNotificationActivated } from 'src/app/shared/app-constants';
+import {
+  AppConstants,
+  FEATURE_FLAG_PORTAL_HEADER_FOOTER,
+  isFollowUpNotificationDiseaseActivated,
+  isFollowUpNotificationPathogenActivated,
+  isNonNominalNotificationActivated,
+} from 'src/app/shared/app-constants';
 import { Subject, takeUntil } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/services';
@@ -28,7 +34,6 @@ import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { UrlTree } from '@angular/router';
-import PATHOGEN_NON_NOMINAL = AppConstants.Titles.PATHOGEN_NON_NOMINAL;
 import DISEASE_NON_NOMINAL = AppConstants.Titles.DISEASE_NON_NOMINAL;
 
 declare type UserPermissions = {
@@ -117,8 +122,12 @@ export class WelcomeComponent implements OnInit, OnDestroy {
     this.oidcSecurityService.authorize();
   }
 
-  get showPathogenTile() {
+  get hasPathogenNotificationRole() {
     return this.userInfo().permissions.hasPathogenNotificationRole;
+  }
+
+  get hasDiseaseNotificationSenderRole() {
+    return this.userInfo().permissions.hasDiseaseNotificationSenderRole;
   }
 
   get showIGSTile() {
@@ -129,19 +138,27 @@ export class WelcomeComponent implements OnInit, OnDestroy {
     return this.isNonNominalNotificationActivated() && this.userInfo().permissions.hasNonNominalNotificationSenderRole;
   }
 
-  get showNonNominalSubTiles() {
-    return this.showNonNominalTile;
+  get showPathogenExpandableTile() {
+    return this.isFollowUpNotificationPathogenActivated() && this.hasPathogenNotificationRole;
   }
 
-  get showFollowUpTile() {
-    return this.isFollowUpNotificationActivated() && this.showPathogenTile;
+  get showDiseaseExpandableTile() {
+    return this.isFollowUpNotificationDiseaseActivated() && this.hasDiseaseNotificationSenderRole;
+  }
+
+  get showPathogenNominalTile() {
+    return !this.isFollowUpNotificationPathogenActivated() && this.hasPathogenNotificationRole;
+  }
+
+  get showDiseaseNominalTile() {
+    return !this.isFollowUpNotificationDiseaseActivated() && this.hasDiseaseNotificationSenderRole;
   }
 
   get tiles(): WelcomeTileInfo[] {
     return [
       // Disease (Krankheit melden)
       {
-        renderingCondition: this.userInfo().permissions.hasDiseaseNotificationSenderRole,
+        renderingCondition: this.showDiseaseNominalTile,
         config: {
           id: 'disease',
           titleTextRows: AppConstants.Titles.DISEASE,
@@ -151,28 +168,63 @@ export class WelcomeComponent implements OnInit, OnDestroy {
             src: 'assets/images/disease.svg',
             alt: 'Logo der Erkrankungsmeldung',
           },
-          contentParagraphs: [AppConstants.InfoTexts.DISEASE],
+          contentParagraphs: [AppConstants.InfoTexts.DISEASE_OLD],
           buttonLabel: 'Melden',
+        },
+      },
+      {
+        renderingCondition: this.showDiseaseExpandableTile,
+        config: {
+          id: 'disease',
+          titleTextRows: AppConstants.Titles.DISEASE,
+          tooltip: AppConstants.Tooltips.CLICK_TO_OPEN,
+          logoImage: {
+            src: 'assets/images/disease.svg',
+            alt: 'Logo der Erkrankungsmeldung',
+          },
+          contentParagraphs: [AppConstants.InfoTexts.DISEASE],
+          subTiles: [
+            {
+              renderingCondition: this.showDiseaseExpandableTile,
+              config: {
+                id: 'disease-nominal',
+                titleTextRows: AppConstants.Titles.DISEASE_SHORT,
+                tooltip: AppConstants.Tooltips.CLICK_TO_REPORT,
+                destinationRouterLink: `/${AppConstants.PathSegments.DISEASE_NOTIFICATION}`,
+                contentParagraphs: [AppConstants.InfoTexts.DISEASE_SHORT],
+              },
+            },
+            {
+              renderingCondition: this.showDiseaseExpandableTile,
+              config: {
+                id: 'disease-follow-up',
+                titleTextRows: AppConstants.Titles.FOLLOW_UP,
+                tooltip: AppConstants.Tooltips.CLICK_TO_REPORT,
+                destinationRouterLink: `/${AppConstants.PathSegments.DISEASE_NOTIFICATION_FOLLOW_UP}`,
+                contentParagraphs: [AppConstants.InfoTexts.DISEASE_FOLLOW_UP],
+              },
+            },
+          ],
         },
       },
       // Pathogen (Erregernachweis melden)
       {
-        renderingCondition: this.showPathogenTile && !this.showFollowUpTile,
+        renderingCondition: this.showPathogenNominalTile,
         config: {
           id: 'pathogen',
-          titleTextRows: AppConstants.Titles.PATHOGEN,
+          titleTextRows: AppConstants.Titles.PATHOGEN_SHORT,
           tooltip: AppConstants.Tooltips.CLICK_TO_REPORT,
           destinationRouterLink: `/${AppConstants.PathSegments.PATHOGEN_NOTIFICATION}`,
           logoImage: {
             src: 'assets/images/pathogen.svg',
             alt: 'Logo Erregernachweis melden',
           },
-          contentParagraphs: [AppConstants.InfoTexts.PATHOGEN],
+          contentParagraphs: [AppConstants.InfoTexts.PATHOGEN_OLD],
           buttonLabel: 'Melden',
         },
       },
       {
-        renderingCondition: this.showFollowUpTile,
+        renderingCondition: this.showPathogenExpandableTile,
         config: {
           id: 'pathogen',
           titleTextRows: AppConstants.Titles.PATHOGEN,
@@ -184,20 +236,20 @@ export class WelcomeComponent implements OnInit, OnDestroy {
           contentParagraphs: [AppConstants.InfoTexts.PATHOGEN],
           subTiles: [
             {
-              renderingCondition: this.showFollowUpTile,
+              renderingCondition: this.showPathogenExpandableTile,
               config: {
                 id: 'pathogen-nominal',
-                titleTextRows: PATHOGEN_NON_NOMINAL,
+                titleTextRows: AppConstants.Titles.PATHOGEN_SHORT,
                 tooltip: AppConstants.Tooltips.CLICK_TO_REPORT,
                 destinationRouterLink: `/${AppConstants.PathSegments.PATHOGEN_NOTIFICATION}`,
                 contentParagraphs: [AppConstants.InfoTexts.PATHOGEN_SHORT],
               },
             },
             {
-              renderingCondition: this.showFollowUpTile,
+              renderingCondition: this.showPathogenExpandableTile,
               config: {
                 id: 'pathogen-follow-up',
-                titleTextRows: ['Nichtnamentliche Folgemeldungen'],
+                titleTextRows: AppConstants.Titles.FOLLOW_UP,
                 tooltip: AppConstants.Tooltips.CLICK_TO_REPORT,
                 destinationRouterLink: `/${AppConstants.PathSegments.PATHOGEN_NOTIFICATION_FOLLOW_UP}`,
                 contentParagraphs: [AppConstants.InfoTexts.PATHOGEN_FOLLOW_UP],
@@ -221,17 +273,17 @@ export class WelcomeComponent implements OnInit, OnDestroy {
           contentParagraphs: [AppConstants.InfoTexts.NON_NOMINAL],
           subTiles: [
             {
-              renderingCondition: this.showNonNominalSubTiles,
+              renderingCondition: this.showNonNominalTile,
               config: {
                 id: 'pathogen-non-nominal',
-                titleTextRows: PATHOGEN_NON_NOMINAL,
+                titleTextRows: AppConstants.Titles.PATHOGEN_SHORT,
                 tooltip: AppConstants.Tooltips.CLICK_TO_REPORT,
                 destinationRouterLink: `/${AppConstants.PathSegments.PATHOGEN_NOTIFICATION_NON_NOMINAL}`,
                 contentParagraphs: [AppConstants.InfoTexts.PATHOGEN_NON_NOMINAL],
               },
             },
             {
-              renderingCondition: this.showNonNominalSubTiles,
+              renderingCondition: this.showNonNominalTile,
               config: {
                 id: 'disease-non-nominal',
                 titleTextRows: DISEASE_NON_NOMINAL,
@@ -320,5 +372,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
   protected readonly environment = environment;
   protected readonly AppConstants = AppConstants;
   protected readonly isNonNominalNotificationActivated = isNonNominalNotificationActivated;
-  protected readonly isFollowUpNotificationActivated = isFollowUpNotificationActivated;
+  protected readonly isFollowUpNotificationPathogenActivated = isFollowUpNotificationPathogenActivated;
+  protected readonly isFollowUpNotificationDiseaseActivated = isFollowUpNotificationDiseaseActivated;
+  protected readonly FEATURE_FLAG_PORTAL_HEADER_FOOTER = FEATURE_FLAG_PORTAL_HEADER_FOOTER;
 }

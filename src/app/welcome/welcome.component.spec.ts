@@ -226,4 +226,57 @@ describe('WelcomeComponent', () => {
       );
     });
   });
+
+  describe('test tiles with subtiles', () => {
+    TestSetup.JWT_ROLES_EXPANDABLE_TILES.forEach(({ id, roles, tile, subTiles, doNegativeTest }) => {
+      it(`should show tile ${tile} and its subtiles when user has roles ${roles.join(', ')}`, async () => {
+        createComponent();
+        spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').and.returnValue(of(''));
+        fixture.point.injector.get(AuthService).$isAuthenticated = isAuthenticatedSubject;
+        spyOn(fixture.point.injector.get(AuthService), 'checkRole').and.callFake((role: string) => roles.includes(role as AppConstants.Roles));
+
+        fixture.point.injector.get(AuthService).$tokenChanged.next();
+
+        ngMocks.flushTestBed();
+        createComponent();
+
+        await fixture.whenStable();
+        fixture.detectChanges();
+
+        const tileElement = getElementById(tile);
+        expect(!!tileElement).toBeTruthy();
+
+        const tileIndex = component.tiles.findIndex(tile => Array.isArray(tile.config.subTiles) && tile.config.subTiles.length > 0 && tile.config.id === id);
+
+        // Expand the non-nominal tile, workaround because click doesn't work
+        component.changeExpandedStateForTile(tileIndex);
+        fixture.detectChanges();
+
+        // verify each subtile is present
+        subTiles.forEach(({ tile: subTileId }) => {
+          const subTileElement = getElementById(subTileId);
+          expect(subTileElement).toBeTruthy();
+        });
+      });
+
+      if (doNegativeTest) {
+        it(`should not show tile ${tile} when user does not have required roles`, async () => {
+          createComponent();
+          spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').and.returnValue(of(''));
+          fixture.point.injector.get(AuthService).$isAuthenticated = isAuthenticatedSubject;
+          spyOn(fixture.point.injector.get(AuthService), 'checkRole').and.returnValue(false);
+          fixture.point.injector.get(AuthService).$tokenChanged.next();
+
+          ngMocks.flushTestBed();
+          createComponent();
+
+          await fixture.whenStable();
+          fixture.detectChanges();
+
+          const tileElement = getElementById(tile);
+          expect(tileElement).toBeFalsy();
+        });
+      }
+    });
+  });
 });

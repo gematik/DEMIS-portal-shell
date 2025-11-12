@@ -23,22 +23,35 @@
       </a>
     }
 
-    @if (hasDiseaseNotificationSenderRole) {
-      <a id="a-to-disease" [class.active-tab]="activeTab === C.PathSegments.DISEASE_NOTIFICATION"
-         [class.inactive-tab]="activeTab !== C.PathSegments.DISEASE_NOTIFICATION" mat-tab-link
+    @if (!isFollowUpNotificationDiseaseActivated() && hasDiseaseNotificationSenderRole) {
+      <a id="a-to-disease" [class.active-tab]="isDiseaseTabActive"
+         [class.inactive-tab]="!isDiseaseTabActive" mat-tab-link
          (click)=navigateToDisease() routerLinkActive="active">
         Krankheit (§ 6 IfSG)
       </a>
     }
 
-    @if (!isFollowUpNotificationActivated() && (showPathogenLinks)) {
+    @if (isFollowUpNotificationDiseaseActivated() && hasDiseaseNotificationSenderRole) {
+      <button id="btn-disease" class="navbar-menu-btn" mat-button [matMenuTriggerFor]="menu"
+              [class.active-tab]="isDiseaseTabActive"
+              [class.inactive-tab]="!isDiseaseTabActive">Krankheit (§ 6 IfSG)
+        <mat-icon iconPositionEnd fontIcon="arrow_drop_down" class="btn__icon"></mat-icon>
+      </button>
+      <mat-menu #menu="matMenu" class="menu-width_disease">
+        <a id="a-to-disease-nominal"
+           mat-menu-item [routerLink]="C.PathSegments.DISEASE_NOTIFICATION">Erstmeldung</a>
+        <a id="a-to-disease-follow-up" mat-menu-item [routerLink]="C.PathSegments.DISEASE_NOTIFICATION_FOLLOW_UP">Folgemeldung</a>
+      </mat-menu>
+    }
+
+    @if (!isFollowUpNotificationPathogenActivated() && (hasPathogenNotificationSenderRole)) {
       <a id="a-to-pathogen" [class.active-tab]="isPathogenTabActive" [class.inactive-tab]="!isPathogenTabActive"
          mat-tab-link [routerLink]="C.PathSegments.PATHOGEN_NOTIFICATION" routerLinkActive="active">
         Erregernachweis (§ 7 Abs. 1 IfSG)
       </a>
     }
 
-    @if (isFollowUpNotificationActivated() && (showPathogenLinks)) {
+    @if (isFollowUpNotificationPathogenActivated() && (hasPathogenNotificationSenderRole)) {
       <button id="btn-pathogen" class="navbar-menu-btn" mat-button [matMenuTriggerFor]="menu"
               [class.active-tab]="isPathogenTabActive"
               [class.inactive-tab]="!isPathogenTabActive">Erregernachweis (§ 7 Abs. 1 IfSG)
@@ -46,9 +59,8 @@
       </button>
       <mat-menu #menu="matMenu" class="menu-width_pathogen">
         <a id="a-to-pathogen-nominal"
-           mat-menu-item [routerLink]="C.PathSegments.PATHOGEN_NOTIFICATION">Erregernachweis</a>
-        <a id="a-to-pathogen-follow-up" mat-menu-item [routerLink]="C.PathSegments.PATHOGEN_NOTIFICATION_FOLLOW_UP">Nichtnamentliche
-          Folgemeldung</a>
+           mat-menu-item [routerLink]="C.PathSegments.PATHOGEN_NOTIFICATION">Erstmeldung</a>
+        <a id="a-to-pathogen-follow-up" mat-menu-item [routerLink]="C.PathSegments.PATHOGEN_NOTIFICATION_FOLLOW_UP">Folgemeldung</a>
       </mat-menu>
     }
 

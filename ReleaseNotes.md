@@ -2,6 +2,11 @@
 
 # Release portal-shell
 
+## Release 1.4.1
+
+- Added sub-tiles and routing for §6.1 follow-up notification (FEATURE_FLAG_FOLLOW_UP_NOTIFICATION_PORTAL_DISEASE)
+- Added new footer (FEATURE_FLAG_PORTAL_HEADER_FOOTER)
+
 ## Release 1.4.0
 
 - Fixed layout issues in the welcome component when information banners are displayed
@@ -14,19 +19,23 @@
 - Resolved focus issue with navbar menu buttons
 
 ## Release 1.3.0
-- Added sub-tiles and routing for follow-up notification (FEATURE_FLAG_FOLLOW_UP_NOTIFICATION)
+
+- Added sub-tiles and routing for §7.1 follow-up notification (FEATURE_FLAG_FOLLOW_UP_NOTIFICATION_PORTAL_PATHOGEN)
 - resized "Finanziert von der Europäischen Union" logo
 - Switched to the library implementation of the DEMIS theme using Portal-Theme
 - Add new API endpoints activated by feature flag FEATURE_FLAG_NEW_API_ENDPOINTS
 
 ## Release 1.2.7
+
 - Upgraded to Angular 19
 
 ## Release 1.2.6
+
 - logo and text adaptions for § 7.3
 - added "Finanziert von der Europäischen Union" logo to landing page
 
 ## Release 1.2.5
+
 - changed default color for input outlines and input labels
 - added functionality to show information banners above the top navigation bar (FEATURE_FLAG_PORTAL_INFOBANNER)
 - added functionality to show a stage indicator banner above the top navigation bar, to highlight dedicated stages (FEATURE_FLAG_PORTAL_INFOBANNER)
@@ -35,19 +44,24 @@
 - Routing for §7.3 notification (non nominal) to portal-pathogen & portal-disease
 
 ## Release 1.2.4
+
 - Updated Portal-Core Library version
 - Adjusted border-radius for some elements
 
 ## Release 1.2.3
+
 - Updated ospo-resources for adding additional notes and disclaimer
 - Added sub-tiles for non-nominal notification (FEATURE_FLAG_NON_NOMINAL_NOTIFICATION)
 - Adjusted navbar styling and colors
 
 ## Release 1.2.2
+
 - Add new font and background color
 
 ## Release 1.2.1
+
 - New wording for igs tile
 
 ## Release 1.2.0
+
 - First official GitHub-Release
