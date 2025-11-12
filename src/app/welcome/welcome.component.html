@@ -1,41 +1,118 @@
-<div [ngClass]="{ 'page-wrapper': isAuthenticated() }">
-  <gem-demis-max-height-content-container [elementSelectorsToSubtract]="['app-navbar', 'footer']">
-    <div id="new-welcome-container" class="container">
-      <div>
-        <div id="welcome-texts-container">
-          <h2 id="welcome-demis-heading">Willkommen bei DEMIS</h2>
-          <p class="welcome-demis-text">{{ AppConstants.InfoTexts.ABOUT }}</p>
-          <p class="welcome-demis-text">{{ AppConstants.InfoTexts.KNOWLEDGE_DATABASE }}
-            <a target="_blank" rel="noopener noreferrer" href="{{AppConstants.ExternalLinks.DEMIS_WDB}}">{{
-              AppConstants.Labels.DEMIS_KNOWLEDGE_DATABASE_LINK }}</a>
-          </p>
+@if (!FEATURE_FLAG_PORTAL_HEADER_FOOTER()) {
+  <div [ngClass]="{ 'page-wrapper': isAuthenticated() }">
+    <gem-demis-max-height-content-container [elementSelectorsToSubtract]="['app-navbar', 'footer']">
+      <div id="new-welcome-container" class="container">
+        <div>
+          <div id="welcome-texts-container">
+            <h2 id="welcome-demis-heading">Willkommen bei DEMIS</h2>
+            <p class="welcome-demis-text">{{ AppConstants.InfoTexts.ABOUT }}</p>
+            <p class="welcome-demis-text">{{ AppConstants.InfoTexts.KNOWLEDGE_DATABASE }}
+              <a target="_blank" rel="noopener noreferrer" href="{{AppConstants.ExternalLinks.DEMIS_WDB}}">{{
+                  AppConstants.Labels.DEMIS_KNOWLEDGE_DATABASE_LINK
+                }}</a>
+            </p>
+          </div>
+          @if (!isAuthenticated()) {
+            <button type="button" mat-button id="btn-welcome-auth-login" (click)="login()">
+              Anmelden
+              <mat-icon class="logIn-btn_chevron-right">chevron_right</mat-icon>
+            </button>
+          }
         </div>
-        @if (!isAuthenticated()) {
-        <button type="button" mat-button id="btn-welcome-auth-login" (click)="login()">
-          Anmelden
-          <mat-icon class="logIn-btn_chevron-right">chevron_right</mat-icon>
-        </button>
-        }
+        <div id="welcome-tiles-container" class="row">
+          @for (tile of tiles; let index = $index; track index) {
+            @if ((tile.renderingCondition === undefined) || tile.renderingCondition) {
+              <app-welcome-tile class="column" id="welcome-tile-{{ tile.config.id }}" [config]="tile.config"
+                                [animated]="true"
+                                [isExpanded]="expandedTileIndex() === index"
+                                (toggle)="changeExpandedStateForTile(index)">
+              </app-welcome-tile>
+            }
+          }
+        </div>
       </div>
-      <div id="welcome-tiles-container" class="row">
-        @for (tile of tiles; let index = $index; track index) {
-        @if ((tile.renderingCondition === undefined) || tile.renderingCondition) {
-        <app-welcome-tile class="column" id="welcome-tile-{{ tile.config.id }}" [config]="tile.config" [animated]="true"
-          [isExpanded]="expandedTileIndex() === index" (toggle)="changeExpandedStateForTile(index)">
-        </app-welcome-tile>
-        }
-        }
+    </gem-demis-max-height-content-container>
+
+    <footer class="footer_deprecated bottom-positioned">
+      <div class="EU-logo">
+        <img ngSrc="assets/images/EU-logo.jpg" [priority]="true" alt="Finanziert von der Europäischen Union" height="48"
+             width="185">
       </div>
+      @if (isAuthenticated()) {
+        <div class="authenticated-as" id="start-username">Eingeloggt als {{ userInfo().username }}</div>
+      }
+    </footer>
+  </div>
+}
+
+@if (FEATURE_FLAG_PORTAL_HEADER_FOOTER()) {
+  <gem-demis-max-height-content-container
+    [elementSelectorsToSubtract]="['app-navbar']">
+    <div class="page-wrapper" [ngClass]="{ 'logged-in': isAuthenticated(), 'logged-out': !isAuthenticated() }">
+      <main class="content" role="main">
+        <div id="new-welcome-container" class="container">
+          <div>
+            <div id="welcome-texts-container">
+              <h2 id="welcome-demis-heading">Willkommen bei DEMIS</h2>
+              <p class="welcome-demis-text">{{ AppConstants.InfoTexts.ABOUT }}</p>
+              <p class="welcome-demis-text">
+                {{ AppConstants.InfoTexts.KNOWLEDGE_DATABASE }}
+                <a target="_blank" rel="noopener noreferrer" href="{{ AppConstants.ExternalLinks.DEMIS_WDB }}">
+                  {{ AppConstants.Labels.DEMIS_KNOWLEDGE_DATABASE_LINK }}
+                </a>
+              </p>
+            </div>
+            @if (!isAuthenticated()) {
+              <button type="button" mat-button id="btn-welcome-auth-login" (click)="login()">
+                Anmelden
+                <mat-icon class="logIn-btn_chevron-right">chevron_right</mat-icon>
+              </button>
+            }
+          </div>
+          <div id="welcome-tiles-container" class="row">
+            @for (tile of tiles; let index = $index; track index) {
+              @if ((tile.renderingCondition === undefined) || tile.renderingCondition) {
+                <app-welcome-tile
+                  class="column"
+                  id="welcome-tile-{{ tile.config.id }}"
+                  [config]="tile.config"
+                  [animated]="true"
+                  [isExpanded]="expandedTileIndex() === index"
+                  (toggle)="changeExpandedStateForTile(index)">
+                </app-welcome-tile>
+              }
+            }
+          </div>
+        </div>
+      </main>
+      <footer class="footer" role="contentinfo">
+        <div class="footer-inner">
+          <div class="footer-left">
+            <div class="RKI-logo">
+              <img ngSrc="assets/images/RKI-logo.svg" [priority]="true" alt="Robert Koch Institut" height="48"
+                   width="185"/>
+            </div>
+            <div class="EU-logo">
+              <img ngSrc="assets/images/EU-logo.jpg" [priority]="true" alt="Finanziert von der Europäischen Union"
+                   height="58" width="224"/>
+            </div>
+          </div>
+
+          <div class="footer-right">
+            <div class="footer-right-top">
+              @if (isAuthenticated()) {
+                <div class="authenticated-as" id="start-username">Eingeloggt als {{ userInfo().username }}</div>
+              }
+            </div>
+
+            <nav class="footer-right-bottom" aria-label="Footer Navigation">
+              <a href="#impressum">Impressum</a>
+              <a href="#privacy-policy">Datenschutz</a>
+              <!-- <a href="#accessibility-statement">Barrierefreiheit</a> -->
+            </nav>
+          </div>
+        </div>
+      </footer>
     </div>
   </gem-demis-max-height-content-container>
-
-  <footer class="footer bottom-positioned">
-    <div class="EU-logo">
-      <img ngSrc="assets/images/EU-logo.jpg" [priority]="true" alt="Finanziert von der Europäischen Union" height="48"
-        width="185">
-    </div>
-    @if (isAuthenticated()) {
-    <div class="authenticated-as" id="start-username">Eingeloggt als {{ userInfo().username }}</div>
-    }
-  </footer>
-</div>
+}

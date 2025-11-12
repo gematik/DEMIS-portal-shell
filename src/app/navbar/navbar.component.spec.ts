@@ -131,15 +131,20 @@ describe('Navbar Test', () => {
     });
   });
 
-  it('should navigate to disease on button click', () => {
+  it('should display the disease menu items', async () => {
     createComponent();
     spyOn(fixture.point.injector.get(AuthService), 'checkRole').and.callFake((role: string) => AppConstants.Roles.DISEASE_NOTIFICATION_SENDER === role);
     ngMocks.flushTestBed();
     createComponent();
-    const router = fixture.point.injector.get(Router);
-    const button = fixture.point.nativeElement.querySelector('#a-to-disease');
+
+    const button = fixture.point.nativeElement.querySelector('#btn-disease');
     button.click();
-    expect(router.navigateByUrl).toHaveBeenCalledWith('/disease-notification');
+    fixture.detectChanges();
+
+    const menuItemFollowUp = document.querySelector('#a-to-disease-follow-up') as HTMLElement;
+    expect(menuItemFollowUp).toBeTruthy();
+    const menuItemNominal = document.querySelector('#a-to-disease-nominal') as HTMLElement;
+    expect(menuItemNominal).toBeTruthy();
   });
 
   it('should display the disease non-nominal menu item and navigate to the correct route on click', async () => {
@@ -192,6 +197,7 @@ describe('Navbar Test', () => {
 
     expect(component.activeTab).toEqual('');
     expect(component.isPathogenTabActive).toBeFalse();
+    expect(component.isDiseaseTabActive).toBeFalse();
     expect(component.isNonNominalTabActive).toBeFalse();
   });
 
@@ -199,7 +205,7 @@ describe('Navbar Test', () => {
     createComponent();
     fixture.detectChanges();
 
-    const pathogenPath = AppConstants.Tabs.PATHOGEN_TEST_RESULTS;
+    const pathogenPath = AppConstants.Tabs.PATHOGEN;
 
     mockRouter.routerState.snapshot.url = '/' + pathogenPath;
     routerEvents.next(new NavigationEnd(1, pathogenPath, pathogenPath));
@@ -207,6 +213,22 @@ describe('Navbar Test', () => {
 
     expect(component.activeTab).toEqual(pathogenPath);
     expect(component.isPathogenTabActive).toBeTrue();
+    expect(component.isDiseaseTabActive).toBeFalse();
+    expect(component.isNonNominalTabActive).toBeFalse();
+  });
+  it('should set disease tab as active when navigating to pathogen path', () => {
+    createComponent();
+    fixture.detectChanges();
+
+    const diseasePath = AppConstants.Tabs.DISEASE;
+
+    mockRouter.routerState.snapshot.url = '/' + diseasePath;
+    routerEvents.next(new NavigationEnd(1, diseasePath, diseasePath));
+    fixture.detectChanges();
+
+    expect(component.activeTab).toEqual(diseasePath);
+    expect(component.isDiseaseTabActive).toBeTrue();
+    expect(component.isPathogenTabActive).toBeFalse();
     expect(component.isNonNominalTabActive).toBeFalse();
   });
 

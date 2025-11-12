@@ -42,12 +42,14 @@ config:
     hospitalLocations: /api/ng/services/hospital-locations
     pathogen: /api/ng/notification/pathogen
     disease: /api/ng/notification/disease
-  files: {}
+  files: { }
   featureFlags:
     FEATURE_FLAG_PORTAL_INFOBANNER: false
     FEATURE_FLAG_NON_NOMINAL_NOTIFICATION: false
-    FEATURE_FLAG_FOLLOW_UP_NOTIFICATION: false
+    FEATURE_FLAG_FOLLOW_UP_NOTIFICATION_PORTAL_PATHOGEN: false
+    FEATURE_FLAG_FOLLOW_UP_NOTIFICATION_PORTAL_DISEASE: false
     FEATURE_FLAG_NEW_API_ENDPOINTS: false
+    FEATURE_FLAG_PORTAL_HEADER_FOOTER: false
   ## Information Banners to be shown above the navigation bar in the portal
   ##
   ## E.g.
@@ -60,7 +62,7 @@ config:
   ##     endsAt     # [optional]  string;              datetime as ISO String (in the format YYYY-MM-DDThh:mm:ssZ); defines the date and time (inclusive) the shell ends to show the banner
   ##     moreInfo   # [optional]  string;              a web link to more information, triggers the "more info" button when set
   ##     closable   # [optional]  boolean;             whether the banner can be closed by the user, default is true
-  infoBanners: []
+  infoBanners: [ ]
   ## Show a visual indicator in the DEMIS portal on what stage the user is currently working on
   ##
   ## E.g.
@@ -68,7 +70,7 @@ config:
   ##   content            # [required]  string;  the content of the stage indicator as markdown
   ##   moreInfo           # [optional]  string;  a web link to more information, triggers the "more info" button when set
   ##   demisHomeLogoFile  # [optional]  string;  the file name of the DEMIS logo to be shown on the home button in the navbar; default is 'DEMIS.svg'
-  stageIndicator: {}
+  stageIndicator: { }
   ngxLoggerConfig:
     level: 1
     disableConsoleLogging: false
@@ -88,10 +90,10 @@ config:
 # E.g.
 # customLabels:
 #   my-label: my-label-value
-customLabels: {}
+customLabels: { }
 
 # Extra labels for deployments
-deploymentLabels: {}
+deploymentLabels: { }
 
 # Extra Environment Variables to be defined
 # customEnvVars
@@ -103,7 +105,7 @@ serviceAccount:
   # Specifies whether a service account should be created
   create: true
   # Annotations to add to the service account
-  annotations: {}
+  annotations: { }
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name: ""
@@ -111,17 +113,17 @@ serviceAccount:
 # The Pull Policy for the Image
 imagePullPolicy: IfNotPresent
 # Define Image Pull Secrets if using private registry
-imagePullSecrets: []
+imagePullSecrets: [ ]
 nameOverride: "portal-shell"
 fullnameOverride: "portal-shell"
 
-podLabels: {}
+podLabels: { }
 
 # Annotations for Workload
-annotations: {}
+annotations: { }
 
 # Annotations for Pods
-podAnnotations: {}
+podAnnotations: { }
 
 # Pod Security Context - applies to all containers in a Pod
 podSecurityContext:
@@ -181,9 +183,9 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   targetMemoryUtilizationPercentage: 80
 
-nodeSelector: {}
+nodeSelector: { }
 
-tolerations: []
+tolerations: [ ]
 
 istio:
   enable: true

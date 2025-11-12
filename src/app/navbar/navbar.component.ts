@@ -20,7 +20,12 @@ import { NavigationEnd, Router } from '@angular/router';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { filter, Subject, takeUntil } from 'rxjs';
 import { AuthService } from 'src/app/services';
-import { AppConstants, isFollowUpNotificationActivated, isNonNominalNotificationActivated } from 'src/app/shared/app-constants';
+import {
+  AppConstants,
+  isFollowUpNotificationDiseaseActivated,
+  isFollowUpNotificationPathogenActivated,
+  isNonNominalNotificationActivated,
+} from 'src/app/shared/app-constants';
 import { environment } from 'src/environments/environment';
 import { PackageJsonService } from '../services/package-json.service';
 
@@ -40,9 +45,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   readonly env = environment;
   isPathogenTabActive: boolean = false;
+  isDiseaseTabActive: boolean = false;
   hasBedOccupencySenderRole: boolean = false;
   hasDiseaseNotificationSenderRole: boolean = false;
-  showPathogenLinks: boolean = false;
+  hasPathogenNotificationSenderRole: boolean = false;
   hasIgsDataSenderRole: boolean = false;
   hasIgsNotificationSenderRole: boolean = false;
   // Nonnominal users always have both roles so there is no need to distinguish between pathogen and disease. Same goes for welcome tile
@@ -67,7 +73,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
         if (this.activeTab.includes(this.C.Tabs.HOME)) {
           this.blurActiveMenuButtons();
         }
-        this.isPathogenTabActive = this.activeTab.includes(this.C.Tabs.PATHOGEN_TEST_RESULTS) && !this.activeTab.includes(this.C.PathSegments.NON_NOMINAL);
+        this.isPathogenTabActive = this.activeTab.includes(this.C.Tabs.PATHOGEN) && !this.activeTab.includes(this.C.PathSegments.NON_NOMINAL);
+        this.isDiseaseTabActive = this.activeTab.includes(this.C.Tabs.DISEASE) && !this.activeTab.includes(this.C.PathSegments.NON_NOMINAL);
         this.isNonNominalTabActive = this.activeTab.includes(this.C.PathSegments.NON_NOMINAL);
       });
     this.isLoggedIn = toSignal(this.ssoAuthService.$isAuthenticated, { initialValue: false });
@@ -111,7 +118,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   setRoleControl() {
     this.hasBedOccupencySenderRole = this.ssoAuthService.checkRole(AppConstants.Roles.BED_OCCUPANCY_SENDER);
     this.hasDiseaseNotificationSenderRole = this.ssoAuthService.checkRole(AppConstants.Roles.DISEASE_NOTIFICATION_SENDER);
-    this.showPathogenLinks = this.ssoAuthService.checkRole(AppConstants.Roles.PATHOGEN_NOTIFICATION_SENDER);
+    this.hasPathogenNotificationSenderRole = this.ssoAuthService.checkRole(AppConstants.Roles.PATHOGEN_NOTIFICATION_SENDER);
     this.showNonNominalLinks =
       this.ssoAuthService.checkRole(AppConstants.Roles.PATHOGEN_NOTIFICATION_NON_NOMINAL_SENDER) &&
       this.ssoAuthService.checkRole(AppConstants.Roles.DISEASE_NOTIFICATION_NON_NOMINAL_SENDER);
@@ -145,5 +152,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   protected readonly isNonNominalNotificationActivated = isNonNominalNotificationActivated;
-  protected readonly isFollowUpNotificationActivated = isFollowUpNotificationActivated;
+  protected readonly isFollowUpNotificationPathogenActivated = isFollowUpNotificationPathogenActivated;
+  protected readonly isFollowUpNotificationDiseaseActivated = isFollowUpNotificationDiseaseActivated;
 }
