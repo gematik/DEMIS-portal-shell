@@ -2,6 +2,10 @@
 
 # Release portal-shell
 
+## Release 1.4.2
+
+- Added new header (FEATURE_FLAG_PORTAL_HEADER_FOOTER)
+
 ## Release 1.4.1
 
 - Added sub-tiles and routing for §6.1 follow-up notification (FEATURE_FLAG_FOLLOW_UP_NOTIFICATION_PORTAL_DISEASE)
