@@ -2,19 +2,19 @@
   flex: 1 1 auto;
 }
 
-.mat-toolbar {
-  // TODO: workaround: --mat-app-background-color: #faf9fd; is set explicitly and unset makes it white again/default which will be default in future
-  background-color: var(--color-white);
-}
-
-
-// sets submenu width to button width
+// sets submenu width to button width - DEPRECATED - can be removed when FEATURE_FLAG_PORTAL_HEADER_FOOTER is removed
 ::ng-deep .menu-width_pathogen {
   min-width: 336px !important;
 }
 
 ::ng-deep .menu-width_disease {
   min-width: 216px !important;
+}
+
+.mat-toolbar-row, .mat-toolbar-single-row {
+  padding-right: 40px;
+  padding-left: 23px; //40-17px from Logo left-margin
+  background-color: var(--color-white);
 }
 
 .navbar-tab-group {
@@ -51,8 +51,9 @@
     }
   }
 
-  //"abmelden"/"anmelden"
-  .btn-navbar-auth {
+  //"abmelden"/"anmelden"/"menu"
+  .btn-navbar-auth,
+  .menu-button {
     font-size: 17px;
 
     &:hover {
@@ -67,6 +68,16 @@
   .inactive-tab {
     border-bottom: 3px solid transparent;
   }
+}
+
+
+.btn-navbar-auth.mdc-button {
+  border-radius: 16px !important;
+  border: 1px solid var(--color-black);
+}
+
+.menu-button {
+  margin-right: 20px;
 }
 
 #img-local-indicator-logo {
@@ -102,4 +113,36 @@
   margin-top: -1px;
   position: relative;
   z-index: 999;
+}
+
+.menu-header {
+  pointer-events: none;
+  user-select: none;
+  align-content: center;
+  background: var(--color-neutral-light);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 16px 16px;
+}
+
+.menu-divider {
+  border-top-color: var(--color-black);
+  padding-top: 8px;
+}
+
+// needs overwrite because of angular material default padding
+::ng-deep .burger-menu .mat-mdc-menu-content {
+  padding-top: 0 !important;
+}
+
+//accessibility focus and tab focus
+#home-button:focus,
+#home-button:focus-visible,
+.btn-navbar-auth:focus,
+.btn-navbar-auth:focus-visible,
+.menu-button:focus,
+.menu-button:focus-visible,
+{
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
 }

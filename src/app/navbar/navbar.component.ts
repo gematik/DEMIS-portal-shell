@@ -11,7 +11,8 @@
     In case of changes by gematik find details in the "Readme" file.
     See the Licence for the specific language governing permissions and limitations under the Licence.
     *******
-    For additional notes and disclaimer from gematik and in case of changes by gematik find details in the "Readme" file.
+    For additional notes and disclaimer from gematik and in case of changes by gematik,
+    find details in the "Readme" file.
  */
 
 import { Component, inject, input, OnDestroy, OnInit, Signal } from '@angular/core';
@@ -22,6 +23,7 @@ import { filter, Subject, takeUntil } from 'rxjs';
 import { AuthService } from 'src/app/services';
 import {
   AppConstants,
+  FEATURE_FLAG_PORTAL_HEADER_FOOTER,
   isFollowUpNotificationDiseaseActivated,
   isFollowUpNotificationPathogenActivated,
   isNonNominalNotificationActivated,
@@ -154,4 +156,5 @@ export class NavbarComponent implements OnInit, OnDestroy {
   protected readonly isNonNominalNotificationActivated = isNonNominalNotificationActivated;
   protected readonly isFollowUpNotificationPathogenActivated = isFollowUpNotificationPathogenActivated;
   protected readonly isFollowUpNotificationDiseaseActivated = isFollowUpNotificationDiseaseActivated;
+  protected readonly FEATURE_FLAG_PORTAL_HEADER_FOOTER = FEATURE_FLAG_PORTAL_HEADER_FOOTER;
 }
