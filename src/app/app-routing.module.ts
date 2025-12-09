@@ -43,6 +43,19 @@ export const unprotectedRoutes: Routes = [
     path: AppConstants.PathSegments.WELCOME,
     component: WelcomeComponent,
   },
+  {
+    path: 'are-notification',
+    children: [
+      {
+        path: '**',
+        loadChildren: () =>
+            import('src/app/spa-host/spa-host.module').then(
+                m => m.SpaHostModule,
+            ),
+        data: { app: 'notification-portal-mf-are' },
+      },
+    ],
+  },
 ];
 
 const protectedRoutes: Routes = [

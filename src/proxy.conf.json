@@ -99,6 +99,22 @@
     },
     "logLevel": "debug"
   },
+  "/are": {
+    "target": "http://localhost:4205",
+    "secure": false,
+    "pathRewrite": {
+      "^/are": ""
+    },
+    "logLevel": "debug"
+  },
+  "/portal/are": {
+    "target": "http://localhost:4205",
+    "secure": false,
+    "pathRewrite": {
+      "^/portal/are": ""
+    },
+    "logLevel": "debug"
+  },
   "/gateway/igs": {
     "target": "https://portal.ingress.local",
     "secure": false,

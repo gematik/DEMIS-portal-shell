@@ -3,6 +3,7 @@
     "notification-portal-mf-bed-occupancy": "/bedoccupancy/main.js",
     "notification-portal-mf-disease": "/disease/main.js",
     "notification-portal-mf-pathogen": "/pathogen/main.js",
-    "notification-portal-mf-igs": "/igs/main.js"
+    "notification-portal-mf-igs": "/igs/main.js",
+    "notification-portal-mf-are": "/are/main.js"
   }
 }
