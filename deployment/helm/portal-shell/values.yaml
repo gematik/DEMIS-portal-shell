@@ -44,12 +44,13 @@ config:
     disease: /api/ng/notification/disease
   files: { }
   featureFlags:
-    FEATURE_FLAG_PORTAL_INFOBANNER: false
     FEATURE_FLAG_NON_NOMINAL_NOTIFICATION: false
     FEATURE_FLAG_FOLLOW_UP_NOTIFICATION_PORTAL_PATHOGEN: false
     FEATURE_FLAG_FOLLOW_UP_NOTIFICATION_PORTAL_DISEASE: false
     FEATURE_FLAG_NEW_API_ENDPOINTS: false
     FEATURE_FLAG_PORTAL_HEADER_FOOTER: false
+    FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y: false
+    FEATURE_FLAG_ANONYMOUS_NOTIFICATION: false
   ## Information Banners to be shown above the navigation bar in the portal
   ##
   ## E.g.

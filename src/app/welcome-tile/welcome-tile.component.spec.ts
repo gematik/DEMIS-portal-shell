@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2025 gematik GmbH
+    Copyright (c) 2026 gematik GmbH
     Licensed under the EUPL, Version 1.2 or - as soon they will be approved by the
     European Commission – subsequent versions of the EUPL (the "Licence").
     You may not use this work except in compliance with the Licence.
@@ -21,6 +21,7 @@ import { WelcomeTileConfig } from '../welcome/welcome.component';
 import { Router } from '@angular/router';
 import { TestBed } from '@angular/core/testing';
 import { ComponentInputs } from '../../test/utils/input-signal-types';
+import { environment } from '../../environments/environment';
 
 describe('WelcomeTileComponent', () => {
   let fixture: MockedComponentFixture<WelcomeTileComponent, ComponentInputs<WelcomeTileComponent>>;
@@ -80,6 +81,50 @@ describe('WelcomeTileComponent', () => {
     });
 
     it('should navigate to destination when tile is not expandable', () => {
+      spyOn(component, 'isTileExpandable').and.returnValue(false);
+      component.config().destinationRouterLink = '/test-route';
+
+      component.handleTileClick();
+
+      expect(router.navigateByUrl).toHaveBeenCalledWith('/test-route');
+    });
+  });
+
+  describe('handleTileClick with FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y enabled', () => {
+    let originalFeatureFlags: any;
+
+    beforeEach(() => {
+      originalFeatureFlags = environment.featureFlags;
+      Object.defineProperty(environment, 'featureFlags', {
+        value: {
+          ...originalFeatureFlags,
+          FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y: true,
+        },
+        writable: true,
+        configurable: true,
+      });
+    });
+
+    afterEach(() => {
+      Object.defineProperty(environment, 'featureFlags', {
+        value: originalFeatureFlags,
+        writable: true,
+        configurable: true,
+      });
+    });
+
+    it('should navigate to destination when feature flag is enabled and tile is expandable', () => {
+      spyOn(component, 'isTileExpandable').and.returnValue(true);
+      spyOn(component.toggle, 'emit');
+      component.config().destinationRouterLink = '/test-route';
+
+      component.handleTileClick();
+
+      expect(router.navigateByUrl).toHaveBeenCalledWith('/test-route');
+      expect(component.toggle.emit).not.toHaveBeenCalled();
+    });
+
+    it('should navigate to destination when feature flag is enabled and tile is not expandable', () => {
       spyOn(component, 'isTileExpandable').and.returnValue(false);
       component.config().destinationRouterLink = '/test-route';
 

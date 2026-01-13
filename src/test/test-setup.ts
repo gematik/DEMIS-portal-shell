@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2025 gematik GmbH
+    Copyright (c) 2026 gematik GmbH
     Licensed under the EUPL, Version 1.2 or - as soon they will be approved by the
     European Commission – subsequent versions of the EUPL (the "Licence").
     You may not use this work except in compliance with the Licence.
@@ -22,9 +22,10 @@ export class TestSetup {
     featureFlags: {
       CONFIG_TOKEN_INJECTION_ENABLED: true,
       FEATURE_FLAG_NON_NOMINAL_NOTIFICATION: true,
-      FEATURE_FLAG_PORTAL_INFOBANNER: true,
       FEATURE_FLAG_FOLLOW_UP_NOTIFICATION_PORTAL_PATHOGEN: true,
       FEATURE_FLAG_FOLLOW_UP_NOTIFICATION_PORTAL_DISEASE: true,
+      FEATURE_FLAG_ANONYMOUS_NOTIFICATION: true,
+      FEATURE_FLAG_PORTAL_HEADER_FOOTER: true,
     },
   };
 
@@ -75,9 +76,42 @@ export class TestSetup {
         },
         {
           tile: 'sub-tile-button-pathogen-follow-up',
-          link: 'pathogen-notification/7.1/follow-up',
         },
       ],
+      doNegativeTest: true,
+    },
+    {
+      id: 'non-nominal',
+      roles: [AppConstants.Roles.PATHOGEN_NOTIFICATION_NON_NOMINAL_SENDER, AppConstants.Roles.DISEASE_NOTIFICATION_NON_NOMINAL_SENDER],
+      tile: 'welcome-tile-non-nominal',
+      subTiles: [
+        {
+          tile: 'sub-tile-button-pathogen-non-nominal',
+          link: '/pathogen-notification/7.3/non-nominal',
+        },
+        {
+          tile: 'sub-tile-button-disease-non-nominal',
+          link: '/disease-notification/7.3/non-nominal',
+        },
+      ],
+      requireAllRoles: true,
+      doNegativeTest: true,
+    },
+    {
+      id: 'anonymous',
+      roles: [AppConstants.Roles.PATHOGEN_NOTIFICATION_ANONYMOUS_SENDER, AppConstants.Roles.DISEASE_NOTIFICATION_ANONYMOUS_SENDER],
+      tile: 'welcome-tile-anonymous',
+      subTiles: [
+        {
+          tile: 'sub-tile-button-pathogen-anonymous',
+          link: '/pathogen-notification/7.3/anonymous',
+        },
+        {
+          tile: 'sub-tile-button-disease-anonymous',
+          link: '/disease-notification/7.3/anonymous',
+        },
+      ],
+      requireAllRoles: true,
       doNegativeTest: true,
     },
   ];

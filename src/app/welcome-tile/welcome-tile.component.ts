@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2025 gematik GmbH
+    Copyright (c) 2026 gematik GmbH
     Licensed under the EUPL, Version 1.2 or - as soon they will be approved by the
     European Commission – subsequent versions of the EUPL (the "Licence").
     You may not use this work except in compliance with the Licence.
@@ -15,18 +15,20 @@
     find details in the "Readme" file.
  */
 
+import { A11yModule } from '@angular/cdk/a11y';
 import { CommonModule } from '@angular/common';
 import { Component, inject, input, output } from '@angular/core';
-import { WelcomeTileConfig } from '../welcome/welcome.component';
-import { Router, RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIcon } from '@angular/material/icon';
-import { isNonNominalNotificationActivated } from '../shared/app-constants';
+import { Router, RouterModule } from '@angular/router';
+import { FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y, isNonNominalNotificationActivated } from '../shared/app-constants';
+import { WelcomeTileConfig } from '../welcome/welcome.component';
 
 @Component({
   selector: 'app-welcome-tile',
-  imports: [CommonModule, MatCardModule, RouterModule, MatButtonModule, MatIcon],
+  imports: [CommonModule, MatCardModule, RouterModule, MatExpansionModule, MatButtonModule, MatIcon, A11yModule],
   templateUrl: './welcome-tile.component.html',
   styleUrl: './welcome-tile.component.scss',
 })
@@ -44,6 +46,12 @@ export class WelcomeTileComponent {
   }
 
   handleTileClick(): void {
+    if (FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y()) {
+      this.navigateTo(this.config().destinationRouterLink as string);
+      return;
+    }
+
+    // To be removed once FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y is removed
     if (this.isTileExpandable()) {
       this.toggle.emit();
     } else {
@@ -70,4 +78,5 @@ export class WelcomeTileComponent {
   }
 
   protected readonly isNonNominalNotificationActivated = isNonNominalNotificationActivated;
+  protected readonly FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y = FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y;
 }

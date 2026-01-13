@@ -3,15 +3,17 @@
     <gem-demis-max-height-content-container [elementSelectorsToSubtract]="['app-navbar', 'footer']">
       <div id="new-welcome-container" class="container">
         <div>
-          <div id="welcome-texts-container">
-            <h2 id="welcome-demis-heading">Willkommen bei DEMIS</h2>
-            <p class="welcome-demis-text">{{ AppConstants.InfoTexts.ABOUT }}</p>
-            <p class="welcome-demis-text">{{ AppConstants.InfoTexts.KNOWLEDGE_DATABASE }}
-              <a target="_blank" rel="noopener noreferrer" href="{{AppConstants.ExternalLinks.DEMIS_WDB}}">{{
-                  AppConstants.Labels.DEMIS_KNOWLEDGE_DATABASE_LINK
-                }}</a>
-            </p>
-          </div>
+          <section [attr.aria-labelledby]="'welcome-demis-heading'">
+            <div id="welcome-texts-container">
+              <h1 id="welcome-demis-heading">Willkommen bei DEMIS</h1>
+              <p class="welcome-demis-text">{{ AppConstants.InfoTexts.ABOUT }}</p>
+              <p class="welcome-demis-text">{{ AppConstants.InfoTexts.KNOWLEDGE_DATABASE }}
+                <a target="_blank" rel="noopener noreferrer" href="{{AppConstants.ExternalLinks.DEMIS_WDB}}">{{
+                    AppConstants.Labels.DEMIS_KNOWLEDGE_DATABASE_LINK
+                  }}</a>
+              </p>
+            </div>
+          </section>
           @if (!isAuthenticated()) {
             <button type="button" mat-button id="btn-welcome-auth-login" (click)="login()">
               Anmelden
@@ -19,17 +21,19 @@
             </button>
           }
         </div>
-        <div id="welcome-tiles-container" class="row">
-          @for (tile of tiles; let index = $index; track index) {
-            @if ((tile.renderingCondition === undefined) || tile.renderingCondition) {
-              <app-welcome-tile class="column" id="welcome-tile-{{ tile.config.id }}" [config]="tile.config"
-                                [animated]="true"
-                                [isExpanded]="expandedTileIndex() === index"
-                                (toggle)="changeExpandedStateForTile(index)">
-              </app-welcome-tile>
+        <main id="main">
+          <div id="welcome-tiles-container" class="row">
+            @for (tile of tiles; let index = $index; track index) {
+              @if ((tile.renderingCondition === undefined) || tile.renderingCondition) {
+                <app-welcome-tile class="column" id="welcome-tile-{{ tile.config.id }}" [config]="tile.config"
+                                  [animated]="true"
+                                  [isExpanded]="expandedTileIndex() === index"
+                                  (toggle)="changeExpandedStateForTile(index)">
+                </app-welcome-tile>
+              }
             }
-          }
-        </div>
+          </div>
+        </main>
       </div>
     </gem-demis-max-height-content-container>
 
@@ -52,16 +56,18 @@
       <main class="content" role="main">
         <div id="new-welcome-container" class="container">
           <div>
-            <div id="welcome-texts-container">
-              <h2 id="welcome-demis-heading">Willkommen bei DEMIS</h2>
-              <p class="welcome-demis-text">{{ AppConstants.InfoTexts.ABOUT }}</p>
-              <p class="welcome-demis-text">
-                {{ AppConstants.InfoTexts.KNOWLEDGE_DATABASE }}
-                <a target="_blank" rel="noopener noreferrer" href="{{ AppConstants.ExternalLinks.DEMIS_WDB }}">
-                  {{ AppConstants.Labels.DEMIS_KNOWLEDGE_DATABASE_LINK }}
-                </a>
-              </p>
-            </div>
+            <section [attr.aria-labelledby]="'welcome-demis-heading'">
+              <div id="welcome-texts-container">
+                <h1 id="welcome-demis-heading">Willkommen bei DEMIS</h1>
+                <p class="welcome-demis-text">{{ AppConstants.InfoTexts.ABOUT }}</p>
+                <p class="welcome-demis-text">
+                  {{ AppConstants.InfoTexts.KNOWLEDGE_DATABASE }}
+                  <a target="_blank" rel="noopener noreferrer" href="{{ AppConstants.ExternalLinks.DEMIS_WDB }}">
+                    {{ AppConstants.Labels.DEMIS_KNOWLEDGE_DATABASE_LINK }}
+                  </a>
+                </p>
+              </div>
+            </section>
             @if (!isAuthenticated()) {
               <button type="button" mat-button id="btn-welcome-auth-login" (click)="login()">
                 Anmelden
@@ -69,7 +75,7 @@
               </button>
             }
           </div>
-          <div id="welcome-tiles-container" class="row">
+          <section id="welcome-tiles-container" class="row" aria-label="DEMIS-Meldungen">
             @for (tile of tiles; let index = $index; track index) {
               @if ((tile.renderingCondition === undefined) || tile.renderingCondition) {
                 <app-welcome-tile
@@ -82,7 +88,7 @@
                 </app-welcome-tile>
               }
             }
-          </div>
+          </section>
         </div>
       </main>
       <footer class="footer" role="contentinfo">

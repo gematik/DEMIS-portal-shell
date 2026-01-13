@@ -1,53 +1,108 @@
-<div>
-  <mat-card id="tile-card-{{ config().id }}"
-            [ngClass]="{ 'tile-card': true, 'animated': animated() && !isExpanded() }"
-            (click)="handleTileClick()"
-            (keydown.enter)="handleTileClick()"
-            tabindex="0"
-            [attr.title]="config().tooltip">
-    <div id="tile-content-{{ config().id }}" class="tile-content no-text-select">
-      <img id="tile-logo-{{ config().id }}" class="tile-logo"
-           [attr.src]="config()?.logoImage!.src"
-           [attr.alt]="config()?.logoImage!.alt"/>
-      <div id="tile-row-{{ config().id }}" class="tile-row">
-        <h2 id="tile-title-{{ config().id }}" class="tile-title">
-          {{ config().titleTextRows.join(' ') }}
-        </h2>
-        <p id="tile-title-text-{{ config().id }}" class="tile-title-text">
-          {{ config().contentParagraphs[0] }}
-        </p>
-      </div>
-      <mat-icon
-        id="tile-icon_{{ getIconType() }}-{{ config().id }}"
-        class="tile-icon">
-        {{ getIconName() }}
-      </mat-icon>
-    </div>
-    @if (isTileExpandable() && isExpanded()) {
-      <div class="sub-tiles-container">
-        @for (subTile of config().subTiles; track $index) {
-          @if (subTile.renderingCondition) {
-            <button (click)="navigateTo(subTile.config?.destinationRouterLink)"
-                    class="sub-tile-button"
-                    [title]="subTile.config.tooltip"
-                    id="sub-tile-button-{{ subTile.config.id }}">
-              <div class="tile-content">
-                <div class="tile-row">
-                  <h3 class="sub-tile-heading">
-                    {{ subTile.config.titleTextRows }}
-                  </h3>
-                  <p class="sub-tile-text">
-                    {{ subTile.config.contentParagraphs[0] }}
-                  </p>
-                </div>
-                <mat-icon id="tile-icon_chevron-right-logo-{{ subTile.config.id }}" class="tile-icon">chevron_right
-                </mat-icon>
-              </div>
-            </button>
-          }
-        }
+<!-- The following templates contain the header and content for the new expansion panel. This is used
+     to simplify the process of using a feature flag for tile containers.
+     Please remove these template containers and put their content directly in the new HTML tag once
+     FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y will be removed! -->
+
+<ng-template #expansionHeader>
+  <div id="tile-content-{{ config().id }}" class="tile-content no-text-select"
+    [attr.title]="config().tooltip">
+    <img id="tile-logo-{{ config().id }}" class="tile-logo" aria-hidden="true" focusable="false"
+      [attr.src]="config()?.logoImage!.src" [attr.alt]="" />
+
+    <!-- The following template contains the tile row content. This is used to simplify the process of using
+         a feature flag for tile-row containers.
+         Please remove this template container and put its content directly in the new HTML tag once
+         FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y will be removed! -->
+    <ng-template #tileRowContent>
+      <h2 id="tile-title-{{ config().id }}" class="tile-title">
+        {{ config().titleTextRows.join(' ') }}
+      </h2>
+      <p id="tile-title-text-{{ config().id }}" class="tile-title-text">
+        {{ config().contentParagraphs[0] }}
+      </p>
+    </ng-template>
+
+    @if (FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y()) {
+      <section id="tile-row-{{ config().id }}" class="tile-row" aria-hidden="true">
+        <!-- Please preplace this content container with the direct content from the tile row template above once
+             FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y will be removed! -->
+        <ng-container *ngTemplateOutlet="tileRowContent"></ng-container>
+      </section>
+    }
+    @else {
+      <div id="tile-row-{{ config().id }}" class="tile-row" aria-hidden="true">
+        <ng-container *ngTemplateOutlet="tileRowContent"></ng-container>
       </div>
     }
-  </mat-card>
-</div>
+    <mat-icon id="tile-icon_{{ getIconType() }}-{{ config().id }}" class="tile-icon">
+      {{ getIconName() }}
+    </mat-icon>
+  </div>
+</ng-template>
 
+<ng-template #expansionContent>
+  <div class="sub-tiles-container" id="sub-tiles-container-{{ config().id }}">
+    @for (subTile of config().subTiles; track $index) {
+      @if (subTile.renderingCondition) {
+      <button (click)="navigateTo(subTile.config?.destinationRouterLink)"
+        class="sub-tile-button {{ FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y() ? '' : 'NOT_FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y' }}"
+        [attr.title]="subTile.config.tooltip" 
+        [attr.aria-label]="subTile.config.titleTextRows + ' - ' + subTile.config.contentParagraphs[0]"
+        id="sub-tile-button-{{ subTile.config.id }}">
+        <div class="tile-content">
+          <div id="tile-row-{{ config().id }}-{{ subTile.config.id }}" class="tile-row" aria-hidden="true">
+            <h3 id="sub-tile-heading-{{ config().id }}-{{ subTile.config.id }}" class="sub-tile-heading">
+              {{ subTile.config.titleTextRows }}
+            </h3>
+            <p id="sub-tile-text-{{ config().id }}-{{ subTile.config.id }}" class="sub-tile-text">
+              {{ subTile.config.contentParagraphs[0] }}
+            </p>
+          </div>
+          <mat-icon id="tile-icon_chevron-right-logo-{{ subTile.config.id }}" class="tile-icon">chevron_right
+          </mat-icon>
+        </div>
+      </button>
+      }
+    }
+  </div>
+</ng-template>
+
+@if (FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y()) {
+  @if (!isTileExpandable()) {
+    <button (click)="handleTileClick()" (keydown.enter)="handleTileClick()" (keydown.space)="handleTileClick()"
+      id="tile-button-{{ config().id }}" class="tile-button not-expandable mat-elevation-z1"
+      [attr.aria-label]="config().titleTextRows.join(' ') + ' - ' + config().contentParagraphs[0]">
+      <!-- Please preplace this content container with the direct content from the tile template above once
+           FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y will be removed! -->
+      <ng-container *ngTemplateOutlet="expansionHeader"></ng-container>
+    </button>
+  }
+  @else {
+    <mat-expansion-panel
+      id="tile-button-{{ config().id }}" class="tile-button"
+      [attr.aria-label]="config().titleTextRows.join(' ') + ' - ' + config().contentParagraphs[0]"
+      [attr.title]="config().tooltip" (click)="toggle.emit()" (keydown.enter)="toggle.emit()"
+      (keydown.space)="toggle.emit()" [expanded]="isExpanded()" hideToggle>
+      <!-- Please preplace these content containers with the direct contents from the templates above once
+           FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y will be removed! -->
+      <mat-expansion-panel-header>
+        <ng-container *ngTemplateOutlet="expansionHeader"></ng-container>
+      </mat-expansion-panel-header>
+    
+      <ng-container *ngTemplateOutlet="expansionContent"></ng-container>
+    </mat-expansion-panel>
+  }
+}
+@else {
+  <div>
+    <mat-card id="tile-card-{{ config().id }}" [ngClass]="{ 'tile-card': true, 'animated': animated() && !isExpanded() }"
+      (click)="handleTileClick()" (keydown.enter)="handleTileClick()" (keydown.space)="handleTileClick()" tabindex="0"
+      [attr.title]="config().tooltip">
+      <ng-container *ngTemplateOutlet="expansionHeader"></ng-container>
+
+      @if (isTileExpandable() && isExpanded()) {
+        <ng-container *ngTemplateOutlet="expansionContent"></ng-container>
+      }
+    </mat-card>
+  </div>
+}

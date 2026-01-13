@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2025 gematik GmbH
+    Copyright (c) 2026 gematik GmbH
     Licensed under the EUPL, Version 1.2 or - as soon they will be approved by the
     European Commission – subsequent versions of the EUPL (the "Licence").
     You may not use this work except in compliance with the Licence.
@@ -177,39 +177,6 @@ describe('WelcomeComponent', () => {
       });
     });
 
-    it('should show welcome-tile-non-nominal when both non-nominal roles are present', () => {
-      createComponent();
-      spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').and.returnValue(of(''));
-      fixture.point.injector.get(AuthService).$isAuthenticated = isAuthenticatedSubject;
-      spyOn(fixture.point.injector.get(AuthService), 'checkRole').and.callFake(
-        (role: string) =>
-          role === AppConstants.Roles.PATHOGEN_NOTIFICATION_NON_NOMINAL_SENDER || role === AppConstants.Roles.DISEASE_NOTIFICATION_NON_NOMINAL_SENDER
-      );
-      fixture.point.injector.get(AuthService).$tokenChanged.next();
-      ngMocks.flushTestBed();
-      createComponent();
-      let tile = getElementById(`welcome-tile-non-nominal`) as HTMLElement;
-      expect(!!tile).toBeTruthy();
-      tile.click();
-    });
-
-    [AppConstants.Roles.PATHOGEN_NOTIFICATION_NON_NOMINAL_SENDER, AppConstants.Roles.DISEASE_NOTIFICATION_NON_NOMINAL_SENDER].forEach(presentRole => {
-      it(`should not show welcome-tile-non-nominal when only one ${presentRole} is present`, () => {
-        createComponent();
-        spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').and.returnValue(of(''));
-        fixture.point.injector.get(AuthService).$isAuthenticated = isAuthenticatedSubject;
-        spyOn(fixture.point.injector.get(AuthService), 'checkRole').and.callFake(
-          (role: string) =>
-            role === AppConstants.Roles.PATHOGEN_NOTIFICATION_NON_NOMINAL_SENDER || role === AppConstants.Roles.DISEASE_NOTIFICATION_NON_NOMINAL_SENDER
-        );
-        fixture.point.injector.get(AuthService).$tokenChanged.next();
-        ngMocks.flushTestBed();
-        createComponent();
-        const tile = getElementById(`welcome-tile-non-nominal`);
-        expect(!!tile).toBeTruthy();
-      });
-    });
-
     it('should check portal config when there is a PORTAL_CONFIG_ERROR in session storage', () => {
       spyOn(sessionStorage, 'getItem').and.callFake((key: string) => {
         if (key === 'PORTAL_CONFIG_ERROR') {
@@ -229,7 +196,7 @@ describe('WelcomeComponent', () => {
   });
 
   describe('test tiles with subtiles', () => {
-    TestSetup.JWT_ROLES_EXPANDABLE_TILES.forEach(({ id, roles, tile, subTiles, doNegativeTest }) => {
+    TestSetup.JWT_ROLES_EXPANDABLE_TILES.forEach(({ id, roles, tile, subTiles, doNegativeTest, requireAllRoles }) => {
       it(`should show tile ${tile} and its subtiles when user has roles ${roles.join(', ')}`, async () => {
         createComponent();
         spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').and.returnValue(of(''));
@@ -249,7 +216,7 @@ describe('WelcomeComponent', () => {
 
         const tileIndex = component.tiles.findIndex(tile => Array.isArray(tile.config.subTiles) && tile.config.subTiles.length > 0 && tile.config.id === id);
 
-        // Expand the non-nominal tile, workaround because click doesn't work
+        // Expand the tile, workaround because click doesn't work
         component.changeExpandedStateForTile(tileIndex);
         fixture.detectChanges();
 
@@ -260,6 +227,7 @@ describe('WelcomeComponent', () => {
         });
       });
 
+      // Negative test: For tiles that require roles, test that it doesn't show when no roles are present
       if (doNegativeTest) {
         it(`should not show tile ${tile} when user does not have required roles`, async () => {
           createComponent();
@@ -276,6 +244,28 @@ describe('WelcomeComponent', () => {
 
           const tileElement = getElementById(tile);
           expect(tileElement).toBeFalsy();
+        });
+      }
+
+      // For tiles that require all roles, test that it doesn't show when only one role is present
+      if (requireAllRoles && roles.length > 1) {
+        roles.forEach(requiredRole => {
+          it(`should not show tile ${tile} when only ${requiredRole} role is present`, async () => {
+            createComponent();
+            spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').and.returnValue(of(''));
+            fixture.point.injector.get(AuthService).$isAuthenticated = isAuthenticatedSubject;
+            spyOn(fixture.point.injector.get(AuthService), 'checkRole').and.callFake((role: string) => role === requiredRole);
+            fixture.point.injector.get(AuthService).$tokenChanged.next();
+
+            ngMocks.flushTestBed();
+            createComponent();
+
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const tileElement = getElementById(tile);
+            expect(tileElement).toBeFalsy();
+          });
         });
       }
     });

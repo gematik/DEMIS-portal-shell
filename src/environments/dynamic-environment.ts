@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2025 gematik GmbH
+    Copyright (c) 2026 gematik GmbH
     Licensed under the EUPL, Version 1.2 or - as soon they will be approved by the
     European Commission – subsequent versions of the EUPL (the "Licence").
     You may not use this work except in compliance with the Licence.
@@ -39,10 +39,10 @@ interface NgxLoggerConfig {
 export interface FeatureFlags {
   CONFIG_TOKEN_INJECTION_ENABLED?: boolean;
   FEATURE_FLAG_NON_NOMINAL_NOTIFICATION?: boolean;
-  FEATURE_FLAG_PORTAL_INFOBANNER?: boolean;
   FEATURE_FLAG_FOLLOW_UP_NOTIFICATION_PORTAL_PATHOGEN?: boolean;
   FEATURE_FLAG_FOLLOW_UP_NOTIFICATION_PORTAL_DISEASE?: boolean;
   FEATURE_FLAG_PORTAL_HEADER_FOOTER?: boolean;
+  FEATURE_FLAG_ANONYMOUS_NOTIFICATION?: boolean;
 }
 
 interface GatewayPaths {

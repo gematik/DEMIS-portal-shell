@@ -1,2 +1,21 @@
 // Nur bootstraps grid-system nutzen
 @use 'node_modules/bootstrap/scss/bootstrap-grid';
+
+// attention icon
+.primary-color-icon {
+  margin-top: 5px;
+  margin-right: 5px;
+  color: var(--color-primary);
+}
+
+.wide-tooltip {
+  border-radius: 12px;
+}
+
+.wide-tooltip .mat-mdc-tooltip-surface {
+  min-width: 300px;
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  padding: 15px;
+}
