@@ -2,6 +2,17 @@
 
 # Release portal-shell
 
+## Release 1.4.3
+
+- Upgraded dependencies
+- Added stylings
+- Disabled Sandbox for ChromeHeadless browser to run karma tests in CI
+- Updated Base Image to 1.29.4-alpine3.23-slim
+- Removed FEATURE_FLAG_PORTAL_INFOBANNER
+- Improved accessibility of welcome page in logged out state
+- Added new tile and routing for § 7.3 anonymous notification (FEATURE_FLAG_ANONYMOUS_NOTIFICATION)
+- Improved accessibility of welcome page in logged in state
+
 ## Release 1.4.2
 
 - Added new header (FEATURE_FLAG_PORTAL_HEADER_FOOTER)

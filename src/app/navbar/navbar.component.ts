@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2025 gematik GmbH
+    Copyright (c) 2026 gematik GmbH
     Licensed under the EUPL, Version 1.2 or - as soon they will be approved by the
     European Commission – subsequent versions of the EUPL (the "Licence").
     You may not use this work except in compliance with the Licence.
@@ -24,12 +24,14 @@ import { AuthService } from 'src/app/services';
 import {
   AppConstants,
   FEATURE_FLAG_PORTAL_HEADER_FOOTER,
+  isAnonymousNotificationActivated,
   isFollowUpNotificationDiseaseActivated,
   isFollowUpNotificationPathogenActivated,
   isNonNominalNotificationActivated,
 } from 'src/app/shared/app-constants';
 import { environment } from 'src/environments/environment';
 import { PackageJsonService } from '../services/package-json.service';
+import PathSegments = AppConstants.PathSegments;
 
 @Component({
   selector: 'app-navbar',
@@ -55,7 +57,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
   hasIgsNotificationSenderRole: boolean = false;
   // Nonnominal users always have both roles so there is no need to distinguish between pathogen and disease. Same goes for welcome tile
   isNonNominalTabActive: boolean = false;
+  isAnonymousTabActive: boolean = false;
   showNonNominalLinks: boolean = false;
+  showAnonymousLinks: boolean = false;
 
   readonly packageJson = inject(PackageJsonService);
   private readonly oidcSecurityService = inject(OidcSecurityService);
@@ -75,9 +79,16 @@ export class NavbarComponent implements OnInit, OnDestroy {
         if (this.activeTab.includes(this.C.Tabs.HOME)) {
           this.blurActiveMenuButtons();
         }
-        this.isPathogenTabActive = this.activeTab.includes(this.C.Tabs.PATHOGEN) && !this.activeTab.includes(this.C.PathSegments.NON_NOMINAL);
-        this.isDiseaseTabActive = this.activeTab.includes(this.C.Tabs.DISEASE) && !this.activeTab.includes(this.C.PathSegments.NON_NOMINAL);
+        this.isPathogenTabActive =
+          this.activeTab.includes(this.C.Tabs.PATHOGEN) &&
+          !this.activeTab.includes(this.C.PathSegments.NON_NOMINAL) &&
+          !this.activeTab.includes(this.C.PathSegments.ANONYMOUS);
+        this.isDiseaseTabActive =
+          this.activeTab.includes(this.C.Tabs.DISEASE) &&
+          !this.activeTab.includes(this.C.PathSegments.NON_NOMINAL) &&
+          !this.activeTab.includes(this.C.PathSegments.ANONYMOUS);
         this.isNonNominalTabActive = this.activeTab.includes(this.C.PathSegments.NON_NOMINAL);
+        this.isAnonymousTabActive = this.activeTab.includes(this.C.PathSegments.ANONYMOUS);
       });
     this.isLoggedIn = toSignal(this.ssoAuthService.$isAuthenticated, { initialValue: false });
     this.ssoAuthService.$tokenChanged.pipe(takeUntil(this.unsubscriber)).subscribe(() => {
@@ -96,16 +107,16 @@ export class NavbarComponent implements OnInit, OnDestroy {
     });
   }
 
-  get FEATURE_FLAG_PORTAL_INFOBANNER() {
-    return !!environment.featureFlags?.FEATURE_FLAG_PORTAL_INFOBANNER;
-  }
-
   navigateToDiseaseNonNominal() {
     this.router.navigateByUrl('/disease-notification/7.3/non-nominal');
   }
 
   navigateToDisease() {
     this.router.navigateByUrl('/disease-notification');
+  }
+
+  navigateToDiseaseAnonymous() {
+    this.router.navigateByUrl('/' + PathSegments.DISEASE_NOTIFICATION_ANONYMOUS);
   }
 
   get version() {
@@ -124,6 +135,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.showNonNominalLinks =
       this.ssoAuthService.checkRole(AppConstants.Roles.PATHOGEN_NOTIFICATION_NON_NOMINAL_SENDER) &&
       this.ssoAuthService.checkRole(AppConstants.Roles.DISEASE_NOTIFICATION_NON_NOMINAL_SENDER);
+    this.showAnonymousLinks =
+      this.ssoAuthService.checkRole(AppConstants.Roles.PATHOGEN_NOTIFICATION_ANONYMOUS_SENDER) &&
+      this.ssoAuthService.checkRole(AppConstants.Roles.DISEASE_NOTIFICATION_ANONYMOUS_SENDER);
     this.hasIgsDataSenderRole =
       this.ssoAuthService.checkRole(AppConstants.Roles.IGS_SEQUENCE_DATA_SENDER) ||
       this.ssoAuthService.checkRole(AppConstants.Roles.IGS_NOTIFICATION_DATA_SENDER_FASTA_ONLY);
@@ -157,4 +171,5 @@ export class NavbarComponent implements OnInit, OnDestroy {
   protected readonly isFollowUpNotificationPathogenActivated = isFollowUpNotificationPathogenActivated;
   protected readonly isFollowUpNotificationDiseaseActivated = isFollowUpNotificationDiseaseActivated;
   protected readonly FEATURE_FLAG_PORTAL_HEADER_FOOTER = FEATURE_FLAG_PORTAL_HEADER_FOOTER;
+  protected readonly isAnonymousNotificationActivated = isAnonymousNotificationActivated;
 }

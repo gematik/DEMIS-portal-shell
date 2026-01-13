@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2025 gematik GmbH
+    Copyright (c) 2026 gematik GmbH
     Licensed under the EUPL, Version 1.2 or - as soon they will be approved by the
     European Commission – subsequent versions of the EUPL (the "Licence").
     You may not use this work except in compliance with the Licence.
@@ -95,6 +95,18 @@ const protectedRoutes: Routes = [
     ],
   },
   {
+    path: AppConstants.PathSegments.PATHOGEN_NOTIFICATION_ANONYMOUS,
+    canActivate: [kcAuthGuard, roleGuard],
+    data: { role: AppConstants.Roles.PATHOGEN_NOTIFICATION_ANONYMOUS_SENDER },
+    children: [
+      {
+        path: '**',
+        loadChildren: () => import('src/app/spa-host/spa-host.module').then(m => m.SpaHostModule),
+        data: { app: 'notification-portal-mf-pathogen' },
+      },
+    ],
+  },
+  {
     path: AppConstants.PathSegments.DISEASE_NOTIFICATION,
     canActivate: [kcAuthGuard, roleGuard],
     data: { role: AppConstants.Roles.DISEASE_NOTIFICATION_SENDER },
@@ -122,6 +134,18 @@ const protectedRoutes: Routes = [
     path: AppConstants.PathSegments.DISEASE_NOTIFICATION_NON_NOMINAL,
     canActivate: [kcAuthGuard, roleGuard],
     data: { role: AppConstants.Roles.DISEASE_NOTIFICATION_NON_NOMINAL_SENDER },
+    children: [
+      {
+        path: '**',
+        loadChildren: () => import('src/app/spa-host/spa-host.module').then(m => m.SpaHostModule),
+        data: { app: 'notification-portal-mf-disease' },
+      },
+    ],
+  },
+  {
+    path: AppConstants.PathSegments.DISEASE_NOTIFICATION_ANONYMOUS,
+    canActivate: [kcAuthGuard, roleGuard],
+    data: { role: AppConstants.Roles.DISEASE_NOTIFICATION_ANONYMOUS_SENDER },
     children: [
       {
         path: '**',

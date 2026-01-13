@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2025 gematik GmbH
+    Copyright (c) 2026 gematik GmbH
     Licensed under the EUPL, Version 1.2 or - as soon they will be approved by the
     European Commission – subsequent versions of the EUPL (the "Licence").
     You may not use this work except in compliance with the Licence.
@@ -19,6 +19,8 @@ import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular
 import {
   AppConstants,
   FEATURE_FLAG_PORTAL_HEADER_FOOTER,
+  FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y,
+  isAnonymousNotificationActivated,
   isFollowUpNotificationDiseaseActivated,
   isFollowUpNotificationPathogenActivated,
   isNonNominalNotificationActivated,
@@ -44,6 +46,7 @@ declare type UserPermissions = {
   hasIgsDataSenderRole: boolean;
   hasIgsNotificationSenderRole: boolean;
   hasNonNominalNotificationSenderRole: boolean;
+  hasAnonymousSenderRole: boolean;
 };
 
 declare type UserInfo = {
@@ -62,6 +65,7 @@ const INITIAL_USER_INFORMATION: UserInfo = {
     hasIgsDataSenderRole: false,
     hasIgsNotificationSenderRole: false,
     hasNonNominalNotificationSenderRole: false,
+    hasAnonymousSenderRole: false,
   },
 };
 
@@ -137,6 +141,10 @@ export class WelcomeComponent implements OnInit, OnDestroy {
 
   get showNonNominalTile() {
     return this.isNonNominalNotificationActivated() && this.userInfo().permissions.hasNonNominalNotificationSenderRole;
+  }
+
+  get showAnonymousTile() {
+    return this.isAnonymousNotificationActivated() && this.userInfo().permissions.hasAnonymousSenderRole;
   }
 
   get showPathogenExpandableTile() {
@@ -259,14 +267,13 @@ export class WelcomeComponent implements OnInit, OnDestroy {
           ],
         },
       },
-      // §7.3-er Meldungen
+      // § 7.3-er Meldungen
       {
         renderingCondition: this.showNonNominalTile,
         config: {
           id: 'non-nominal',
           titleTextRows: AppConstants.Titles.NON_NOMINAL,
           tooltip: AppConstants.Tooltips.CLICK_TO_OPEN,
-          destinationRouterLink: `/${AppConstants.PathSegments.PATHOGEN_NOTIFICATION}`,
           logoImage: {
             src: 'assets/images/non-nominal.svg',
             alt: 'Logo Erregernachweis melden',
@@ -291,6 +298,42 @@ export class WelcomeComponent implements OnInit, OnDestroy {
                 tooltip: AppConstants.Tooltips.CLICK_TO_REPORT,
                 destinationRouterLink: `/${AppConstants.PathSegments.DISEASE_NOTIFICATION_NON_NOMINAL}`,
                 contentParagraphs: [AppConstants.InfoTexts.DISEASE_NON_NOMINAL],
+              },
+            },
+          ],
+        },
+      },
+      // § 7.3 Anonym
+      {
+        renderingCondition: this.showAnonymousTile,
+        config: {
+          id: 'anonymous',
+          titleTextRows: AppConstants.Titles.ANONYMOUS,
+          tooltip: AppConstants.Tooltips.CLICK_TO_OPEN,
+          logoImage: {
+            src: 'assets/images/anonymous.svg',
+            alt: 'Logo Anonyme Meldung',
+          },
+          contentParagraphs: [AppConstants.InfoTexts.ANONYMOUS],
+          subTiles: [
+            {
+              renderingCondition: this.showAnonymousTile,
+              config: {
+                id: 'pathogen-anonymous',
+                titleTextRows: AppConstants.Titles.PATHOGEN_ANONYMOUS,
+                tooltip: AppConstants.Tooltips.CLICK_TO_REPORT,
+                destinationRouterLink: `/${AppConstants.PathSegments.PATHOGEN_NOTIFICATION_ANONYMOUS}`,
+                contentParagraphs: [AppConstants.InfoTexts.PATHOGEN_ANONYMOUS],
+              },
+            },
+            {
+              renderingCondition: this.showAnonymousTile,
+              config: {
+                id: 'disease-anonymous',
+                titleTextRows: AppConstants.Titles.DISEASE_ANONYMOUS,
+                tooltip: AppConstants.Tooltips.CLICK_TO_REPORT,
+                destinationRouterLink: `/${AppConstants.PathSegments.DISEASE_NOTIFICATION_ANONYMOUS}`,
+                contentParagraphs: [AppConstants.InfoTexts.DISEASE_ANONYMOUS],
               },
             },
           ],
@@ -348,6 +391,9 @@ export class WelcomeComponent implements OnInit, OnDestroy {
         hasNonNominalNotificationSenderRole:
           this.authService.checkRole(AppConstants.Roles.PATHOGEN_NOTIFICATION_NON_NOMINAL_SENDER) &&
           this.authService.checkRole(AppConstants.Roles.DISEASE_NOTIFICATION_NON_NOMINAL_SENDER),
+        hasAnonymousSenderRole:
+          this.authService.checkRole(AppConstants.Roles.PATHOGEN_NOTIFICATION_ANONYMOUS_SENDER) &&
+          this.authService.checkRole(AppConstants.Roles.DISEASE_NOTIFICATION_ANONYMOUS_SENDER),
       },
     };
 
@@ -375,5 +421,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
   protected readonly isNonNominalNotificationActivated = isNonNominalNotificationActivated;
   protected readonly isFollowUpNotificationPathogenActivated = isFollowUpNotificationPathogenActivated;
   protected readonly isFollowUpNotificationDiseaseActivated = isFollowUpNotificationDiseaseActivated;
+  protected readonly isAnonymousNotificationActivated = isAnonymousNotificationActivated;
   protected readonly FEATURE_FLAG_PORTAL_HEADER_FOOTER = FEATURE_FLAG_PORTAL_HEADER_FOOTER;
+  protected readonly FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y = FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y;
 }

@@ -1,6 +1,4 @@
-@if (FEATURE_FLAG_PORTAL_INFOBANNER) {
-  <app-info-banner-section></app-info-banner-section>
-}
+<app-info-banner-section></app-info-banner-section>
 
 <mat-toolbar class="app-navbar-demis" role="toolbar" aria-label="Hauptnavigation">
   <!-- #region Header LOGOS ("I am local" and "DEMIS Logo") -->
@@ -77,6 +75,21 @@
              [routerLink]="C.PathSegments.PATHOGEN_NOTIFICATION_NON_NOMINAL">Erregernachweis</a>
           <a id="a-to-disease-non-nominal" mat-menu-item (click)="navigateToDiseaseNonNominal()">Ärztliche
             Ergänzungsmeldung</a>
+        </mat-menu>
+      }
+
+
+      @if (isAnonymousNotificationActivated() && (showAnonymousLinks)) {
+        <button class="navbar-menu-btn" id="btn-anonymous" mat-button [matMenuTriggerFor]="menu"
+                [class.active-tab]="isAnonymousTabActive"
+                [class.inactive-tab]="!isAnonymousTabActive">Anonyme Meldung (§ 7 Abs. 3 IfSG)
+          <mat-icon iconPositionEnd fontIcon="arrow_drop_down" class="btn__icon"></mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <a id="a-to-pathogen-anonymous" mat-menu-item
+             [routerLink]="C.PathSegments.PATHOGEN_NOTIFICATION_ANONYMOUS">Erregernachweis (anonym)</a>
+          <a id="a-to-disease-anonymous" mat-menu-item (click)="navigateToDiseaseAnonymous()">Ärztliche
+            Ergänzungsmeldung (anonym)</a>
         </mat-menu>
       }
 
@@ -162,7 +175,7 @@
     <button type="button" mat-button id="btn-burger-menu-in-navbar" class="menu-button" [matMenuTriggerFor]="burgerMenu"
             aria-haspopup="menu" aria-label="Menü öffnen" tabindex=0>
       <mat-icon fontIcon="menu"></mat-icon>
-      Menu
+      Menü
     </button>
     <mat-menu #burgerMenu="matMenu" class="burger-menu" aria-label="Formularseitenmenü">
       @if (isLoggedIn()) {
@@ -174,7 +187,7 @@
           </button>
         }
         @if (isFollowUpNotificationDiseaseActivated() && hasDiseaseNotificationSenderRole) {
-          <button mat-menu-item [matMenuTriggerFor]="diseaseMenu" role="menuitem" aria-label="Krankheit Paragraph 6
+          <button id="menu-disease" mat-menu-item [matMenuTriggerFor]="diseaseMenu" role="menuitem" aria-label="Krankheit Paragraph 6
             IfSG">Krankheit (§ 6
             IfSG)
           </button>
@@ -196,7 +209,7 @@
           </button>
         }
         @if (isFollowUpNotificationPathogenActivated() && (hasPathogenNotificationSenderRole)) {
-          <button mat-menu-item [matMenuTriggerFor]="pathogenMenu" role="menuitem"
+          <button id="menu-pathogen" mat-menu-item [matMenuTriggerFor]="pathogenMenu" role="menuitem"
                   aria-label="Erregernachweis Paragraph 7 Abschnitt 1 IfSG">Erregernachweis
             (§ 7 Abs. 1 IfSG)
           </button>
@@ -211,7 +224,7 @@
           </mat-menu>
         }
         @if (isNonNominalNotificationActivated() && (showNonNominalLinks)) {
-          <button mat-menu-item [matMenuTriggerFor]="nonNominalMenu" role="menuitem"
+          <button id="menu-non-nominal" mat-menu-item [matMenuTriggerFor]="nonNominalMenu" role="menuitem"
                   aria-label="Paragraph 7 Abschnitt 3 IfSG">§ 7 Abs. 3 IfSG
           </button>
           <mat-menu #nonNominalMenu="matMenu">
@@ -222,6 +235,18 @@
             </button>
           </mat-menu>
         }
+      }
+      @if (isAnonymousNotificationActivated() && (showAnonymousLinks)) {
+        <button id="menu-anonymous" mat-menu-item [matMenuTriggerFor]="anonymousMenu" role="menuitem"
+                aria-label="Paragraph 7 Abschnitt 3 IfSG Anonym">Anonyme Meldung (§ 7 Abs. 3 IfSG)</button>
+        <mat-menu #anonymousMenu="matMenu">
+            <button mat-menu-item id="a-to-pathogen-anonymous"
+                    [routerLink]="C.PathSegments.PATHOGEN_NOTIFICATION_ANONYMOUS">Erregernachweis (anonym)
+            </button>
+            <button mat-menu-item id="a-to-disease-anonymous" (click)="navigateToDiseaseAnonymous()">Ärztliche <br>Ergänzungsmeldung (anonym)
+            </button>
+
+        </mat-menu>
       }
       @if (isLoggedIn() && (hasBedOccupencySenderRole || (hasIgsDataSenderRole && hasIgsNotificationSenderRole))) {
         <div class="menu-header" role="separator" aria-hidden="true">Weitere Surveillance-Systeme</div>
