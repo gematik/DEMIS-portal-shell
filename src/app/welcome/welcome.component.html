@@ -1,40 +1,69 @@
-@if (!FEATURE_FLAG_PORTAL_HEADER_FOOTER()) {
-  <div [ngClass]="{ 'page-wrapper': isAuthenticated() }">
-    <gem-demis-max-height-content-container [elementSelectorsToSubtract]="['app-navbar', 'footer']">
-      <div id="new-welcome-container" class="container">
-        <div>
-          <section [attr.aria-labelledby]="'welcome-demis-heading'">
-            <div id="welcome-texts-container">
-              <h1 id="welcome-demis-heading">Willkommen bei DEMIS</h1>
-              <p class="welcome-demis-text">{{ AppConstants.InfoTexts.ABOUT }}</p>
-              <p class="welcome-demis-text">{{ AppConstants.InfoTexts.KNOWLEDGE_DATABASE }}
-                <a target="_blank" rel="noopener noreferrer" href="{{AppConstants.ExternalLinks.DEMIS_WDB}}">{{
-                    AppConstants.Labels.DEMIS_KNOWLEDGE_DATABASE_LINK
-                  }}</a>
-              </p>
-            </div>
-          </section>
+<ng-template #commonContent>
+  <div id="new-welcome-container" class="container">
+    <div>
+      <section [attr.aria-labelledby]="'welcome-demis-heading'">
+        <div id="welcome-texts-container">
+          <h1 id="welcome-demis-heading">Willkommen im DEMIS-Meldeportal</h1>
+
+          @if (isAuthenticated()) {
+            <p class="welcome-demis-text">
+              {{ AppConstants.InfoTexts.ABOUT_AUTHENTICATED }}
+            </p>
+            <p class="welcome-demis-text">
+              Bei Fragen steht Ihnen der DEMIS-Support via E-Mail an <a href="mailto:demis-support@rki.de"
+                                                                        aria-label="E-Mail an den DEMIS-Support senden">demis-support&#64;rki.de</a>&nbsp;gern
+              zur Verfügung.
+            </p>
+          }
+
+          @if (!isAuthenticated()) {
+            <p class="welcome-demis-text">
+              {{ AppConstants.InfoTexts.ABOUT_UNAUTHENTICATED }}
+            </p>
+            <p class="welcome-demis-text">
+              Weitere Informationen zu DEMIS finden Sie in der
+              <a href="https://wiki.gematik.de/spaces/DSKB/overview" target="_blank" rel="noopener noreferrer"
+                 aria-label="DEMIS-Wissensdatenbank öffnen">DEMIS-Wissensdatenbank</a>.
+              Hier finden Sie auch
+              <a href="https://wiki.gematik.de/x/TX1NJw" target="_blank" rel="noopener noreferrer"
+                 aria-label="Schulungsvideos zum Meldeportal öffnen">Schulungsvideos zum Meldeportal</a>. Bei Fragen
+              steht Ihnen der DEMIS-Support via E-Mail an
+              <a href="mailto:demis-support@rki.de" aria-label="E-Mail an den DEMIS-Support senden">
+                demis-support&#64;rki.de</a>&nbsp;gern zur Verfügung.<br><br>
+            </p>
+            <p class="welcome-demis-text">
+              Anmeldung: Die Nutzung des Meldeportals setzt eine Authentisierung voraus.
+            </p>
+          }
           @if (!isAuthenticated()) {
             <button type="button" mat-button id="btn-welcome-auth-login" (click)="login()">
-              Anmelden
+              Zur Anmeldung
               <mat-icon class="logIn-btn_chevron-right">chevron_right</mat-icon>
             </button>
           }
         </div>
-        <main id="main">
-          <div id="welcome-tiles-container" class="row">
-            @for (tile of tiles; let index = $index; track index) {
-              @if ((tile.renderingCondition === undefined) || tile.renderingCondition) {
-                <app-welcome-tile class="column" id="welcome-tile-{{ tile.config.id }}" [config]="tile.config"
-                                  [animated]="true"
-                                  [isExpanded]="expandedTileIndex() === index"
-                                  (toggle)="changeExpandedStateForTile(index)">
-                </app-welcome-tile>
-              }
-            }
-          </div>
-        </main>
+      </section>
+    </div>
+    <main id="main">
+      <div id="welcome-tiles-container" class="row">
+        @for (tile of tiles; let index = $index; track index) {
+          @if ((tile.renderingCondition === undefined) || tile.renderingCondition) {
+            <app-welcome-tile class="column" id="welcome-tile-{{ tile.config.id }}" [config]="tile.config"
+                              [animated]="true"
+                              [isExpanded]="expandedTileIndex() === index"
+                              (toggle)="changeExpandedStateForTile(index)">
+            </app-welcome-tile>
+          }
+        }
       </div>
+    </main>
+  </div>
+</ng-template>
+
+@if (!FEATURE_FLAG_PORTAL_HEADER_FOOTER()) {
+  <div [ngClass]="{ 'page-wrapper': isAuthenticated() }">
+    <gem-demis-max-height-content-container [elementSelectorsToSubtract]="['app-navbar', 'footer']">
+      <ng-container *ngTemplateOutlet="commonContent"></ng-container>
     </gem-demis-max-height-content-container>
 
     <footer class="footer_deprecated bottom-positioned">
@@ -50,46 +79,10 @@
 }
 
 @if (FEATURE_FLAG_PORTAL_HEADER_FOOTER()) {
-  <gem-demis-max-height-content-container
-    [elementSelectorsToSubtract]="['app-navbar']">
+  <gem-demis-max-height-content-container [elementSelectorsToSubtract]="['app-navbar']">
     <div class="page-wrapper" [ngClass]="{ 'logged-in': isAuthenticated(), 'logged-out': !isAuthenticated() }">
       <main class="content" role="main">
-        <div id="new-welcome-container" class="container">
-          <div>
-            <section [attr.aria-labelledby]="'welcome-demis-heading'">
-              <div id="welcome-texts-container">
-                <h1 id="welcome-demis-heading">Willkommen bei DEMIS</h1>
-                <p class="welcome-demis-text">{{ AppConstants.InfoTexts.ABOUT }}</p>
-                <p class="welcome-demis-text">
-                  {{ AppConstants.InfoTexts.KNOWLEDGE_DATABASE }}
-                  <a target="_blank" rel="noopener noreferrer" href="{{ AppConstants.ExternalLinks.DEMIS_WDB }}">
-                    {{ AppConstants.Labels.DEMIS_KNOWLEDGE_DATABASE_LINK }}
-                  </a>
-                </p>
-              </div>
-            </section>
-            @if (!isAuthenticated()) {
-              <button type="button" mat-button id="btn-welcome-auth-login" (click)="login()">
-                Anmelden
-                <mat-icon class="logIn-btn_chevron-right">chevron_right</mat-icon>
-              </button>
-            }
-          </div>
-          <section id="welcome-tiles-container" class="row" aria-label="DEMIS-Meldungen">
-            @for (tile of tiles; let index = $index; track index) {
-              @if ((tile.renderingCondition === undefined) || tile.renderingCondition) {
-                <app-welcome-tile
-                  class="column"
-                  id="welcome-tile-{{ tile.config.id }}"
-                  [config]="tile.config"
-                  [animated]="true"
-                  [isExpanded]="expandedTileIndex() === index"
-                  (toggle)="changeExpandedStateForTile(index)">
-                </app-welcome-tile>
-              }
-            }
-          </section>
-        </div>
+        <ng-container *ngTemplateOutlet="commonContent"></ng-container>
       </main>
       <footer class="footer" role="contentinfo">
         <div class="footer-inner">

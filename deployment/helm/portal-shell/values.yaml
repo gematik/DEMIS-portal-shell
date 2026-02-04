@@ -47,7 +47,6 @@ config:
     FEATURE_FLAG_NON_NOMINAL_NOTIFICATION: false
     FEATURE_FLAG_FOLLOW_UP_NOTIFICATION_PORTAL_PATHOGEN: false
     FEATURE_FLAG_FOLLOW_UP_NOTIFICATION_PORTAL_DISEASE: false
-    FEATURE_FLAG_NEW_API_ENDPOINTS: false
     FEATURE_FLAG_PORTAL_HEADER_FOOTER: false
     FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y: false
     FEATURE_FLAG_ANONYMOUS_NOTIFICATION: false
@@ -76,16 +75,10 @@ config:
     level: 1
     disableConsoleLogging: false
   importMap:
-    notification-portal-mf-bed-occupancy: ../bedoccupancy/main.js
-    notification-portal-mf-disease: ../disease/main.js
-    notification-portal-mf-pathogen: ../pathogen/main.js
-    notification-portal-mf-igs: ../igs/main.js
-  newApiEndpoints:
-    importMap:
-      notification-portal-mf-bed-occupancy: ../../portal/bedoccupancy/main.js
-      notification-portal-mf-disease: ../../portal/disease/main.js
-      notification-portal-mf-pathogen: ../../portal/pathogen/main.js
-      notification-portal-mf-igs: ../../portal/igs/main.js
+    notification-portal-mf-bed-occupancy: ../../portal/bedoccupancy/main.js
+    notification-portal-mf-disease: ../../portal/disease/main.js
+    notification-portal-mf-pathogen: ../../portal/pathogen/main.js
+    notification-portal-mf-igs: ../../portal/igs/main.js
 
 # Extra Labels to be added
 # E.g.

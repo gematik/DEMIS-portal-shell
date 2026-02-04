@@ -2,6 +2,13 @@
 
 # Release portal-shell
 
+## Release 1.4.4
+
+- Add alt and aria-label for DEMIS header logo
+- new texts on "homepage" (authenticated and unauthenticated) and "about" page
+- new contact/support page
+- removed feature flag NEW_API_ENDPOINTS
+
 ## Release 1.4.3
 
 - Upgraded dependencies

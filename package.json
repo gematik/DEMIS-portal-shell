@@ -1,6 +1,6 @@
 {
   "name": "portal-shell",
-  "version": "1.4.3-snapshot",
+  "version": "1.4.4-snapshot",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
