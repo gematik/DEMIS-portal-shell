@@ -44,6 +44,7 @@ export function FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y(): boolean {
 export namespace AppConstants {
   export enum ShellPathSegments {
     ABOUT = 'about',
+    CONTACT = 'contact',
     SITE_NOTICE = 'impressum',
     PRIVACY_POLICY = 'privacy-policy',
     WELCOME = 'welcome',
@@ -66,6 +67,7 @@ export namespace AppConstants {
     PRIVACY_POLICY = ShellPathSegments.PRIVACY_POLICY,
     SEQUENCE_NOTIFICATION = 'sequence_notification',
     WELCOME = ShellPathSegments.WELCOME,
+    CONTACT = ShellPathSegments.CONTACT,
   }
 
   export enum Tabs {
@@ -79,7 +81,6 @@ export namespace AppConstants {
   export enum ExternalLinks {
     DATA_ANALYSIS = 'https://go.gematik.de/demisanalyse',
     DEMIS_WDB = 'https://wiki.gematik.de/display/DSKB',
-    CONTACT_SUPPORT = 'https://go.gematik.de/demis-support',
     SUPPORT_FAQ = 'https://go.gematik.de/demisfaq',
   }
 
@@ -95,11 +96,12 @@ export namespace AppConstants {
     SUPPORT_QUESTIONS_LINK = 'Supportanfragen', //can be removed when FEATURE_FLAG_PORTAL_HEADER_FOOTER is removed
     SUPPORT_SUPPORT_LINK = 'Kontaktformular',
     SUPPORT_FAQ_LINK = 'FAQ',
+    CONTACT_SUPPORT = 'Kontakt/Support',
   }
 
   export enum InfoTexts {
-    ABOUT = 'Das Deutsche Elektronische Melde- und Informationssystem für den Infektionsschutz (DEMIS) ermöglicht bundesweit die elektronische Meldung gemäß Infektionsschutzgesetz (IfSG). Über das DEMIS-Meldeportal können Meldepflichtige Meldungen gemäß IfSG über ein Online-Formular absetzen.',
-    KNOWLEDGE_DATABASE = 'Nähere Informationen zu DEMIS finden Sie hier:',
+    ABOUT_UNAUTHENTICATED = 'Das Deutsche Elektronische Melde- und Informationssystem für den Infektionsschutz (DEMIS) ermöglicht bundesweit die elektronische Meldung gemäß Infektionsschutzgesetz (IfSG). Meldepflichtige Personen und Einrichtungen können im DEMIS-Meldeportal über ein Online-Formular Meldungen gemäß IfSG absetzen.',
+    ABOUT_AUTHENTICATED = 'Über die unten aufgeführten Kacheln können Sie als meldepflichtige Person bzw. Einrichtung eine Meldung gemäß IfSG absetzen. Bitte klicken Sie auf die Ihrer Meldung entsprechenden Kachel.',
     BED_OCCUPANCY = 'Meldung der Krankenhausbettenbelegung gemäß § 13 Abs. 7 IfSG',
     DISEASE_OLD = 'Meldung von meldepflichtigen Infektionskrankheiten (z.B. bei Verdacht, Erkrankung oder Tod) gemäß § 6 Abs. 1 Nr. 1 und 1a IfSG sowie § 6 Abs. 2 IfSG',
     DISEASE = 'Namentliche Meldung von Infektionskrankheiten (z.B. bei Verdacht, Erkrankung oder Tod) gemäß § 6 Abs. 1 Nr. 1 und 1a IfSG sowie § 6 Abs. 2 IfSG',

@@ -7,7 +7,7 @@
   }
 
   <button mat-button id="home-button" routerLink="/" aria-label="Startseite">
-    <img id="img-demis-logo" src="{{ demisLogoUrl }}" alt="DEMIS Logo"/>
+    <img id="img-demis-logo" src="{{ demisLogoUrl }}" alt="DEMIS Logo – Zur Startseite" aria-label="Zur Startseite"/>
   </button>
   <!-- #endregion Header LOGOS -->
 
@@ -161,7 +161,7 @@
       </button>
 
       <!-- SUPPORT -->
-      <button mat-menu-item id="a-to-support" (click)="openInNewTab(C.ExternalLinks.CONTACT_SUPPORT)">
+      <button mat-menu-item id="a-to-support" (click)="openInNewTab(C.ExternalLinks.SUPPORT_FAQ)">
         <mat-icon>contact_support</mat-icon>
         {{ C.Labels.SUPPORT_QUESTIONS_LINK }}
       </button>
@@ -238,13 +238,15 @@
       }
       @if (isAnonymousNotificationActivated() && (showAnonymousLinks)) {
         <button id="menu-anonymous" mat-menu-item [matMenuTriggerFor]="anonymousMenu" role="menuitem"
-                aria-label="Paragraph 7 Abschnitt 3 IfSG Anonym">Anonyme Meldung (§ 7 Abs. 3 IfSG)</button>
+                aria-label="Paragraph 7 Abschnitt 3 IfSG Anonym">Anonyme Meldung (§ 7 Abs. 3 IfSG)
+        </button>
         <mat-menu #anonymousMenu="matMenu">
-            <button mat-menu-item id="a-to-pathogen-anonymous"
-                    [routerLink]="C.PathSegments.PATHOGEN_NOTIFICATION_ANONYMOUS">Erregernachweis (anonym)
-            </button>
-            <button mat-menu-item id="a-to-disease-anonymous" (click)="navigateToDiseaseAnonymous()">Ärztliche <br>Ergänzungsmeldung (anonym)
-            </button>
+          <button mat-menu-item id="a-to-pathogen-anonymous"
+                  [routerLink]="C.PathSegments.PATHOGEN_NOTIFICATION_ANONYMOUS">Erregernachweis (anonym)
+          </button>
+          <button mat-menu-item id="a-to-disease-anonymous" (click)="navigateToDiseaseAnonymous()">Ärztliche <br>Ergänzungsmeldung
+            (anonym)
+          </button>
 
         </mat-menu>
       }
@@ -284,8 +286,9 @@
       <button mat-menu-item id="a-to-demis-wdb" (click)="openInNewTab(C.ExternalLinks.DEMIS_WDB)" role="menuitem">
         {{ C.Labels.DEMIS_KNOWLEDGE_DATABASE_LINK }}
       </button>
-      <button mat-menu-item id="a-to-support" (click)="openInNewTab(C.ExternalLinks.CONTACT_SUPPORT)" role="menuitem">
-        {{ C.Labels.SUPPORT_SUPPORT_LINK }}
+      <button mat-menu-item id="a-to-support" [routerLink]="C.PathSegments.CONTACT" routerLinkActive="active"
+              role="menuitem">
+        {{ C.Labels.CONTACT_SUPPORT }}
       </button>
       <button mat-menu-item id="a-to-faq" (click)="openInNewTab(C.ExternalLinks.SUPPORT_FAQ)" role="menuitem"
               aria-label="Frequently asked questions">

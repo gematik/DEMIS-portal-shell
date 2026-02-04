@@ -19,6 +19,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AboutComponent } from 'src/app/about/about.component';
+import { ContactComponent } from 'src/app/contact/contact.component';
 import { PrivacyPolicyComponent } from 'src/app/privacy-policy/privacy-policy.component';
 import { kcAuthGuard } from 'src/app/services/auth.guard';
 import { roleGuard } from 'src/app/services/role.guard';
@@ -42,6 +43,10 @@ export const unprotectedRoutes: Routes = [
   {
     path: AppConstants.PathSegments.WELCOME,
     component: WelcomeComponent,
+  },
+  {
+    path: AppConstants.PathSegments.CONTACT,
+    component: ContactComponent,
   },
 ];
 
