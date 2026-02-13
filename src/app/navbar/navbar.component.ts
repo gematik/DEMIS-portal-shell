@@ -50,6 +50,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   readonly env = environment;
   isPathogenTabActive: boolean = false;
   isDiseaseTabActive: boolean = false;
+  isAreTabActive: boolean = false;
   hasBedOccupencySenderRole: boolean = false;
   hasDiseaseNotificationSenderRole: boolean = false;
   hasPathogenNotificationSenderRole: boolean = false;
@@ -88,6 +89,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
           !this.activeTab.includes(this.C.PathSegments.NON_NOMINAL) &&
           !this.activeTab.includes(this.C.PathSegments.ANONYMOUS);
         this.isNonNominalTabActive = this.activeTab.includes(this.C.PathSegments.NON_NOMINAL);
+        this.isAreTabActive = this.activeTab.includes(this.C.PathSegments.ARE_NOTIFICATION);
         this.isAnonymousTabActive = this.activeTab.includes(this.C.PathSegments.ANONYMOUS);
       });
     this.isLoggedIn = toSignal(this.ssoAuthService.$isAuthenticated, { initialValue: false });
@@ -117,6 +119,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   navigateToDiseaseAnonymous() {
     this.router.navigateByUrl('/' + PathSegments.DISEASE_NOTIFICATION_ANONYMOUS);
+  }
+
+  navigateToAre() {
+    this.router.navigateByUrl(`/${AppConstants.PathSegments.ARE_NOTIFICATION}`);
   }
 
   get version() {

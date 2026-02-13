@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2026 gematik GmbH
+    Copyright (c) 2025 gematik GmbH
     Licensed under the EUPL, Version 1.2 or - as soon they will be approved by the
     European Commission – subsequent versions of the EUPL (the "Licence").
     You may not use this work except in compliance with the Licence.
@@ -168,6 +168,22 @@ const protectedRoutes: Routes = [
         path: '**',
         loadChildren: () => import('src/app/spa-host/spa-host.module').then(m => m.SpaHostModule),
         data: { app: 'notification-portal-mf-igs' },
+      },
+    ],
+  },
+  {
+    path: AppConstants.PathSegments.ARE_NOTIFICATION,
+    canActivate: [kcAuthGuard, roleGuard],
+    // TODO: Adapt when ARE-access is finalized conceptually
+    data: { role: AppConstants.Roles.DISEASE_NOTIFICATION_SENDER},
+    children: [
+      {
+        path: '**',
+        loadChildren: () =>
+            import('src/app/spa-host/spa-host.module').then(
+                m => m.SpaHostModule,
+            ),
+        data: { app: 'notification-portal-mf-are' },
       },
     ],
   },

@@ -66,6 +66,7 @@ export namespace AppConstants {
     DISEASE_NOTIFICATION_ANONYMOUS = 'disease-notification/7.3/anonymous',
     PRIVACY_POLICY = ShellPathSegments.PRIVACY_POLICY,
     SEQUENCE_NOTIFICATION = 'sequence_notification',
+    ARE_NOTIFICATION = 'are-notification',
     WELCOME = ShellPathSegments.WELCOME,
     CONTACT = ShellPathSegments.CONTACT,
   }
@@ -118,6 +119,7 @@ export namespace AppConstants {
     ANONYMOUS = 'Anonyme Meldung eines Erregernachweises oder ärztliche Ergänzungsmeldung gemäß § 7 Abs. 3 IfSG: C. trachomatis (L1-L3), Echinococcus spp., HIV, N. gonorrhoeae, T. gondii & T. pallidum',
     PATHOGEN_ANONYMOUS = 'Anonyme Meldung eines Nachweises von Krankheitserregern gemäß § 7 Abs. 3 IfSG',
     DISEASE_ANONYMOUS = 'Anonyme Meldung von Infektionskrankheiten gemäß § 7 Abs. 3 IfSG ',
+    ARE = 'Meldung im Rahmen der syndromischen ARE-Surveillance an die Arbeitsgemeischaft Influenza (AGI) des Robert Koch-Instituts (RKI)'
   }
 
   export namespace Titles {
@@ -129,6 +131,7 @@ export namespace AppConstants {
     export const PATHOGEN_SHORT = ['Erregernachweis melden'];
     export const DISEASE_NON_NOMINAL = ['Ärztliche Ergänzungsmeldung'];
     export const SEQUENCE_NOTIFICATION_NEW = ['Integrierte Genomische Surveillance', '(IGS)'];
+    export const ARE = ['ARE-Surveillancemeldung']
     export const FOLLOW_UP = ['Folgemeldung'];
     export const SEQUENCE_NOTIFICATION = ['IGS'];
     export const ANONYMOUS = ['Anonyme Meldung gemäß § 7 Abs. 3 IfSG'];
@@ -157,5 +160,6 @@ export namespace AppConstants {
     IGS_SEQUENCE_DATA_SENDER = 'igs-sequence-data-sender',
     IGS_NOTIFICATION_DATA_SENDER = 'igs-notification-data-sender',
     IGS_NOTIFICATION_DATA_SENDER_FASTA_ONLY = 'igs-sequence-data-sender-fasta-only',
+    ARE_NOTIFICATION_SENDER = 'are-notification-sender',
   }
 }

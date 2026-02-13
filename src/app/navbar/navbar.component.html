@@ -110,6 +110,17 @@
           IGS
         </a>
       }
+
+      @if (hasDiseaseNotificationSenderRole) {
+        <a id="a-to-are"
+           [class.active-tab]="isAreTabActive"
+           [class.inactive-tab]="!isAreTabActive"
+           mat-tab-link
+           [routerLink]="C.PathSegments.ARE_NOTIFICATION"
+           routerLinkActive="active">
+           ARE
+        </a>
+    }
     </nav>
   }
   <!-- #endregion NAV BAR - DEPRECATED - ("Startseite", "Erregernachweis", "Krankheit", "Betten", "IGS",...)-->

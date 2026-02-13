@@ -267,7 +267,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
           ],
         },
       },
-      // § 7.3-er Meldungen
+      // §7.3-er Meldungen
       {
         renderingCondition: this.showNonNominalTile,
         config: {
@@ -368,6 +368,23 @@ export class WelcomeComponent implements OnInit, OnDestroy {
             alt: 'Logo der Bettenbelegung Meldung',
           },
           contentParagraphs: [AppConstants.InfoTexts.SEQUENCE_NOTIFICATION],
+          buttonLabel: 'Melden',
+        },
+      },
+      // ARE
+      {
+        // TODO: Change to final solution how/when ARE is shown if concept is finished
+        renderingCondition: this.showDiseaseNominalTile,
+        config: {
+          id: 'are-notification',
+          titleTextRows: AppConstants.Titles.ARE,
+          tooltip: AppConstants.Tooltips.CLICK_TO_REPORT,
+          destinationRouterLink: `/${AppConstants.PathSegments.ARE_NOTIFICATION}`,
+          logoImage: {
+            src: 'assets/images/are.svg',
+            alt: 'Logo der ARE-Meldung',
+          },
+          contentParagraphs: [AppConstants.InfoTexts.ARE],
           buttonLabel: 'Melden',
         },
       },

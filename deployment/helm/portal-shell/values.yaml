@@ -79,6 +79,7 @@ config:
     notification-portal-mf-disease: ../../portal/disease/main.js
     notification-portal-mf-pathogen: ../../portal/pathogen/main.js
     notification-portal-mf-igs: ../../portal/igs/main.js
+    notification-portal-mf-are: ../../portal/are/main.js
 
 # Extra Labels to be added
 # E.g.
