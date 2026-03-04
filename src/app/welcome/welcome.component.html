@@ -26,8 +26,8 @@
                  aria-label="DEMIS-Wissensdatenbank öffnen">DEMIS-Wissensdatenbank</a>.
               Hier finden Sie auch
               <a href="https://wiki.gematik.de/x/TX1NJw" target="_blank" rel="noopener noreferrer"
-                 aria-label="Schulungsvideos zum Meldeportal öffnen">Schulungsvideos zum Meldeportal</a>. Bei Fragen
-              steht Ihnen der DEMIS-Support via E-Mail an
+                 aria-label="Schulungsvideos zum Meldeportal öffnen">Schulungsvideos zum Meldeportal</a>.
+              <br><br> Bei Fragen steht Ihnen der DEMIS-Support via E-Mail an
               <a href="mailto:demis-support@rki.de" aria-label="E-Mail an den DEMIS-Support senden">
                 demis-support&#64;rki.de</a>&nbsp;gern zur Verfügung.<br><br>
             </p>
@@ -51,8 +51,7 @@
             <app-welcome-tile class="column" id="welcome-tile-{{ tile.config.id }}" [config]="tile.config"
                               [animated]="true"
                               [isExpanded]="expandedTileIndex() === index"
-                              (toggle)="changeExpandedStateForTile(index)">
-            </app-welcome-tile>
+                              (toggle)="changeExpandedStateForTile(index)" />
           }
         }
       </div>
@@ -63,7 +62,7 @@
 @if (!FEATURE_FLAG_PORTAL_HEADER_FOOTER()) {
   <div [ngClass]="{ 'page-wrapper': isAuthenticated() }">
     <gem-demis-max-height-content-container [elementSelectorsToSubtract]="['app-navbar', 'footer']">
-      <ng-container *ngTemplateOutlet="commonContent"></ng-container>
+      <ng-container *ngTemplateOutlet="commonContent" />
     </gem-demis-max-height-content-container>
 
     <footer class="footer_deprecated bottom-positioned">
@@ -80,38 +79,11 @@
 
 @if (FEATURE_FLAG_PORTAL_HEADER_FOOTER()) {
   <gem-demis-max-height-content-container [elementSelectorsToSubtract]="['app-navbar']">
-    <div class="page-wrapper" [ngClass]="{ 'logged-in': isAuthenticated(), 'logged-out': !isAuthenticated() }">
+    <div class="page-wrapper" [ngClass]="isAuthenticated() ? 'logged-in' : 'logged-out'">
       <main class="content" role="main">
-        <ng-container *ngTemplateOutlet="commonContent"></ng-container>
+        <ng-container *ngTemplateOutlet="commonContent" />
       </main>
-      <footer class="footer" role="contentinfo">
-        <div class="footer-inner">
-          <div class="footer-left">
-            <div class="RKI-logo">
-              <img ngSrc="assets/images/RKI-logo.svg" [priority]="true" alt="Robert Koch Institut" height="48"
-                   width="192"/>
-            </div>
-            <div class="EU-logo">
-              <img ngSrc="assets/images/EU-logo.jpg" [priority]="true" alt="Finanziert von der Europäischen Union"
-                   height="58" width="224"/>
-            </div>
-          </div>
-
-          <div class="footer-right">
-            <div class="footer-right-top">
-              @if (isAuthenticated()) {
-                <div class="authenticated-as" id="start-username">Eingeloggt als {{ userInfo().username }}</div>
-              }
-            </div>
-
-            <nav class="footer-right-bottom" aria-label="Footer Navigation">
-              <a href="#impressum">Impressum</a>
-              <a href="#privacy-policy">Datenschutz</a>
-              <!-- <a href="#accessibility-statement">Barrierefreiheit</a> -->
-            </nav>
-          </div>
-        </div>
-      </footer>
+      <app-footer></app-footer>
     </div>
   </gem-demis-max-height-content-container>
 }

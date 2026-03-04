@@ -16,6 +16,7 @@
  */
 
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { NgModule, inject, provideAppInitializer } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -31,6 +32,11 @@ import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { AppComponent } from 'src/app/app.component';
 import { NavbarComponent } from 'src/app/navbar/navbar.component';
+import { AboutComponent } from 'src/app/about/about.component';
+import { ContactComponent } from 'src/app/contact/contact.component';
+import { ImprintComponent } from './imprint/imprint.component';
+import { AccessibilityStatementComponent } from 'src/app/accessibiliy-statement/accessibility-statement.component';
+import { FooterComponent } from 'src/app/footer/footer.component';
 import { LOCALE_ID_DE } from 'src/app/shared/common-utils';
 import { IconLoaderService } from 'src/app/shared/services/icon-loader.service';
 import { environment } from 'src/environments/environment';
@@ -52,7 +58,6 @@ import { AuthService } from 'src/app/services/auth.service';
 import { KcConfigService } from 'src/app/services/kc-config.service';
 import { KcStorageService } from 'src/app/services/kc-storage.service';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
-import { NgOptimizedImage } from '@angular/common';
 import { InfoBannerSectionComponent } from './info-banner-section/info-banner-section.component';
 import { WelcomeTileComponent } from './welcome-tile/welcome-tile.component';
 
@@ -68,7 +73,7 @@ const authFactory = (configService: KcConfigService) => {
 };
 
 @NgModule({
-  declarations: [AppComponent, NavbarComponent],
+  declarations: [AppComponent, NavbarComponent, AboutComponent, ContactComponent, ImprintComponent, AccessibilityStatementComponent],
   bootstrap: [AppComponent],
   imports: [
     ToastrModule.forRoot({
@@ -84,6 +89,7 @@ const authFactory = (configService: KcConfigService) => {
     }),
     LoggerModule.forRoot(environment.defaultNgxLoggerConfig),
     BrowserModule,
+    CommonModule,
     AppRoutingModule,
     RouterModule,
     BrowserAnimationsModule,
@@ -101,6 +107,7 @@ const authFactory = (configService: KcConfigService) => {
     MatDialogModule,
     MatTabsModule,
     WelcomeTileComponent,
+    FooterComponent,
     MaxHeightContentContainerComponent,
     NgOptimizedImage,
     InfoBannerSectionComponent,

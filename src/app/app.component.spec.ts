@@ -34,7 +34,7 @@ import { AuthService } from './services';
 // Mock component with automatic input handling
 @Component({
   selector: 'gem-demis-max-height-content-container',
-  template: '<ng-content></ng-content>',
+  template: '<ng-content />',
   inputs: ['elementSelectorsToSubtract'], // Automatic input handling
 })
 class MockMaxHeightContentContainerComponent implements Partial<ComponentInputs<MaxHeightContentContainerComponent>> {

@@ -24,8 +24,9 @@ import { PrivacyPolicyComponent } from 'src/app/privacy-policy/privacy-policy.co
 import { kcAuthGuard } from 'src/app/services/auth.guard';
 import { roleGuard } from 'src/app/services/role.guard';
 import { AppConstants } from 'src/app/shared/app-constants';
-import { SiteNoticeComponent } from 'src/app/site-notice/site-notice.component';
+import { ImprintComponent } from './imprint/imprint.component';
 import { WelcomeComponent } from 'src/app/welcome/welcome.component';
+import { AccessibilityStatementComponent } from './accessibiliy-statement/accessibility-statement.component';
 
 export const unprotectedRoutes: Routes = [
   {
@@ -37,8 +38,17 @@ export const unprotectedRoutes: Routes = [
     component: PrivacyPolicyComponent,
   },
   {
-    path: AppConstants.PathSegments.SITE_NOTICE,
-    component: SiteNoticeComponent,
+    path: AppConstants.PathSegments.SITE_NOTICE, // can be removed when FeatureFlag FOOTER_LINKS_CORRECTION is removed
+    component: ImprintComponent,
+  },
+  {
+    path: AppConstants.PathSegments.IMPRINT,
+    component: ImprintComponent,
+  },
+
+  {
+    path: AppConstants.PathSegments.ACCESSIBILITY_STATEMENT,
+    component: AccessibilityStatementComponent,
   },
   {
     path: AppConstants.PathSegments.WELCOME,

@@ -18,6 +18,7 @@
 import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import {
   AppConstants,
+  FEATURE_FLAG_PORTAL_ACCESSIBILITY,
   FEATURE_FLAG_PORTAL_HEADER_FOOTER,
   FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y,
   isAnonymousNotificationActivated,
@@ -33,6 +34,7 @@ import { NGXLogger } from 'ngx-logger';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { EqualHeightService } from 'src/app/shared/services/equal-height.service';
 import { WelcomeTileComponent } from '../welcome-tile/welcome-tile.component';
+import { FooterComponent } from '../footer/footer.component';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
@@ -94,7 +96,7 @@ export declare type WelcomeTileConfig = {
   selector: 'app-welcome',
   templateUrl: './welcome.component.html',
   styleUrls: ['./welcome.component.scss'],
-  imports: [CommonModule, WelcomeTileComponent, MatButton, MatIcon, NgOptimizedImage, MaxHeightContentContainerComponent],
+  imports: [CommonModule, WelcomeTileComponent, MatButton, MatIcon, NgOptimizedImage, MaxHeightContentContainerComponent, FooterComponent],
 })
 export class WelcomeComponent implements OnInit, OnDestroy {
   private readonly oidcSecurityService = inject(OidcSecurityService);
@@ -424,4 +426,5 @@ export class WelcomeComponent implements OnInit, OnDestroy {
   protected readonly isAnonymousNotificationActivated = isAnonymousNotificationActivated;
   protected readonly FEATURE_FLAG_PORTAL_HEADER_FOOTER = FEATURE_FLAG_PORTAL_HEADER_FOOTER;
   protected readonly FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y = FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y;
+  protected readonly FEATURE_FLAG_PORTAL_ACCESSIBILITY = FEATURE_FLAG_PORTAL_ACCESSIBILITY;
 }

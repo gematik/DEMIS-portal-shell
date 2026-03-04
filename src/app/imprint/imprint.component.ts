@@ -15,21 +15,12 @@
     find details in the "Readme" file.
  */
 
-import { SiteNoticeComponent } from './site-notice.component';
-import { MockBuilder, MockedComponentFixture, MockRender } from 'ng-mocks';
+import { Component } from '@angular/core';
 
-describe('SiteNoticeComponent', () => {
-  let fixture: MockedComponentFixture<SiteNoticeComponent>;
-  let component: SiteNoticeComponent;
-
-  beforeEach(() => MockBuilder(SiteNoticeComponent));
-
-  beforeEach(() => {
-    fixture = MockRender(SiteNoticeComponent);
-    component = fixture.point.componentInstance;
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+@Component({
+  selector: 'app-site-notice',
+  templateUrl: './imprint.component.html',
+  styleUrls: ['./imprint.component.scss'],
+  standalone: false,
+})
+export class ImprintComponent {}

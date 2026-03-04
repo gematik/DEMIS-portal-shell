@@ -15,7 +15,6 @@
     find details in the "Readme" file.
  */
 
-import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { MatDividerModule } from '@angular/material/divider';
 import { InfoBannerStorageService } from 'src/app/services/info-banner-storage.service';
@@ -33,7 +32,7 @@ import { InfoBannerContentComponent } from './info-banner-content/info-banner-co
  */
 @Component({
   selector: 'app-info-banner-section',
-  imports: [CommonModule, MatDividerModule, InfoBannerContentComponent],
+  imports: [MatDividerModule, InfoBannerContentComponent],
   templateUrl: './info-banner-section.component.html',
   styleUrl: './info-banner-section.component.scss',
 })

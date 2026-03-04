@@ -41,12 +41,22 @@ export function FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y(): boolean {
   return environment.featureFlags?.FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y ?? false;
 }
 
+export function FEATURE_FLAG_PORTAL_ACCESSIBILITY(): boolean {
+  return environment.featureFlags?.FEATURE_FLAG_PORTAL_ACCESSIBILITY ?? false;
+}
+
+export function FEATURE_FLAG_FOOTER_LINKS_CORRECTION(): boolean {
+  return environment.featureFlags?.FEATURE_FLAG_FOOTER_LINKS_CORRECTION ?? false;
+}
+
 export namespace AppConstants {
   export enum ShellPathSegments {
     ABOUT = 'about',
     CONTACT = 'contact',
     SITE_NOTICE = 'impressum',
+    IMPRINT = 'imprint',
     PRIVACY_POLICY = 'privacy-policy',
+    ACCESSIBILITY_STATEMENT = 'accessibility-statement',
     WELCOME = 'welcome',
   }
 
@@ -55,6 +65,7 @@ export namespace AppConstants {
     BED_OCCUPANCY = 'bed-occupancy',
     DISEASE_NOTIFICATION = 'disease-notification',
     SITE_NOTICE = ShellPathSegments.SITE_NOTICE,
+    IMPRINT = ShellPathSegments.IMPRINT,
     PATHOGEN_NOTIFICATION = 'pathogen-notification',
     NON_NOMINAL = '/7.3/non-nominal',
     ANONYMOUS = '/7.3/anonymous',
@@ -65,6 +76,7 @@ export namespace AppConstants {
     DISEASE_NOTIFICATION_NON_NOMINAL = 'disease-notification/7.3/non-nominal',
     DISEASE_NOTIFICATION_ANONYMOUS = 'disease-notification/7.3/anonymous',
     PRIVACY_POLICY = ShellPathSegments.PRIVACY_POLICY,
+    ACCESSIBILITY_STATEMENT = ShellPathSegments.ACCESSIBILITY_STATEMENT,
     SEQUENCE_NOTIFICATION = 'sequence_notification',
     WELCOME = ShellPathSegments.WELCOME,
     CONTACT = ShellPathSegments.CONTACT,

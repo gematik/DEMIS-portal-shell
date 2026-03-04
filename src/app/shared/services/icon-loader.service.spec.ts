@@ -26,12 +26,18 @@ describe('IconLoaderService', () => {
   let matIconRegistrySpy: jasmine.Spy;
   let domSanitizerSpy: jasmine.Spy;
 
-  beforeEach(() => MockBuilder(IconLoaderService).mock(MatIconRegistry).mock(DomSanitizer));
+  beforeEach(() =>
+    MockBuilder(IconLoaderService)
+      .mock(MatIconRegistry)
+      .mock(DomSanitizer, {
+        bypassSecurityTrustResourceUrl: (url: string) => url,
+      })
+  );
 
   beforeEach(() => {
     service = TestBed.inject(IconLoaderService);
     matIconRegistrySpy = spyOn(TestBed.inject(MatIconRegistry), 'addSvgIcon');
-    domSanitizerSpy = spyOn(TestBed.inject(DomSanitizer), 'bypassSecurityTrustResourceUrl').and.callFake((url: string) => url);
+    domSanitizerSpy = spyOn(TestBed.inject(DomSanitizer), 'bypassSecurityTrustResourceUrl').and.callThrough();
   });
 
   it('should be created', () => {

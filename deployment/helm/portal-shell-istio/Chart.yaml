@@ -1,6 +1,0 @@
-apiVersion: v2
-name: portal-shell-istio
-description: DEMIS portal-shell Istio Configuration
-type: application
-version: 1.4.3
-appVersion: "1.4.3"
