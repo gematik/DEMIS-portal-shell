@@ -1,21 +1,29 @@
-<div class="container">
-  <h1 style="margin-top: 20px">
-    Kontakt/Support
-  </h1>
-  <p>
-    E-Mail:
-    <a href="mailto:demis-support@rki.de"
-       aria-label="E-Mail an den DEMIS-Support senden"
-       style="text-decoration: underline">demis-support&#64;rki.de</a><br>
-    Hotline: 0800 - 000 3041 (Mo.-Fr., 09-17 Uhr)
-  </p>
-  <p>
-    Bei Fragen oder Anregungen steht Ihnen der DEMIS-Support gern zur Verfügung.
-  </p>
-  <p>
-    Umfangreiche Informationen und akteursspezifische FAQ finden Sie außerdem in der
-    <a href="https://wiki.gematik.de/display/DSKB" target="_blank"
-       rel="noopener noreferrer" aria-label="DEMIS-Wissensdatenbank in neuem Tab öffnen"
-       style="text-decoration: underline">DEMIS-Wissensdatenbank</a>.
-  </p>
-</div>
+<gem-demis-max-height-content-container [elementSelectorsToSubtract]="['app-navbar']">
+  <div class="subpage-wrapper">
+    <main class="subpage-content" role="main">
+      <div class="container">
+        <h1 style="margin-top: 20px">
+          Kontakt/Support
+        </h1>
+        <p>
+          E-Mail:
+          <a href="mailto:demis-support@rki.de"
+             aria-label="E-Mail an den DEMIS-Support senden"
+             style="text-decoration: underline">demis-support&#64;rki.de</a><br>
+          Hotline: 0800 - 000 3041 (Mo.-Fr., 09-17 Uhr)
+        </p>
+        <p>
+          Bei Fragen oder Anregungen steht Ihnen der DEMIS-Support gern zur Verfügung.
+        </p>
+        <p>
+          Umfangreiche Informationen und akteursspezifische FAQ finden Sie außerdem in der
+          <a href="https://wiki.gematik.de/display/DSKB" target="_blank"
+             rel="noopener noreferrer" aria-label="DEMIS-Wissensdatenbank in neuem Tab öffnen"
+             style="text-decoration: underline">DEMIS-Wissensdatenbank</a>.
+        </p>
+      </div>
+    </main>
+    <app-footer></app-footer>
+  </div>
+</gem-demis-max-height-content-container>
+

@@ -12,7 +12,7 @@
     "forceConsistentCasingInFileNames": false,
     "strict": true,
     "esModuleInterop": true,
-    "strictPropertyInitialization":false,
+    "strictPropertyInitialization": false,
     "noImplicitOverride": false,
     "noPropertyAccessFromIndexSignature": false,
     "noImplicitReturns": false,
@@ -20,16 +20,12 @@
     "sourceMap": true,
     "declaration": false,
     "experimentalDecorators": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "importHelpers": true,
     "target": "ES2022",
     "module": "ES2022",
     "useDefineForClassFields": false,
-    "resolveJsonModule": true,
-    "lib": [
-      "ES2022",
-      "dom"
-    ]
+    "resolveJsonModule": true
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

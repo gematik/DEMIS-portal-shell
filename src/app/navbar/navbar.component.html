@@ -1,4 +1,4 @@
-<app-info-banner-section></app-info-banner-section>
+<app-info-banner-section />
 
 <mat-toolbar class="app-navbar-demis" role="toolbar" aria-label="Hauptnavigation">
   <!-- #region Header LOGOS ("I am local" and "DEMIS Logo") -->
@@ -35,7 +35,7 @@
         <button id="btn-disease" class="navbar-menu-btn" mat-button [matMenuTriggerFor]="menu"
                 [class.active-tab]="isDiseaseTabActive"
                 [class.inactive-tab]="!isDiseaseTabActive">Krankheit (§ 6 IfSG)
-          <mat-icon iconPositionEnd fontIcon="arrow_drop_down" class="btn__icon"></mat-icon>
+          <mat-icon iconPositionEnd fontIcon="arrow_drop_down" class="btn__icon" />
         </button>
         <mat-menu #menu="matMenu" class="menu-width_disease">
           <a id="a-to-disease-nominal"
@@ -55,7 +55,7 @@
         <button id="btn-pathogen" class="navbar-menu-btn" mat-button [matMenuTriggerFor]="menu"
                 [class.active-tab]="isPathogenTabActive"
                 [class.inactive-tab]="!isPathogenTabActive">Erregernachweis (§ 7 Abs. 1 IfSG)
-          <mat-icon iconPositionEnd fontIcon="arrow_drop_down" class="btn__icon"></mat-icon>
+          <mat-icon iconPositionEnd fontIcon="arrow_drop_down" class="btn__icon" />
         </button>
         <mat-menu #menu="matMenu" class="menu-width_pathogen">
           <a id="a-to-pathogen-nominal"
@@ -68,7 +68,7 @@
         <button class="navbar-menu-btn" id="btn-non-nominal" mat-button [matMenuTriggerFor]="menu"
                 [class.active-tab]="isNonNominalTabActive"
                 [class.inactive-tab]="!isNonNominalTabActive">§ 7 Abs. 3 IfSG
-          <mat-icon iconPositionEnd fontIcon="arrow_drop_down" class="btn__icon"></mat-icon>
+          <mat-icon iconPositionEnd fontIcon="arrow_drop_down" class="btn__icon" />
         </button>
         <mat-menu #menu="matMenu">
           <a id="a-to-pathogen-non-nominal" mat-menu-item
@@ -83,7 +83,7 @@
         <button class="navbar-menu-btn" id="btn-anonymous" mat-button [matMenuTriggerFor]="menu"
                 [class.active-tab]="isAnonymousTabActive"
                 [class.inactive-tab]="!isAnonymousTabActive">Anonyme Meldung (§ 7 Abs. 3 IfSG)
-          <mat-icon iconPositionEnd fontIcon="arrow_drop_down" class="btn__icon"></mat-icon>
+          <mat-icon iconPositionEnd fontIcon="arrow_drop_down" class="btn__icon" />
         </button>
         <mat-menu #menu="matMenu">
           <a id="a-to-pathogen-anonymous" mat-menu-item
@@ -114,14 +114,14 @@
   }
   <!-- #endregion NAV BAR - DEPRECATED - ("Startseite", "Erregernachweis", "Krankheit", "Betten", "IGS",...)-->
 
-  <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
+  <mat-tab-nav-panel #tabPanel />
 
   <!-- #region "drei-punkte-menü" - DEPRECATED - -->
   <span class="toolbar-spacer"></span>
   @if (!FEATURE_FLAG_PORTAL_HEADER_FOOTER()) {
     <button mat-icon-button id="btn-burger-menu-in-navbar" [matMenuTriggerFor]="burgerMenu"
             aria-label="Öffne Burgermenü">
-      <mat-icon fontIcon="more_vert"></mat-icon>
+      <mat-icon fontIcon="more_vert" />
     </button>
 
     <mat-menu #burgerMenu="matMenu" aria-label="Menü">
@@ -174,7 +174,7 @@
   @if (FEATURE_FLAG_PORTAL_HEADER_FOOTER()) {
     <button type="button" mat-button id="btn-burger-menu-in-navbar" class="menu-button" [matMenuTriggerFor]="burgerMenu"
             aria-haspopup="menu" aria-label="Menü öffnen" tabindex=0>
-      <mat-icon fontIcon="menu"></mat-icon>
+      <mat-icon fontIcon="menu" />
       Menü
     </button>
     <mat-menu #burgerMenu="matMenu" class="burger-menu" aria-label="Formularseitenmenü">
@@ -265,7 +265,7 @@
           IGS
         </button>
       }
-      <mat-divider class="menu-divider" aria-hidden="true"></mat-divider>
+      <mat-divider class="menu-divider" aria-hidden="true" />
       <button mat-menu-item id="a-to-about" [routerLink]="C.PathSegments.ABOUT" routerLinkActive="active"
               role="menuitem">
         <mat-icon>info</mat-icon>
@@ -297,7 +297,7 @@
     </mat-menu>
   }
   <!-- #endregion BURGER MENU (redesign NEW instead of "drei-punkte-menü")-->
-  <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
+  <mat-tab-nav-panel #tabPanel />
 
 
   <!-- #region AUTH BUTTON ("anmelden"/"abmelden") -->
@@ -318,4 +318,4 @@
 </mat-toolbar>
 
 
-<mat-divider class="navbar-to-content-divider" aria-hidden="true"></mat-divider>
+<mat-divider class="navbar-to-content-divider" aria-hidden="true" />

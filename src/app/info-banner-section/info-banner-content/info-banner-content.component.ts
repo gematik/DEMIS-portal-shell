@@ -15,7 +15,6 @@
     find details in the "Readme" file.
  */
 
-import { CommonModule } from '@angular/common';
 import { Component, inject, input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -25,7 +24,7 @@ import { InfoBannerConfig, InfoBannerType } from 'src/environments/dynamic-envir
 
 @Component({
   selector: 'app-info-banner-content',
-  imports: [CommonModule, MatButtonModule, MatIconModule],
+  imports: [MatButtonModule, MatIconModule],
   templateUrl: './info-banner-content.component.html',
   styleUrl: './info-banner-content.component.scss',
 })

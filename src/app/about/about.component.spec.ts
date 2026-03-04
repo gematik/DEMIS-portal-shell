@@ -16,13 +16,31 @@
  */
 
 import { AboutComponent } from './about.component';
-import { MockBuilder, MockedComponentFixture, MockRender } from 'ng-mocks';
+import { MockBuilder, MockedComponentFixture, MockRender, MockService } from 'ng-mocks';
+import { NGXLogger } from 'ngx-logger';
+import { AuthService } from '../services';
+import { Subject } from 'rxjs';
+import { MaxHeightContentContainerComponent } from '@gematik/demis-portal-core-library';
+import { FooterComponent } from '../footer/footer.component';
 
 describe('AboutComponent', () => {
   let fixture: MockedComponentFixture<AboutComponent>;
   let component: AboutComponent;
+  const tokenChangedSubject = new Subject<void>();
 
-  beforeEach(() => MockBuilder(AboutComponent));
+  beforeEach(() =>
+    MockBuilder(AboutComponent)
+      .keep(MaxHeightContentContainerComponent)
+      .keep(FooterComponent)
+      .mock(NGXLogger)
+      .provide({
+        provide: AuthService,
+        useValue: {
+          ...MockService(AuthService),
+          $tokenChanged: tokenChangedSubject,
+        } as AuthService,
+      })
+  );
 
   beforeEach(() => {
     fixture = MockRender(AboutComponent);

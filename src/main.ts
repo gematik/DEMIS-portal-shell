@@ -15,7 +15,7 @@
     find details in the "Readme" file.
  */
 
-import { NgZone } from '@angular/core';
+import { NgZone, provideZoneChangeDetection } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { start as singleSpaStart } from 'single-spa';
 import { enableProdMode, getSingleSpaExtraProviders } from 'single-spa-angular';
@@ -40,7 +40,7 @@ fetch(environment.pathToEnvironment)
     }
 
     platformBrowserDynamic(getSingleSpaExtraProviders())
-      .bootstrapModule(AppModule)
+      .bootstrapModule(AppModule, { applicationProviders: [provideZoneChangeDetection()] })
       .then(module => {
         const rootZone = module.injector.get(NgZone);
 

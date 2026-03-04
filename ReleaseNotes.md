@@ -2,12 +2,22 @@
 
 # Release portal-shell
 
+## Release 1.5.0
+
+- Added stylings and texts adaptions for welcome page
+- Added accessibility statement footer link (FEATURE_FLAG_PORTAL_ACCESSIBILITY)
+- Updated Angular to v21
+- Removed CPU limit in helm chart
+- Removed istio helm chart
+- Add footer to all sub pages
+- Change imprint link and add ids in footer (FEATURE_FLAG_FOOTER_LINKS_CORRECTION)
+
 ## Release 1.4.4
 
-- Add alt and aria-label for DEMIS header logo
-- new texts on "homepage" (authenticated and unauthenticated) and "about" page
-- new contact/support page
-- removed feature flag NEW_API_ENDPOINTS
+- Added alt and aria-label for DEMIS header logo
+- New texts on "homepage" (authenticated and unauthenticated) and "about" page
+- New contact/support page
+- Removed feature flag NEW_API_ENDPOINTS
 
 ## Release 1.4.3
 

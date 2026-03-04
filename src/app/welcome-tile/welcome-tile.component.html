@@ -26,12 +26,12 @@
       <section id="tile-row-{{ config().id }}" class="tile-row" aria-hidden="true">
         <!-- Please preplace this content container with the direct content from the tile row template above once
              FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y will be removed! -->
-        <ng-container *ngTemplateOutlet="tileRowContent"></ng-container>
+        <ng-container *ngTemplateOutlet="tileRowContent" />
       </section>
     }
     @else {
       <div id="tile-row-{{ config().id }}" class="tile-row" aria-hidden="true">
-        <ng-container *ngTemplateOutlet="tileRowContent"></ng-container>
+        <ng-container *ngTemplateOutlet="tileRowContent" />
       </div>
     }
     <mat-icon id="tile-icon_{{ getIconType() }}-{{ config().id }}" class="tile-icon">
@@ -74,7 +74,7 @@
       [attr.aria-label]="config().titleTextRows.join(' ') + ' - ' + config().contentParagraphs[0]">
       <!-- Please preplace this content container with the direct content from the tile template above once
            FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y will be removed! -->
-      <ng-container *ngTemplateOutlet="expansionHeader"></ng-container>
+      <ng-container *ngTemplateOutlet="expansionHeader" />
     </button>
   }
   @else {
@@ -86,10 +86,10 @@
       <!-- Please preplace these content containers with the direct contents from the templates above once
            FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y will be removed! -->
       <mat-expansion-panel-header>
-        <ng-container *ngTemplateOutlet="expansionHeader"></ng-container>
+        <ng-container *ngTemplateOutlet="expansionHeader" />
       </mat-expansion-panel-header>
     
-      <ng-container *ngTemplateOutlet="expansionContent"></ng-container>
+      <ng-container *ngTemplateOutlet="expansionContent" />
     </mat-expansion-panel>
   }
 }
@@ -98,10 +98,10 @@
     <mat-card id="tile-card-{{ config().id }}" [ngClass]="{ 'tile-card': true, 'animated': animated() && !isExpanded() }"
       (click)="handleTileClick()" (keydown.enter)="handleTileClick()" (keydown.space)="handleTileClick()" tabindex="0"
       [attr.title]="config().tooltip">
-      <ng-container *ngTemplateOutlet="expansionHeader"></ng-container>
+      <ng-container *ngTemplateOutlet="expansionHeader" />
 
       @if (isTileExpandable() && isExpanded()) {
-        <ng-container *ngTemplateOutlet="expansionContent"></ng-container>
+        <ng-container *ngTemplateOutlet="expansionContent" />
       }
     </mat-card>
   </div>

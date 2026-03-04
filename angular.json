@@ -15,15 +15,13 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:application",
+          "builder": "@angular/build:application",
           "options": {
             "outputPath": {
               "base": "dist/portal-shell"
             },
             "index": "src/index.html",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -32,15 +30,14 @@
                 "glob": "**/*",
                 "input": "src/assets/",
                 "output": "./assets/",
-                "ignore": [
-                  "dev"
-                ]
+                "ignore": ["dev"]
               }
             ],
             "styles": [
               "node_modules/material-icons/iconfont/material-icons.css",
               "node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "node_modules/@gematik/demis-portal-theme-library/demis-theme.css",
+              "node_modules/bootstrap/dist/css/bootstrap-grid.min.css",
               "src/styles.scss"
             ],
             "scripts": [
@@ -52,10 +49,9 @@
             ],
             "browser": "src/main.ts",
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "."
-              ]
-            }
+              "includePaths": ["."]
+            },
+            "preserveSymlinks": true
           },
           "configurations": {
             "production": {
@@ -67,7 +63,7 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "3kb",
+                  "maximumWarning": "4kb",
                   "maximumError": "5kb"
                 }
               ],
@@ -89,9 +85,7 @@
                   "glob": "**/*",
                   "input": "src/assets/",
                   "output": "./assets/",
-                  "ignore": [
-                    "dev"
-                  ]
+                  "ignore": ["dev"]
                 },
                 {
                   "glob": "**/*",
@@ -104,7 +98,7 @@
           "defaultConfiguration": "production"
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "@angular/build:dev-server",
           "options": {
             "proxyConfig": "src/proxy.conf.json"
           },
@@ -119,35 +113,31 @@
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "builder": "@angular/build:extract-i18n",
           "options": {
             "buildTarget": "portal-shell:build"
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@angular/build:karma",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
+            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
+            "karmaConfig": "karma.conf.js",
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "node_modules/material-icons/iconfont/material-icons.css",
               "node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "node_modules/@gematik/demis-portal-theme-library/demis-theme.css",
+              "node_modules/bootstrap/dist/css/bootstrap-grid.min.css",
               "src/styles.scss"
             ],
             "scripts": [],
             "codeCoverage": true,
-            "codeCoverageExclude": [
-              "src/test/**/*"
-            ]
+            "codeCoverageExclude": ["src/test/**/*"],
+            "preserveSymlinks": true,
+            "watch": false
           }
         }
       }
@@ -155,5 +145,31 @@
   },
   "cli": {
     "analytics": false
+  },
+  "schematics": {
+    "@schematics/angular:component": {
+      "type": "component"
+    },
+    "@schematics/angular:directive": {
+      "type": "directive"
+    },
+    "@schematics/angular:service": {
+      "type": "service"
+    },
+    "@schematics/angular:guard": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:interceptor": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:module": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:pipe": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:resolver": {
+      "typeSeparator": "."
+    }
   }
 }

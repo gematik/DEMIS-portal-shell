@@ -1,0 +1,34 @@
+<footer class="footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <div class="RKI-logo">
+        <img ngSrc="assets/images/RKI-logo.svg" [priority]="true" alt="Robert Koch Institut" height="48"
+             width="192"/>
+      </div>
+      <div class="EU-logo">
+        <img ngSrc="assets/images/EU-logo.jpg" [priority]="true" alt="Finanziert von der Europäischen Union"
+             height="58" width="224"/>
+      </div>
+    </div>
+
+    <div class="footer-right">
+      <div class="footer-right-top">
+        @if (isAuthenticated()) {
+          <div class="authenticated-as" id="start-username">Eingeloggt als {{ userInfo().username }}</div>
+        }
+      </div>
+
+      <nav class="footer-right-bottom" aria-label="Footer Navigation">
+        @if (FEATURE_FLAG_FOOTER_LINKS_CORRECTION()) {
+          <a href="#imprint" id="a-to-imprint">Impressum</a>
+        } @else {
+          <a href="#impressum">Impressum</a>
+        }
+        <a href="#privacy-policy" id="a-to-privacy">Datenschutz</a>
+        @if (FEATURE_FLAG_PORTAL_ACCESSIBILITY()) {
+          <a href="#accessibility-statement" id="a-to-accessibility-statement">Barrierefreiheit</a>
+        }
+      </nav>
+    </div>
+  </div>
+</footer>

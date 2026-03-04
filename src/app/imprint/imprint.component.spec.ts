@@ -15,15 +15,39 @@
     find details in the "Readme" file.
  */
 
-import { Component } from '@angular/core';
+import { ImprintComponent } from './imprint.component';
+import { MockBuilder, MockedComponentFixture, MockRender, MockService } from 'ng-mocks';
+import { NGXLogger } from 'ngx-logger';
+import { AuthService } from '../services';
+import { Subject } from 'rxjs';
 import { MaxHeightContentContainerComponent } from '@gematik/demis-portal-core-library';
 import { FooterComponent } from '../footer/footer.component';
 
-@Component({
-  selector: 'app-privacy-policy',
-  standalone: true,
-  imports: [MaxHeightContentContainerComponent, FooterComponent],
-  templateUrl: './privacy-policy.component.html',
-  styleUrls: ['./privacy-policy.component.scss'],
-})
-export class PrivacyPolicyComponent {}
+describe('SiteNoticeComponent', () => {
+  let fixture: MockedComponentFixture<ImprintComponent>;
+  let component: ImprintComponent;
+  const tokenChangedSubject = new Subject<void>();
+
+  beforeEach(() =>
+    MockBuilder(ImprintComponent)
+      .keep(MaxHeightContentContainerComponent)
+      .keep(FooterComponent)
+      .mock(NGXLogger)
+      .provide({
+        provide: AuthService,
+        useValue: {
+          ...MockService(AuthService),
+          $tokenChanged: tokenChangedSubject,
+        } as AuthService,
+      })
+  );
+
+  beforeEach(() => {
+    fixture = MockRender(ImprintComponent);
+    component = fixture.point.componentInstance;
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

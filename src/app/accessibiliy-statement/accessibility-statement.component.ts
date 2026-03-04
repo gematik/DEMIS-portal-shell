@@ -16,10 +16,11 @@
  */
 
 import { Component } from '@angular/core';
+
 @Component({
-  selector: 'app-site-notice',
-  templateUrl: './site-notice.component.html',
-  styleUrls: ['./site-notice.component.scss'],
+  selector: 'app-accessibility-statement',
+  templateUrl: './accessibility-statement.component.html',
+  styleUrls: ['./accessibility-statement.component.scss'],
   standalone: false,
 })
-export class SiteNoticeComponent {}
+export class AccessibilityStatementComponent {}

@@ -50,7 +50,7 @@ describe('WelcomeTileComponent', () => {
   };
 
   beforeEach(() => {
-    fixture = MockRender(WelcomeTileComponent, { config: initConfig });
+    fixture = MockRender(WelcomeTileComponent, { config: initConfig, isExpanded: false });
     component = fixture.point.componentInstance;
     router = TestBed.inject(Router);
   });
@@ -146,33 +146,24 @@ describe('WelcomeTileComponent', () => {
 
   describe('getIconName', () => {
     it('should return chevron_right when tile is not expandable', () => {
-      const fixture = MockRender(WelcomeTileComponent, {
-        config: initConfig,
-        isExpanded: false,
-      });
-      const component = fixture.point.componentInstance;
+      fixture.componentInstance.isExpanded = false;
+      fixture.detectChanges();
       spyOn(component, 'isTileExpandable').and.returnValue(false);
 
       expect(component.getIconName()).toBe('chevron_right');
     });
 
     it('should return keyboard_arrow_up when tile is expandable and expanded', () => {
-      const fixture = MockRender(WelcomeTileComponent, {
-        config: initConfig,
-        isExpanded: true,
-      });
-      const component = fixture.point.componentInstance;
+      fixture.componentInstance.isExpanded = true;
+      fixture.detectChanges();
       spyOn(component, 'isTileExpandable').and.returnValue(true);
 
       expect(component.getIconName()).toBe('keyboard_arrow_up');
     });
 
     it('should return keyboard_arrow_down when tile is expandable and not expanded', () => {
-      const fixture = MockRender(WelcomeTileComponent, {
-        config: initConfig,
-        isExpanded: false,
-      });
-      const component = fixture.point.componentInstance;
+      fixture.componentInstance.isExpanded = false;
+      fixture.detectChanges();
       spyOn(component, 'isTileExpandable').and.returnValue(true);
 
       expect(component.getIconName()).toBe('keyboard_arrow_down');
@@ -181,33 +172,24 @@ describe('WelcomeTileComponent', () => {
 
   describe('getIconType', () => {
     it('should return chevron-right-logo when tile is not expandable', () => {
-      const fixture = MockRender(WelcomeTileComponent, {
-        config: initConfig,
-        isExpanded: false,
-      });
-      const component = fixture.point.componentInstance;
+      fixture.componentInstance.isExpanded = false;
+      fixture.detectChanges();
       spyOn(component, 'isTileExpandable').and.returnValue(false);
 
       expect(component.getIconType()).toBe('chevron-right-logo');
     });
 
     it('should return chevron-up-logo when tile is expandable and expanded', () => {
-      const fixture = MockRender(WelcomeTileComponent, {
-        config: initConfig,
-        isExpanded: true,
-      });
-      const component = fixture.point.componentInstance;
+      fixture.componentInstance.isExpanded = true;
+      fixture.detectChanges();
       spyOn(component, 'isTileExpandable').and.returnValue(true);
 
       expect(component.getIconType()).toBe('chevron-up-logo');
     });
 
     it('should return chevron-down-logo when tile is expandable and not expanded', () => {
-      const fixture = MockRender(WelcomeTileComponent, {
-        config: initConfig,
-        isExpanded: false,
-      });
-      const component = fixture.point.componentInstance;
+      fixture.componentInstance.isExpanded = false;
+      fixture.detectChanges();
       spyOn(component, 'isTileExpandable').and.returnValue(true);
 
       expect(component.getIconType()).toBe('chevron-down-logo');

@@ -1,26 +1,34 @@
-<div class="container">
-  <h1 style="margin-top: 20px">
-    Über DEMIS
-  </h1>
-  <p>
-    Seit Juni 2020 ermöglicht DEMIS bundesweit die elektronische Meldung gemäß Infektionsschutzgesetz (IfSG).
-    Meldepflichtige Personen und Einrichtungen gemäß § 8 IfSG sind zum Absetzen von Meldungen über DEMIS verpflichtet.
-  </p>
-  <p>
-    Die gemeldeten Daten werden über DEMIS verschlüsselt an die jeweils zum Empfang berechtigte Behörde des Öffentlichen
-    Gesundheitsdienstes weitergeleitet und dort verarbeitet.
-  </p>
-  <p>
-    Weiterführende Informationen zum Meldewesen finden Sie auf der <a
-    href="https://www.rki.de/DE/Themen/Infektionskrankheiten/Meldewesen/meldewesen-node.html?templateQueryString=meldewesen"
-    target="_blank" rel="noopener noreferrer" aria-label="Webseite des Robert Koch-Instituts in neuem Tab öffnen"
-    style="text-decoration: underline">Webseite des Robert Koch-Instituts</a>.
-    Umfangreiche Informationen zu DEMIS finden Sie in der <a href="https://wiki.gematik.de/display/DSKB" target="_blank"
-                                                             rel="noopener noreferrer"
-                                                             aria-label="DEMIS-Wissensdatenbank in neuem Tab öffnen"
-                                                             style="text-decoration: underline">DEMIS-Wissensdatenbank</a>
-    –
-    unter anderem zu Meldepflichten,
-    Anbindung und Authentisierung, Akteure u.v.m.
-  </p>
-</div>
+<gem-demis-max-height-content-container [elementSelectorsToSubtract]="['app-navbar']">
+  <div class="subpage-wrapper">
+    <main class="subpage-content" role="main">
+      <div class="container">
+        <h1 style="margin-top: 20px">
+          Über DEMIS
+        </h1>
+        <p>
+          Seit Juni 2020 ermöglicht DEMIS bundesweit die elektronische Meldung gemäß Infektionsschutzgesetz (IfSG).
+          Meldepflichtige Personen und Einrichtungen gemäß § 8 IfSG sind zum Absetzen von Meldungen über DEMIS verpflichtet.
+        </p>
+        <p>
+          Die gemeldeten Daten werden über DEMIS verschlüsselt an die jeweils zum Empfang berechtigte Behörde des Öffentlichen
+          Gesundheitsdienstes weitergeleitet und dort verarbeitet.
+        </p>
+        <p>
+          Weiterführende Informationen zum Meldewesen finden Sie auf der <a
+          href="https://www.rki.de/DE/Themen/Infektionskrankheiten/Meldewesen/meldewesen-node.html?templateQueryString=meldewesen"
+          target="_blank" rel="noopener noreferrer" aria-label="Webseite des Robert Koch-Instituts in neuem Tab öffnen"
+          style="text-decoration: underline">Webseite des Robert Koch-Instituts</a>.
+          Umfangreiche Informationen zu DEMIS finden Sie in der <a href="https://wiki.gematik.de/display/DSKB" target="_blank"
+                                                                   rel="noopener noreferrer"
+                                                                   aria-label="DEMIS-Wissensdatenbank in neuem Tab öffnen"
+                                                                   style="text-decoration: underline">DEMIS-Wissensdatenbank</a>
+          –
+          unter anderem zu Meldepflichten,
+          Anbindung und Authentisierung, Akteure u.v.m.
+        </p>
+      </div>
+    </main>
+    <app-footer></app-footer>
+  </div>
+</gem-demis-max-height-content-container>
+

@@ -15,7 +15,7 @@
     find details in the "Readme" file.
  */
 
-import { PrivacyPolicyComponent } from './privacy-policy.component';
+import { AccessibilityStatementComponent } from './accessibility-statement.component';
 import { MockBuilder, MockedComponentFixture, MockRender, MockService } from 'ng-mocks';
 import { NGXLogger } from 'ngx-logger';
 import { AuthService } from '../services';
@@ -23,13 +23,13 @@ import { Subject } from 'rxjs';
 import { MaxHeightContentContainerComponent } from '@gematik/demis-portal-core-library';
 import { FooterComponent } from '../footer/footer.component';
 
-describe('PrivacyPolicyComponent', () => {
-  let fixture: MockedComponentFixture<PrivacyPolicyComponent>;
-  let component: PrivacyPolicyComponent;
+describe('AccessibilityStatementComponent', () => {
+  let fixture: MockedComponentFixture<AccessibilityStatementComponent>;
+  let component: AccessibilityStatementComponent;
   const tokenChangedSubject = new Subject<void>();
 
   beforeEach(() =>
-    MockBuilder(PrivacyPolicyComponent)
+    MockBuilder(AccessibilityStatementComponent)
       .keep(MaxHeightContentContainerComponent)
       .keep(FooterComponent)
       .mock(NGXLogger)
@@ -43,7 +43,7 @@ describe('PrivacyPolicyComponent', () => {
   );
 
   beforeEach(() => {
-    fixture = MockRender(PrivacyPolicyComponent);
+    fixture = MockRender(AccessibilityStatementComponent);
     component = fixture.point.componentInstance;
   });
 
