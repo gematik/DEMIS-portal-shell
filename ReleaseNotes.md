@@ -2,6 +2,12 @@
 
 # Release portal-shell
 
+## Release 1.5.1
+
+- Updated @gematik/demis-portal-theme-library to 1.1.2
+- Updated @gematik/demis-portal-core-library to 3.0.9
+- Change mail address in accessibility statement
+
 ## Release 1.5.0
 
 - Added stylings and texts adaptions for welcome page
