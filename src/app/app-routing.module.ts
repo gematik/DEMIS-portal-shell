@@ -158,18 +158,6 @@ const protectedRoutes: Routes = [
     ],
   },
   {
-    path: AppConstants.PathSegments.DISEASE_NOTIFICATION_ANONYMOUS,
-    canActivate: [kcAuthGuard, roleGuard],
-    data: { role: AppConstants.Roles.DISEASE_NOTIFICATION_ANONYMOUS_SENDER },
-    children: [
-      {
-        path: '**',
-        loadChildren: () => import('src/app/spa-host/spa-host.module').then(m => m.SpaHostModule),
-        data: { app: 'notification-portal-mf-disease' },
-      },
-    ],
-  },
-  {
     path: AppConstants.PathSegments.SEQUENCE_NOTIFICATION,
     canActivate: [kcAuthGuard, roleGuard],
     data: { role: AppConstants.Roles.IGS_NOTIFICATION_DATA_SENDER },
@@ -178,6 +166,18 @@ const protectedRoutes: Routes = [
         path: '**',
         loadChildren: () => import('src/app/spa-host/spa-host.module').then(m => m.SpaHostModule),
         data: { app: 'notification-portal-mf-igs' },
+      },
+    ],
+  },
+  {
+    path: AppConstants.PathSegments.ARE_NOTIFICATION,
+    canActivate: [kcAuthGuard, roleGuard],
+    data: { role: AppConstants.Roles.IGS_NOTIFICATION_DATA_SENDER },
+    children: [
+      {
+        path: '**',
+        loadChildren: () => import('src/app/spa-host/spa-host.module').then(m => m.SpaHostModule),
+        data: { app: 'notification-portal-mf-are' },
       },
     ],
   },

@@ -70,6 +70,15 @@
   }
 }
 
+.menu-item-trailing {
+  flex-direction: row-reverse;
+
+  .mat-icon {
+    margin-right: 0;
+    margin-left: var(--mat-menu-item-spacing, 12px);
+  }
+}
+
 
 .btn-navbar-auth.mdc-button {
   border-radius: 16px !important;
@@ -141,8 +150,7 @@
 .btn-navbar-auth:focus,
 .btn-navbar-auth:focus-visible,
 .menu-button:focus,
-.menu-button:focus-visible,
-{
+.menu-button:focus-visible {
   outline: 2px solid currentColor;
   outline-offset: 2px;
 }

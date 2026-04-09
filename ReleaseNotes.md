@@ -2,11 +2,24 @@
 
 # Release portal-shell
 
+## Release 1.6.0
+
+- Removed @single-spa-community/angular dependency
+- Updated NGINX-Base-Image to 1.29.7
+- Removed 7.3 disease anonymous notification tile and navbar
+- Switched to routerLink in navbar
+- Updated package name to @single-spa-community/angular
+- Changed § 7.3 notification header texts
+- Added request surveillance access (FEATURE_FLAG_SURVEILLANCE_PROGRAM_ADMISSION_ENABLED)
+- Added panel for ARE (FEATURE_FLAG_PORTAL_ARE_ENABLED)
+- Removed role disease-notification-anonymous-sender
+- Updated @gematik/demis-portal-core-library to 3.1.0
+
 ## Release 1.5.1
 
 - Updated @gematik/demis-portal-theme-library to 1.1.2
 - Updated @gematik/demis-portal-core-library to 3.0.9
-- Change mail address in accessibility statement
+- Changed mail address in accessibility statement
 
 ## Release 1.5.0
 

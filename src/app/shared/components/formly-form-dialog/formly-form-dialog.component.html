@@ -1,0 +1,42 @@
+<!-- ################################################################################
+ Reusable templates for buttons
+ ################################################################################ -->
+
+<ng-template #cancelButtonTpl let-buttonIdPostfix="idPostfix">
+  <button id="{{ dialogId }}-{{ buttonIdPostfix }}-back" mat-button class="btn color style"
+    [class.dark--color]="!showAcceptButton"
+    (click)="abort()">
+    {{ cancelButtonText || 'Zurück' }}
+  </button>
+</ng-template>
+
+<ng-template #acceptButtonTpl let-buttonIdPostfix="idPostfix">
+  <button id="{{ dialogId }}-{{ buttonIdPostfix }}-continue" mat-button class="btn style dark--color"
+    [disabled]="nextButtonDisabled()"
+    (click)="proceed()">
+    {{ acceptButtonText || 'Weiter' }}
+  </button>
+</ng-template>
+
+<gem-demis-formly-form-dialog-styles />
+<h1 id="{{ dialogId }}-dialog-header" mat-dialog-title class="dialog-header">
+  @if(icon) {
+  <mat-icon aria-hidden="true" id="{{ dialogId }}-title-icon" [style.color]="iconColor">{{ icon }}</mat-icon>
+  }
+  <div id="{{ dialogId }}-title" class="dialog-title">{{ title }}</div>
+</h1>
+
+<mat-dialog-content id="{{ dialogId }}-dialog-content" class="gem-demis-formly-form-dialog-content">
+  <p id="{{ dialogId }}-dialog-text" class="dialog-text" [innerHTML]="preFormText"></p>
+  <form [formGroup]="form">
+    <formly-form [form]="form" [model]="model" [fields]="formlyFieldConfig" [options]="options" />
+  </form>
+  <p id="{{ dialogId }}-dialog-lowerText" [innerHTML]="postFormText"></p>
+</mat-dialog-content>
+
+<mat-dialog-actions class="button-container">
+  <ng-container *ngTemplateOutlet="cancelButtonTpl; context: { idPostfix: '' }" />
+  @if(showAcceptButton) {
+    <ng-container *ngTemplateOutlet="acceptButtonTpl; context: { idPostfix: '' }" />
+  }
+</mat-dialog-actions>

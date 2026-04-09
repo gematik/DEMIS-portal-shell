@@ -37,6 +37,14 @@ export function FEATURE_FLAG_PORTAL_HEADER_FOOTER(): boolean {
   return environment.featureFlags?.FEATURE_FLAG_PORTAL_HEADER_FOOTER ?? false;
 }
 
+export function FEATURE_FLAG_SURVEILLANCE_PROGRAM_ADMISSION_ENABLED(): boolean {
+  return environment.featureFlags?.FEATURE_FLAG_SURVEILLANCE_PROGRAM_ADMISSION_ENABLED ?? false;
+}
+
+export function FEATURE_FLAG_PORTAL_ARE_ENABLED(): boolean {
+  return environment.featureFlags?.FEATURE_FLAG_PORTAL_ARE_ENABLED ?? false;
+}
+
 export function FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y(): boolean {
   return environment.featureFlags?.FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y ?? false;
 }
@@ -78,6 +86,7 @@ export namespace AppConstants {
     PRIVACY_POLICY = ShellPathSegments.PRIVACY_POLICY,
     ACCESSIBILITY_STATEMENT = ShellPathSegments.ACCESSIBILITY_STATEMENT,
     SEQUENCE_NOTIFICATION = 'sequence_notification',
+    ARE_NOTIFICATION = 'are-notification',
     WELCOME = ShellPathSegments.WELCOME,
     CONTACT = ShellPathSegments.CONTACT,
   }
@@ -86,6 +95,7 @@ export namespace AppConstants {
     BED_OCCUPANCY = PathSegments.BED_OCCUPANCY,
     HOME = PathSegments.WELCOME,
     SEQUENCE_NOTIFICATION = PathSegments.SEQUENCE_NOTIFICATION,
+    ARE_NOTIFICATION = PathSegments.ARE_NOTIFICATION,
     PATHOGEN = PathSegments.PATHOGEN_NOTIFICATION,
     DISEASE = PathSegments.DISEASE_NOTIFICATION,
   }
@@ -106,7 +116,6 @@ export namespace AppConstants {
     START_PAGE_LINK = 'Startseite',
     SUBMIT_BED_OCCUPANCY_LINK = 'Bettenbelegung',
     SUPPORT_QUESTIONS_LINK = 'Supportanfragen', //can be removed when FEATURE_FLAG_PORTAL_HEADER_FOOTER is removed
-    SUPPORT_SUPPORT_LINK = 'Kontaktformular',
     SUPPORT_FAQ_LINK = 'FAQ',
     CONTACT_SUPPORT = 'Kontakt/Support',
   }
@@ -122,14 +131,13 @@ export namespace AppConstants {
     PATHOGEN = 'Namentliche Meldung eines Nachweises von Krankheitserregern (inkl. positiver Schnelltestergebnisse) gemäß § 7 Abs. 1 IfSG',
     PATHOGEN_SHORT = 'Meldung eines Nachweises von Krankheitserregern gemäß § 7 Abs. 1 IfSG unter Angabe von Daten zur betroffenen Person',
     PATHOGEN_FOLLOW_UP = 'Folgemeldung eines Erregernachweises gemäß § 7 Abs. 1 IfSG ohne Angaben von Personendaten',
-    NON_NOMINAL = 'Meldung eines Erregernachweises oder ärztliche Ergänzung gemäß § 7 Abs. 3 IfSG: C. trachomatis (L1-L3), Echinococcus spp., HIV, N. gonorrhoeae, T. gondii & T. pallidum',
-    PATHOGEN_NON_NOMINAL = 'Meldung von meldepflichtigen Infektionskrankheiten gemäß § 7 Abs. 3 IfSG',
-    DISEASE_NON_NOMINAL = 'Meldung eines Nachweises von Krankheitserregern gemäß § 7 Abs. 3 IfSG',
+    NON_NOMINAL = 'Nichtnamentliche Meldung eines Erregernachweises oder ärztliche Ergänzung gemäß § 7 Abs. 3 IfSG: C. trachomatis (L1-L3), Echinococcus spp., HIV, N. gonorrhoeae, T. gondii & T. pallidum',
+    PATHOGEN_NON_NOMINAL = 'Meldung eines Nachweises von Krankheitserregern gemäß § 7 Abs. 3 IfSG unter Angabe von Personendaten zur Pseudonymisierung',
+    DISEASE_NON_NOMINAL = 'Ärztl. Ergänzungsmeldung eines Erregernachweises gemäß § 7 Abs. 3 IfSG unter Angabe von Personendaten zur Pseudonymisierung',
     DISEASE_FOLLOW_UP = 'Folgemeldung eines Nachweises von Infektionskrankheiten gemäß § 6 IfSG ohne Angabe von Personendaten',
     SEQUENCE_NOTIFICATION = 'Übermittlung von Sequenz- und Sequenzmetadaten für die Integrierte Genomische Surveillance gemäß § 13 Abs. 3 IfSG',
-    ANONYMOUS = 'Anonyme Meldung eines Erregernachweises oder ärztliche Ergänzungsmeldung gemäß § 7 Abs. 3 IfSG: C. trachomatis (L1-L3), Echinococcus spp., HIV, N. gonorrhoeae, T. gondii & T. pallidum',
-    PATHOGEN_ANONYMOUS = 'Anonyme Meldung eines Nachweises von Krankheitserregern gemäß § 7 Abs. 3 IfSG',
-    DISEASE_ANONYMOUS = 'Anonyme Meldung von Infektionskrankheiten gemäß § 7 Abs. 3 IfSG ',
+    ARE_NOTIFICATION = 'Meldung im Rahmen der syndromischen ARE-Surveillance an die Arbeitsgemeischaft Influenza (AGI) des Robert Koch-Instituts (RKI)',
+    PATHOGEN_ANONYMOUS = 'Meldung eines Erregernachweises einer anonymen Testung gemäß § 7 Abs. 3 IfSG: C. trachomatis (L1-L3), Echinococcus spp., HIV, N. gonorrhoeae, T. gondii & T. pallidum',
   }
 
   export namespace Titles {
@@ -139,13 +147,13 @@ export namespace AppConstants {
     export const PATHOGEN = ['Meldung eines Erregernachweises gemäß § 7 Abs. 1 IfSG'];
     export const NON_NOMINAL = ['Meldung gemäß § 7 Abs. 3 IfSG'];
     export const PATHOGEN_SHORT = ['Erregernachweis melden'];
-    export const DISEASE_NON_NOMINAL = ['Ärztliche Ergänzungsmeldung'];
+    export const DISEASE_NON_NOMINAL = ['Ärztliche Ergänzungsmeldung (Ohne bekannte MeldungsID)'];
+    export const Pathogen_NON_NOMINAL = ['Erregernachweis melden (Erzeugung neuer MeldungsID)'];
     export const SEQUENCE_NOTIFICATION_NEW = ['Integrierte Genomische Surveillance', '(IGS)'];
+    export const ARE_NOTIFICATION = ['Akute respiratorische Erkrankung Surveillance', '(ARE)'];
     export const FOLLOW_UP = ['Folgemeldung'];
     export const SEQUENCE_NOTIFICATION = ['IGS'];
-    export const ANONYMOUS = ['Anonyme Meldung gemäß § 7 Abs. 3 IfSG'];
-    export const PATHOGEN_ANONYMOUS = ['Erregernachweis melden (Anonym)'];
-    export const DISEASE_ANONYMOUS = ['Ärztliche Ergänzungsmeldung (Anonym)'];
+    export const ANONYMOUS = ['Meldung einer anonymen Testung gemäß § 7 Abs. 3 IfSG'];
   }
 
   export enum Messages {
@@ -165,9 +173,9 @@ export namespace AppConstants {
     PATHOGEN_NOTIFICATION_NON_NOMINAL_SENDER = 'pathogen-notification-nonnominal-sender',
     DISEASE_NOTIFICATION_NON_NOMINAL_SENDER = 'disease-notification-nonnominal-sender',
     PATHOGEN_NOTIFICATION_ANONYMOUS_SENDER = 'pathogen-notification-anonymous-sender',
-    DISEASE_NOTIFICATION_ANONYMOUS_SENDER = 'disease-notification-anonymous-sender',
     IGS_SEQUENCE_DATA_SENDER = 'igs-sequence-data-sender',
     IGS_NOTIFICATION_DATA_SENDER = 'igs-notification-data-sender',
     IGS_NOTIFICATION_DATA_SENDER_FASTA_ONLY = 'igs-sequence-data-sender-fasta-only',
+    ARE_NOTIFICATION_SENDER = 'are-notification-sender',
   }
 }

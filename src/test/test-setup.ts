@@ -98,20 +98,21 @@ export class TestSetup {
       doNegativeTest: true,
     },
     {
-      id: 'anonymous',
-      roles: [AppConstants.Roles.PATHOGEN_NOTIFICATION_ANONYMOUS_SENDER, AppConstants.Roles.DISEASE_NOTIFICATION_ANONYMOUS_SENDER],
-      tile: 'welcome-tile-anonymous',
-      subTiles: [
-        {
-          tile: 'sub-tile-button-pathogen-anonymous',
-          link: '/pathogen-notification/7.3/anonymous',
-        },
-        {
-          tile: 'sub-tile-button-disease-anonymous',
-          link: '/disease-notification/7.3/anonymous',
-        },
+      id: 'igs',
+      roles: [
+        AppConstants.Roles.IGS_NOTIFICATION_DATA_SENDER,
+        AppConstants.Roles.IGS_NOTIFICATION_DATA_SENDER_FASTA_ONLY,
+        AppConstants.Roles.IGS_SEQUENCE_DATA_SENDER,
       ],
-      requireAllRoles: true,
+      tile: 'welcome-tile-sequence-notification',
+      subTiles: [],
+      doNegativeTest: true,
+    },
+    {
+      id: 'are',
+      roles: [AppConstants.Roles.ARE_NOTIFICATION_SENDER],
+      tile: 'welcome-tile-are-notification',
+      subTiles: [],
       doNegativeTest: true,
     },
   ];

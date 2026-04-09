@@ -22,7 +22,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
 import { MockBuilder, MockedComponentFixture, MockInstance, MockProvider, MockRender, MockService, ngMocks } from 'ng-mocks';
-import { BehaviorSubject, of, ReplaySubject, Subject } from 'rxjs';
+import { BehaviorSubject, defer, of, ReplaySubject, Subject, throwError } from 'rxjs';
+import { MessageDialogService } from '@gematik/demis-portal-core-library';
 import { TestSetup } from '../../test/test-setup';
 import { AuthService } from '../services';
 import { NavbarComponent } from './navbar.component';
@@ -31,7 +32,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AppConstants } from '../shared/app-constants';
 import { InfoBannerSectionComponent } from '../info-banner-section/info-banner-section.component';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
-import { environment } from '../../environments/environment';
+import { FormlyFormDialogService } from '../services/formly-form-dialog.service';
+import { AccessibleTextComponent } from '../shared/components/accessible-text/accessible-text.component';
 
 describe('Navbar Test', () => {
   let component: NavbarComponent;
@@ -61,7 +63,10 @@ describe('Navbar Test', () => {
       },
     },
     navigateByUrl: jasmine.createSpy('navigateByUrl'),
-    createUrlTree: jasmine.createSpy('createUrlTree').and.callFake((commands: any[], extras?: any) => ({ commands, extras })),
+    createUrlTree: jasmine.createSpy('createUrlTree').and.callFake((commands: any[], extras?: any) => ({
+      commands,
+      extras,
+    })),
     navigate: jasmine.createSpy('navigate'),
     serializeUrl: jasmine.createSpy('serializeUrl').and.callFake((urlTree: any) => '/' + urlTree.commands.join('/')),
   };
@@ -84,10 +89,12 @@ describe('Navbar Test', () => {
           $isAuthenticated: authSubject,
         } as AuthService,
       })
+      .mock(MessageDialogService)
       .provide({ provide: Router, useValue: mockRouter })
       .mock(ActivatedRoute)
       .mock(MatIconModule)
-      .mock(InfoBannerSectionComponent);
+      .mock(InfoBannerSectionComponent)
+      .mock(AccessibleTextComponent);
   });
 
   describe('old navbar, FEATURE_FLAG_PORTAL_HEADER_FOOTER === false', () => {
@@ -174,7 +181,7 @@ describe('Navbar Test', () => {
       menuItem.click();
       fixture.detectChanges();
 
-      expect(router.navigateByUrl).toHaveBeenCalledWith('/disease-notification/7.3/non-nominal');
+      expect(router.navigateByUrl).toHaveBeenCalledWith(jasmine.objectContaining({ commands: ['disease-notification/7.3/non-nominal'] }), jasmine.any(Object));
     });
     it('should display the pathogen menu items', async () => {
       createComponent();
@@ -392,7 +399,7 @@ describe('Navbar Test', () => {
       menuItemDisease.click();
       fixture.detectChanges();
 
-      expect(router.navigateByUrl).toHaveBeenCalledWith('/disease-notification/7.3/non-nominal');
+      expect(router.navigateByUrl).toHaveBeenCalledWith(jasmine.objectContaining({ commands: ['disease-notification/7.3/non-nominal'] }), jasmine.any(Object));
     });
     it('should display the pathogen non-nominal menu item and navigate to the correct route on click', async () => {
       createComponent();
@@ -449,8 +456,7 @@ describe('Navbar Test', () => {
       createComponent();
       fixture.detectChanges();
       spyOn(fixture.point.injector.get(AuthService), 'checkRole').and.callFake(
-        (role: string) =>
-          role === AppConstants.Roles.PATHOGEN_NOTIFICATION_ANONYMOUS_SENDER || role === AppConstants.Roles.DISEASE_NOTIFICATION_ANONYMOUS_SENDER
+        (role: string) => role === AppConstants.Roles.PATHOGEN_NOTIFICATION_ANONYMOUS_SENDER
       );
       ngMocks.flushTestBed();
       createComponent();
@@ -458,57 +464,17 @@ describe('Navbar Test', () => {
 
       const burgerButton = fixture.point.nativeElement.querySelector('#btn-burger-menu-in-navbar');
       burgerButton.click();
-      fixture.detectChanges();
-
-      const anonymousButton = document.querySelector('#menu-anonymous') as HTMLElement;
-      anonymousButton.click();
       fixture.detectChanges();
 
       const menuItemPathogen = document.querySelector('#a-to-pathogen-anonymous') as HTMLElement;
       expect(menuItemPathogen).toBeTruthy();
-      const menuItemDisease = document.querySelector('#a-to-disease-anonymous') as HTMLElement;
-      expect(menuItemDisease).toBeTruthy();
-    });
-
-    it('should navigate to disease anonymous on click', async () => {
-      createComponent();
-      fixture.detectChanges();
-      const authService = fixture.point.injector.get(AuthService);
-      spyOn(authService, 'checkRole').and.callFake(
-        (role: string) =>
-          role === AppConstants.Roles.PATHOGEN_NOTIFICATION_ANONYMOUS_SENDER || role === AppConstants.Roles.DISEASE_NOTIFICATION_ANONYMOUS_SENDER
-      );
-      ngMocks.flushTestBed();
-      createComponent();
-      fixture.detectChanges();
-
-      const router = fixture.point.injector.get(Router);
-
-      const burgerButton = fixture.point.nativeElement.querySelector('#btn-burger-menu-in-navbar');
-      burgerButton.click();
-      fixture.detectChanges();
-
-      const anonymousButton = document.querySelector('#menu-anonymous') as HTMLElement;
-      anonymousButton.click();
-      fixture.detectChanges();
-
-      const menuItem = document.querySelector('#a-to-disease-anonymous') as HTMLElement;
-      expect(menuItem).toBeTruthy();
-
-      menuItem.click();
-      fixture.detectChanges();
-
-      expect(router.navigateByUrl).toHaveBeenCalledWith('/' + component.C.PathSegments.DISEASE_NOTIFICATION_ANONYMOUS);
     });
 
     it('should navigate to pathogen anonymous on click', async () => {
       createComponent();
       fixture.detectChanges();
       const authService = fixture.point.injector.get(AuthService);
-      spyOn(authService, 'checkRole').and.callFake(
-        (role: string) =>
-          role === AppConstants.Roles.PATHOGEN_NOTIFICATION_ANONYMOUS_SENDER || role === AppConstants.Roles.DISEASE_NOTIFICATION_ANONYMOUS_SENDER
-      );
+      spyOn(authService, 'checkRole').and.callFake((role: string) => role === AppConstants.Roles.PATHOGEN_NOTIFICATION_ANONYMOUS_SENDER);
       ngMocks.flushTestBed();
       createComponent();
       fixture.detectChanges();
@@ -517,10 +483,6 @@ describe('Navbar Test', () => {
 
       const burgerButton = fixture.point.nativeElement.querySelector('#btn-burger-menu-in-navbar');
       burgerButton.click();
-      fixture.detectChanges();
-
-      const anonymousButton = document.querySelector('#menu-anonymous') as HTMLElement;
-      anonymousButton.click();
       fixture.detectChanges();
 
       const menuItem = document.querySelector('#a-to-pathogen-anonymous') as HTMLElement;
@@ -529,6 +491,161 @@ describe('Navbar Test', () => {
       menuItem.click();
       fixture.detectChanges();
       expect(router.navigateByUrl).toHaveBeenCalledWith(jasmine.objectContaining({ commands: ['pathogen-notification/7.3/anonymous'] }), jasmine.any(Object));
+    });
+  });
+
+  describe('Register surveillance program tests', () => {
+    beforeEach(() => {
+      (window as any)['config'].featureFlags.FEATURE_FLAG_PORTAL_HEADER_FOOTER = true;
+      createComponent();
+      component.hasAreNotificationSenderRole = true;
+      fixture.detectChanges();
+    });
+
+    describe('visibility buttons depending on feature flags FEATURE_FLAG_SURVEILLANCE_PROGRAM & FEATURE_FLAG_PORTAL_ARE_ENABLED', () => {
+      it('should show register surveillance program button when FEATURE_FLAG_SURVEILLANCE_PROGRAM is enabled', () => {
+        (window as any)['config'].featureFlags.FEATURE_FLAG_SURVEILLANCE_PROGRAM_ADMISSION_ENABLED = true;
+
+        const burgerButton = fixture.point.nativeElement.querySelector('#btn-burger-menu-in-navbar');
+        burgerButton.click();
+        fixture.detectChanges();
+
+        const actionButton = document.querySelector('#btn-register-for-surveillance-system') as HTMLElement;
+        expect(actionButton).toBeTruthy();
+      });
+
+      it('should not display register surveillance program button when FEATURE_FLAG_SURVEILLANCE_PROGRAM is disabled', () => {
+        (window as any)['config'].featureFlags.FEATURE_FLAG_SURVEILLANCE_PROGRAM_ADMISSION_ENABLED = false;
+
+        const burgerButton = fixture.point.nativeElement.querySelector('#btn-burger-menu-in-navbar');
+        burgerButton.click();
+        fixture.detectChanges();
+
+        const actionButton = document.querySelector('#btn-register-for-surveillance-system') as HTMLElement;
+        expect(actionButton).toBeFalsy();
+      });
+
+      it('should show are link when FEATURE_FLAG_PORTAL_ARE_ENABLED is enabled', () => {
+        (window as any)['config'].featureFlags.FEATURE_FLAG_PORTAL_ARE_ENABLED = true;
+
+        const burgerButton = fixture.point.nativeElement.querySelector('#btn-burger-menu-in-navbar');
+        burgerButton.click();
+        fixture.detectChanges();
+
+        const actionButton = document.querySelector('#a-to-are-notification') as HTMLElement;
+        expect(actionButton).toBeTruthy();
+      });
+
+      it('should not display are link when FEATURE_FLAG_PORTAL_ARE_ENABLED is disabled', () => {
+        (window as any)['config'].featureFlags.FEATURE_FLAG_PORTAL_ARE_ENABLED = false;
+
+        const burgerButton = fixture.point.nativeElement.querySelector('#btn-burger-menu-in-navbar');
+        burgerButton.click();
+        fixture.detectChanges();
+
+        const actionButton = document.querySelector('#a-to-are-notification') as HTMLElement;
+        expect(actionButton).toBeFalsy();
+      });
+
+      it('should not display are link when FEATURE_FLAG_PORTAL_ARE_ENABLED is disabled', () => {
+        (window as any)['config'].featureFlags.FEATURE_FLAG_PORTAL_ARE_ENABLED = true;
+        component.hasAreNotificationSenderRole = false;
+        fixture.detectChanges();
+
+        const burgerButton = fixture.point.nativeElement.querySelector('#btn-burger-menu-in-navbar');
+        burgerButton.click();
+        fixture.detectChanges();
+
+        const actionButton = document.querySelector('#a-to-are-notification') as HTMLElement;
+        expect(actionButton).toBeFalsy();
+      });
+    });
+
+    describe('registration dialog behavior', () => {
+      it('should show info dialog and skip registration when SPU id already exists', () => {
+        const authService = fixture.point.injector.get(AuthService) as any;
+        authService.getSPUId = () => 'spu-123';
+        const formlyFormDialogService = fixture.point.injector.get(FormlyFormDialogService);
+        const showFormDialogSpy = spyOn(formlyFormDialogService, 'showFormlyFormDialog');
+        const processSpy = spyOn<any>(component, 'processRegistration');
+        component.openRegisterDialog();
+
+        expect(showFormDialogSpy).toHaveBeenCalledTimes(1);
+        expect(showFormDialogSpy.calls.first().args[0].title).toContain('Zugang bereits freigeschaltet');
+        expect(processSpy).not.toHaveBeenCalled();
+      });
+
+      it('should show "Freischaltung fehlgeschlagen" dialog when requestSurveillanceAccess fails', () => {
+        const formResult = { surveillanceProgramUserId: 'abc', zipCode: '12345' };
+        const authService = fixture.point.injector.get(AuthService) as any;
+        authService.getSPUId = () => undefined;
+        const messageDialogService = fixture.point.injector.get(MessageDialogService);
+        const formlyFormDialogService = fixture.point.injector.get(FormlyFormDialogService);
+        const showFormDialogSpy = spyOn(formlyFormDialogService, 'showFormlyFormDialog').and.returnValue(of(formResult as unknown as string | undefined));
+        const requestSurveillanceAccessSpy = spyOn<any>(component, 'requestSurveillanceAccess').and.returnValue(throwError(() => new Error('request failed')));
+        spyOn(messageDialogService, 'closeSpinnerDialog');
+
+        component.openRegisterDialog();
+        expect(requestSurveillanceAccessSpy).toHaveBeenCalledTimes(1);
+        expect(requestSurveillanceAccessSpy).toHaveBeenCalledWith(formResult);
+        expect(showFormDialogSpy).toHaveBeenCalledWith(jasmine.objectContaining({ title: 'Freischaltung fehlgeschlagen' }));
+        expect(messageDialogService.closeSpinnerDialog).toHaveBeenCalled();
+      });
+
+      it('should open register form and process registration on confirm', () => {
+        const result = { surveillanceProgramUserId: 'id', zipCode: '12345' };
+        const authService = fixture.point.injector.get(AuthService) as any;
+        authService.getSPUId = () => undefined;
+        const formlyFormDialogService = fixture.point.injector.get(FormlyFormDialogService);
+        const showFormDialogSpy = spyOn(formlyFormDialogService, 'showFormlyFormDialog').and.returnValue(of(result as unknown as string | undefined));
+        const processSpy = spyOn<any>(component, 'processRegistration');
+        component.openRegisterDialog();
+
+        expect(showFormDialogSpy).toHaveBeenCalledTimes(1);
+        expect(showFormDialogSpy.calls.first().args[0].title).toContain('Surveillance-System-Zugang freischalten');
+        expect(processSpy).toHaveBeenCalledWith(result);
+      });
+
+      it('should show "Token-Refresh fehlgeschlagen" dialog when forceRefreshSession fails after successful registration', () => {
+        const formResult = { surveillanceProgramUserId: 'abc', zipCode: '12345' };
+        const authService = fixture.point.injector.get(AuthService) as any;
+        authService.getSPUId = () => undefined;
+        const messageDialogService = fixture.point.injector.get(MessageDialogService);
+        const formlyFormDialogService = fixture.point.injector.get(FormlyFormDialogService);
+
+        let callCount = 0;
+        const showFormDialogSpy = spyOn(formlyFormDialogService, 'showFormlyFormDialog').and.callFake(() => {
+          callCount++;
+          // first call: registration form → return filled form data
+          if (callCount === 1) return of(formResult as unknown as string | undefined);
+          // second call: info dialog (showInfoDialog) → return value is ignored
+          return of(undefined as unknown as string | undefined);
+        });
+        spyOn(messageDialogService, 'showSpinnerDialog');
+        spyOn(messageDialogService, 'closeSpinnerDialog');
+
+        const oidcService = fixture.point.injector.get(OidcSecurityService);
+        spyOn(oidcService, 'forceRefreshSession').and.returnValue(throwError(() => new Error('refresh failed')));
+
+        spyOn<any>(component, 'requestSurveillanceAccess').and.returnValue(of({}));
+
+        component.openRegisterDialog();
+
+        // When token refresh fails after successful registration, component shows partial success dialog
+        expect(showFormDialogSpy).toHaveBeenCalledWith(jasmine.objectContaining({ title: 'Freischaltung erfolgreich' }));
+        expect(messageDialogService.closeSpinnerDialog).toHaveBeenCalled();
+      });
+
+      it('should not process registration when dialog is cancelled', () => {
+        const authService = fixture.point.injector.get(AuthService) as any;
+        authService.getSPUId = () => undefined;
+        const formlyFormDialogService = fixture.point.injector.get(FormlyFormDialogService);
+        spyOn(formlyFormDialogService, 'showFormlyFormDialog').and.returnValue(defer(() => of(undefined as unknown as string | undefined)));
+        const processSpy = spyOn<any>(component, 'processRegistration');
+        component.openRegisterDialog();
+
+        expect(processSpy).not.toHaveBeenCalled();
+      });
     });
   });
 });
