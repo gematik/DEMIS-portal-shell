@@ -19,6 +19,7 @@ import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular
 import {
   AppConstants,
   FEATURE_FLAG_PORTAL_ACCESSIBILITY,
+  FEATURE_FLAG_PORTAL_ARE_ENABLED,
   FEATURE_FLAG_PORTAL_HEADER_FOOTER,
   FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y,
   isAnonymousNotificationActivated,
@@ -47,6 +48,7 @@ declare type UserPermissions = {
   hasDiseaseNotificationSenderRole: boolean;
   hasIgsDataSenderRole: boolean;
   hasIgsNotificationSenderRole: boolean;
+  hasAreNotificationSenderRole: boolean;
   hasNonNominalNotificationSenderRole: boolean;
   hasAnonymousSenderRole: boolean;
 };
@@ -66,6 +68,7 @@ const INITIAL_USER_INFORMATION: UserInfo = {
     hasDiseaseNotificationSenderRole: false,
     hasIgsDataSenderRole: false,
     hasIgsNotificationSenderRole: false,
+    hasAreNotificationSenderRole: false,
     hasNonNominalNotificationSenderRole: false,
     hasAnonymousSenderRole: false,
   },
@@ -139,6 +142,10 @@ export class WelcomeComponent implements OnInit, OnDestroy {
 
   get showIGSTile() {
     return this.userInfo().permissions.hasIgsDataSenderRole && this.userInfo().permissions.hasIgsNotificationSenderRole;
+  }
+
+  get showAreTile() {
+    return this.userInfo().permissions.hasAreNotificationSenderRole && FEATURE_FLAG_PORTAL_ARE_ENABLED();
   }
 
   get showNonNominalTile() {
@@ -286,7 +293,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
               renderingCondition: this.showNonNominalTile,
               config: {
                 id: 'pathogen-non-nominal',
-                titleTextRows: AppConstants.Titles.PATHOGEN_SHORT,
+                titleTextRows: AppConstants.Titles.Pathogen_NON_NOMINAL,
                 tooltip: AppConstants.Tooltips.CLICK_TO_REPORT,
                 destinationRouterLink: `/${AppConstants.PathSegments.PATHOGEN_NOTIFICATION_NON_NOMINAL}`,
                 contentParagraphs: [AppConstants.InfoTexts.PATHOGEN_NON_NOMINAL],
@@ -309,36 +316,15 @@ export class WelcomeComponent implements OnInit, OnDestroy {
       {
         renderingCondition: this.showAnonymousTile,
         config: {
-          id: 'anonymous',
+          id: 'pathogen-anonymous',
           titleTextRows: AppConstants.Titles.ANONYMOUS,
           tooltip: AppConstants.Tooltips.CLICK_TO_OPEN,
+          destinationRouterLink: `/${AppConstants.PathSegments.PATHOGEN_NOTIFICATION_ANONYMOUS}`,
           logoImage: {
             src: 'assets/images/anonymous.svg',
             alt: 'Logo Anonyme Meldung',
           },
-          contentParagraphs: [AppConstants.InfoTexts.ANONYMOUS],
-          subTiles: [
-            {
-              renderingCondition: this.showAnonymousTile,
-              config: {
-                id: 'pathogen-anonymous',
-                titleTextRows: AppConstants.Titles.PATHOGEN_ANONYMOUS,
-                tooltip: AppConstants.Tooltips.CLICK_TO_REPORT,
-                destinationRouterLink: `/${AppConstants.PathSegments.PATHOGEN_NOTIFICATION_ANONYMOUS}`,
-                contentParagraphs: [AppConstants.InfoTexts.PATHOGEN_ANONYMOUS],
-              },
-            },
-            {
-              renderingCondition: this.showAnonymousTile,
-              config: {
-                id: 'disease-anonymous',
-                titleTextRows: AppConstants.Titles.DISEASE_ANONYMOUS,
-                tooltip: AppConstants.Tooltips.CLICK_TO_REPORT,
-                destinationRouterLink: `/${AppConstants.PathSegments.DISEASE_NOTIFICATION_ANONYMOUS}`,
-                contentParagraphs: [AppConstants.InfoTexts.DISEASE_ANONYMOUS],
-              },
-            },
-          ],
+          contentParagraphs: [AppConstants.InfoTexts.PATHOGEN_ANONYMOUS],
         },
       },
       // Bed Occupancy (Bettenbelegung melden)
@@ -367,9 +353,24 @@ export class WelcomeComponent implements OnInit, OnDestroy {
           destinationRouterLink: `/${AppConstants.PathSegments.SEQUENCE_NOTIFICATION}`,
           logoImage: {
             src: 'assets/images/igs.svg',
-            alt: 'Logo der Bettenbelegung Meldung',
+            alt: 'Logo der IGS Meldung',
           },
           contentParagraphs: [AppConstants.InfoTexts.SEQUENCE_NOTIFICATION],
+          buttonLabel: 'Melden',
+        },
+      },
+      {
+        renderingCondition: this.showAreTile,
+        config: {
+          id: 'are-notification',
+          titleTextRows: AppConstants.Titles.ARE_NOTIFICATION,
+          tooltip: AppConstants.Tooltips.UPLOAD_INFO,
+          destinationRouterLink: `/${AppConstants.PathSegments.ARE_NOTIFICATION}`,
+          logoImage: {
+            src: 'assets/images/are.svg',
+            alt: 'Logo der ARE Meldung',
+          },
+          contentParagraphs: [AppConstants.InfoTexts.ARE_NOTIFICATION],
           buttonLabel: 'Melden',
         },
       },
@@ -390,12 +391,11 @@ export class WelcomeComponent implements OnInit, OnDestroy {
           this.authService.checkRole(AppConstants.Roles.IGS_SEQUENCE_DATA_SENDER) ||
           this.authService.checkRole(AppConstants.Roles.IGS_NOTIFICATION_DATA_SENDER_FASTA_ONLY),
         hasIgsNotificationSenderRole: this.authService.checkRole(AppConstants.Roles.IGS_NOTIFICATION_DATA_SENDER),
+        hasAreNotificationSenderRole: this.authService.checkRole(AppConstants.Roles.ARE_NOTIFICATION_SENDER),
         hasNonNominalNotificationSenderRole:
           this.authService.checkRole(AppConstants.Roles.PATHOGEN_NOTIFICATION_NON_NOMINAL_SENDER) &&
           this.authService.checkRole(AppConstants.Roles.DISEASE_NOTIFICATION_NON_NOMINAL_SENDER),
-        hasAnonymousSenderRole:
-          this.authService.checkRole(AppConstants.Roles.PATHOGEN_NOTIFICATION_ANONYMOUS_SENDER) &&
-          this.authService.checkRole(AppConstants.Roles.DISEASE_NOTIFICATION_ANONYMOUS_SENDER),
+        hasAnonymousSenderRole: this.authService.checkRole(AppConstants.Roles.PATHOGEN_NOTIFICATION_ANONYMOUS_SENDER),
       },
     };
 

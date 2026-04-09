@@ -55,6 +55,14 @@
     },
     "logLevel": "debug"
   },
+  "/portal/are": {
+    "target": "http://localhost:4205",
+    "secure": false,
+    "pathRewrite": {
+      "^/portal/are": ""
+    },
+    "logLevel": "debug"
+  },
   "/gateway/igs": {
     "target": "https://portal.ingress.local",
     "secure": false,
@@ -78,5 +86,11 @@
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
+  },
+  "/realms": {
+    "target": "https://auth.ingress.local",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   }
 }

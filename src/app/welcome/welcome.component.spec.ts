@@ -76,6 +76,7 @@ describe('WelcomeComponent', () => {
       spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').and.returnValue(of(''));
       expect(component).toBeTruthy();
     });
+
     it('should use correct logo paths', () => {
       createComponent();
       const pathogenTile = component.tiles.find(tile => tile.config.id === 'pathogen');
@@ -196,6 +197,10 @@ describe('WelcomeComponent', () => {
   });
 
   describe('test tiles with subtiles', () => {
+    beforeAll(() => {
+      (window as any)['config'].featureFlags.FEATURE_FLAG_PORTAL_ARE_ENABLED = true;
+    });
+
     TestSetup.JWT_ROLES_EXPANDABLE_TILES.forEach(({ id, roles, tile, subTiles, doNegativeTest, requireAllRoles }) => {
       it(`should show tile ${tile} and its subtiles when user has roles ${roles.join(', ')}`, async () => {
         createComponent();

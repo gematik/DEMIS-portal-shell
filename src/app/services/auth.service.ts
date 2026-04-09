@@ -33,6 +33,7 @@ interface RealmAccess {
 export interface Token {
   realm_access: RealmAccess;
   username: string;
+  'SP-User-ID'?: string;
 }
 
 @Injectable({
@@ -165,5 +166,12 @@ export class AuthService {
       return null;
     }
     return this.token?.username;
+  }
+
+  getSPUId() {
+    if (!this.isAuthenticated()) {
+      return null;
+    }
+    return this.token?.['SP-User-ID'];
   }
 }

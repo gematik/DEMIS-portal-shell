@@ -3,114 +3,112 @@
 <mat-toolbar class="app-navbar-demis" role="toolbar" aria-label="Hauptnavigation">
   <!-- #region Header LOGOS ("I am local" and "DEMIS Logo") -->
   @if (env.isLocal) {
-    <img id="img-local-indicator-logo" alt="local indicator Logo" src="assets/images/local-indicator.gif"/>
+  <img id="img-local-indicator-logo" alt="local indicator Logo" src="assets/images/local-indicator.gif" />
   }
 
   <button mat-button id="home-button" routerLink="/" aria-label="Startseite">
-    <img id="img-demis-logo" src="{{ demisLogoUrl }}" alt="DEMIS Logo – Zur Startseite" aria-label="Zur Startseite"/>
+    <img id="img-demis-logo" src="{{ demisLogoUrl }}" alt="DEMIS Logo – Zur Startseite" aria-label="Zur Startseite" />
   </button>
   <!-- #endregion Header LOGOS -->
 
 
   <!-- #region NAV BAR - DEPRECATED - ("Startseite", "Erregernachweis", "Krankheit", "Betten", "IGS",...) -->
   @if (!FEATURE_FLAG_PORTAL_HEADER_FOOTER()) {
-    <nav mat-tab-nav-bar class="navbar-tab-group" [tabPanel]="tabPanel" role="tablist" aria-label="Hauptnavigation">
-      @if (isLoggedIn()) {
-        <a id="a-to-homepage" [class.active-tab]="activeTab === C.Tabs.HOME"
-           [class.inactive-tab]="activeTab !== C.Tabs.HOME"
-           mat-tab-link routerLink="./" routerLinkActive="active" tabindex=0>
-          {{ C.Labels.START_PAGE_LINK }}
-        </a>
-      }
+  <nav mat-tab-nav-bar class="navbar-tab-group" [tabPanel]="tabPanel" role="tablist" aria-label="Hauptnavigation">
+    @if (isLoggedIn()) {
+    <a id="a-to-homepage" [class.active-tab]="activeTab === C.Tabs.HOME"
+      [class.inactive-tab]="activeTab !== C.Tabs.HOME" mat-tab-link routerLink="./" routerLinkActive="active"
+      tabindex=0>
+      {{ C.Labels.START_PAGE_LINK }}
+    </a>
+    }
 
-      @if (!isFollowUpNotificationDiseaseActivated() && hasDiseaseNotificationSenderRole) {
-        <a id="a-to-disease" [class.active-tab]="isDiseaseTabActive"
-           [class.inactive-tab]="!isDiseaseTabActive" mat-tab-link
-           (click)=navigateToDisease() routerLinkActive="active">
-          Krankheit (§ 6 IfSG)
-        </a>
-      }
+    @if (!isFollowUpNotificationDiseaseActivated() && hasDiseaseNotificationSenderRole) {
+    <a id="a-to-disease" [class.active-tab]="isDiseaseTabActive" [class.inactive-tab]="!isDiseaseTabActive" mat-tab-link
+      [routerLink]="C.PathSegments.DISEASE_NOTIFICATION" routerLinkActive="active">
+      Krankheit (§ 6 IfSG)
+    </a>
+    }
 
-      @if (isFollowUpNotificationDiseaseActivated() && hasDiseaseNotificationSenderRole) {
-        <button id="btn-disease" class="navbar-menu-btn" mat-button [matMenuTriggerFor]="menu"
-                [class.active-tab]="isDiseaseTabActive"
-                [class.inactive-tab]="!isDiseaseTabActive">Krankheit (§ 6 IfSG)
-          <mat-icon iconPositionEnd fontIcon="arrow_drop_down" class="btn__icon" />
-        </button>
-        <mat-menu #menu="matMenu" class="menu-width_disease">
-          <a id="a-to-disease-nominal"
-             mat-menu-item [routerLink]="C.PathSegments.DISEASE_NOTIFICATION">Erstmeldung</a>
-          <a id="a-to-disease-follow-up" mat-menu-item [routerLink]="C.PathSegments.DISEASE_NOTIFICATION_FOLLOW_UP">Folgemeldung</a>
-        </mat-menu>
-      }
+    @if (isFollowUpNotificationDiseaseActivated() && hasDiseaseNotificationSenderRole) {
+    <button id="btn-disease" class="navbar-menu-btn" mat-button [matMenuTriggerFor]="menu"
+      [class.active-tab]="isDiseaseTabActive" [class.inactive-tab]="!isDiseaseTabActive">Krankheit (§ 6 IfSG)
+      <mat-icon iconPositionEnd fontIcon="arrow_drop_down" class="btn__icon" />
+    </button>
+    <mat-menu #menu="matMenu" class="menu-width_disease">
+      <a id="a-to-disease-nominal" mat-menu-item [routerLink]="C.PathSegments.DISEASE_NOTIFICATION">Erstmeldung</a>
+      <a id="a-to-disease-follow-up" mat-menu-item
+        [routerLink]="C.PathSegments.DISEASE_NOTIFICATION_FOLLOW_UP">Folgemeldung</a>
+    </mat-menu>
+    }
 
-      @if (!isFollowUpNotificationPathogenActivated() && (hasPathogenNotificationSenderRole)) {
-        <a id="a-to-pathogen" [class.active-tab]="isPathogenTabActive" [class.inactive-tab]="!isPathogenTabActive"
-           mat-tab-link [routerLink]="C.PathSegments.PATHOGEN_NOTIFICATION" routerLinkActive="active">
-          Erregernachweis (§ 7 Abs. 1 IfSG)
-        </a>
-      }
+    @if (!isFollowUpNotificationPathogenActivated() && (hasPathogenNotificationSenderRole)) {
+    <a id="a-to-pathogen" [class.active-tab]="isPathogenTabActive" [class.inactive-tab]="!isPathogenTabActive"
+      mat-tab-link [routerLink]="C.PathSegments.PATHOGEN_NOTIFICATION" routerLinkActive="active">
+      Erregernachweis (§ 7 Abs. 1 IfSG)
+    </a>
+    }
 
-      @if (isFollowUpNotificationPathogenActivated() && (hasPathogenNotificationSenderRole)) {
-        <button id="btn-pathogen" class="navbar-menu-btn" mat-button [matMenuTriggerFor]="menu"
-                [class.active-tab]="isPathogenTabActive"
-                [class.inactive-tab]="!isPathogenTabActive">Erregernachweis (§ 7 Abs. 1 IfSG)
-          <mat-icon iconPositionEnd fontIcon="arrow_drop_down" class="btn__icon" />
-        </button>
-        <mat-menu #menu="matMenu" class="menu-width_pathogen">
-          <a id="a-to-pathogen-nominal"
-             mat-menu-item [routerLink]="C.PathSegments.PATHOGEN_NOTIFICATION">Erstmeldung</a>
-          <a id="a-to-pathogen-follow-up" mat-menu-item [routerLink]="C.PathSegments.PATHOGEN_NOTIFICATION_FOLLOW_UP">Folgemeldung</a>
-        </mat-menu>
-      }
+    @if (isFollowUpNotificationPathogenActivated() && (hasPathogenNotificationSenderRole)) {
+    <button id="btn-pathogen" class="navbar-menu-btn" mat-button [matMenuTriggerFor]="menu"
+      [class.active-tab]="isPathogenTabActive" [class.inactive-tab]="!isPathogenTabActive">Erregernachweis (§ 7 Abs. 1
+      IfSG)
+      <mat-icon iconPositionEnd fontIcon="arrow_drop_down" class="btn__icon" />
+    </button>
+    <mat-menu #menu="matMenu" class="menu-width_pathogen">
+      <a id="a-to-pathogen-nominal" mat-menu-item [routerLink]="C.PathSegments.PATHOGEN_NOTIFICATION">Erstmeldung</a>
+      <a id="a-to-pathogen-follow-up" mat-menu-item
+        [routerLink]="C.PathSegments.PATHOGEN_NOTIFICATION_FOLLOW_UP">Folgemeldung</a>
+    </mat-menu>
+    }
 
-      @if (isNonNominalNotificationActivated() && (showNonNominalLinks)) {
-        <button class="navbar-menu-btn" id="btn-non-nominal" mat-button [matMenuTriggerFor]="menu"
-                [class.active-tab]="isNonNominalTabActive"
-                [class.inactive-tab]="!isNonNominalTabActive">§ 7 Abs. 3 IfSG
-          <mat-icon iconPositionEnd fontIcon="arrow_drop_down" class="btn__icon" />
-        </button>
-        <mat-menu #menu="matMenu">
-          <a id="a-to-pathogen-non-nominal" mat-menu-item
-             [routerLink]="C.PathSegments.PATHOGEN_NOTIFICATION_NON_NOMINAL">Erregernachweis</a>
-          <a id="a-to-disease-non-nominal" mat-menu-item (click)="navigateToDiseaseNonNominal()">Ärztliche
-            Ergänzungsmeldung</a>
-        </mat-menu>
-      }
+    @if (isNonNominalNotificationActivated() && (showNonNominalLinks)) {
+    <button class="navbar-menu-btn" id="btn-non-nominal" mat-button [matMenuTriggerFor]="menu"
+      [class.active-tab]="isNonNominalTabActive" [class.inactive-tab]="!isNonNominalTabActive">§ 7 Abs. 3 IfSG
+      <mat-icon iconPositionEnd fontIcon="arrow_drop_down" class="btn__icon" />
+    </button>
+    <mat-menu #menu="matMenu">
+      <a id="a-to-pathogen-non-nominal" mat-menu-item
+        [routerLink]="C.PathSegments.PATHOGEN_NOTIFICATION_NON_NOMINAL">Erregernachweis</a>
+      <a id="a-to-disease-non-nominal" mat-menu-item [routerLink]="C.PathSegments.DISEASE_NOTIFICATION_NON_NOMINAL">Ärztliche
+        Ergänzungsmeldung</a>
+    </mat-menu>
+    }
 
 
-      @if (isAnonymousNotificationActivated() && (showAnonymousLinks)) {
-        <button class="navbar-menu-btn" id="btn-anonymous" mat-button [matMenuTriggerFor]="menu"
-                [class.active-tab]="isAnonymousTabActive"
-                [class.inactive-tab]="!isAnonymousTabActive">Anonyme Meldung (§ 7 Abs. 3 IfSG)
-          <mat-icon iconPositionEnd fontIcon="arrow_drop_down" class="btn__icon" />
-        </button>
-        <mat-menu #menu="matMenu">
-          <a id="a-to-pathogen-anonymous" mat-menu-item
-             [routerLink]="C.PathSegments.PATHOGEN_NOTIFICATION_ANONYMOUS">Erregernachweis (anonym)</a>
-          <a id="a-to-disease-anonymous" mat-menu-item (click)="navigateToDiseaseAnonymous()">Ärztliche
-            Ergänzungsmeldung (anonym)</a>
-        </mat-menu>
-      }
+    @if (isAnonymousNotificationActivated() && (showAnonymousLinks)) {
+      <a id="a-to-pathogen-anonymous" [class.active-tab]="isAnonymousTabActive"
+         [class.inactive-tab]="!isAnonymousTabActive" mat-tab-link [routerLink]="C.PathSegments.PATHOGEN_NOTIFICATION_ANONYMOUS"
+         routerLinkActive="active">
+        Erregernachweis, anonym (§ 7 Abs. 3 IfSG)
+      </a>
+    }
 
 
-      @if (hasBedOccupencySenderRole) {
-        <a id="a-to-bed-occupancy" [class.active-tab]="activeTab === C.Tabs.BED_OCCUPANCY"
-           [class.inactive-tab]="activeTab !== C.Tabs.BED_OCCUPANCY" mat-tab-link
-           [routerLink]="C.PathSegments.BED_OCCUPANCY"
-           routerLinkActive="active">
-          {{ C.Labels.SUBMIT_BED_OCCUPANCY_LINK }}
-        </a>
-      }
+    @if (hasBedOccupencySenderRole) {
+    <a id="a-to-bed-occupancy" [class.active-tab]="activeTab === C.Tabs.BED_OCCUPANCY"
+      [class.inactive-tab]="activeTab !== C.Tabs.BED_OCCUPANCY" mat-tab-link [routerLink]="C.PathSegments.BED_OCCUPANCY"
+      routerLinkActive="active">
+      {{ C.Labels.SUBMIT_BED_OCCUPANCY_LINK }}
+    </a>
+    }
 
-      @if (hasIgsDataSenderRole && hasIgsNotificationSenderRole) {
-        <a id="a-to-sequence-notification" [class.active-tab]="activeTab === C.Tabs.SEQUENCE_NOTIFICATION"
-           [class.inactive-tab]="activeTab !== C.Tabs.SEQUENCE_NOTIFICATION" mat-tab-link
-           [routerLink]="C.PathSegments.SEQUENCE_NOTIFICATION" routerLinkActive="active">
-          IGS
-        </a>
-      }
-    </nav>
+    @if (hasIgsDataSenderRole && hasIgsNotificationSenderRole) {
+    <a id="a-to-sequence-notification" [class.active-tab]="activeTab === C.Tabs.SEQUENCE_NOTIFICATION"
+      [class.inactive-tab]="activeTab !== C.Tabs.SEQUENCE_NOTIFICATION" mat-tab-link
+      [routerLink]="C.PathSegments.SEQUENCE_NOTIFICATION" routerLinkActive="active">
+      IGS
+    </a>
+    }
+
+    @if (hasAreNotificationSenderRole && FEATURE_FLAG_PORTAL_ARE_ENABLED()) {
+    <a id="a-to-are-notification-deprecated" [class.active-tab]="activeTab === C.Tabs.ARE_NOTIFICATION"
+      [class.inactive-tab]="activeTab !== C.Tabs.ARE_NOTIFICATION" mat-tab-link
+      [routerLink]="C.PathSegments.ARE_NOTIFICATION" routerLinkActive="active">
+      ARE
+    </a>
+    }
+  </nav>
   }
   <!-- #endregion NAV BAR - DEPRECATED - ("Startseite", "Erregernachweis", "Krankheit", "Betten", "IGS",...)-->
 
@@ -119,182 +117,180 @@
   <!-- #region "drei-punkte-menü" - DEPRECATED - -->
   <span class="toolbar-spacer"></span>
   @if (!FEATURE_FLAG_PORTAL_HEADER_FOOTER()) {
-    <button mat-icon-button id="btn-burger-menu-in-navbar" [matMenuTriggerFor]="burgerMenu"
-            aria-label="Öffne Burgermenü">
-      <mat-icon fontIcon="more_vert" />
+  <button mat-icon-button id="btn-burger-menu-in-navbar" [matMenuTriggerFor]="burgerMenu" aria-label="Öffne Burgermenü">
+    <mat-icon fontIcon="more_vert" />
+  </button>
+
+  <mat-menu #burgerMenu="matMenu" aria-label="Menü">
+    <!-- ABOUT -->
+    <button mat-menu-item id="a-to-about" [routerLink]="C.PathSegments.ABOUT" routerLinkActive="active">
+      {{ C.Labels.ABOUT_DEMIS_LINK }}
+      {{ version }}
     </button>
 
-    <mat-menu #burgerMenu="matMenu" aria-label="Menü">
-      <!-- ABOUT -->
-      <button mat-menu-item id="a-to-about" [routerLink]="C.PathSegments.ABOUT" routerLinkActive="active">
-        {{ C.Labels.ABOUT_DEMIS_LINK }}
-        {{ version }}
-      </button>
+    <!-- DATA ANALYSIS -->
+    <button mat-menu-item id="a-to-data-analyse" (click)="openInNewTab(C.ExternalLinks.DATA_ANALYSIS)">
+      {{ C.Labels.DATA_ANALYSIS_LINK }}
+    </button>
 
-      <!-- DATA ANALYSIS -->
-      <button mat-menu-item id="a-to-data-analyse" (click)="openInNewTab(C.ExternalLinks.DATA_ANALYSIS)">
-        {{ C.Labels.DATA_ANALYSIS_LINK }}
-      </button>
+    <!-- HELP (See submenu below for entries) -->
+    <button mat-menu-item id="btn-help-menu-inside-burger-menu" [matMenuTriggerFor]="helpMenu">
+      {{ C.Labels.HELP_LINK }}
+    </button>
 
-      <!-- HELP (See submenu below for entries) -->
-      <button mat-menu-item id="btn-help-menu-inside-burger-menu" [matMenuTriggerFor]="helpMenu">
-        {{ C.Labels.HELP_LINK }}
-      </button>
+    <!-- SITE NOTICE -->
+    <button mat-menu-item id="a-to-site-notice" routerLink="/impressum" routerLinkActive="active">
+      {{ C.Labels.SITE_NOTICE_LINK }}
+    </button>
 
-      <!-- SITE NOTICE -->
-      <button mat-menu-item id="a-to-site-notice" routerLink="/impressum" routerLinkActive="active">
-        {{ C.Labels.SITE_NOTICE_LINK }}
-      </button>
+    <!-- PRIVACY POLICY -->
+    <button mat-menu-item id="a-to-privacy-policy" routerLink="/privacy-policy" routerLinkActive="active">
+      {{ C.Labels.PRIVACY_POLICY }}
+    </button>
+  </mat-menu>
 
-      <!-- PRIVACY POLICY -->
-      <button mat-menu-item id="a-to-privacy-policy" routerLink="/privacy-policy" routerLinkActive="active">
-        {{ C.Labels.PRIVACY_POLICY }}
-      </button>
-    </mat-menu>
+  <!-- HELP SUBMENU -->
+  <mat-menu #helpMenu="matMenu">
+    <!-- KNOWLEDGE DATABASE -->
+    <button mat-menu-item id="a-to-demis-wdb" (click)="openInNewTab(C.ExternalLinks.DEMIS_WDB)">
+      <mat-icon>assessment</mat-icon>
+      {{ C.Labels.DEMIS_KNOWLEDGE_DATABASE_LINK }}
+    </button>
 
-    <!-- HELP SUBMENU -->
-    <mat-menu #helpMenu="matMenu">
-      <!-- KNOWLEDGE DATABASE -->
-      <button mat-menu-item id="a-to-demis-wdb" (click)="openInNewTab(C.ExternalLinks.DEMIS_WDB)">
-        <mat-icon>assessment</mat-icon>
-        {{ C.Labels.DEMIS_KNOWLEDGE_DATABASE_LINK }}
-      </button>
-
-      <!-- SUPPORT -->
-      <button mat-menu-item id="a-to-support" (click)="openInNewTab(C.ExternalLinks.SUPPORT_FAQ)">
-        <mat-icon>contact_support</mat-icon>
-        {{ C.Labels.SUPPORT_QUESTIONS_LINK }}
-      </button>
-    </mat-menu>
+    <!-- SUPPORT -->
+    <button mat-menu-item id="a-to-support" (click)="openInNewTab(C.ExternalLinks.SUPPORT_FAQ)">
+      <mat-icon>contact_support</mat-icon>
+      {{ C.Labels.SUPPORT_QUESTIONS_LINK }}
+    </button>
+  </mat-menu>
   }
   <!-- #endregion "drei-punkte-menü" - DEPRECATED - -->
 
 
   <!-- #region BURGER MENU (redesign NEW instead of "drei-punkte-menü")-->
   @if (FEATURE_FLAG_PORTAL_HEADER_FOOTER()) {
-    <button type="button" mat-button id="btn-burger-menu-in-navbar" class="menu-button" [matMenuTriggerFor]="burgerMenu"
-            aria-haspopup="menu" aria-label="Menü öffnen" tabindex=0>
-      <mat-icon fontIcon="menu" />
-      Menü
+  <button type="button" mat-button id="btn-burger-menu-in-navbar" class="menu-button" [matMenuTriggerFor]="burgerMenu"
+    aria-haspopup="menu" aria-label="Menü öffnen" tabindex=0>
+    <mat-icon fontIcon="menu" />
+    Menü
+  </button>
+  <mat-menu #burgerMenu="matMenu" class="burger-menu" aria-label="Formularseitenmenü">
+    @if (isLoggedIn()) {
+    <div class="menu-header" role="separator" aria-hidden="true">Gesetzliche Meldepflichten</div>
+    @if (!isFollowUpNotificationDiseaseActivated() && hasDiseaseNotificationSenderRole) {
+    <button mat-menu-item id="a-to-disease" [routerLink]="C.PathSegments.DISEASE_NOTIFICATION" routerLinkActive="active" role="menuitem">
+      <gem-demis-accessible-text visual="Krankheit (§ 6 IfSG)" screenReader="Krankheit (Paragraph 6 Infektionsschutzgesetz)" />
     </button>
-    <mat-menu #burgerMenu="matMenu" class="burger-menu" aria-label="Formularseitenmenü">
-      @if (isLoggedIn()) {
-        <div class="menu-header" role="separator" aria-hidden="true">Gesetzliche Meldepflichten</div>
-        @if (!isFollowUpNotificationDiseaseActivated() && hasDiseaseNotificationSenderRole) {
-          <button mat-menu-item id="a-to-disease" (click)="navigateToDisease()" routerLinkActive="active"
-                  role="menuitem" aria-label="Krankheit Paragraph 6 IfSG">
-            Krankheit (§ 6 IfSG)
-          </button>
-        }
-        @if (isFollowUpNotificationDiseaseActivated() && hasDiseaseNotificationSenderRole) {
-          <button id="menu-disease" mat-menu-item [matMenuTriggerFor]="diseaseMenu" role="menuitem" aria-label="Krankheit Paragraph 6
-            IfSG">Krankheit (§ 6
-            IfSG)
-          </button>
-          <mat-menu #diseaseMenu="matMenu">
-            <button mat-menu-item id="a-to-disease-nominal" [routerLink]="C.PathSegments.DISEASE_NOTIFICATION">
-              Erstmeldung
-            </button>
-            <button mat-menu-item id="a-to-disease-follow-up"
-                    [routerLink]="C.PathSegments.DISEASE_NOTIFICATION_FOLLOW_UP">
-              Folgemeldung
-            </button>
-          </mat-menu>
-        }
-        @if (!isFollowUpNotificationPathogenActivated() && (hasPathogenNotificationSenderRole)) {
-          <button mat-menu-item id="a-to-pathogen" [routerLink]="C.PathSegments.PATHOGEN_NOTIFICATION"
-                  routerLinkActive="active" role="menuitem"
-                  aria-label="Erregernachweis Paragraph 7 Abschnitt 1 IfSG">
-            Erregernachweis (§ 7 Abs. 1 IfSG)
-          </button>
-        }
-        @if (isFollowUpNotificationPathogenActivated() && (hasPathogenNotificationSenderRole)) {
-          <button id="menu-pathogen" mat-menu-item [matMenuTriggerFor]="pathogenMenu" role="menuitem"
-                  aria-label="Erregernachweis Paragraph 7 Abschnitt 1 IfSG">Erregernachweis
-            (§ 7 Abs. 1 IfSG)
-          </button>
-          <mat-menu #pathogenMenu="matMenu">
-            <button mat-menu-item id="a-to-pathogen-nominal" [routerLink]="C.PathSegments.PATHOGEN_NOTIFICATION">
-              Erstmeldung
-            </button>
-            <button mat-menu-item id="a-to-pathogen-follow-up"
-                    [routerLink]="C.PathSegments.PATHOGEN_NOTIFICATION_FOLLOW_UP">
-              Folgemeldung
-            </button>
-          </mat-menu>
-        }
-        @if (isNonNominalNotificationActivated() && (showNonNominalLinks)) {
-          <button id="menu-non-nominal" mat-menu-item [matMenuTriggerFor]="nonNominalMenu" role="menuitem"
-                  aria-label="Paragraph 7 Abschnitt 3 IfSG">§ 7 Abs. 3 IfSG
-          </button>
-          <mat-menu #nonNominalMenu="matMenu">
-            <button mat-menu-item id="a-to-pathogen-non-nominal"
-                    [routerLink]="C.PathSegments.PATHOGEN_NOTIFICATION_NON_NOMINAL">Erregernachweis
-            </button>
-            <button mat-menu-item id="a-to-disease-non-nominal" (click)="navigateToDiseaseNonNominal()">Ärztliche <br>Ergänzungsmeldung
-            </button>
-          </mat-menu>
-        }
-      }
-      @if (isAnonymousNotificationActivated() && (showAnonymousLinks)) {
-        <button id="menu-anonymous" mat-menu-item [matMenuTriggerFor]="anonymousMenu" role="menuitem"
-                aria-label="Paragraph 7 Abschnitt 3 IfSG Anonym">Anonyme Meldung (§ 7 Abs. 3 IfSG)
-        </button>
-        <mat-menu #anonymousMenu="matMenu">
-          <button mat-menu-item id="a-to-pathogen-anonymous"
-                  [routerLink]="C.PathSegments.PATHOGEN_NOTIFICATION_ANONYMOUS">Erregernachweis (anonym)
-          </button>
-          <button mat-menu-item id="a-to-disease-anonymous" (click)="navigateToDiseaseAnonymous()">Ärztliche <br>Ergänzungsmeldung
-            (anonym)
-          </button>
+    }
+    @if (isFollowUpNotificationDiseaseActivated() && hasDiseaseNotificationSenderRole) {
+    <button id="menu-disease" mat-menu-item [matMenuTriggerFor]="diseaseMenu" role="menuitem">
+      <gem-demis-accessible-text visual="Krankheit (§ 6 IfSG)" screenReader="Krankheit (Paragraph 6 Infektionsschutzgesetz)" />
+    </button>
+    <mat-menu #diseaseMenu="matMenu">
+      <button mat-menu-item id="a-to-disease-nominal" [routerLink]="C.PathSegments.DISEASE_NOTIFICATION">
+        Erstmeldung
+      </button>
+      <button mat-menu-item id="a-to-disease-follow-up" [routerLink]="C.PathSegments.DISEASE_NOTIFICATION_FOLLOW_UP">
+        Folgemeldung
+      </button>
+    </mat-menu>
+    }
+    @if (!isFollowUpNotificationPathogenActivated() && (hasPathogenNotificationSenderRole)) {
+    <button mat-menu-item id="a-to-pathogen" [routerLink]="C.PathSegments.PATHOGEN_NOTIFICATION"
+      routerLinkActive="active" role="menuitem">
+      <gem-demis-accessible-text visual="Erregernachweis (§ 7 Abs. 1 IfSG)" screenReader="Erregernachweis (Paragraph 7 Absatz 1 Infektionsschutzgesetz)" />
+    </button>
+    }
+    @if (isFollowUpNotificationPathogenActivated() && (hasPathogenNotificationSenderRole)) {
+    <button id="menu-pathogen" mat-menu-item [matMenuTriggerFor]="pathogenMenu" role="menuitem">
+      <gem-demis-accessible-text visual="Erregernachweis (§ 7 Abs. 1 IfSG)" screenReader="Erregernachweis (Paragraph 7 Absatz 1 Infektionsschutzgesetz)" />
+    </button>
+    <mat-menu #pathogenMenu="matMenu">
+      <button mat-menu-item id="a-to-pathogen-nominal" [routerLink]="C.PathSegments.PATHOGEN_NOTIFICATION">
+        Erstmeldung
+      </button>
+      <button mat-menu-item id="a-to-pathogen-follow-up" [routerLink]="C.PathSegments.PATHOGEN_NOTIFICATION_FOLLOW_UP">
+        Folgemeldung
+      </button>
+    </mat-menu>
+    }
+    @if (isNonNominalNotificationActivated() && (showNonNominalLinks)) {
+    <button id="menu-non-nominal" mat-menu-item [matMenuTriggerFor]="nonNominalMenu" role="menuitem">
+      <gem-demis-accessible-text visual="Erregernachweis und ärztl. Ergänzung (§ 7 Abs. 3 IfSG)" screenReader="Erregernachweis und ärztl. Ergänzung (Paragraph 7 Absatz 3 Infektionsschutzgesetz)" />
+    </button>
+    <mat-menu #nonNominalMenu="matMenu">
+      <button mat-menu-item id="a-to-pathogen-non-nominal"
+        [routerLink]="C.PathSegments.PATHOGEN_NOTIFICATION_NON_NOMINAL">Erregernachweis <br>(MeldungsID unbekannt)
+      </button>
+      <button mat-menu-item id="a-to-disease-non-nominal" [routerLink]="C.PathSegments.DISEASE_NOTIFICATION_NON_NOMINAL"><gem-demis-accessible-text visual="Ärztl. Ergänzungsmeldung (MeldungsID unbekannt)" screenReader="Ärztliche Ergänzungsmeldung (MeldungsID unbekannt)" />
+      </button>
+    </mat-menu>
+    }
+    }
+    @if (isAnonymousNotificationActivated() && (showAnonymousLinks)) {
+      <button mat-menu-item id="a-to-pathogen-anonymous" [routerLink]="C.PathSegments.PATHOGEN_NOTIFICATION_ANONYMOUS" routerLinkActive="active"
+              role="menuitem">
+        <gem-demis-accessible-text visual="Erregernachweis, anonym (§ 7 Abs. 3 IfSG)" screenReader="Erregernachweis, anonym (Paragraph 7 Absatz 3 Infektionsschutzgesetz)" />
+      </button>
+    }
+    @if (isLoggedIn() && (hasBedOccupencySenderRole || (hasIgsDataSenderRole && hasIgsNotificationSenderRole) ||
+    hasAreNotificationSenderRole)) {
+    <div class="menu-header" role="separator" aria-hidden="true">Weitere Surveillance-Systeme</div>
+    }
+    @if (hasBedOccupencySenderRole) {
+    <button mat-menu-item id="a-to-bed-occupancy" [routerLink]="C.PathSegments.BED_OCCUPANCY" routerLinkActive="active"
+      role="menuitem">
+      {{ C.Labels.SUBMIT_BED_OCCUPANCY_LINK }}
+    </button>
+    }
+    @if (hasIgsDataSenderRole && hasIgsNotificationSenderRole) {
+    <button mat-menu-item id="a-to-sequence-notification" [routerLink]="C.PathSegments.SEQUENCE_NOTIFICATION"
+      routerLinkActive="active" role="menuitem">
+      IGS
+    </button>
+    }
+    @if (hasAreNotificationSenderRole && FEATURE_FLAG_PORTAL_ARE_ENABLED()) {
+    <button mat-menu-item id="a-to-are-notification" [routerLink]="C.PathSegments.ARE_NOTIFICATION"
+      routerLinkActive="active" role="menuitem">
+      ARE
+    </button>
+    }
+    @if(isLoggedIn() && FEATURE_FLAG_SURVEILLANCE_PROGRAM_ADMISSION_ENABLED()){
+    <button mat-menu-item id="btn-register-for-surveillance-system" class="menu-item-trailing"
+      (click)="openRegisterDialog()" role="menuitem">
+      <mat-icon>open_in_new</mat-icon>
+      Surveillance-System-Zugang freischalten
+    </button>
 
-        </mat-menu>
-      }
-      @if (isLoggedIn() && (hasBedOccupencySenderRole || (hasIgsDataSenderRole && hasIgsNotificationSenderRole))) {
-        <div class="menu-header" role="separator" aria-hidden="true">Weitere Surveillance-Systeme</div>
-      }
-      @if (hasBedOccupencySenderRole) {
-        <button mat-menu-item id="a-to-bed-occupancy" [routerLink]="C.PathSegments.BED_OCCUPANCY"
-                routerLinkActive="active" role="menuitem">
-          {{ C.Labels.SUBMIT_BED_OCCUPANCY_LINK }}
-        </button>
-      }
-      @if (hasIgsDataSenderRole && hasIgsNotificationSenderRole) {
-        <button mat-menu-item id="a-to-sequence-notification" [routerLink]="C.PathSegments.SEQUENCE_NOTIFICATION"
-                routerLinkActive="active" role="menuitem">
-          IGS
-        </button>
-      }
-      <mat-divider class="menu-divider" aria-hidden="true" />
-      <button mat-menu-item id="a-to-about" [routerLink]="C.PathSegments.ABOUT" routerLinkActive="active"
-              role="menuitem">
-        <mat-icon>info</mat-icon>
-        {{ C.Labels.ABOUT_DEMIS_LINK }}
-      </button>
-      <button mat-menu-item id="a-to-data-analyse" (click)="openInNewTab(C.ExternalLinks.DATA_ANALYSIS)"
-              role="menuitem">
-        <mat-icon>radar</mat-icon>
-        {{ C.Labels.DATA_ANALYSIS_LINK }}
-      </button>
-      <button mat-menu-item id="btn-help-menu-inside-burger-menu" [matMenuTriggerFor]="helpMenu" role="menuitem"
-              aria-haspopup="menu">
-        <mat-icon>help</mat-icon>
-        {{ C.Labels.HELP_LINK }}
-      </button>
-    </mat-menu>
-    <mat-menu #helpMenu="matMenu">
-      <button mat-menu-item id="a-to-demis-wdb" (click)="openInNewTab(C.ExternalLinks.DEMIS_WDB)" role="menuitem">
-        {{ C.Labels.DEMIS_KNOWLEDGE_DATABASE_LINK }}
-      </button>
-      <button mat-menu-item id="a-to-support" [routerLink]="C.PathSegments.CONTACT" routerLinkActive="active"
-              role="menuitem">
-        {{ C.Labels.CONTACT_SUPPORT }}
-      </button>
-      <button mat-menu-item id="a-to-faq" (click)="openInNewTab(C.ExternalLinks.SUPPORT_FAQ)" role="menuitem"
-              aria-label="Frequently asked questions">
-        {{ C.Labels.SUPPORT_FAQ_LINK }}
-      </button>
-    </mat-menu>
+    }
+    <mat-divider class="menu-divider" aria-hidden="true" />
+    <button mat-menu-item id="a-to-about" [routerLink]="C.PathSegments.ABOUT" routerLinkActive="active" role="menuitem">
+      <mat-icon>info</mat-icon>
+      {{ C.Labels.ABOUT_DEMIS_LINK }}
+    </button>
+    <button mat-menu-item id="a-to-data-analyse" (click)="openInNewTab(C.ExternalLinks.DATA_ANALYSIS)" role="menuitem">
+      <mat-icon>radar</mat-icon>
+      {{ C.Labels.DATA_ANALYSIS_LINK }}
+    </button>
+    <button mat-menu-item id="btn-help-menu-inside-burger-menu" [matMenuTriggerFor]="helpMenu" role="menuitem"
+      aria-haspopup="menu">
+      <mat-icon>help</mat-icon>
+      {{ C.Labels.HELP_LINK }}
+    </button>
+  </mat-menu>
+  <mat-menu #helpMenu="matMenu">
+    <button mat-menu-item id="a-to-demis-wdb" (click)="openInNewTab(C.ExternalLinks.DEMIS_WDB)" role="menuitem">
+      {{ C.Labels.DEMIS_KNOWLEDGE_DATABASE_LINK }}
+    </button>
+    <button mat-menu-item id="a-to-support" [routerLink]="C.PathSegments.CONTACT" routerLinkActive="active"
+      role="menuitem">
+      {{ C.Labels.CONTACT_SUPPORT }}
+    </button>
+    <button mat-menu-item id="a-to-faq" (click)="openInNewTab(C.ExternalLinks.SUPPORT_FAQ)" role="menuitem"
+      aria-label="Frequently asked questions">
+      {{ C.Labels.SUPPORT_FAQ_LINK }}
+    </button>
+  </mat-menu>
   }
   <!-- #endregion BURGER MENU (redesign NEW instead of "drei-punkte-menü")-->
   <mat-tab-nav-panel #tabPanel />
@@ -302,17 +298,17 @@
 
   <!-- #region AUTH BUTTON ("anmelden"/"abmelden") -->
   @if (isLoggedIn()) {
-    <button type="button" mat-button id="btn-navbar-auth_logout" class="btn-navbar-auth" (click)="logout()"
-            aria-label="Abmelden">
-      <mat-icon fontSet="material-icons">person</mat-icon>
-      Abmelden
-    </button>
+  <button type="button" mat-button id="btn-navbar-auth_logout" class="btn-navbar-auth" (click)="logout()"
+    aria-label="Abmelden">
+    <mat-icon fontSet="material-icons">person</mat-icon>
+    Abmelden
+  </button>
   } @else {
-    <button type="button" mat-button id="btn-navbar-auth_login" class="btn-navbar-auth" (click)="login()"
-            aria-label="Anmelden">
-      <mat-icon fontSet="material-icons-outlined">person</mat-icon>
-      Anmelden
-    </button>
+  <button type="button" mat-button id="btn-navbar-auth_login" class="btn-navbar-auth" (click)="login()"
+    aria-label="Anmelden">
+    <mat-icon fontSet="material-icons-outlined">person</mat-icon>
+    Anmelden
+  </button>
   }
   <!-- #endregion AUTH BUTTON ("anmelden"/"abmelden")-->
 </mat-toolbar>
