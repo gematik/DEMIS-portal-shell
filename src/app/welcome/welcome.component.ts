@@ -23,8 +23,7 @@ import {
   FEATURE_FLAG_PORTAL_HEADER_FOOTER,
   FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y,
   isAnonymousNotificationActivated,
-  isFollowUpNotificationDiseaseActivated,
-  isFollowUpNotificationPathogenActivated,
+  isNonNominalFollowUpNotificationActivated,
   isNonNominalNotificationActivated,
 } from 'src/app/shared/app-constants';
 import { Subject, takeUntil } from 'rxjs';
@@ -41,6 +40,7 @@ import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { UrlTree } from '@angular/router';
 import DISEASE_NON_NOMINAL = AppConstants.Titles.DISEASE_NON_NOMINAL;
+import DISEASE_NON_NOMINAL_FOLLOW_UP = AppConstants.Titles.DISEASE_NON_NOMINAL_FOLLOW_UP;
 
 declare type UserPermissions = {
   hasBedOccupencySenderRole: boolean;
@@ -152,46 +152,19 @@ export class WelcomeComponent implements OnInit, OnDestroy {
     return this.isNonNominalNotificationActivated() && this.userInfo().permissions.hasNonNominalNotificationSenderRole;
   }
 
+  get showNonNominalFollowUpTile() {
+    return this.showNonNominalTile && this.isNonNominalFollowUpNotificationActivated();
+  }
+
   get showAnonymousTile() {
     return this.isAnonymousNotificationActivated() && this.userInfo().permissions.hasAnonymousSenderRole;
   }
 
-  get showPathogenExpandableTile() {
-    return this.isFollowUpNotificationPathogenActivated() && this.hasPathogenNotificationRole;
-  }
-
-  get showDiseaseExpandableTile() {
-    return this.isFollowUpNotificationDiseaseActivated() && this.hasDiseaseNotificationSenderRole;
-  }
-
-  get showPathogenNominalTile() {
-    return !this.isFollowUpNotificationPathogenActivated() && this.hasPathogenNotificationRole;
-  }
-
-  get showDiseaseNominalTile() {
-    return !this.isFollowUpNotificationDiseaseActivated() && this.hasDiseaseNotificationSenderRole;
-  }
-
   get tiles(): WelcomeTileInfo[] {
     return [
-      // Disease (Krankheit melden)
+      // § 6.1-er Meldungen
       {
-        renderingCondition: this.showDiseaseNominalTile,
-        config: {
-          id: 'disease',
-          titleTextRows: AppConstants.Titles.DISEASE,
-          tooltip: AppConstants.Tooltips.CLICK_TO_REPORT,
-          destinationRouterLink: `/${AppConstants.PathSegments.DISEASE_NOTIFICATION}`,
-          logoImage: {
-            src: 'assets/images/disease.svg',
-            alt: 'Logo der Erkrankungsmeldung',
-          },
-          contentParagraphs: [AppConstants.InfoTexts.DISEASE_OLD],
-          buttonLabel: 'Melden',
-        },
-      },
-      {
-        renderingCondition: this.showDiseaseExpandableTile,
+        renderingCondition: this.hasDiseaseNotificationSenderRole,
         config: {
           id: 'disease',
           titleTextRows: AppConstants.Titles.DISEASE,
@@ -203,7 +176,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
           contentParagraphs: [AppConstants.InfoTexts.DISEASE],
           subTiles: [
             {
-              renderingCondition: this.showDiseaseExpandableTile,
+              renderingCondition: this.hasDiseaseNotificationSenderRole,
               config: {
                 id: 'disease-nominal',
                 titleTextRows: AppConstants.Titles.DISEASE_SHORT,
@@ -213,7 +186,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
               },
             },
             {
-              renderingCondition: this.showDiseaseExpandableTile,
+              renderingCondition: this.hasDiseaseNotificationSenderRole,
               config: {
                 id: 'disease-follow-up',
                 titleTextRows: AppConstants.Titles.FOLLOW_UP,
@@ -225,24 +198,9 @@ export class WelcomeComponent implements OnInit, OnDestroy {
           ],
         },
       },
-      // Pathogen (Erregernachweis melden)
+      // § 7.1-er Meldungen
       {
-        renderingCondition: this.showPathogenNominalTile,
-        config: {
-          id: 'pathogen',
-          titleTextRows: AppConstants.Titles.PATHOGEN_SHORT,
-          tooltip: AppConstants.Tooltips.CLICK_TO_REPORT,
-          destinationRouterLink: `/${AppConstants.PathSegments.PATHOGEN_NOTIFICATION}`,
-          logoImage: {
-            src: 'assets/images/pathogen.svg',
-            alt: 'Logo Erregernachweis melden',
-          },
-          contentParagraphs: [AppConstants.InfoTexts.PATHOGEN_OLD],
-          buttonLabel: 'Melden',
-        },
-      },
-      {
-        renderingCondition: this.showPathogenExpandableTile,
+        renderingCondition: this.hasPathogenNotificationRole,
         config: {
           id: 'pathogen',
           titleTextRows: AppConstants.Titles.PATHOGEN,
@@ -254,7 +212,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
           contentParagraphs: [AppConstants.InfoTexts.PATHOGEN],
           subTiles: [
             {
-              renderingCondition: this.showPathogenExpandableTile,
+              renderingCondition: this.hasPathogenNotificationRole,
               config: {
                 id: 'pathogen-nominal',
                 titleTextRows: AppConstants.Titles.PATHOGEN_SHORT,
@@ -264,7 +222,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
               },
             },
             {
-              renderingCondition: this.showPathogenExpandableTile,
+              renderingCondition: this.hasPathogenNotificationRole,
               config: {
                 id: 'pathogen-follow-up',
                 titleTextRows: AppConstants.Titles.FOLLOW_UP,
@@ -290,10 +248,30 @@ export class WelcomeComponent implements OnInit, OnDestroy {
           contentParagraphs: [AppConstants.InfoTexts.NON_NOMINAL],
           subTiles: [
             {
+              renderingCondition: this.showNonNominalFollowUpTile,
+              config: {
+                id: 'pathogen-non-nominal-follow-up',
+                titleTextRows: AppConstants.Titles.PATHOGEN_NON_NOMINAL_FOLLOW_UP,
+                tooltip: AppConstants.Tooltips.CLICK_TO_REPORT,
+                destinationRouterLink: `/${AppConstants.PathSegments.PATHOGEN_NOTIFICATION_NON_NOMINAL_FOLLOW_UP}`,
+                contentParagraphs: [AppConstants.InfoTexts.PATHOGEN_NON_NOMINAL_FOLLOW_UP],
+              },
+            },
+            {
+              renderingCondition: this.showNonNominalFollowUpTile,
+              config: {
+                id: 'disease-non-nominal-follow-up',
+                titleTextRows: DISEASE_NON_NOMINAL_FOLLOW_UP,
+                tooltip: AppConstants.Tooltips.CLICK_TO_REPORT,
+                destinationRouterLink: `/${AppConstants.PathSegments.DISEASE_NOTIFICATION_NON_NOMINAL_FOLLOW_UP}`,
+                contentParagraphs: [AppConstants.InfoTexts.DISEASE_NON_NOMINAL_FOLLOW_UP],
+              },
+            },
+            {
               renderingCondition: this.showNonNominalTile,
               config: {
                 id: 'pathogen-non-nominal',
-                titleTextRows: AppConstants.Titles.Pathogen_NON_NOMINAL,
+                titleTextRows: AppConstants.Titles.PATHOGEN_NON_NOMINAL,
                 tooltip: AppConstants.Tooltips.CLICK_TO_REPORT,
                 destinationRouterLink: `/${AppConstants.PathSegments.PATHOGEN_NOTIFICATION_NON_NOMINAL}`,
                 contentParagraphs: [AppConstants.InfoTexts.PATHOGEN_NON_NOMINAL],
@@ -359,6 +337,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
           buttonLabel: 'Melden',
         },
       },
+      // ARE
       {
         renderingCondition: this.showAreTile,
         config: {
@@ -421,8 +400,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
   protected readonly environment = environment;
   protected readonly AppConstants = AppConstants;
   protected readonly isNonNominalNotificationActivated = isNonNominalNotificationActivated;
-  protected readonly isFollowUpNotificationPathogenActivated = isFollowUpNotificationPathogenActivated;
-  protected readonly isFollowUpNotificationDiseaseActivated = isFollowUpNotificationDiseaseActivated;
+  protected readonly isNonNominalFollowUpNotificationActivated = isNonNominalFollowUpNotificationActivated;
   protected readonly isAnonymousNotificationActivated = isAnonymousNotificationActivated;
   protected readonly FEATURE_FLAG_PORTAL_HEADER_FOOTER = FEATURE_FLAG_PORTAL_HEADER_FOOTER;
   protected readonly FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y = FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y;

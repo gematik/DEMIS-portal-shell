@@ -23,14 +23,7 @@
     </a>
     }
 
-    @if (!isFollowUpNotificationDiseaseActivated() && hasDiseaseNotificationSenderRole) {
-    <a id="a-to-disease" [class.active-tab]="isDiseaseTabActive" [class.inactive-tab]="!isDiseaseTabActive" mat-tab-link
-      [routerLink]="C.PathSegments.DISEASE_NOTIFICATION" routerLinkActive="active">
-      Krankheit (§ 6 IfSG)
-    </a>
-    }
-
-    @if (isFollowUpNotificationDiseaseActivated() && hasDiseaseNotificationSenderRole) {
+    @if (hasDiseaseNotificationSenderRole) {
     <button id="btn-disease" class="navbar-menu-btn" mat-button [matMenuTriggerFor]="menu"
       [class.active-tab]="isDiseaseTabActive" [class.inactive-tab]="!isDiseaseTabActive">Krankheit (§ 6 IfSG)
       <mat-icon iconPositionEnd fontIcon="arrow_drop_down" class="btn__icon" />
@@ -42,14 +35,7 @@
     </mat-menu>
     }
 
-    @if (!isFollowUpNotificationPathogenActivated() && (hasPathogenNotificationSenderRole)) {
-    <a id="a-to-pathogen" [class.active-tab]="isPathogenTabActive" [class.inactive-tab]="!isPathogenTabActive"
-      mat-tab-link [routerLink]="C.PathSegments.PATHOGEN_NOTIFICATION" routerLinkActive="active">
-      Erregernachweis (§ 7 Abs. 1 IfSG)
-    </a>
-    }
-
-    @if (isFollowUpNotificationPathogenActivated() && (hasPathogenNotificationSenderRole)) {
+    @if (hasPathogenNotificationSenderRole) {
     <button id="btn-pathogen" class="navbar-menu-btn" mat-button [matMenuTriggerFor]="menu"
       [class.active-tab]="isPathogenTabActive" [class.inactive-tab]="!isPathogenTabActive">Erregernachweis (§ 7 Abs. 1
       IfSG)
@@ -177,12 +163,8 @@
   <mat-menu #burgerMenu="matMenu" class="burger-menu" aria-label="Formularseitenmenü">
     @if (isLoggedIn()) {
     <div class="menu-header" role="separator" aria-hidden="true">Gesetzliche Meldepflichten</div>
-    @if (!isFollowUpNotificationDiseaseActivated() && hasDiseaseNotificationSenderRole) {
-    <button mat-menu-item id="a-to-disease" [routerLink]="C.PathSegments.DISEASE_NOTIFICATION" routerLinkActive="active" role="menuitem">
-      <gem-demis-accessible-text visual="Krankheit (§ 6 IfSG)" screenReader="Krankheit (Paragraph 6 Infektionsschutzgesetz)" />
-    </button>
-    }
-    @if (isFollowUpNotificationDiseaseActivated() && hasDiseaseNotificationSenderRole) {
+
+    @if (hasDiseaseNotificationSenderRole) {
     <button id="menu-disease" mat-menu-item [matMenuTriggerFor]="diseaseMenu" role="menuitem">
       <gem-demis-accessible-text visual="Krankheit (§ 6 IfSG)" screenReader="Krankheit (Paragraph 6 Infektionsschutzgesetz)" />
     </button>
@@ -195,13 +177,8 @@
       </button>
     </mat-menu>
     }
-    @if (!isFollowUpNotificationPathogenActivated() && (hasPathogenNotificationSenderRole)) {
-    <button mat-menu-item id="a-to-pathogen" [routerLink]="C.PathSegments.PATHOGEN_NOTIFICATION"
-      routerLinkActive="active" role="menuitem">
-      <gem-demis-accessible-text visual="Erregernachweis (§ 7 Abs. 1 IfSG)" screenReader="Erregernachweis (Paragraph 7 Absatz 1 Infektionsschutzgesetz)" />
-    </button>
-    }
-    @if (isFollowUpNotificationPathogenActivated() && (hasPathogenNotificationSenderRole)) {
+
+    @if (hasPathogenNotificationSenderRole) {
     <button id="menu-pathogen" mat-menu-item [matMenuTriggerFor]="pathogenMenu" role="menuitem">
       <gem-demis-accessible-text visual="Erregernachweis (§ 7 Abs. 1 IfSG)" screenReader="Erregernachweis (Paragraph 7 Absatz 1 Infektionsschutzgesetz)" />
     </button>
@@ -219,10 +196,24 @@
       <gem-demis-accessible-text visual="Erregernachweis und ärztl. Ergänzung (§ 7 Abs. 3 IfSG)" screenReader="Erregernachweis und ärztl. Ergänzung (Paragraph 7 Absatz 3 Infektionsschutzgesetz)" />
     </button>
     <mat-menu #nonNominalMenu="matMenu">
+      @if (isNonNominalFollowUpNotificationActivated()) {
+        <button mat-menu-item id="a-to-pathogen-non-nominal-follow-up"
+                [routerLink]="C.PathSegments.PATHOGEN_NOTIFICATION_NON_NOMINAL_FOLLOW_UP">Erregernachweis <br>(MeldungsID
+          bekannt)
+        </button>
+        <button mat-menu-item id="a-to-disease-non-nominal-follow-up"
+                [routerLink]="C.PathSegments.DISEASE_NOTIFICATION_NON_NOMINAL_FOLLOW_UP">
+          <gem-demis-accessible-text visual="Ärztl. Ergänzungsmeldung (MeldungsID bekannt)"
+                                     screenReader="Ärztliche Ergänzungsmeldung (MeldungsID bekannt)" />
+        </button>
+      }
       <button mat-menu-item id="a-to-pathogen-non-nominal"
-        [routerLink]="C.PathSegments.PATHOGEN_NOTIFICATION_NON_NOMINAL">Erregernachweis <br>(MeldungsID unbekannt)
+              [routerLink]="C.PathSegments.PATHOGEN_NOTIFICATION_NON_NOMINAL">Erregernachweis <br>(MeldungsID unbekannt)
       </button>
-      <button mat-menu-item id="a-to-disease-non-nominal" [routerLink]="C.PathSegments.DISEASE_NOTIFICATION_NON_NOMINAL"><gem-demis-accessible-text visual="Ärztl. Ergänzungsmeldung (MeldungsID unbekannt)" screenReader="Ärztliche Ergänzungsmeldung (MeldungsID unbekannt)" />
+      <button mat-menu-item id="a-to-disease-non-nominal"
+              [routerLink]="C.PathSegments.DISEASE_NOTIFICATION_NON_NOMINAL">
+        <gem-demis-accessible-text visual="Ärztl. Ergänzungsmeldung (MeldungsID unbekannt)"
+                                   screenReader="Ärztliche Ergänzungsmeldung (MeldungsID unbekannt)" />
       </button>
     </mat-menu>
     }

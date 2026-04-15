@@ -2,13 +2,18 @@
 
 # Release portal-shell
 
+## Release 1.7.0
+- Updated NGINX-Base-Image to 1.30.0
+- Added § 7.3 follow-up notification tiles and routing (FEATURE_FLAG_FOLLOW_UP_7_3)
+- Removed FEATURE_FLAG_FOLLOW_UP_NOTIFICATION_PORTAL_PATHOGEN and FEATURE_FLAG_FOLLOW_UP_NOTIFICATION_PORTAL_DISEASE
+- Added Feature Flags for ARE and Surveillance Program Admission to helm charts
+
 ## Release 1.6.0
 
 - Removed @single-spa-community/angular dependency
 - Updated NGINX-Base-Image to 1.29.7
 - Removed 7.3 disease anonymous notification tile and navbar
 - Switched to routerLink in navbar
-- Updated package name to @single-spa-community/angular
 - Changed § 7.3 notification header texts
 - Added request surveillance access (FEATURE_FLAG_SURVEILLANCE_PROGRAM_ADMISSION_ENABLED)
 - Added panel for ARE (FEATURE_FLAG_PORTAL_ARE_ENABLED)
