@@ -275,4 +275,68 @@ describe('WelcomeComponent', () => {
       }
     });
   });
+
+  describe('non-nominal follow-up feature flag tests', () => {
+    beforeEach(() => {
+      (window as any)['config'] = JSON.parse(JSON.stringify(TestSetup.CONFIG));
+    });
+
+    it('should show non-nominal follow-up sub-tiles when FEATURE_FLAG_FOLLOW_UP_7_3 is enabled', async () => {
+      createComponent();
+      spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').and.returnValue(of(''));
+      fixture.point.injector.get(AuthService).$isAuthenticated = isAuthenticatedSubject;
+      spyOn(fixture.point.injector.get(AuthService), 'checkRole').and.callFake(
+        (role: string) =>
+          role === AppConstants.Roles.PATHOGEN_NOTIFICATION_NON_NOMINAL_SENDER || role === AppConstants.Roles.DISEASE_NOTIFICATION_NON_NOMINAL_SENDER
+      );
+      fixture.point.injector.get(AuthService).$tokenChanged.next();
+      ngMocks.flushTestBed();
+      createComponent();
+
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      const nonNominalTileIndex = component.tiles.findIndex(tile => tile.config.id === 'non-nominal');
+      component.changeExpandedStateForTile(nonNominalTileIndex);
+      fixture.detectChanges();
+
+      const pathogenFollowUp = getElementById('sub-tile-button-pathogen-non-nominal-follow-up');
+      expect(pathogenFollowUp).toBeTruthy();
+      const diseaseFollowUp = getElementById('sub-tile-button-disease-non-nominal-follow-up');
+      expect(diseaseFollowUp).toBeTruthy();
+    });
+
+    it('should not show non-nominal follow-up sub-tiles when FEATURE_FLAG_FOLLOW_UP_7_3 is disabled', async () => {
+      // TODO remove test when FEATURE_FLAG_FOLLOW_UP_7_3 is removed
+      (window as any)['config'].featureFlags.FEATURE_FLAG_FOLLOW_UP_7_3 = false;
+      createComponent();
+      spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').and.returnValue(of(''));
+      fixture.point.injector.get(AuthService).$isAuthenticated = isAuthenticatedSubject;
+      spyOn(fixture.point.injector.get(AuthService), 'checkRole').and.callFake(
+        (role: string) =>
+          role === AppConstants.Roles.PATHOGEN_NOTIFICATION_NON_NOMINAL_SENDER || role === AppConstants.Roles.DISEASE_NOTIFICATION_NON_NOMINAL_SENDER
+      );
+      fixture.point.injector.get(AuthService).$tokenChanged.next();
+      ngMocks.flushTestBed();
+      createComponent();
+
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      const nonNominalTileIndex = component.tiles.findIndex(tile => tile.config.id === 'non-nominal');
+      component.changeExpandedStateForTile(nonNominalTileIndex);
+      fixture.detectChanges();
+
+      const pathogenFollowUp = getElementById('sub-tile-button-pathogen-non-nominal-follow-up');
+      expect(pathogenFollowUp).toBeFalsy();
+      const diseaseFollowUp = getElementById('sub-tile-button-disease-non-nominal-follow-up');
+      expect(diseaseFollowUp).toBeFalsy();
+
+      // non-nominal sub-tiles without follow-up should still be present
+      const pathogenNonNominal = getElementById('sub-tile-button-pathogen-non-nominal');
+      expect(pathogenNonNominal).toBeTruthy();
+      const diseaseNonNominal = getElementById('sub-tile-button-disease-non-nominal');
+      expect(diseaseNonNominal).toBeTruthy();
+    });
+  });
 });

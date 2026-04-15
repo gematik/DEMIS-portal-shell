@@ -28,8 +28,7 @@ import {
   FEATURE_FLAG_PORTAL_HEADER_FOOTER,
   FEATURE_FLAG_SURVEILLANCE_PROGRAM_ADMISSION_ENABLED,
   isAnonymousNotificationActivated,
-  isFollowUpNotificationDiseaseActivated,
-  isFollowUpNotificationPathogenActivated,
+  isNonNominalFollowUpNotificationActivated,
   isNonNominalNotificationActivated,
 } from 'src/app/shared/app-constants';
 import { environment } from 'src/environments/environment';
@@ -299,8 +298,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   protected readonly isNonNominalNotificationActivated = isNonNominalNotificationActivated;
-  protected readonly isFollowUpNotificationPathogenActivated = isFollowUpNotificationPathogenActivated;
-  protected readonly isFollowUpNotificationDiseaseActivated = isFollowUpNotificationDiseaseActivated;
+  protected readonly isNonNominalFollowUpNotificationActivated = isNonNominalFollowUpNotificationActivated;
   protected readonly FEATURE_FLAG_PORTAL_HEADER_FOOTER = FEATURE_FLAG_PORTAL_HEADER_FOOTER;
   protected readonly isAnonymousNotificationActivated = isAnonymousNotificationActivated;
   protected readonly FEATURE_FLAG_SURVEILLANCE_PROGRAM_ADMISSION_ENABLED = FEATURE_FLAG_SURVEILLANCE_PROGRAM_ADMISSION_ENABLED;

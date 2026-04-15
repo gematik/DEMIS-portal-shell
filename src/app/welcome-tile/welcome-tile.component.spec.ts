@@ -106,11 +106,7 @@ describe('WelcomeTileComponent', () => {
     });
 
     afterEach(() => {
-      Object.defineProperty(environment, 'featureFlags', {
-        value: originalFeatureFlags,
-        writable: true,
-        configurable: true,
-      });
+      delete (environment as any).featureFlags;
     });
 
     it('should navigate to destination when feature flag is enabled and tile is expandable', () => {

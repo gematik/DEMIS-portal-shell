@@ -22,8 +22,7 @@ export class TestSetup {
     featureFlags: {
       CONFIG_TOKEN_INJECTION_ENABLED: true,
       FEATURE_FLAG_NON_NOMINAL_NOTIFICATION: true,
-      FEATURE_FLAG_FOLLOW_UP_NOTIFICATION_PORTAL_PATHOGEN: true,
-      FEATURE_FLAG_FOLLOW_UP_NOTIFICATION_PORTAL_DISEASE: true,
+      FEATURE_FLAG_FOLLOW_UP_7_3: true,
       FEATURE_FLAG_ANONYMOUS_NOTIFICATION: true,
       FEATURE_FLAG_PORTAL_HEADER_FOOTER: true,
     },
@@ -85,6 +84,14 @@ export class TestSetup {
       roles: [AppConstants.Roles.PATHOGEN_NOTIFICATION_NON_NOMINAL_SENDER, AppConstants.Roles.DISEASE_NOTIFICATION_NON_NOMINAL_SENDER],
       tile: 'welcome-tile-non-nominal',
       subTiles: [
+        {
+          tile: 'sub-tile-button-pathogen-non-nominal-follow-up',
+          link: '/pathogen-notification/7.3/follow-up',
+        },
+        {
+          tile: 'sub-tile-button-disease-non-nominal-follow-up',
+          link: '/disease-notification/7.3/follow-up',
+        },
         {
           tile: 'sub-tile-button-pathogen-non-nominal',
           link: '/pathogen-notification/7.3/non-nominal',

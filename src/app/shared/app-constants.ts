@@ -25,12 +25,8 @@ export function isAnonymousNotificationActivated(): boolean {
   return environment.featureFlags?.FEATURE_FLAG_ANONYMOUS_NOTIFICATION ?? false;
 }
 
-export function isFollowUpNotificationPathogenActivated(): boolean {
-  return environment.featureFlags?.FEATURE_FLAG_FOLLOW_UP_NOTIFICATION_PORTAL_PATHOGEN ?? false;
-}
-
-export function isFollowUpNotificationDiseaseActivated(): boolean {
-  return environment.featureFlags?.FEATURE_FLAG_FOLLOW_UP_NOTIFICATION_PORTAL_DISEASE ?? false;
+export function isNonNominalFollowUpNotificationActivated(): boolean {
+  return environment.featureFlags?.FEATURE_FLAG_FOLLOW_UP_7_3 ?? false;
 }
 
 export function FEATURE_FLAG_PORTAL_HEADER_FOOTER(): boolean {
@@ -79,10 +75,11 @@ export namespace AppConstants {
     ANONYMOUS = '/7.3/anonymous',
     PATHOGEN_NOTIFICATION_FOLLOW_UP = 'pathogen-notification/7.1/follow-up',
     PATHOGEN_NOTIFICATION_NON_NOMINAL = 'pathogen-notification/7.3/non-nominal',
+    PATHOGEN_NOTIFICATION_NON_NOMINAL_FOLLOW_UP = 'pathogen-notification/7.3/follow-up',
     PATHOGEN_NOTIFICATION_ANONYMOUS = 'pathogen-notification/7.3/anonymous',
     DISEASE_NOTIFICATION_FOLLOW_UP = 'disease-notification/6.1/follow-up',
     DISEASE_NOTIFICATION_NON_NOMINAL = 'disease-notification/7.3/non-nominal',
-    DISEASE_NOTIFICATION_ANONYMOUS = 'disease-notification/7.3/anonymous',
+    DISEASE_NOTIFICATION_NON_NOMINAL_FOLLOW_UP = 'disease-notification/7.3/follow-up',
     PRIVACY_POLICY = ShellPathSegments.PRIVACY_POLICY,
     ACCESSIBILITY_STATEMENT = ShellPathSegments.ACCESSIBILITY_STATEMENT,
     SEQUENCE_NOTIFICATION = 'sequence_notification',
@@ -124,16 +121,16 @@ export namespace AppConstants {
     ABOUT_UNAUTHENTICATED = 'Das Deutsche Elektronische Melde- und Informationssystem für den Infektionsschutz (DEMIS) ermöglicht bundesweit die elektronische Meldung gemäß Infektionsschutzgesetz (IfSG). Meldepflichtige Personen und Einrichtungen können im DEMIS-Meldeportal über ein Online-Formular Meldungen gemäß IfSG absetzen.',
     ABOUT_AUTHENTICATED = 'Über die unten aufgeführten Kacheln können Sie als meldepflichtige Person bzw. Einrichtung eine Meldung gemäß IfSG absetzen. Bitte klicken Sie auf die Ihrer Meldung entsprechenden Kachel.',
     BED_OCCUPANCY = 'Meldung der Krankenhausbettenbelegung gemäß § 13 Abs. 7 IfSG',
-    DISEASE_OLD = 'Meldung von meldepflichtigen Infektionskrankheiten (z.B. bei Verdacht, Erkrankung oder Tod) gemäß § 6 Abs. 1 Nr. 1 und 1a IfSG sowie § 6 Abs. 2 IfSG',
     DISEASE = 'Namentliche Meldung von Infektionskrankheiten (z.B. bei Verdacht, Erkrankung oder Tod) gemäß § 6 Abs. 1 Nr. 1 und 1a IfSG sowie § 6 Abs. 2 IfSG',
     DISEASE_SHORT = 'Meldung eines Nachweises von Infektionskrankheiten gemäß § 6 IfSG unter Angabe von Daten zur betroffenen Person',
-    PATHOGEN_OLD = 'Meldung eines Nachweises von Krankheitserregern (inkl. positive Schnelltestergebnisse) gemäß § 7 Abs. 1 IfSG',
     PATHOGEN = 'Namentliche Meldung eines Nachweises von Krankheitserregern (inkl. positiver Schnelltestergebnisse) gemäß § 7 Abs. 1 IfSG',
     PATHOGEN_SHORT = 'Meldung eines Nachweises von Krankheitserregern gemäß § 7 Abs. 1 IfSG unter Angabe von Daten zur betroffenen Person',
     PATHOGEN_FOLLOW_UP = 'Folgemeldung eines Erregernachweises gemäß § 7 Abs. 1 IfSG ohne Angaben von Personendaten',
     NON_NOMINAL = 'Nichtnamentliche Meldung eines Erregernachweises oder ärztliche Ergänzung gemäß § 7 Abs. 3 IfSG: C. trachomatis (L1-L3), Echinococcus spp., HIV, N. gonorrhoeae, T. gondii & T. pallidum',
     PATHOGEN_NON_NOMINAL = 'Meldung eines Nachweises von Krankheitserregern gemäß § 7 Abs. 3 IfSG unter Angabe von Personendaten zur Pseudonymisierung',
+    PATHOGEN_NON_NOMINAL_FOLLOW_UP = 'Meldung eines Nachweises von Krankheitserregern gemäß § 7 Abs. 3 IfSG ohne Angabe von Personendaten, aber mit Meldungsverweis',
     DISEASE_NON_NOMINAL = 'Ärztl. Ergänzungsmeldung eines Erregernachweises gemäß § 7 Abs. 3 IfSG unter Angabe von Personendaten zur Pseudonymisierung',
+    DISEASE_NON_NOMINAL_FOLLOW_UP = 'Ärztl. Ergänzungsmeldung eines Erregernachweises gemäß § 7 Abs. 3 IfSG ohne Angabe von Personendaten, aber mit Meldungsverweis',
     DISEASE_FOLLOW_UP = 'Folgemeldung eines Nachweises von Infektionskrankheiten gemäß § 6 IfSG ohne Angabe von Personendaten',
     SEQUENCE_NOTIFICATION = 'Übermittlung von Sequenz- und Sequenzmetadaten für die Integrierte Genomische Surveillance gemäß § 13 Abs. 3 IfSG',
     ARE_NOTIFICATION = 'Meldung im Rahmen der syndromischen ARE-Surveillance an die Arbeitsgemeischaft Influenza (AGI) des Robert Koch-Instituts (RKI)',
@@ -148,7 +145,9 @@ export namespace AppConstants {
     export const NON_NOMINAL = ['Meldung gemäß § 7 Abs. 3 IfSG'];
     export const PATHOGEN_SHORT = ['Erregernachweis melden'];
     export const DISEASE_NON_NOMINAL = ['Ärztliche Ergänzungsmeldung (Ohne bekannte MeldungsID)'];
-    export const Pathogen_NON_NOMINAL = ['Erregernachweis melden (Erzeugung neuer MeldungsID)'];
+    export const DISEASE_NON_NOMINAL_FOLLOW_UP = ['Ärztliche Ergänzungsmeldung (Nutzung bekannter MeldungsID)'];
+    export const PATHOGEN_NON_NOMINAL = ['Erregernachweis melden (Erzeugung neuer MeldungsID)'];
+    export const PATHOGEN_NON_NOMINAL_FOLLOW_UP = ['Erregernachweis melden (Nutzung bekannter MeldungsID)'];
     export const SEQUENCE_NOTIFICATION_NEW = ['Integrierte Genomische Surveillance', '(IGS)'];
     export const ARE_NOTIFICATION = ['Akute respiratorische Erkrankung Surveillance', '(ARE)'];
     export const FOLLOW_UP = ['Folgemeldung'];

@@ -293,6 +293,7 @@ describe('Navbar Test', () => {
   describe('new navbar, FEATURE_FLAG_PORTAL_HEADER_FOOTER === true', () => {
     beforeEach(() => {
       (window as any)['config'].featureFlags.FEATURE_FLAG_PORTAL_HEADER_FOOTER = true;
+      (window as any)['config'].featureFlags.FEATURE_FLAG_FOLLOW_UP_7_3 = true;
     });
     it('should create', () => {
       createComponent();
@@ -428,6 +429,125 @@ describe('Navbar Test', () => {
 
       menuItemPathogen.click();
       expect(router.navigateByUrl).toHaveBeenCalledWith(jasmine.objectContaining({ commands: ['pathogen-notification/7.3/non-nominal'] }), jasmine.any(Object));
+    });
+
+    it('should display the non-nominal follow-up menu items when FEATURE_FLAG_FOLLOW_UP_7_3 is enabled', async () => {
+      (window as any)['config'].featureFlags.FEATURE_FLAG_FOLLOW_UP_7_3 = true;
+      createComponent();
+      fixture.detectChanges();
+      const authService = fixture.point.injector.get(AuthService);
+      spyOn(authService, 'checkRole').and.callFake(
+        (role: string) =>
+          role === AppConstants.Roles.PATHOGEN_NOTIFICATION_NON_NOMINAL_SENDER || role === AppConstants.Roles.DISEASE_NOTIFICATION_NON_NOMINAL_SENDER
+      );
+      ngMocks.flushTestBed();
+      createComponent();
+      fixture.detectChanges();
+
+      const burgerButton = fixture.point.nativeElement.querySelector('#btn-burger-menu-in-navbar');
+      burgerButton.click();
+      fixture.detectChanges();
+
+      const nonNominalButton = document.querySelector('#menu-non-nominal') as HTMLElement;
+      nonNominalButton.click();
+      fixture.detectChanges();
+
+      const pathogenFollowUp = document.querySelector('#a-to-pathogen-non-nominal-follow-up') as HTMLElement;
+      expect(pathogenFollowUp).toBeTruthy();
+      const diseaseFollowUp = document.querySelector('#a-to-disease-non-nominal-follow-up') as HTMLElement;
+      expect(diseaseFollowUp).toBeTruthy();
+    });
+
+    it('should not display the non-nominal follow-up menu items when FEATURE_FLAG_FOLLOW_UP_7_3 is disabled', async () => {
+      // TODO remove test when FEATURE_FLAG_FOLLOW_UP_7_3 is removed
+      (window as any)['config'].featureFlags.FEATURE_FLAG_FOLLOW_UP_7_3 = false;
+      createComponent();
+      fixture.detectChanges();
+      const authService = fixture.point.injector.get(AuthService);
+      spyOn(authService, 'checkRole').and.callFake(
+        (role: string) =>
+          role === AppConstants.Roles.PATHOGEN_NOTIFICATION_NON_NOMINAL_SENDER || role === AppConstants.Roles.DISEASE_NOTIFICATION_NON_NOMINAL_SENDER
+      );
+      ngMocks.flushTestBed();
+      createComponent();
+      fixture.detectChanges();
+
+      const burgerButton = fixture.point.nativeElement.querySelector('#btn-burger-menu-in-navbar');
+      burgerButton.click();
+      fixture.detectChanges();
+
+      const nonNominalButton = document.querySelector('#menu-non-nominal') as HTMLElement;
+      nonNominalButton.click();
+      fixture.detectChanges();
+
+      const pathogenFollowUp = document.querySelector('#a-to-pathogen-non-nominal-follow-up') as HTMLElement;
+      expect(pathogenFollowUp).toBeFalsy();
+      const diseaseFollowUp = document.querySelector('#a-to-disease-non-nominal-follow-up') as HTMLElement;
+      expect(diseaseFollowUp).toBeFalsy();
+    });
+
+    it('should navigate to pathogen non-nominal follow-up on click', async () => {
+      (window as any)['config'].featureFlags.FEATURE_FLAG_FOLLOW_UP_7_3 = true;
+      createComponent();
+      fixture.detectChanges();
+      const authService = fixture.point.injector.get(AuthService);
+      spyOn(authService, 'checkRole').and.callFake(
+        (role: string) =>
+          role === AppConstants.Roles.PATHOGEN_NOTIFICATION_NON_NOMINAL_SENDER || role === AppConstants.Roles.DISEASE_NOTIFICATION_NON_NOMINAL_SENDER
+      );
+      ngMocks.flushTestBed();
+      createComponent();
+      fixture.detectChanges();
+
+      const router = fixture.point.injector.get(Router);
+
+      const burgerButton = fixture.point.nativeElement.querySelector('#btn-burger-menu-in-navbar');
+      burgerButton.click();
+      fixture.detectChanges();
+
+      const nonNominalButton = document.querySelector('#menu-non-nominal') as HTMLElement;
+      nonNominalButton.click();
+      fixture.detectChanges();
+
+      const menuItem = document.querySelector('#a-to-pathogen-non-nominal-follow-up') as HTMLElement;
+      expect(menuItem).toBeTruthy();
+
+      menuItem.click();
+      fixture.detectChanges();
+
+      expect(router.navigateByUrl).toHaveBeenCalledWith(jasmine.objectContaining({ commands: ['pathogen-notification/7.3/follow-up'] }), jasmine.any(Object));
+    });
+
+    it('should navigate to disease non-nominal follow-up on click', async () => {
+      (window as any)['config'].featureFlags.FEATURE_FLAG_FOLLOW_UP_7_3 = true;
+      createComponent();
+      fixture.detectChanges();
+      const authService = fixture.point.injector.get(AuthService);
+      spyOn(authService, 'checkRole').and.callFake(
+        (role: string) =>
+          role === AppConstants.Roles.PATHOGEN_NOTIFICATION_NON_NOMINAL_SENDER || role === AppConstants.Roles.DISEASE_NOTIFICATION_NON_NOMINAL_SENDER
+      );
+      ngMocks.flushTestBed();
+      createComponent();
+      fixture.detectChanges();
+
+      const router = fixture.point.injector.get(Router);
+
+      const burgerButton = fixture.point.nativeElement.querySelector('#btn-burger-menu-in-navbar');
+      burgerButton.click();
+      fixture.detectChanges();
+
+      const nonNominalButton = document.querySelector('#menu-non-nominal') as HTMLElement;
+      nonNominalButton.click();
+      fixture.detectChanges();
+
+      const menuItem = document.querySelector('#a-to-disease-non-nominal-follow-up') as HTMLElement;
+      expect(menuItem).toBeTruthy();
+
+      menuItem.click();
+      fixture.detectChanges();
+
+      expect(router.navigateByUrl).toHaveBeenCalledWith(jasmine.objectContaining({ commands: ['disease-notification/7.3/follow-up'] }), jasmine.any(Object));
     });
 
     it('should display the pathogen menu items', async () => {
