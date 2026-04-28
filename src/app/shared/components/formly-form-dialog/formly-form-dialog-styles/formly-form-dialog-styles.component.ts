@@ -22,30 +22,53 @@ import { Component, ViewEncapsulation } from '@angular/core';
   template: `<!-- ONLY USED FOR GLOBAL STYLES! DO NOT EXPORT! -->`,
   styles: `
     .gem-demis-formly-form-dialog-content {
+      line-height: 1.3 !important;
+
       formly-group {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
+        .mat-mdc-form-field {
+          margin-bottom: 6px;
+        }
       }
 
-      .initial-notification-id-input-field-valid {
-        --mat-form-field-outlined-outline-color: var(--color-success-dark);
-        --mat-form-field-outlined-focus-outline-color: var(--color-success-dark);
-        --mat-form-field-outlined-hover-outline-color: var(--color-success-dark);
-        --mat-form-field-outlined-label-text-color: var(--color-success-dark);
-        --mat-form-field-outlined-hover-label-text-color: var(--color-success-dark);
-        --mat-form-field-outlined-focus-label-text-color: var(--color-success-dark);
+      .mat-mdc-form-field-subscript-wrapper,
+      .mat-mdc-form-field-hint-wrapper,
+      .mat-mdc-form-field-error-wrapper,
+      .mat-mdc-form-field-error {
+        height: 0;
+        padding: 0px;
+        line-height: 1.3 !important;
+
+        &:has(*:not(:empty)) {
+          height: fit-content;
+        }
       }
 
-      .initial-notification-id-input-field-invalid,
-      .initial-notification-id-input-field-notvalidated {
-        --mat-form-field-outlined-error-outline-color: var(--color-error-dark);
-        --mat-form-field-outlined-error-focus-outline-color: var(--color-error-dark);
-        --mat-form-field-outlined-error-hover-outline-color: var(--color-error-dark);
-        --mat-form-field-outlined-error-label-text-color: var(--color-error-dark);
-        --mat-form-field-outlined-error-hover-label-text-color: var(--color-error-dark);
-        --mat-form-field-outlined-error-focus-label-text-color: var(--color-error-dark);
+      .mdc-text-field--invalid {
+        position: relative;
+        &::after {
+          content: 'warning_amber';
+          font-family: 'Material Icons';
+          color: var(--color-error-dark);
+          font-size: 24px;
+          position: absolute;
+          right: 12px;
+          top: 50%;
+          transform: translateY(-50%);
+        }
       }
+
+      .mat-mdc-form-field-subscript-wrapper {
+        padding-bottom: 6px;
+        overflow: hidden;
+      }
+
+      --mat-form-field-outlined-error-outline-color: var(--color-error-dark);
+      --mat-form-field-outlined-error-focus-outline-color: var(--color-error-dark);
+      --mat-form-field-outlined-error-hover-outline-color: var(--color-error-dark);
+      --mat-form-field-outlined-error-label-text-color: var(--color-error-dark);
+      --mat-form-field-outlined-error-hover-label-text-color: var(--color-error-dark);
+      --mat-form-field-outlined-error-focus-label-text-color: var(--color-error-dark);
+      --mat-form-field-error-text-color: var(--color-error-dark);
     }
   `,
   encapsulation: ViewEncapsulation.None, // <-- Applies styles globally!

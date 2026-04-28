@@ -19,9 +19,8 @@ import { Component, inject, input, OnDestroy, OnInit, Signal } from '@angular/co
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router } from '@angular/router';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
-import { filter, Observable, Subject, takeUntil } from 'rxjs';
+import { filter, Observable, Subject, takeUntil, firstValueFrom } from 'rxjs';
 import { AuthService, KcConfigService } from 'src/app/services';
-import { MessageDialogService } from '@gematik/demis-portal-core-library';
 import {
   AppConstants,
   FEATURE_FLAG_PORTAL_ARE_ENABLED,
@@ -33,7 +32,7 @@ import {
 } from 'src/app/shared/app-constants';
 import { environment } from 'src/environments/environment';
 import { PackageJsonService } from '../services/package-json.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { FormlyFormDialogProps, FormlyFormDialogService } from '../services/formly-form-dialog.service';
 
 @Component({
@@ -43,7 +42,6 @@ import { FormlyFormDialogProps, FormlyFormDialogService } from '../services/form
   standalone: false,
 })
 export class NavbarComponent implements OnInit, OnDestroy {
-  private readonly messageDialogService = inject(MessageDialogService);
   private readonly formlyFormDialogService = inject(FormlyFormDialogService);
   private readonly authService = inject(AuthService);
   private readonly oidcSecurityService = inject(OidcSecurityService);
@@ -166,66 +164,43 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   openRegisterDialog(): void {
     if (this.showExistingAccessDialog()) return;
-    this.formlyFormDialogService.showFormlyFormDialog(this.getRegisterFormConfig()).subscribe(result => result && this.processRegistration(result));
+    this.formlyFormDialogService.showFormlyFormDialog(this.getRegisterFormConfig()).subscribe(result => result && this.handleRegistrationSuccess(result));
   }
 
   private showExistingAccessDialog(): boolean {
     const spuId = this.ssoAuthService.getSPUId();
     if (!spuId) return false;
-    console.log("User's SPU ID:", spuId); // Log the SPU ID for debugging purposes
     this.showInfoDialog(
       'existing-access',
       'Zugang bereits freigeschaltet',
-      `Ihr Zugang zum Surveillance-System ist bereits freigeschaltet.\nDie ID Ihrer verknüpften Organisation lautet: **${spuId}**\nBei weiteren Fragen melden Sie sich bitte bei der DEMIS Geschäftsstelle des Robert Koch-Instituts: [demis-support@rki.de](mailto:demis-support@rki.de)`,
+      `Ihr Zugang zum Surveillance-System ist bereits freigeschaltet.<br><br>Die ID Ihrer verknüpften Organisation lautet: **${spuId}**<br><br>Bei weiteren Fragen melden Sie sich bitte bei der DEMIS Geschäftsstelle des Robert Koch-Instituts: [demis-support@rki.de](mailto:demis-support@rki.de)`,
       'check_circle',
       'var(--gem-demis-success-color)'
     );
     return true;
   }
 
-  private processRegistration(data: any): void {
-    this.messageDialogService.showSpinnerDialog({ message: 'Zugang wird freigeschaltet' });
-
-    this.requestSurveillanceAccess(data).subscribe({
-      next: () => this.handleRegistrationSuccess(),
-      error: () => this.handleRegistrationError(),
-    });
-  }
-
-  private handleRegistrationSuccess(): void {
+  private handleRegistrationSuccess(data: any): void {
     this.oidcSecurityService.forceRefreshSession().subscribe({
       next: () => {
-        this.messageDialogService.closeSpinnerDialog();
         this.showInfoDialog(
           'registration-success',
           'Freischaltung erfolgreich',
-          `Ihre Angaben konnten erfolgreich zugeordnet werden. Sie sollten nun für die hinterlegten Surveillance-Programme freigeschaltet sein.\nDie ID Ihrer verknüpften Organisation lautet: **${this.ssoAuthService.getSPUId()}**\nBei weiteren Fragen melden Sie sich bitte bei der DEMIS Geschäftsstelle des Robert Koch-Instituts: [demis-support@rki.de](mailto:demis-support@rki.de)`,
+          `Ihre Angaben konnten erfolgreich zugeordnet werden. Sie sollten nun für die hinterlegten Surveillance-Programme freigeschaltet sein.<br><br>Die ID Ihrer verknüpften Organisation lautet: **${this.ssoAuthService.getSPUId()}**<br><br>Bei weiteren Fragen melden Sie sich bitte bei der DEMIS Geschäftsstelle des Robert Koch-Instituts: [demis-support@rki.de](mailto:demis-support@rki.de)`,
           'check_circle',
           'var(--gem-demis-success-color)'
         );
       },
       error: () => {
-        this.messageDialogService.closeSpinnerDialog();
         this.showInfoDialog(
           'registration-success-partly',
           'Freischaltung erfolgreich',
-          `Ihre Angaben konnten erfolgreich zugeordnet werden. Bitte melden Sie sich erneut bei DEMIS an, um die entsprechenden Rechte zu erhalten.\nBei weiteren Fragen melden Sie sich bitte bei der DEMIS Geschäftsstelle des Robert Koch-Instituts: [demis-support@rki.de](mailto:demis-support@rki.de)`,
+          `Ihre Angaben konnten erfolgreich zugeordnet werden. Bitte melden Sie sich erneut bei DEMIS an, um die entsprechenden Rechte zu erhalten.<br><br>Bei weiteren Fragen melden Sie sich bitte bei der DEMIS Geschäftsstelle des Robert Koch-Instituts: [demis-support@rki.de](mailto:demis-support@rki.de)`,
           'check_circle',
           'var(--gem-demis-success-color)'
         );
       },
     });
-  }
-
-  private handleRegistrationError(): void {
-    this.messageDialogService.closeSpinnerDialog();
-    this.showInfoDialog(
-      'registration-error',
-      'Freischaltung fehlgeschlagen',
-      `Ihr Zugang zum Surveillance-System konnte nicht freigeschaltet werden.\nBitte versuchen Sie es später erneut.\nBei anhaltenden Problemen melden Sie sich bitte bei der DEMIS Geschäftsstelle des Robert Koch-Instituts: [demis-support@rki.de](mailto:demis-support@rki.de)`,
-      'error',
-      'var(--gem-demis-error-color)'
-    );
   }
 
   private requestSurveillanceAccess(data: any): Observable<any> {
@@ -245,6 +220,32 @@ export class NavbarComponent implements OnInit, OnDestroy {
       postFormText: 'Weitere Informationen finden Sie hier: [zur DEMIS-Wissensdatenbank](https://wiki.gematik.de/x/bATWKw)',
       cancelButtonText: 'Abbrechen',
       acceptButtonText: 'Freischalten',
+      secondTryValidatesAllInputs: true,
+      errorNamesToCleanOnChange: ['submitValidation'],
+      submitValidation: async (data, formGroup) => {
+        try {
+          await firstValueFrom(this.requestSurveillanceAccess(data));
+          return true;
+        } catch (error) {
+          if (error instanceof HttpErrorResponse) {
+            if (error.status === 401) {
+              Object.keys(formGroup.controls).forEach(key => {
+                formGroup.controls[key].setErrors({ submitValidation: true });
+              });
+              return false;
+            }
+            this.formlyFormDialogService.closeDialog();
+            this.showInfoDialog(
+              'technical-error',
+              'Freischaltung fehlgeschlagen',
+              `Ihr Zugang zum Surveillance-System konnte nicht freigeschaltet werden. Bitte versuchen Sie es später erneut. Bei anhaltenden Problemen melden Sie sich bitte bei der DEMIS Geschäftsstelle des Robert Koch-Instituts: [demis-support@rki.de](mailto:demis-support@rki.de)`,
+              'error',
+              'var(--gem-demis-error-color)'
+            );
+            return false;
+          }
+        }
+      },
       formlyFieldConfig: [
         {
           id: 'suId',
@@ -253,14 +254,17 @@ export class NavbarComponent implements OnInit, OnDestroy {
           props: {
             label: 'Surveillance-User-Identifikator',
             required: true,
-            placeholder: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
-            description: 'Im Format: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
+            description: 'Identifikationsnummer im UUID-Format.',
             pattern: '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}',
+            attributes: {
+              'aria-label': 'Identifikationsnummer im UUID-Format.',
+            },
           },
           validation: {
             messages: {
-              pattern: 'Der Surveillance-User-Identifikator muss im richtigen Format sein.',
+              pattern: 'Ungültiges UUID-Format.',
               required: 'Surveillance-User-Identifikator ist ein Pflichtfeld.',
+              submitValidation: '',
             },
           },
         },
@@ -271,13 +275,17 @@ export class NavbarComponent implements OnInit, OnDestroy {
           props: {
             label: 'Postleitzahl der Einrichtung',
             required: true,
-            placeholder: '12345',
+            description: 'Die Postleitzahl muss aus genau 5 Ziffern bestehen.',
             pattern: '[0-9]{5}',
+            attributes: {
+              'aria-label': 'Die Postleitzahl muss aus genau 5 Ziffern bestehen.',
+            },
           },
           validation: {
             messages: {
               pattern: 'Die Postleitzahl muss aus genau 5 Ziffern bestehen.',
               required: 'Postleitzahl der Einrichtung ist ein Pflichtfeld.',
+              submitValidation: 'Die Kombination aus Surveillance-User-Identifikator und Postleitzahl ist ungültig.',
             },
           },
         },

@@ -15,8 +15,9 @@
     find details in the "Readme" file.
  */
 
-import { Component, inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogActions, MatDialogContent } from '@angular/material/dialog';
+import { Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MAT_DIALOG_DATA, MatDialogActions, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
 import { FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
 import { FormlyMaterialModule } from '@ngx-formly/material';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -33,6 +34,7 @@ import { MarkdownService } from '@gematik/demis-portal-core-library';
   imports: [
     NgTemplateOutlet,
     MatDialogContent,
+    MatDialogTitle,
     MatIcon,
     MatDialogActions,
     ReactiveFormsModule,
@@ -50,6 +52,7 @@ export class FormlyFormDialogComponent {
   private readonly formlyFormDialogService = inject(FormlyFormDialogService);
   private readonly liveAnnouncer = inject(LiveAnnouncer);
   private readonly markdownService = inject(MarkdownService);
+  private readonly destroyRef = inject(DestroyRef);
 
   dialogId: string;
   title?: string;
@@ -62,9 +65,10 @@ export class FormlyFormDialogComponent {
   model: Record<string, unknown> = {};
   options: FormlyFormOptions = {};
   showAcceptButton: boolean;
-  requiredFields: string[] = [];
   icon?: string;
   iconColor?: string;
+  submitValidation?: (model: Record<string, unknown>, form: FormGroup) => Promise<boolean>;
+  errorNamesToCleanOnChange?: string[];
 
   constructor() {
     this.dialogId = this.data.dialogId;
@@ -76,25 +80,65 @@ export class FormlyFormDialogComponent {
     this.cancelButtonText = this.data.cancelButtonText;
     this.acceptButtonText = this.data.acceptButtonText;
     this.showAcceptButton = this.data.showAcceptButton ?? true;
-    this.formlyFieldConfig = this.data.formlyFieldConfig ?? [];
-    this.requiredFields = this.formlyFieldConfig.filter(field => field.props?.required).map(field => field.key as string);
+    this.formlyFieldConfig = this.addDefaultPropsToFields(this.data.formlyFieldConfig);
+    this.submitValidation = this.data.submitValidation ?? undefined;
+    this.errorNamesToCleanOnChange = this.data.errorNamesToCleanOnChange;
+
+    this.form.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.clearAllErrors());
+  }
+
+  addDefaultPropsToFields(fields?: InputField[]): InputField[] {
+    if (!fields) {
+      return [];
+    }
+    return fields.map((field, index) => {
+      field.props = field.props ?? {};
+      return {
+        ...field,
+        props: {
+          ...field.props,
+          subscriptSizing: 'dynamic',
+          floatLabel: 'always',
+        },
+        validation: {
+          ...field.validation,
+          messages: {
+            ...field.validation?.messages,
+            externalValidation: (err: any) => err,
+          },
+        },
+      };
+    });
   }
 
   abort(): void {
     this.liveAnnouncer.announce('Dialog geschlossen.', 'assertive').then(() => this.formlyFormDialogService.closeDialog());
   }
 
-  closeDialog(): void {
-    this.liveAnnouncer.announce('Dialog geschlossen.', 'assertive').then(() => this.formlyFormDialogService.closeDialog(this.model));
+  async proceed(): Promise<void> {
+    if (!this.submitValidation) {
+      this.liveAnnouncer.announce('Dialog geschlossen.', 'assertive').then(() => this.formlyFormDialogService.closeDialog(this.model));
+      return;
+    }
+    if (await this.submitValidation(this.model, this.form)) {
+      this.liveAnnouncer.announce('Dialog geschlossen.', 'assertive').then(() => this.formlyFormDialogService.closeDialog(this.model));
+      return;
+    }
+    this.liveAnnouncer.announce('Eingaben sind ungültig. Bitte überprüfen!', 'assertive');
+  }
+
+  private clearAllErrors(): void {
+    this.form.setErrors(null);
+    Object.keys(this.form.controls).forEach(key => {
+      const control = this.form.get(key);
+      this.errorNamesToCleanOnChange?.forEach(errorName => {
+        const { [errorName]: removedError, ...remainingErrors } = control?.errors || {};
+        control?.setErrors(Object.keys(remainingErrors).length > 0 ? remainingErrors : null);
+      });
+    });
   }
 
   nextButtonDisabled = (): boolean => {
     return !this.form.valid;
   };
-
-  proceed(): void {
-    if (this.form.valid) {
-      this.closeDialog();
-    }
-  }
 }

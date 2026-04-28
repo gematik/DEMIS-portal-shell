@@ -32,6 +32,7 @@ describe('FormlyFormDialogService', () => {
     maxWidth: '610px',
     maxHeight: '80vh',
     disableClose: true,
+    ariaModal: true,
   };
 
   beforeEach(() => {
@@ -96,6 +97,8 @@ describe('FormlyFormDialogService', () => {
         const openSpy = spyOn(matDialog, 'open').and.returnValue(mockDialogRef);
         service.showFormlyFormDialog(formDialogData);
         expect(openSpy).toHaveBeenCalledWith(FormlyFormDialogComponent, {
+          ariaLabelledBy: `${formDialogData.dialogId}-dialog-header`,
+          ariaDescribedBy: `${formDialogData.dialogId}-dialog-text ${formDialogData.dialogId}-dialog-lowerText`,
           data: formDialogData,
           ...defaultFormDialogStyle,
         });
@@ -108,11 +111,14 @@ describe('FormlyFormDialogService', () => {
           maxWidth: '200px',
           maxHeight: '60vh',
           disableClose: true,
+          ariaModal: true,
         };
 
         const openSpy = spyOn(matDialog, 'open').and.returnValue(mockDialogRef);
         service.showFormlyFormDialog(formDialogData, customFormDialogStyle);
         expect(openSpy).toHaveBeenCalledWith(FormlyFormDialogComponent, {
+          ariaLabelledBy: `${formDialogData.dialogId}-dialog-header`,
+          ariaDescribedBy: `${formDialogData.dialogId}-dialog-text ${formDialogData.dialogId}-dialog-lowerText`,
           data: formDialogData,
           ...customFormDialogStyle,
         });
