@@ -15,6 +15,7 @@
     find details in the "Readme" file.
  */
 
+import { HttpErrorResponse } from '@angular/common/http';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
@@ -32,7 +33,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AppConstants } from '../shared/app-constants';
 import { InfoBannerSectionComponent } from '../info-banner-section/info-banner-section.component';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
-import { FormlyFormDialogService } from '../services/formly-form-dialog.service';
+import { FormlyFormDialogProps, FormlyFormDialogService } from '../services/formly-form-dialog.service';
 import { AccessibleTextComponent } from '../shared/components/accessible-text/accessible-text.component';
 
 describe('Navbar Test', () => {
@@ -687,84 +688,175 @@ describe('Navbar Test', () => {
         authService.getSPUId = () => 'spu-123';
         const formlyFormDialogService = fixture.point.injector.get(FormlyFormDialogService);
         const showFormDialogSpy = spyOn(formlyFormDialogService, 'showFormlyFormDialog');
-        const processSpy = spyOn<any>(component, 'processRegistration');
+        const handleRegistrationSuccessSpy = spyOn<any>(component, 'handleRegistrationSuccess');
         component.openRegisterDialog();
 
         expect(showFormDialogSpy).toHaveBeenCalledTimes(1);
         expect(showFormDialogSpy.calls.first().args[0].title).toContain('Zugang bereits freigeschaltet');
-        expect(processSpy).not.toHaveBeenCalled();
+        expect(handleRegistrationSuccessSpy).not.toHaveBeenCalled();
       });
 
-      it('should show "Freischaltung fehlgeschlagen" dialog when requestSurveillanceAccess fails', () => {
-        const formResult = { surveillanceProgramUserId: 'abc', zipCode: '12345' };
-        const authService = fixture.point.injector.get(AuthService) as any;
-        authService.getSPUId = () => undefined;
-        const messageDialogService = fixture.point.injector.get(MessageDialogService);
-        const formlyFormDialogService = fixture.point.injector.get(FormlyFormDialogService);
-        const showFormDialogSpy = spyOn(formlyFormDialogService, 'showFormlyFormDialog').and.returnValue(of(formResult as unknown as string | undefined));
-        const requestSurveillanceAccessSpy = spyOn<any>(component, 'requestSurveillanceAccess').and.returnValue(throwError(() => new Error('request failed')));
-        spyOn(messageDialogService, 'closeSpinnerDialog');
-
-        component.openRegisterDialog();
-        expect(requestSurveillanceAccessSpy).toHaveBeenCalledTimes(1);
-        expect(requestSurveillanceAccessSpy).toHaveBeenCalledWith(formResult);
-        expect(showFormDialogSpy).toHaveBeenCalledWith(jasmine.objectContaining({ title: 'Freischaltung fehlgeschlagen' }));
-        expect(messageDialogService.closeSpinnerDialog).toHaveBeenCalled();
-      });
-
-      it('should open register form and process registration on confirm', () => {
+      it('should open register form and call handleRegistrationSuccess on confirm', () => {
         const result = { surveillanceProgramUserId: 'id', zipCode: '12345' };
         const authService = fixture.point.injector.get(AuthService) as any;
         authService.getSPUId = () => undefined;
         const formlyFormDialogService = fixture.point.injector.get(FormlyFormDialogService);
         const showFormDialogSpy = spyOn(formlyFormDialogService, 'showFormlyFormDialog').and.returnValue(of(result as unknown as string | undefined));
-        const processSpy = spyOn<any>(component, 'processRegistration');
+        const handleRegistrationSuccessSpy = spyOn<any>(component, 'handleRegistrationSuccess');
         component.openRegisterDialog();
 
         expect(showFormDialogSpy).toHaveBeenCalledTimes(1);
         expect(showFormDialogSpy.calls.first().args[0].title).toContain('Surveillance-System-Zugang freischalten');
-        expect(processSpy).toHaveBeenCalledWith(result);
+        expect(handleRegistrationSuccessSpy).toHaveBeenCalledWith(result);
       });
 
-      it('should show "Token-Refresh fehlgeschlagen" dialog when forceRefreshSession fails after successful registration', () => {
+      it('should show success dialog when forceRefreshSession succeeds after registration', () => {
         const formResult = { surveillanceProgramUserId: 'abc', zipCode: '12345' };
         const authService = fixture.point.injector.get(AuthService) as any;
-        authService.getSPUId = () => undefined;
-        const messageDialogService = fixture.point.injector.get(MessageDialogService);
+        // Initially no SPU ID, then after registration it should return one
+        let spuIdValue: string | undefined = undefined;
+        authService.getSPUId = () => spuIdValue;
         const formlyFormDialogService = fixture.point.injector.get(FormlyFormDialogService);
 
         let callCount = 0;
         const showFormDialogSpy = spyOn(formlyFormDialogService, 'showFormlyFormDialog').and.callFake(() => {
           callCount++;
-          // first call: registration form → return filled form data
-          if (callCount === 1) return of(formResult as unknown as string | undefined);
-          // second call: info dialog (showInfoDialog) → return value is ignored
+          if (callCount === 1) {
+            // After registration form is submitted, SPU ID becomes available
+            spuIdValue = 'spu-123';
+            return of(formResult as unknown as string | undefined);
+          }
           return of(undefined as unknown as string | undefined);
         });
-        spyOn(messageDialogService, 'showSpinnerDialog');
-        spyOn(messageDialogService, 'closeSpinnerDialog');
+
+        const oidcService = fixture.point.injector.get(OidcSecurityService);
+        spyOn(oidcService, 'forceRefreshSession').and.returnValue(of({} as any));
+
+        component.openRegisterDialog();
+
+        expect(showFormDialogSpy).toHaveBeenCalledWith(jasmine.objectContaining({ title: 'Freischaltung erfolgreich' }));
+      });
+
+      it('should show partial success dialog when forceRefreshSession fails after registration', () => {
+        const formResult = { surveillanceProgramUserId: 'abc', zipCode: '12345' };
+        const authService = fixture.point.injector.get(AuthService) as any;
+        authService.getSPUId = () => undefined;
+        const formlyFormDialogService = fixture.point.injector.get(FormlyFormDialogService);
+
+        let callCount = 0;
+        const showFormDialogSpy = spyOn(formlyFormDialogService, 'showFormlyFormDialog').and.callFake(() => {
+          callCount++;
+          if (callCount === 1) return of(formResult as unknown as string | undefined);
+          return of(undefined as unknown as string | undefined);
+        });
 
         const oidcService = fixture.point.injector.get(OidcSecurityService);
         spyOn(oidcService, 'forceRefreshSession').and.returnValue(throwError(() => new Error('refresh failed')));
 
-        spyOn<any>(component, 'requestSurveillanceAccess').and.returnValue(of({}));
-
         component.openRegisterDialog();
 
-        // When token refresh fails after successful registration, component shows partial success dialog
         expect(showFormDialogSpy).toHaveBeenCalledWith(jasmine.objectContaining({ title: 'Freischaltung erfolgreich' }));
-        expect(messageDialogService.closeSpinnerDialog).toHaveBeenCalled();
       });
 
-      it('should not process registration when dialog is cancelled', () => {
+      it('should not call handleRegistrationSuccess when dialog is cancelled', () => {
         const authService = fixture.point.injector.get(AuthService) as any;
         authService.getSPUId = () => undefined;
         const formlyFormDialogService = fixture.point.injector.get(FormlyFormDialogService);
         spyOn(formlyFormDialogService, 'showFormlyFormDialog').and.returnValue(defer(() => of(undefined as unknown as string | undefined)));
-        const processSpy = spyOn<any>(component, 'processRegistration');
+        const handleRegistrationSuccessSpy = spyOn<any>(component, 'handleRegistrationSuccess');
         component.openRegisterDialog();
 
-        expect(processSpy).not.toHaveBeenCalled();
+        expect(handleRegistrationSuccessSpy).not.toHaveBeenCalled();
+      });
+
+      it('should set form errors when requestSurveillanceAccess returns 401', async () => {
+        const authService = fixture.point.injector.get(AuthService) as any;
+        authService.getSPUId = () => undefined;
+        authService.getEncodedToken = () => 'test-token';
+        const formlyFormDialogService = fixture.point.injector.get(FormlyFormDialogService);
+
+        let capturedConfig: FormlyFormDialogProps | undefined;
+        spyOn(formlyFormDialogService, 'showFormlyFormDialog').and.callFake((config: FormlyFormDialogProps) => {
+          capturedConfig = config;
+          return of(undefined as unknown as string | undefined);
+        });
+
+        spyOn<any>(component, 'requestSurveillanceAccess').and.returnValue(
+          throwError(() => new HttpErrorResponse({ status: 401, statusText: 'Unauthorized' }))
+        );
+
+        component.openRegisterDialog();
+
+        expect(capturedConfig).toBeDefined();
+        expect(capturedConfig!.submitValidation).toBeDefined();
+
+        const testData = { surveillanceProgramUserId: 'test-id', zipCode: '12345' };
+        const mockFormGroup = {
+          controls: {
+            surveillanceProgramUserId: { setErrors: jasmine.createSpy('setErrors') },
+            zipCode: { setErrors: jasmine.createSpy('setErrors') },
+          },
+        };
+        const result = await capturedConfig!.submitValidation!(testData, mockFormGroup as any);
+
+        expect(result).toBeFalse();
+        expect(mockFormGroup.controls.surveillanceProgramUserId.setErrors).toHaveBeenCalledWith({ submitValidation: true });
+        expect(mockFormGroup.controls.zipCode.setErrors).toHaveBeenCalledWith({ submitValidation: true });
+      });
+
+      it('should close dialog and show technical error when requestSurveillanceAccess returns 500', async () => {
+        const authService = fixture.point.injector.get(AuthService) as any;
+        authService.getSPUId = () => undefined;
+        authService.getEncodedToken = () => 'test-token';
+        const formlyFormDialogService = fixture.point.injector.get(FormlyFormDialogService);
+
+        let capturedConfig: FormlyFormDialogProps | undefined;
+        const showFormlyFormDialogSpy = spyOn(formlyFormDialogService, 'showFormlyFormDialog').and.callFake((config: FormlyFormDialogProps) => {
+          capturedConfig = config;
+          return of(undefined as unknown as string | undefined);
+        });
+        const closeDialogSpy = spyOn(formlyFormDialogService, 'closeDialog');
+
+        spyOn<any>(component, 'requestSurveillanceAccess').and.returnValue(
+          throwError(() => new HttpErrorResponse({ status: 500, statusText: 'Internal Server Error' }))
+        );
+
+        component.openRegisterDialog();
+
+        expect(capturedConfig).toBeDefined();
+        expect(capturedConfig!.submitValidation).toBeDefined();
+
+        const testData = { surveillanceProgramUserId: 'test-id', zipCode: '12345' };
+        const result = await capturedConfig!.submitValidation!(testData, {} as any);
+
+        expect(result).toBeFalse();
+        expect(closeDialogSpy).toHaveBeenCalled();
+        expect(showFormlyFormDialogSpy).toHaveBeenCalledWith(jasmine.objectContaining({ title: 'Freischaltung fehlgeschlagen' }));
+      });
+
+      it('should return isValid true when requestSurveillanceAccess succeeds', async () => {
+        const authService = fixture.point.injector.get(AuthService) as any;
+        authService.getSPUId = () => undefined;
+        authService.getEncodedToken = () => 'test-token';
+        const formlyFormDialogService = fixture.point.injector.get(FormlyFormDialogService);
+
+        let capturedConfig: FormlyFormDialogProps | undefined;
+        spyOn(formlyFormDialogService, 'showFormlyFormDialog').and.callFake((config: FormlyFormDialogProps) => {
+          capturedConfig = config;
+          return of(undefined as unknown as string | undefined);
+        });
+
+        spyOn<any>(component, 'requestSurveillanceAccess').and.returnValue(of({ success: true }));
+
+        component.openRegisterDialog();
+
+        expect(capturedConfig).toBeDefined();
+        expect(capturedConfig!.submitValidation).toBeDefined();
+
+        const testData = { surveillanceProgramUserId: 'test-id', zipCode: '12345' };
+        const result = await capturedConfig!.submitValidation!(testData, {} as any);
+
+        expect(result).toBeTrue();
       });
     });
   });

@@ -20,6 +20,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { Observable } from 'rxjs';
 import { FormlyFormDialogComponent } from '../shared/components/formly-form-dialog/formly-form-dialog.component';
+import { FormGroup } from '@angular/forms';
 
 export interface DialogStyle {
   height?: string;
@@ -39,6 +40,8 @@ export interface FormlyFormDialogProps {
   showAcceptButton?: boolean;
   titleIcon?: string;
   titleIconColor?: string;
+  submitValidation?: (model: Record<string, unknown>, form: FormGroup) => Promise<boolean>;
+  errorNamesToCleanOnChange?: string[];
 }
 
 export interface InputField extends FormlyFieldConfig {
@@ -57,12 +60,15 @@ export class FormlyFormDialogService {
       return this.dialogRef.afterClosed();
     }
     this.dialogRef = this.matDialog.open(FormlyFormDialogComponent, {
+      ariaLabelledBy: `${data.dialogId}-dialog-header`,
+      ariaDescribedBy: `${data.dialogId}-dialog-text ${data.dialogId}-dialog-lowerText`,
       data: data,
       height: style?.height ?? 'auto',
       maxHeight: style?.maxHeight ?? this.maxModalHeight,
       width: style?.width ?? '610px',
       maxWidth: this.calculateMax('610px', style?.width, style?.maxWidth),
       disableClose: true,
+      ariaModal: true,
     });
     return this.dialogRef.afterClosed();
   }

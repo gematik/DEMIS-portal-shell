@@ -4,16 +4,14 @@
 
 <ng-template #cancelButtonTpl let-buttonIdPostfix="idPostfix">
   <button id="{{ dialogId }}-{{ buttonIdPostfix }}-back" mat-button class="btn color style"
-    [class.dark--color]="!showAcceptButton"
-    (click)="abort()">
+    [class.dark--color]="!showAcceptButton" (click)="abort()">
     {{ cancelButtonText || 'Zurück' }}
   </button>
 </ng-template>
 
 <ng-template #acceptButtonTpl let-buttonIdPostfix="idPostfix">
   <button id="{{ dialogId }}-{{ buttonIdPostfix }}-continue" mat-button class="btn style dark--color"
-    [disabled]="nextButtonDisabled()"
-    (click)="proceed()">
+    [disabled]="nextButtonDisabled()" (click)="proceed()">
     {{ acceptButtonText || 'Weiter' }}
   </button>
 </ng-template>
@@ -27,16 +25,16 @@
 </h1>
 
 <mat-dialog-content id="{{ dialogId }}-dialog-content" class="gem-demis-formly-form-dialog-content">
-  <p id="{{ dialogId }}-dialog-text" class="dialog-text" [innerHTML]="preFormText"></p>
+  <section id="{{ dialogId }}-dialog-text" class="dialog-text" [innerHTML]="preFormText"></section>
   <form [formGroup]="form">
     <formly-form [form]="form" [model]="model" [fields]="formlyFieldConfig" [options]="options" />
   </form>
-  <p id="{{ dialogId }}-dialog-lowerText" [innerHTML]="postFormText"></p>
+  <section id="{{ dialogId }}-dialog-lowerText" [innerHTML]="postFormText"></section>
 </mat-dialog-content>
 
 <mat-dialog-actions class="button-container">
-  <ng-container *ngTemplateOutlet="cancelButtonTpl; context: { idPostfix: '' }" />
   @if(showAcceptButton) {
     <ng-container *ngTemplateOutlet="acceptButtonTpl; context: { idPostfix: '' }" />
   }
+  <ng-container *ngTemplateOutlet="cancelButtonTpl; context: { idPostfix: '' }" />
 </mat-dialog-actions>

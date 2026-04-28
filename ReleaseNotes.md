@@ -2,6 +2,10 @@
 
 # Release portal-shell
 
+## Release 1.7.1
+- Improved error handling for request access to surveillance programs
+- Accessibility for request access to surveillance programs dialog improved
+
 ## Release 1.7.0
 - Updated NGINX-Base-Image to 1.30.0
 - Added § 7.3 follow-up notification tiles and routing (FEATURE_FLAG_FOLLOW_UP_7_3)
@@ -19,6 +23,8 @@
 - Added panel for ARE (FEATURE_FLAG_PORTAL_ARE_ENABLED)
 - Removed role disease-notification-anonymous-sender
 - Updated @gematik/demis-portal-core-library to 3.1.0
+- Changed error handling on request surveillance access
+- Improved styling on request surveillance access
 
 ## Release 1.5.1
 
