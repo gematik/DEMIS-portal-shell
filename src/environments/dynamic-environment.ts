@@ -43,6 +43,7 @@ export interface FeatureFlags {
   FEATURE_FLAG_ANONYMOUS_NOTIFICATION?: boolean;
   FEATURE_FLAG_PORTAL_ACCESSIBILITY?: boolean;
   FEATURE_FLAG_FOOTER_LINKS_CORRECTION?: boolean;
+  FEATURE_FLAG_PORTAL_FOOTER_LOGO?: boolean;
 }
 
 interface GatewayPaths {

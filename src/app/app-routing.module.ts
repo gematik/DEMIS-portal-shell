@@ -172,7 +172,7 @@ const protectedRoutes: Routes = [
   {
     path: AppConstants.PathSegments.ARE_NOTIFICATION,
     canActivate: [kcAuthGuard, roleGuard],
-    data: { role: AppConstants.Roles.IGS_NOTIFICATION_DATA_SENDER },
+    data: { role: AppConstants.Roles.ARE_NOTIFICATION_SENDER },
     children: [
       {
         path: '**',

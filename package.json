@@ -1,6 +1,6 @@
 {
   "name": "portal-shell",
-  "version": "1.7.1-snapshot",
+  "version": "1.7.2-snapshot",
   "overrides": {
     "ng-mocks": {
       "@angular/common": "$@angular/common",

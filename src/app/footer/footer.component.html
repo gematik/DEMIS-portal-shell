@@ -5,9 +5,14 @@
         <img ngSrc="assets/images/RKI-logo.svg" [priority]="true" alt="Robert Koch Institut" height="48"
              width="192"/>
       </div>
+      @if (FEATURE_FLAG_PORTAL_FOOTER_LOGO()) {
+        <div class="gematik-logo">
+          <img ngSrc="assets/images/gematik-logo.png" [priority]="true" alt="gematik" height="38" width="205"/>
+        </div>
+      }
       <div class="EU-logo">
         <img ngSrc="assets/images/EU-logo.jpg" [priority]="true" alt="Finanziert von der Europäischen Union"
-             height="58" width="224"/>
+             height="38" width="181"/>
       </div>
     </div>
 

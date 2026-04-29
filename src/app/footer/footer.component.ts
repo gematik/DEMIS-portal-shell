@@ -17,7 +17,7 @@
 
 import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
-import { FEATURE_FLAG_FOOTER_LINKS_CORRECTION, FEATURE_FLAG_PORTAL_ACCESSIBILITY } from '../shared/app-constants';
+import { FEATURE_FLAG_FOOTER_LINKS_CORRECTION, FEATURE_FLAG_PORTAL_ACCESSIBILITY, FEATURE_FLAG_PORTAL_FOOTER_LOGO } from '../shared/app-constants';
 import { AuthService } from '../services';
 import { Subject, takeUntil } from 'rxjs';
 
@@ -34,6 +34,7 @@ export class FooterComponent implements OnInit, OnDestroy {
 
   readonly FEATURE_FLAG_PORTAL_ACCESSIBILITY = FEATURE_FLAG_PORTAL_ACCESSIBILITY;
   readonly FEATURE_FLAG_FOOTER_LINKS_CORRECTION = FEATURE_FLAG_FOOTER_LINKS_CORRECTION;
+  readonly FEATURE_FLAG_PORTAL_FOOTER_LOGO = FEATURE_FLAG_PORTAL_FOOTER_LOGO;
 
   readonly userInfo = signal({ isAuthenticated: false, username: '' });
   readonly isAuthenticated = computed(() => this.userInfo().isAuthenticated);
