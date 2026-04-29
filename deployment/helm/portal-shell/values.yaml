@@ -53,6 +53,7 @@ config:
     FEATURE_FLAG_SURVEILLANCE_PROGRAM_ADMISSION_ENABLED: false
     FEATURE_FLAG_PORTAL_ARE_ENABLED: false
     FEATURE_FLAG_FOLLOW_UP_7_3: false
+    FEATURE_FLAG_PORTAL_FOOTER_LOGO: false
   ## Information Banners to be shown above the navigation bar in the portal
   ##
   ## E.g.
