@@ -137,7 +137,7 @@ export namespace AppConstants {
     DISEASE_NON_NOMINAL_FOLLOW_UP = 'Ärztl. Ergänzungsmeldung eines Erregernachweises gemäß § 7 Abs. 3 IfSG ohne Angabe von Personendaten, aber mit Meldungsverweis',
     DISEASE_FOLLOW_UP = 'Folgemeldung eines Nachweises von Infektionskrankheiten gemäß § 6 IfSG ohne Angabe von Personendaten',
     SEQUENCE_NOTIFICATION = 'Übermittlung von Sequenz- und Sequenzmetadaten für die Integrierte Genomische Surveillance gemäß § 13 Abs. 3 IfSG',
-    ARE_NOTIFICATION = 'Meldung im Rahmen der syndromischen ARE-Surveillance an die Arbeitsgemeischaft Influenza (AGI) des Robert Koch-Instituts (RKI)',
+    ARE_NOTIFICATION = 'Formular zur Übermittlung von Probenbegleitschein-Informationen im Rahmen der virologischen ARE-Surveillance an das Nationale Referenzzentrum (NRZ) für Influenzaviren.',
     PATHOGEN_ANONYMOUS = 'Meldung eines Erregernachweises einer anonymen Testung gemäß § 7 Abs. 3 IfSG: C. trachomatis (L1-L3), Echinococcus spp., HIV, N. gonorrhoeae, T. gondii & T. pallidum',
   }
 
@@ -153,7 +153,7 @@ export namespace AppConstants {
     export const PATHOGEN_NON_NOMINAL = ['Erregernachweis melden (Erzeugung neuer MeldungsID)'];
     export const PATHOGEN_NON_NOMINAL_FOLLOW_UP = ['Erregernachweis melden (Nutzung bekannter MeldungsID)'];
     export const SEQUENCE_NOTIFICATION_NEW = ['Integrierte Genomische Surveillance', '(IGS)'];
-    export const ARE_NOTIFICATION = ['Akute respiratorische Erkrankung Surveillance', '(ARE)'];
+    export const ARE_NOTIFICATION = ['Virologische Surveillance akuter respiratorischer Erkrankungen'];
     export const FOLLOW_UP = ['Folgemeldung'];
     export const SEQUENCE_NOTIFICATION = ['IGS'];
     export const ANONYMOUS = ['Meldung einer anonymen Testung gemäß § 7 Abs. 3 IfSG'];
