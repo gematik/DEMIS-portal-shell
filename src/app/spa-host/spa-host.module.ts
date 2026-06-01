@@ -30,7 +30,6 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [SpaHostComponent],
-  imports: [CommonModule, RouterModule.forChild(routes)],
+  imports: [CommonModule, RouterModule.forChild(routes), SpaHostComponent],
 })
 export class SpaHostModule {}

@@ -16,11 +16,13 @@
  */
 
 import { Component } from '@angular/core';
+import { MaxHeightContentContainerComponent } from '@gematik/demis-portal-core-library';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-site-notice',
   templateUrl: './imprint.component.html',
   styleUrls: ['./imprint.component.scss'],
-  standalone: false,
+  imports: [MaxHeightContentContainerComponent, FooterComponent],
 })
 export class ImprintComponent {}

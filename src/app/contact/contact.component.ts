@@ -16,11 +16,13 @@
  */
 
 import { Component } from '@angular/core';
+import { MaxHeightContentContainerComponent } from '@gematik/demis-portal-core-library';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.scss'],
-  standalone: false,
+  imports: [MaxHeightContentContainerComponent, FooterComponent],
 })
 export class ContactComponent {}

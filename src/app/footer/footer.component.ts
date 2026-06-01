@@ -16,7 +16,7 @@
  */
 
 import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { NgOptimizedImage } from '@angular/common';
 import { FEATURE_FLAG_FOOTER_LINKS_CORRECTION, FEATURE_FLAG_PORTAL_ACCESSIBILITY, FEATURE_FLAG_PORTAL_FOOTER_LOGO } from '../shared/app-constants';
 import { AuthService } from '../services';
 import { Subject, takeUntil } from 'rxjs';
@@ -26,7 +26,7 @@ import { Subject, takeUntil } from 'rxjs';
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss'],
   standalone: true,
-  imports: [CommonModule, NgOptimizedImage],
+  imports: [NgOptimizedImage],
 })
 export class FooterComponent implements OnInit, OnDestroy {
   private readonly authService = inject(AuthService);

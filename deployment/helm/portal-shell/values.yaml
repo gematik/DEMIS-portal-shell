@@ -46,7 +46,6 @@ config:
   featureFlags:
     FEATURE_FLAG_NON_NOMINAL_NOTIFICATION: false
     FEATURE_FLAG_PORTAL_HEADER_FOOTER: false
-    FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y: false
     FEATURE_FLAG_ANONYMOUS_NOTIFICATION: false
     FEATURE_FLAG_PORTAL_ACCESSIBILITY: false
     FEATURE_FLAG_FOOTER_LINKS_CORRECTION: false
@@ -54,6 +53,8 @@ config:
     FEATURE_FLAG_PORTAL_ARE_ENABLED: false
     FEATURE_FLAG_FOLLOW_UP_7_3: false
     FEATURE_FLAG_PORTAL_FOOTER_LOGO: false
+    FEATURE_FLAG_PRIVACY_POLICY_TEXT_CHANGE: false
+    FEATURE_FLAG_PORTAL_LINK_SURVSTAT: false
   ## Information Banners to be shown above the navigation bar in the portal
   ##
   ## E.g.
@@ -77,7 +78,7 @@ config:
   stageIndicator: { }
   ngxLoggerConfig:
     level: 1
-    disableConsoleLogging: false
+    disableConsoleLogging: true
   importMap:
     notification-portal-mf-bed-occupancy: ../../portal/bedoccupancy/main.js
     notification-portal-mf-disease: ../../portal/disease/main.js

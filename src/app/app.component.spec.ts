@@ -27,7 +27,6 @@ import { BehaviorSubject, of } from 'rxjs';
 import { TestSetup } from '../test/test-setup';
 import { ComponentInputs } from '../test/utils/input-signal-types';
 import { AppComponent } from './app.component';
-import { DemisAppModule } from './app.module';
 import { NavbarComponent } from './navbar/navbar.component';
 import { AuthService } from './services';
 
@@ -59,7 +58,6 @@ describe('AppComponent', () => {
 
   beforeEach(() =>
     MockBuilder(AppComponent)
-      .keep(DemisAppModule)
       .replace(MaxHeightContentContainerComponent, MockMaxHeightContentContainerComponent)
       .mock(NavbarComponent)
       .mock(AuthService)

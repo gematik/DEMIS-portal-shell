@@ -41,10 +41,6 @@ export function FEATURE_FLAG_PORTAL_ARE_ENABLED(): boolean {
   return environment.featureFlags?.FEATURE_FLAG_PORTAL_ARE_ENABLED ?? false;
 }
 
-export function FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y(): boolean {
-  return environment.featureFlags?.FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y ?? false;
-}
-
 export function FEATURE_FLAG_PORTAL_ACCESSIBILITY(): boolean {
   return environment.featureFlags?.FEATURE_FLAG_PORTAL_ACCESSIBILITY ?? false;
 }
@@ -55,6 +51,14 @@ export function FEATURE_FLAG_FOOTER_LINKS_CORRECTION(): boolean {
 
 export function FEATURE_FLAG_PORTAL_FOOTER_LOGO(): boolean {
   return environment.featureFlags?.FEATURE_FLAG_PORTAL_FOOTER_LOGO ?? false;
+}
+
+export function FEATURE_FLAG_PRIVACY_POLICY_TEXT_CHANGE(): boolean {
+  return environment.featureFlags?.FEATURE_FLAG_PRIVACY_POLICY_TEXT_CHANGE ?? false;
+}
+
+export function FEATURE_FLAG_PORTAL_LINK_SURVSTAT(): boolean {
+  return environment.featureFlags?.FEATURE_FLAG_PORTAL_LINK_SURVSTAT ?? false;
 }
 
 export namespace AppConstants {
@@ -105,6 +109,7 @@ export namespace AppConstants {
     DATA_ANALYSIS = 'https://go.gematik.de/demisanalyse',
     DEMIS_WDB = 'https://wiki.gematik.de/display/DSKB',
     SUPPORT_FAQ = 'https://go.gematik.de/demisfaq',
+    SURVSTAT = 'https://go.gematik.de/demis-meldedaten',
   }
 
   export enum Labels {
@@ -119,6 +124,7 @@ export namespace AppConstants {
     SUPPORT_QUESTIONS_LINK = 'Supportanfragen', //can be removed when FEATURE_FLAG_PORTAL_HEADER_FOOTER is removed
     SUPPORT_FAQ_LINK = 'FAQ',
     CONTACT_SUPPORT = 'Kontakt/Support',
+    SURVSTAT_LINK = 'Meldedaten abfragen',
   }
 
   export enum InfoTexts {

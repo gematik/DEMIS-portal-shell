@@ -23,8 +23,7 @@ import { NGXLogger } from 'ngx-logger';
 import { BehaviorSubject, of, Subject, Subscription } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { logger } from 'src/app/shared/models/ts-logger';
-import { unprotectedRoutes } from '../app-routing.module';
-import { AppConstants } from '../shared/app-constants';
+import { unprotectedRoutePaths } from '../shared/unprotected-routes';
 
 interface RealmAccess {
   roles: string[];
@@ -53,7 +52,7 @@ export class AuthService {
   private readonly jwtHelperService = new JwtHelperService();
 
   private checkAuthSubscription: Subscription;
-  unprotectedURLs: string[] = [...unprotectedRoutes.filter(p => !!p.path && p.path !== AppConstants.PathSegments.WELCOME).map(r => r.path as string)];
+  unprotectedURLs: string[] = [...unprotectedRoutePaths];
 
   constructor() {
     const publicEventsService = inject(PublicEventsService);

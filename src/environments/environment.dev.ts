@@ -24,7 +24,6 @@ class Environment extends DynamicEnvironment {
     super();
     this.local = true;
     this.pathToEnvironment = 'environment.json';
-    this.bypassComfortClient = false;
   }
 }
 
