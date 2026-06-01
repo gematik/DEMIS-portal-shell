@@ -15,27 +15,17 @@
     find details in the "Readme" file.
  */
 
-import { Mock, MockBuilder, MockedComponentFixture, MockRender } from 'ng-mocks';
-import { AppComponent } from 'src/app/app.component';
-import { HarnessLoader } from '@angular/cdk/testing';
-import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { AppRoutingModule } from 'src/app/app-routing.module';
-import { DemisAppModule } from 'src/app/app.module';
+import { AppConstants } from './app-constants';
 
-describe('Shell - Integration Tests', () => {
-  let component: AppComponent;
-  let fixture: MockedComponentFixture<AppComponent>;
-  let loader: HarnessLoader;
-
-  beforeEach(() => MockBuilder([AppComponent, DemisAppModule, AppRoutingModule]));
-
-  beforeEach(() => {
-    fixture = MockRender(AppComponent);
-    component = fixture.point.componentInstance;
-    loader = TestbedHarnessEnvironment.loader(fixture);
-  });
-
-  it('should create the app', () => {
-    expect(component).toBeTruthy();
-  });
-});
+/**
+ * Paths of routes that do not require authentication.
+ * Extracted to avoid circular dependency between app-routing.module and AuthService.
+ */
+export const unprotectedRoutePaths: string[] = [
+  AppConstants.PathSegments.ABOUT,
+  AppConstants.PathSegments.PRIVACY_POLICY,
+  AppConstants.PathSegments.SITE_NOTICE,
+  AppConstants.PathSegments.IMPRINT,
+  AppConstants.PathSegments.ACCESSIBILITY_STATEMENT,
+  AppConstants.PathSegments.CONTACT,
+];

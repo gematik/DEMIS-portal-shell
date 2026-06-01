@@ -21,7 +21,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
+import { provideLocationMocks } from '@angular/common/testing';
 import { MockBuilder, MockedComponentFixture, MockInstance, MockProvider, MockRender, MockService, ngMocks } from 'ng-mocks';
 import { BehaviorSubject, defer, of, ReplaySubject, Subject, throwError } from 'rxjs';
 import { MessageDialogService } from '@gematik/demis-portal-core-library';
@@ -74,7 +75,9 @@ describe('Navbar Test', () => {
 
   beforeEach(() => {
     return MockBuilder(NavbarComponent)
-      .keep(RouterModule)
+      .keep(RouterLink)
+      .keep(RouterLinkActive)
+      .provide(provideLocationMocks())
       .keep(MatTabsModule)
       .keep(MatToolbarModule)
       .keep(MatDividerModule)
@@ -113,7 +116,8 @@ describe('Navbar Test', () => {
         spyOn(fixture.point.injector.get(AuthService), 'checkRole').and.callFake(role => parameter.roles.includes(role as AppConstants.Roles));
         ngMocks.flushTestBed();
         createComponent();
-        const link = getElementbyId(parameter.link);
+        fixture.detectChanges();
+        const link = getElementbyId(`${parameter.link}`);
         expect(!!link).toBeTruthy();
       });
 
@@ -125,7 +129,8 @@ describe('Navbar Test', () => {
           spyOn(fixture.point.injector.get(AuthService), 'checkRole').and.callFake(() => false);
           ngMocks.flushTestBed();
           createComponent();
-          const link = getElementbyId(parameter.link);
+          fixture.detectChanges();
+          const link = getElementbyId(`${parameter.link}`);
           expect(!!link).toBeFalsy();
         }
       });
@@ -139,6 +144,7 @@ describe('Navbar Test', () => {
         );
         ngMocks.flushTestBed();
         createComponent();
+        fixture.detectChanges();
         const link = getElementbyId(`a-to-sequence-notification`);
         expect(!!link).toBeTruthy();
       });
@@ -679,6 +685,44 @@ describe('Navbar Test', () => {
 
         const actionButton = document.querySelector('#a-to-are-notification') as HTMLElement;
         expect(actionButton).toBeFalsy();
+      });
+
+      it('should show survstat link when FEATURE_FLAG_PORTAL_LINK_SURVSTAT is enabled', () => {
+        (window as any)['config'].featureFlags.FEATURE_FLAG_PORTAL_LINK_SURVSTAT = true;
+
+        const burgerButton = fixture.point.nativeElement.querySelector('#btn-burger-menu-in-navbar');
+        burgerButton.click();
+        fixture.detectChanges();
+
+        const actionButton = document.querySelector('#a-to-survstat') as HTMLElement;
+        expect(actionButton).toBeTruthy();
+      });
+
+      it('should not display survstat link when FEATURE_FLAG_PORTAL_LINK_SURVSTAT is disabled', () => {
+        (window as any)['config'].featureFlags.FEATURE_FLAG_PORTAL_LINK_SURVSTAT = false;
+
+        const burgerButton = fixture.point.nativeElement.querySelector('#btn-burger-menu-in-navbar');
+        burgerButton.click();
+        fixture.detectChanges();
+
+        const actionButton = document.querySelector('#a-to-survstat') as HTMLElement;
+        expect(actionButton).toBeFalsy();
+      });
+
+      it('should open survstat link in new tab when clicked', () => {
+        (window as any)['config'].featureFlags.FEATURE_FLAG_PORTAL_LINK_SURVSTAT = true;
+        const openSpy = spyOn(window, 'open');
+
+        const burgerButton = fixture.point.nativeElement.querySelector('#btn-burger-menu-in-navbar');
+        burgerButton.click();
+        fixture.detectChanges();
+
+        const actionButton = document.querySelector('#a-to-survstat') as HTMLElement;
+        expect(actionButton).toBeTruthy();
+        actionButton.click();
+        fixture.detectChanges();
+
+        expect(openSpy).toHaveBeenCalledWith('https://go.gematik.de/demis-meldedaten', '_blank');
       });
     });
 

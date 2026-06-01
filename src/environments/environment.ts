@@ -24,7 +24,6 @@ class Environment extends DynamicEnvironment {
   constructor() {
     super();
     this.local = false;
-    this.bypassComfortClient = false;
   }
 }
 

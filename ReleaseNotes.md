@@ -2,9 +2,26 @@
 
 # Release portal-shell
 
+## Release 1.8.0
+
+- Added new menu link to RKI survstat in burger menu (FEATURE_FLAG_PORTAL_LINK_SURVSTAT)
+- Changed text for ARE panel
+
+## Release 1.7.3
+
+- Change of commissioner text on privacy policy page (FEATURE_FLAG_PORTAL_PRIVACY_POLICY)
+- Added correctly configurable logging
+- Updated @gematik/demis-portal-core-library to 4.2.0
+- Migrated components to standalone
+- Removed @angular/platform-browser-dynamic
+- Font fix for non-expandable tile buttons
+- Removed FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y
+- Fix redundant double <main>
+- Changed error and hint texts for request access to surveillance-systems
+
 ## Release 1.7.2
 
-- Add gematik logo in footer (FEATURE_FLAG_PORTAL_ FOOTER_LOGO)
+- Added gematik logo in footer (FEATURE_FLAG_PORTAL_FOOTER_LOGO)
 - Fixed role check for ARE tile
 
 ## Release 1.7.1

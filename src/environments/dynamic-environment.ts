@@ -16,8 +16,9 @@
  */
 
 import { HttpHeaders } from '@angular/common/http';
-import { NgxLoggerLevel } from 'ngx-logger';
 import { AppConstants } from 'src/app/shared/app-constants';
+import { isDevMode } from '@angular/core';
+import { LOGGER_CONFIG_FOR_DEV, LOGGER_CONFIG_FOR_PROD } from '@gematik/demis-portal-core-library';
 
 declare let window: any;
 
@@ -44,6 +45,8 @@ export interface FeatureFlags {
   FEATURE_FLAG_PORTAL_ACCESSIBILITY?: boolean;
   FEATURE_FLAG_FOOTER_LINKS_CORRECTION?: boolean;
   FEATURE_FLAG_PORTAL_FOOTER_LOGO?: boolean;
+  FEATURE_FLAG_PRIVACY_POLICY_TEXT_CHANGE?: boolean;
+  FEATURE_FLAG_PORTAL_LINK_SURVSTAT?: boolean;
 }
 
 interface GatewayPaths {
@@ -60,7 +63,7 @@ interface IgsPaths {
   sequenceNotification: string;
 }
 
-export interface GatewayConfiguration {
+export interface Configuration {
   production: boolean;
   pathToGateway: string;
   gatewayPaths: GatewayPaths;
@@ -154,7 +157,6 @@ export class DynamicEnvironment {
   public headers: HttpHeaders;
   public local: boolean = false;
   public pathToEnvironment: string = 'environment.json';
-  public bypassComfortClient: boolean = false;
 
   constructor() {
     this.headers = new HttpHeaders({
@@ -162,7 +164,7 @@ export class DynamicEnvironment {
     });
   }
 
-  private get config(): GatewayConfiguration {
+  private get config(): Configuration {
     return window.config;
   }
 
@@ -174,20 +176,24 @@ export class DynamicEnvironment {
     return !!this.config?.production;
   }
 
+  public get defaultLoggerConfiguration() {
+    return isDevMode() ? LOGGER_CONFIG_FOR_DEV : LOGGER_CONFIG_FOR_PROD;
+  }
+
+  /**
+   * Logger is by default disabled (values.yaml)
+   * Locally it is by default enabled (environment.json)
+   *
+   * If values yaml & environment.json do not provide a logger configuration, the default configuration is used,
+   * which is disabled for production and enabled for development.
+   *
+   * To enable or disable it differently on a specific environment, it must be changed via config maps
+   *
+   * Logger config hierarchy:
+   * values.yaml > environment.json > defaultConfig
+   */
   public get ngxLoggerConfig(): NgxLoggerConfig {
-    return this.config?.ngxLoggerConfig ? this.config?.ngxLoggerConfig : this.defaultNgxLoggerConfig;
-  }
-
-  public get defaultNgxLoggerConfig(): NgxLoggerConfig {
-    return {
-      level: NgxLoggerLevel.OFF,
-      disableConsoleLogging: true,
-      serverLogLevel: NgxLoggerLevel.OFF,
-    };
-  }
-
-  public get pathToGateway(): string {
-    return this.config?.pathToGateway;
+    return this.config?.ngxLoggerConfig ? this.config?.ngxLoggerConfig : this.defaultLoggerConfiguration;
   }
 
   public get pathToHospitalization(): string {

@@ -17,7 +17,7 @@
 
 import { Component, inject, input, OnDestroy, OnInit, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { filter, Observable, Subject, takeUntil, firstValueFrom } from 'rxjs';
 import { AuthService, KcConfigService } from 'src/app/services';
@@ -25,6 +25,7 @@ import {
   AppConstants,
   FEATURE_FLAG_PORTAL_ARE_ENABLED,
   FEATURE_FLAG_PORTAL_HEADER_FOOTER,
+  FEATURE_FLAG_PORTAL_LINK_SURVSTAT,
   FEATURE_FLAG_SURVEILLANCE_PROGRAM_ADMISSION_ENABLED,
   isAnonymousNotificationActivated,
   isNonNominalFollowUpNotificationActivated,
@@ -34,12 +35,36 @@ import { environment } from 'src/environments/environment';
 import { PackageJsonService } from '../services/package-json.service';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { FormlyFormDialogProps, FormlyFormDialogService } from '../services/formly-form-dialog.service';
+import { InfoBannerSectionComponent } from '../info-banner-section/info-banner-section.component';
+import { MatToolbar } from '@angular/material/toolbar';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatTabNav, MatTabLink, MatTabNavPanel } from '@angular/material/tabs';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MatIcon } from '@angular/material/icon';
+import { AccessibleTextComponent } from '../shared/components/accessible-text/accessible-text.component';
+import { MatDivider } from '@angular/material/list';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
-  standalone: false,
+  imports: [
+    InfoBannerSectionComponent,
+    MatToolbar,
+    MatButton,
+    RouterLink,
+    MatTabNav,
+    MatTabLink,
+    RouterLinkActive,
+    MatMenuTrigger,
+    MatIcon,
+    MatMenu,
+    MatMenuItem,
+    MatTabNavPanel,
+    MatIconButton,
+    AccessibleTextComponent,
+    MatDivider,
+  ],
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   private readonly formlyFormDialogService = inject(FormlyFormDialogService);
@@ -173,7 +198,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.showInfoDialog(
       'existing-access',
       'Zugang bereits freigeschaltet',
-      `Ihr Zugang zum Surveillance-System ist bereits freigeschaltet.<br><br>Die ID Ihrer verknüpften Organisation lautet: **${spuId}**<br><br>Bei weiteren Fragen melden Sie sich bitte bei der DEMIS Geschäftsstelle des Robert Koch-Instituts: [demis-support@rki.de](mailto:demis-support@rki.de)`,
+      `Ihr Zugang zum Surveillance-System ist bereits freigeschaltet.<br><br>Die ID Ihrer verknüpften Organisation lautet: **${spuId}**<br><br>Bei weiteren Fragen melden Sie sich bitte bei der DEMIS-Geschäftsstelle des Robert Koch-Instituts: [demis-support@rki.de](mailto:demis-support@rki.de)`,
       'check_circle',
       'var(--gem-demis-success-color)'
     );
@@ -186,7 +211,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.showInfoDialog(
           'registration-success',
           'Freischaltung erfolgreich',
-          `Ihre Angaben konnten erfolgreich zugeordnet werden. Sie sollten nun für die hinterlegten Surveillance-Programme freigeschaltet sein.<br><br>Die ID Ihrer verknüpften Organisation lautet: **${this.ssoAuthService.getSPUId()}**<br><br>Bei weiteren Fragen melden Sie sich bitte bei der DEMIS Geschäftsstelle des Robert Koch-Instituts: [demis-support@rki.de](mailto:demis-support@rki.de)`,
+          `Ihre Angaben konnten erfolgreich zugeordnet werden. Sie sollten nun für die hinterlegten Surveillance-Programme freigeschaltet sein.<br><br>Die ID Ihrer verknüpften Organisation lautet: **${this.ssoAuthService.getSPUId()}**<br><br>Bei weiteren Fragen melden Sie sich bitte bei der DEMIS-Geschäftsstelle des Robert Koch-Instituts: [demis-support@rki.de](mailto:demis-support@rki.de)`,
           'check_circle',
           'var(--gem-demis-success-color)'
         );
@@ -195,7 +220,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.showInfoDialog(
           'registration-success-partly',
           'Freischaltung erfolgreich',
-          `Ihre Angaben konnten erfolgreich zugeordnet werden. Bitte melden Sie sich erneut bei DEMIS an, um die entsprechenden Rechte zu erhalten.<br><br>Bei weiteren Fragen melden Sie sich bitte bei der DEMIS Geschäftsstelle des Robert Koch-Instituts: [demis-support@rki.de](mailto:demis-support@rki.de)`,
+          `Ihre Angaben konnten erfolgreich zugeordnet werden.<br><br>Bei weiteren Fragen melden Sie sich bitte bei der DEMIS-Geschäftsstelle des Robert Koch-Instituts: [demis-support@rki.de](mailto:demis-support@rki.de)`,
           'check_circle',
           'var(--gem-demis-success-color)'
         );
@@ -217,7 +242,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       dialogId: 'surveillance-access-registration',
       title: 'Surveillance-System-Zugang freischalten',
       preFormText: `Bitte geben Sie den für Ihre Einrichtung vergebenen **Surveillance-User-Identifikator** und die **Postleitzahl** ein. Dieser wurde Ihnen vom Robert Koch-Institut bereitgestellt. Bei korrekter Eingabe wird Ihr Nutzerkonto mit der Organisation verknüpft und die Berechtigungen für den Zugriff auf das Surveillance-System freigeschaltet.`,
-      postFormText: 'Weitere Informationen finden Sie hier: [zur DEMIS-Wissensdatenbank](https://wiki.gematik.de/x/bATWKw)',
+      postFormText: 'Weitere Informationen finden Sie hier: [DEMIS-Wissensdatenbank](https://wiki.gematik.de/x/bATWKw)',
       cancelButtonText: 'Abbrechen',
       acceptButtonText: 'Freischalten',
       secondTryValidatesAllInputs: true,
@@ -238,7 +263,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
             this.showInfoDialog(
               'technical-error',
               'Freischaltung fehlgeschlagen',
-              `Ihr Zugang zum Surveillance-System konnte nicht freigeschaltet werden. Bitte versuchen Sie es später erneut. Bei anhaltenden Problemen melden Sie sich bitte bei der DEMIS Geschäftsstelle des Robert Koch-Instituts: [demis-support@rki.de](mailto:demis-support@rki.de)`,
+              `Ihr Zugang zum Surveillance-System konnte nicht freigeschaltet werden. Bitte versuchen Sie es später erneut. Bei anhaltenden Problemen melden Sie sich bitte bei der DEMIS-Geschäftsstelle des Robert Koch-Instituts: [demis-support@rki.de](mailto:demis-support@rki.de)`,
               'error',
               'var(--gem-demis-error-color)'
             );
@@ -254,15 +279,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
           props: {
             label: 'Surveillance-User-Identifikator',
             required: true,
-            description: 'Identifikationsnummer im UUID-Format.',
+            description: 'Identifikationsnummer im UUID-Format',
             pattern: '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}',
             attributes: {
-              'aria-label': 'Identifikationsnummer im UUID-Format.',
+              'aria-label': 'Identifikationsnummer im UUID-Format',
             },
           },
           validation: {
             messages: {
-              pattern: 'Ungültiges UUID-Format.',
+              pattern: 'Ungültiges UUID-Format',
               required: 'Surveillance-User-Identifikator ist ein Pflichtfeld.',
               submitValidation: '',
             },
@@ -275,15 +300,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
           props: {
             label: 'Postleitzahl der Einrichtung',
             required: true,
-            description: 'Die Postleitzahl muss aus genau 5 Ziffern bestehen.',
+            description: 'Postleitzahl bestehend aus 5 Ziffern',
             pattern: '[0-9]{5}',
             attributes: {
-              'aria-label': 'Die Postleitzahl muss aus genau 5 Ziffern bestehen.',
+              'aria-label': 'Postleitzahl bestehend aus 5 Ziffern',
             },
           },
           validation: {
             messages: {
-              pattern: 'Die Postleitzahl muss aus genau 5 Ziffern bestehen.',
+              pattern: 'Die Postleitzahl muss aus genau 5 Ziffern bestehen',
               required: 'Postleitzahl der Einrichtung ist ein Pflichtfeld.',
               submitValidation: 'Die Kombination aus Surveillance-User-Identifikator und Postleitzahl ist ungültig.',
             },
@@ -311,4 +336,5 @@ export class NavbarComponent implements OnInit, OnDestroy {
   protected readonly isAnonymousNotificationActivated = isAnonymousNotificationActivated;
   protected readonly FEATURE_FLAG_SURVEILLANCE_PROGRAM_ADMISSION_ENABLED = FEATURE_FLAG_SURVEILLANCE_PROGRAM_ADMISSION_ENABLED;
   protected readonly FEATURE_FLAG_PORTAL_ARE_ENABLED = FEATURE_FLAG_PORTAL_ARE_ENABLED;
+  protected readonly FEATURE_FLAG_PORTAL_LINK_SURVSTAT = FEATURE_FLAG_PORTAL_LINK_SURVSTAT;
 }

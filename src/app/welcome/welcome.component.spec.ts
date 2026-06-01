@@ -15,6 +15,7 @@
     find details in the "Readme" file.
  */
 
+import { NgTemplateOutlet } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MaxHeightContentContainerComponent, MessageDialogService } from '@gematik/demis-portal-core-library';
@@ -25,7 +26,6 @@ import { BehaviorSubject, of, Subject } from 'rxjs';
 import { TestSetup } from '../../test/test-setup';
 import { AuthService } from '../services/auth.service';
 import { AppConstants } from '../shared/app-constants';
-import { EqualHeightService } from '../shared/services/equal-height.service';
 import { WelcomeTileComponent } from '../welcome-tile/welcome-tile.component';
 import { WelcomeComponent } from './welcome.component';
 
@@ -50,8 +50,8 @@ describe('WelcomeComponent', () => {
   beforeEach(() =>
     MockBuilder([WelcomeComponent, WelcomeTileComponent])
       .keep(MaxHeightContentContainerComponent)
+      .keep(NgTemplateOutlet)
       .mock(NGXLogger)
-      .mock(EqualHeightService)
       .mock(MessageDialogService, { error: errorSpy })
       .mock(MatCardModule)
       .mock(MatButtonModule)

@@ -21,7 +21,6 @@ import {
   FEATURE_FLAG_PORTAL_ACCESSIBILITY,
   FEATURE_FLAG_PORTAL_ARE_ENABLED,
   FEATURE_FLAG_PORTAL_HEADER_FOOTER,
-  FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y,
   isAnonymousNotificationActivated,
   isNonNominalFollowUpNotificationActivated,
   isNonNominalNotificationActivated,
@@ -31,8 +30,7 @@ import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/services';
 import { MaxHeightContentContainerComponent, MessageDialogService } from '@gematik/demis-portal-core-library';
 import { NGXLogger } from 'ngx-logger';
-import { CommonModule, NgOptimizedImage } from '@angular/common';
-import { EqualHeightService } from 'src/app/shared/services/equal-height.service';
+import { NgOptimizedImage, NgTemplateOutlet } from '@angular/common';
 import { WelcomeTileComponent } from '../welcome-tile/welcome-tile.component';
 import { FooterComponent } from '../footer/footer.component';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
@@ -99,12 +97,11 @@ export declare type WelcomeTileConfig = {
   selector: 'app-welcome',
   templateUrl: './welcome.component.html',
   styleUrls: ['./welcome.component.scss'],
-  imports: [CommonModule, WelcomeTileComponent, MatButton, MatIcon, NgOptimizedImage, MaxHeightContentContainerComponent, FooterComponent],
+  imports: [WelcomeTileComponent, MatButton, MatIcon, NgOptimizedImage, MaxHeightContentContainerComponent, FooterComponent, NgTemplateOutlet],
 })
 export class WelcomeComponent implements OnInit, OnDestroy {
   private readonly oidcSecurityService = inject(OidcSecurityService);
   private readonly logger = inject(NGXLogger);
-  private readonly equalHeightService = inject(EqualHeightService);
   userInfo = signal<UserInfo>(INITIAL_USER_INFORMATION);
   readonly isAuthenticated = computed(() => this.userInfo().isAuthenticated);
   readonly expandedTileIndex = signal<number | null>(null);
@@ -403,6 +400,5 @@ export class WelcomeComponent implements OnInit, OnDestroy {
   protected readonly isNonNominalFollowUpNotificationActivated = isNonNominalFollowUpNotificationActivated;
   protected readonly isAnonymousNotificationActivated = isAnonymousNotificationActivated;
   protected readonly FEATURE_FLAG_PORTAL_HEADER_FOOTER = FEATURE_FLAG_PORTAL_HEADER_FOOTER;
-  protected readonly FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y = FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y;
   protected readonly FEATURE_FLAG_PORTAL_ACCESSIBILITY = FEATURE_FLAG_PORTAL_ACCESSIBILITY;
 }

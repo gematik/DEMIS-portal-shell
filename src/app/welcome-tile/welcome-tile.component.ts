@@ -16,26 +16,25 @@
  */
 
 import { A11yModule } from '@angular/cdk/a11y';
-import { CommonModule } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import { Component, inject, input, output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIcon } from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
-import { FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y, isNonNominalNotificationActivated } from '../shared/app-constants';
+import { isNonNominalNotificationActivated } from '../shared/app-constants';
 import { WelcomeTileConfig } from '../welcome/welcome.component';
 
 @Component({
   selector: 'app-welcome-tile',
-  imports: [CommonModule, MatCardModule, RouterModule, MatExpansionModule, MatButtonModule, MatIcon, A11yModule],
+  imports: [MatCardModule, RouterModule, MatExpansionModule, MatButtonModule, MatIcon, A11yModule, NgTemplateOutlet],
   templateUrl: './welcome-tile.component.html',
   styleUrl: './welcome-tile.component.scss',
 })
 export class WelcomeTileComponent {
   readonly config = input.required<WelcomeTileConfig>();
   readonly animated = input<boolean>(false);
-  readonly contentHeight = input<string>();
   readonly isExpanded = input(false);
   readonly toggle = output<void>();
   readonly router = inject(Router);
@@ -46,17 +45,7 @@ export class WelcomeTileComponent {
   }
 
   handleTileClick(): void {
-    if (FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y()) {
-      this.navigateTo(this.config().destinationRouterLink as string);
-      return;
-    }
-
-    // To be removed once FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y is removed
-    if (this.isTileExpandable()) {
-      this.toggle.emit();
-    } else {
-      this.navigateTo(this.config().destinationRouterLink as string);
-    }
+    this.navigateTo(this.config().destinationRouterLink as string);
   }
 
   navigateTo(destination: string): void {
@@ -78,5 +67,4 @@ export class WelcomeTileComponent {
   }
 
   protected readonly isNonNominalNotificationActivated = isNonNominalNotificationActivated;
-  protected readonly FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y = FEATURE_FLAG_PORTAL_WELCOME_PAGE_A11Y;
 }

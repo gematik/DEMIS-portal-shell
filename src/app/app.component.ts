@@ -24,15 +24,18 @@ import { initLogger } from 'src/app/shared/models/ts-logger';
 import { JwtHelperService } from '@auth0/angular-jwt';
 // don't shorten the import, or all tests will break
 import { AuthService } from './services/auth.service';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { AppConstants } from './shared/app-constants';
 import { NavigationStateStore } from './services/navigation-state.service';
+import { NavbarComponent } from './navbar/navbar.component';
+import { MaxHeightContentContainerComponent, updateConfigurationForLogger } from '@gematik/demis-portal-core-library';
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  standalone: false,
+  imports: [NavbarComponent, MaxHeightContentContainerComponent, RouterOutlet, NgOptimizedImage],
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'DEMIS-Meldeportal';
@@ -44,7 +47,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private authChangedSubscription: Subscription;
   private readonly jwtHelper = new JwtHelperService();
 
-  private readonly logger = inject(NGXLogger);
+  private logger = inject(NGXLogger);
   private readonly oidcSecurityService = inject(OidcSecurityService);
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
@@ -56,7 +59,7 @@ export class AppComponent implements OnInit, OnDestroy {
     // "initLogger()" is used to instantiate a singleton object of NgxLogger
     // for classes and files where NgxLogger cannot be injected.
     initLogger(this.logger);
-    this.updateLoggerConfig();
+    updateConfigurationForLogger(this.logger, environment.ngxLoggerConfig);
     this.router.events
       .pipe(
         filter(event => event instanceof NavigationEnd),
@@ -90,15 +93,6 @@ export class AppComponent implements OnInit, OnDestroy {
     }
     this.unsubscriber.next();
     this.unsubscriber.complete();
-  }
-
-  private updateLoggerConfig() {
-    const updatedConfig = this.logger.getConfigSnapshot();
-    updatedConfig.level = environment.ngxLoggerConfig.level;
-    updatedConfig.disableConsoleLogging = environment.ngxLoggerConfig.disableConsoleLogging;
-    updatedConfig.serverLogLevel = environment.ngxLoggerConfig.serverLogLevel;
-
-    this.logger.updateConfig(updatedConfig);
   }
 
   private injectToken(base64EncodedToken: string) {

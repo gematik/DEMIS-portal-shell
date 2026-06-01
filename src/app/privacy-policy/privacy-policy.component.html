@@ -44,11 +44,24 @@
   </p>
 
   <h2>Datenschutzbeauftragte:</h2> <!-- Hier prüfen -->
+  @if (isPrivacyPolicyTextChangeEnabled) {
+  <p>
+    Bei Fragen und Anliegen zum Datenschutz wenden Sie sich bitte direkt an die Datenschutzbeauftragte des RKI:
+  </p>
+  <p>
+    Robert Koch-Institut<br />
+    z.H. der Datenschutzbeauftragten<br />
+    Nordufer 20<br />
+    13353 Berlin<br />
+    E-Mail: <a href="mailto:datenschutz@rki.de">datenschutz&#64;rki.de</a>
+  </p>
+  } @else {
   <p>
     E-Mail: <a href="https://www.rki.de/SharedDocs/Kontaktformulare/D/Datenschutz/DatenschutzIntegrator.html?nn=4976162">Datenschutz</a>
     oder unter datenschutz[at]rki.de<br />
     Postalisch: Unter o.g. Adresse mit dem Zusatz: &#34;z. Hd. Datenschutzbeauftragter&#34;
   </p>
+  }
 
   <h2>Allgemeines zur Datenverarbeitung im Zusammenhang mit der Meldung in DEMIS</h2>
   <h2>Umfang der Verarbeitung personenbezogener Daten</h2>
@@ -335,7 +348,7 @@
   </ul>
       </div>
     </main>
-    <app-footer></app-footer>
+    <app-footer />
   </div>
 </gem-demis-max-height-content-container>
 

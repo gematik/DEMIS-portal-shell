@@ -24,7 +24,6 @@ import { SingleSpaService } from '../services/single-spa.service';
   selector: 'app-spa-host',
   template: '<div #appContainer></div>',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: false,
 })
 export class SpaHostComponent implements OnInit {
   private readonly singleSpaService = inject(SingleSpaService);
