@@ -2,6 +2,13 @@
 
 # Release portal-shell
 
+## Release 1.8.1
+
+- Fixed styling errors for different spacings and diversity problems
+- Updated @gematik/demis-portal-core-library to 4.2.4
+- Updated @gematik/demis-portal-theme-library to 1.2.0
+
+
 ## Release 1.8.0
 
 - Added new menu link to RKI survstat in burger menu (FEATURE_FLAG_PORTAL_LINK_SURVSTAT)
