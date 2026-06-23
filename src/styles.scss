@@ -1,8 +1,14 @@
-// attention icon
+// attention icon used next to info/notification text
 .primary-color-icon {
-  margin-top: 5px;
   margin-right: 5px;
   color: var(--color-primary);
+}
+
+.info-notification-text {
+  display: inline-flex;
+  align-items: flex-start; // icon stays at top for multi-line text; no padding-top hacks needed on span.message because .primary-color-icon has no margin-top offset
+  gap: 4px;
+  margin-bottom: 30px;
 }
 
 .wide-tooltip {
