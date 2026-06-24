@@ -49,16 +49,8 @@ export function FEATURE_FLAG_FOOTER_LINKS_CORRECTION(): boolean {
   return environment.featureFlags?.FEATURE_FLAG_FOOTER_LINKS_CORRECTION ?? false;
 }
 
-export function FEATURE_FLAG_PORTAL_FOOTER_LOGO(): boolean {
-  return environment.featureFlags?.FEATURE_FLAG_PORTAL_FOOTER_LOGO ?? false;
-}
-
 export function FEATURE_FLAG_PRIVACY_POLICY_TEXT_CHANGE(): boolean {
   return environment.featureFlags?.FEATURE_FLAG_PRIVACY_POLICY_TEXT_CHANGE ?? false;
-}
-
-export function FEATURE_FLAG_PORTAL_LINK_SURVSTAT(): boolean {
-  return environment.featureFlags?.FEATURE_FLAG_PORTAL_LINK_SURVSTAT ?? false;
 }
 
 export namespace AppConstants {
