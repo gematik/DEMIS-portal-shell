@@ -25,7 +25,6 @@ import {
   AppConstants,
   FEATURE_FLAG_PORTAL_ARE_ENABLED,
   FEATURE_FLAG_PORTAL_HEADER_FOOTER,
-  FEATURE_FLAG_PORTAL_LINK_SURVSTAT,
   FEATURE_FLAG_SURVEILLANCE_PROGRAM_ADMISSION_ENABLED,
   isAnonymousNotificationActivated,
   isNonNominalFollowUpNotificationActivated,
@@ -336,5 +335,4 @@ export class NavbarComponent implements OnInit, OnDestroy {
   protected readonly isAnonymousNotificationActivated = isAnonymousNotificationActivated;
   protected readonly FEATURE_FLAG_SURVEILLANCE_PROGRAM_ADMISSION_ENABLED = FEATURE_FLAG_SURVEILLANCE_PROGRAM_ADMISSION_ENABLED;
   protected readonly FEATURE_FLAG_PORTAL_ARE_ENABLED = FEATURE_FLAG_PORTAL_ARE_ENABLED;
-  protected readonly FEATURE_FLAG_PORTAL_LINK_SURVSTAT = FEATURE_FLAG_PORTAL_LINK_SURVSTAT;
 }

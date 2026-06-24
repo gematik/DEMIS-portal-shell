@@ -2,12 +2,13 @@
 
 # Release portal-shell
 
-## Release 1.8.1
+## Release 1.8.2
 
 - Fixed styling errors for different spacings and diversity problems
 - Updated @gematik/demis-portal-core-library to 4.2.4
 - Updated @gematik/demis-portal-theme-library to 1.2.0
-
+- Removed FF FEATURE_FLAG_PORTAL_FOOTER_LOGO
+- Remove FF FEATURE_FLAG_PORTAL_LINK_SURVSTAT
 
 ## Release 1.8.0
 

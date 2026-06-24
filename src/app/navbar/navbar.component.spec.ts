@@ -687,9 +687,7 @@ describe('Navbar Test', () => {
         expect(actionButton).toBeFalsy();
       });
 
-      it('should show survstat link when FEATURE_FLAG_PORTAL_LINK_SURVSTAT is enabled', () => {
-        (window as any)['config'].featureFlags.FEATURE_FLAG_PORTAL_LINK_SURVSTAT = true;
-
+      it('should show survstat link', () => {
         const burgerButton = fixture.point.nativeElement.querySelector('#btn-burger-menu-in-navbar');
         burgerButton.click();
         fixture.detectChanges();
@@ -698,19 +696,7 @@ describe('Navbar Test', () => {
         expect(actionButton).toBeTruthy();
       });
 
-      it('should not display survstat link when FEATURE_FLAG_PORTAL_LINK_SURVSTAT is disabled', () => {
-        (window as any)['config'].featureFlags.FEATURE_FLAG_PORTAL_LINK_SURVSTAT = false;
-
-        const burgerButton = fixture.point.nativeElement.querySelector('#btn-burger-menu-in-navbar');
-        burgerButton.click();
-        fixture.detectChanges();
-
-        const actionButton = document.querySelector('#a-to-survstat') as HTMLElement;
-        expect(actionButton).toBeFalsy();
-      });
-
       it('should open survstat link in new tab when clicked', () => {
-        (window as any)['config'].featureFlags.FEATURE_FLAG_PORTAL_LINK_SURVSTAT = true;
         const openSpy = spyOn(window, 'open');
 
         const burgerButton = fixture.point.nativeElement.querySelector('#btn-burger-menu-in-navbar');

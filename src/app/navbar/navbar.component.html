@@ -305,12 +305,10 @@
         <mat-icon>radar</mat-icon>
         {{ C.Labels.DATA_ANALYSIS_LINK }}
       </button>
-      @if (FEATURE_FLAG_PORTAL_LINK_SURVSTAT()) {
-        <button mat-menu-item id="a-to-survstat" (click)="openInNewTab(C.ExternalLinks.SURVSTAT)" role="menuitem">
-          <mat-icon>query_stats</mat-icon>
-          {{ C.Labels.SURVSTAT_LINK }}
-        </button>
-      }
+      <button mat-menu-item id="a-to-survstat" (click)="openInNewTab(C.ExternalLinks.SURVSTAT)" role="menuitem">
+        <mat-icon>query_stats</mat-icon>
+        {{ C.Labels.SURVSTAT_LINK }}
+      </button>
       <button mat-menu-item [attr.id]="idHelpMenu" [matMenuTriggerFor]="helpMenu" role="menuitem"
               aria-haspopup="menu">
         <mat-icon>help</mat-icon>
