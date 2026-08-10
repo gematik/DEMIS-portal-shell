@@ -17,14 +17,13 @@
 
 import { AppConstants } from '../app/shared/app-constants';
 
-export class TestSetup {
+export class TestFixtures {
   static readonly CONFIG = {
     featureFlags: {
       CONFIG_TOKEN_INJECTION_ENABLED: true,
       FEATURE_FLAG_NON_NOMINAL_NOTIFICATION: true,
       FEATURE_FLAG_FOLLOW_UP_7_3: true,
       FEATURE_FLAG_ANONYMOUS_NOTIFICATION: true,
-      FEATURE_FLAG_PORTAL_HEADER_FOOTER: true,
     },
   };
 

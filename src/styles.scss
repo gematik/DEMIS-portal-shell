@@ -1,3 +1,12 @@
+@use '@angular/material' as mat;
+
+// Customize the entire app. Change :root to your selector if you want to scope the styles.
+:root {
+  @include mat.select-overrides((
+    enabled-arrow-color: var(--color-primary),
+  ));
+}
+
 // attention icon used next to info/notification text
 .primary-color-icon {
   margin-right: 5px;
@@ -40,3 +49,14 @@
   max-width: 60vw;
 }
 
+/* Global focus indicators: WCAG 2.4.7 (A) / 2.4.11 (AA)
+   Ensures focus rings are never accidentally suppressed by resets or overrides. */
+*:focus-visible {
+  outline-offset: 2px;
+}
+
+/* Visible focus indicator for all buttons across all MFs */
+button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}

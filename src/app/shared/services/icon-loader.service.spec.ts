@@ -15,6 +15,7 @@
     find details in the "Readme" file.
  */
 
+import { beforeEach, describe, expect, it, type Mock, vi } from 'vitest';
 import { TestBed } from '@angular/core/testing';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -23,8 +24,8 @@ import { MockBuilder } from 'ng-mocks';
 
 describe('IconLoaderService', () => {
   let service: IconLoaderService;
-  let matIconRegistrySpy: jasmine.Spy;
-  let domSanitizerSpy: jasmine.Spy;
+  let matIconRegistrySpy: Mock;
+  let domSanitizerSpy: Mock;
 
   beforeEach(() =>
     MockBuilder(IconLoaderService)
@@ -36,8 +37,8 @@ describe('IconLoaderService', () => {
 
   beforeEach(() => {
     service = TestBed.inject(IconLoaderService);
-    matIconRegistrySpy = spyOn(TestBed.inject(MatIconRegistry), 'addSvgIcon');
-    domSanitizerSpy = spyOn(TestBed.inject(DomSanitizer), 'bypassSecurityTrustResourceUrl').and.callThrough();
+    matIconRegistrySpy = vi.spyOn(TestBed.inject(MatIconRegistry), 'addSvgIcon');
+    domSanitizerSpy = vi.spyOn(TestBed.inject(DomSanitizer), 'bypassSecurityTrustResourceUrl');
   });
 
   it('should be created', () => {

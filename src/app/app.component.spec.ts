@@ -15,6 +15,7 @@
     find details in the "Readme" file.
  */
 
+import { beforeEach, describe, expect, it } from 'vitest';
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -24,11 +25,11 @@ import { MockBuilder, MockedComponentFixture, MockRender, MockService } from 'ng
 import { NGXLogger } from 'ngx-logger';
 import { NGXLoggerMock } from 'ngx-logger/testing';
 import { BehaviorSubject, of } from 'rxjs';
-import { TestSetup } from '../test/test-setup';
 import { ComponentInputs } from '../test/utils/input-signal-types';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { AuthService } from './services';
+import { TestFixtures } from '../test/test-fixtures';
 
 // Mock component with automatic input handling
 @Component({
@@ -36,10 +37,7 @@ import { AuthService } from './services';
   template: '<ng-content />',
   inputs: ['elementSelectorsToSubtract'], // Automatic input handling
 })
-class MockMaxHeightContentContainerComponent implements Partial<ComponentInputs<MaxHeightContentContainerComponent>> {
-  // All InputSignals are automatically available as @Input properties
-  // No manual type definition required!
-}
+class MockMaxHeightContentContainerComponent implements Partial<ComponentInputs<MaxHeightContentContainerComponent>> {}
 
 describe('AppComponent', () => {
   let fixture: MockedComponentFixture<AppComponent, ComponentInputs<AppComponent>>;
@@ -54,7 +52,7 @@ describe('AppComponent', () => {
     },
   };
 
-  beforeEach(() => ((window as any)['config'] = TestSetup.CONFIG));
+  beforeEach(() => ((window as any)['config'] = TestFixtures.CONFIG));
 
   beforeEach(() =>
     MockBuilder(AppComponent)

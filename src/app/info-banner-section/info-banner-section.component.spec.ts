@@ -15,6 +15,7 @@
     find details in the "Readme" file.
  */
 
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { EventType, NavigationEnd } from '@angular/router';
@@ -47,11 +48,11 @@ describe('InfoBannerSectionComponent', () => {
 
   beforeEach(() => {
     bannersClosedSignal.set(bannersClosedInitial);
-    spyOn(TestBed.inject(MarkdownService), 'convertToSanitizedHtml').and.callFake((c: string) => `${c}`);
+    vi.spyOn(TestBed.inject(MarkdownService), 'convertToSanitizedHtml').mockImplementation((c: string) => `${c}`);
   });
 
   it('should render banners with default closable and shownIn', () => {
-    spyOnProperty(environment, 'infoBanners', 'get').and.returnValue([
+    vi.spyOn(environment, 'infoBanners', 'get').mockReturnValue([
       { id: '1', content: 'Banner 1', type: 'info', closable: true, shownIn: 'all' },
       { id: '2', content: 'Banner 2', type: 'warning', closable: false, shownIn: 'all' },
     ]);
@@ -62,16 +63,16 @@ describe('InfoBannerSectionComponent', () => {
 
     const configs = component.infoBannerConfigs;
     expect(configs.length).toBe(2);
-    expect(configs[0].closable).toBeTrue();
+    expect(configs[0].closable).toBe(true);
     expect(configs[0].shownIn).toBe('all');
     expect(configs[0].content).toContain('Banner 1');
-    expect(configs[1].closable).toBeFalse();
+    expect(configs[1].closable).toBe(false);
     expect(configs[1].shownIn).toBe('all');
     expect(ngMocks.findInstance(fixture, InfoBannerContentComponent, undefined)).toBeTruthy();
   });
 
   it('should filter out closed banners if closable', () => {
-    spyOnProperty(environment, 'infoBanners', 'get').and.returnValue([{ id: '1', content: 'Banner 1', type: 'info', closable: true, shownIn: 'all' }]);
+    vi.spyOn(environment, 'infoBanners', 'get').mockReturnValue([{ id: '1', content: 'Banner 1', type: 'info', closable: true, shownIn: 'all' }]);
     bannersClosedSignal.set(new Set(['1']));
 
     ngMocks.flushTestBed();
@@ -83,7 +84,7 @@ describe('InfoBannerSectionComponent', () => {
   });
 
   it('should always show non-closable banners even if closed', () => {
-    spyOnProperty(environment, 'infoBanners', 'get').and.returnValue([{ id: '1', content: 'Banner 1', type: 'info', closable: false, shownIn: 'all' }]);
+    vi.spyOn(environment, 'infoBanners', 'get').mockReturnValue([{ id: '1', content: 'Banner 1', type: 'info', closable: false, shownIn: 'all' }]);
     bannersClosedSignal.set(new Set(['1']));
 
     ngMocks.flushTestBed();
@@ -96,7 +97,7 @@ describe('InfoBannerSectionComponent', () => {
 
   it('should filter banners by time', () => {
     const now = new Date();
-    spyOnProperty(environment, 'infoBanners', 'get').and.returnValue([
+    vi.spyOn(environment, 'infoBanners', 'get').mockReturnValue([
       {
         id: '1',
         content: 'Banner 1',
@@ -127,8 +128,8 @@ describe('InfoBannerSectionComponent', () => {
   });
 
   it('should filter banners by shownIn = shell', () => {
-    spyOnProperty(environment, 'infoBanners', 'get').and.returnValue([{ id: '1', content: 'Banner 1', type: 'info', closable: true, shownIn: 'shell' }]);
-    spyOn(TestBed.inject(NavigationStateStore), 'lastNavigationEnd').and.returnValue(generateNavigationEnd('/welcome'));
+    vi.spyOn(environment, 'infoBanners', 'get').mockReturnValue([{ id: '1', content: 'Banner 1', type: 'info', closable: true, shownIn: 'shell' }]);
+    vi.spyOn(TestBed.inject(NavigationStateStore), 'lastNavigationEnd').mockReturnValue(generateNavigationEnd('/welcome'));
 
     ngMocks.flushTestBed();
     const fixture = MockRender(InfoBannerSectionComponent);
@@ -139,10 +140,10 @@ describe('InfoBannerSectionComponent', () => {
   });
 
   it('should filter banners by shownIn as string array', () => {
-    spyOnProperty(environment, 'infoBanners', 'get').and.returnValue([
+    vi.spyOn(environment, 'infoBanners', 'get').mockReturnValue([
       { id: '1', content: 'Banner 1', type: 'info', closable: true, shownIn: [AppConstants.PathSegments.WELCOME] },
     ]);
-    spyOn(TestBed.inject(NavigationStateStore), 'lastNavigationEnd').and.returnValue(generateNavigationEnd('/welcome'));
+    vi.spyOn(TestBed.inject(NavigationStateStore), 'lastNavigationEnd').mockReturnValue(generateNavigationEnd('/welcome'));
 
     ngMocks.flushTestBed();
     const fixture = MockRender(InfoBannerSectionComponent);
@@ -153,7 +154,7 @@ describe('InfoBannerSectionComponent', () => {
   });
 
   it("should not show banners if shownIn doesn't match the required types", () => {
-    spyOnProperty(environment, 'infoBanners', 'get').and.returnValue([{ id: '1', content: 'Banner 1', type: 'info', closable: true, shownIn: 'never' as any }]);
+    vi.spyOn(environment, 'infoBanners', 'get').mockReturnValue([{ id: '1', content: 'Banner 1', type: 'info', closable: true, shownIn: 'never' as any }]);
 
     ngMocks.flushTestBed();
     const fixture = MockRender(InfoBannerSectionComponent);
@@ -164,7 +165,7 @@ describe('InfoBannerSectionComponent', () => {
   });
 
   it('should return compoundType as warning if any banner is warning', () => {
-    spyOnProperty(environment, 'infoBanners', 'get').and.returnValue([
+    vi.spyOn(environment, 'infoBanners', 'get').mockReturnValue([
       { id: '1', content: 'Banner 1', type: 'info', closable: true, shownIn: 'all' },
       { id: '2', content: 'Banner 2', type: 'warning', closable: true, shownIn: 'all' },
     ]);
@@ -177,7 +178,7 @@ describe('InfoBannerSectionComponent', () => {
   });
 
   it('should render stage indicator', () => {
-    spyOnProperty(environment, 'stageIndicator', 'get').and.returnValue({
+    vi.spyOn(environment, 'stageIndicator', 'get').mockReturnValue({
       content: 'TEST_STAGE_INDICATOR_CONTENT',
       moreInfo: 'TEST_MORE_INFO',
       demisHomeLogoFile: 'TEST_DEMIS_HOME_LOGO_FILE',
@@ -193,7 +194,7 @@ describe('InfoBannerSectionComponent', () => {
     expect(stageIndicatorConfig?.type).toBe('stage-indicator');
     expect(stageIndicatorConfig?.content).toBe('TEST_STAGE_INDICATOR_CONTENT');
     expect(stageIndicatorConfig?.shownIn).toBe('all');
-    expect(stageIndicatorConfig?.closable).toBeFalse();
+    expect(stageIndicatorConfig?.closable).toBe(false);
     expect(stageIndicatorConfig?.moreInfo).toBe('TEST_MORE_INFO');
     expect(ngMocks.findInstance(fixture, InfoBannerContentComponent, undefined)).toBeTruthy();
   });

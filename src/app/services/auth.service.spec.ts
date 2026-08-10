@@ -15,6 +15,7 @@
     find details in the "Readme" file.
  */
 
+import { afterEach, beforeEach, describe, expect, it, type Mock, vi } from 'vitest';
 import { TestBed } from '@angular/core/testing';
 
 import { EventTypes, OidcClientNotification, OidcSecurityService, PublicEventsService } from 'angular-auth-oidc-client';
@@ -32,10 +33,10 @@ describe('AuthServiceService', () => {
   beforeEach(() =>
     MockBuilder(AuthService)
       .mock(OidcSecurityService, {
-        getAccessToken: jasmine.createSpy().and.returnValue(of('')),
+        getAccessToken: vi.fn().mockReturnValue(of('')),
       })
       .mock(PublicEventsService, {
-        registerForEvents: jasmine.createSpy().and.returnValue(publicEventSubject),
+        registerForEvents: vi.fn().mockReturnValue(publicEventSubject),
       })
       .mock(NGXLogger)
   );
@@ -52,7 +53,7 @@ describe('AuthServiceService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should update token on NewAuthenticationResult', done => {
+  it('should update token on NewAuthenticationResult', async () => {
     const tokenBefore = service.getEncodedToken();
     expect(tokenBefore).toBe('');
     expect(service.checkRole(TEST_ROLE)).toBeFalsy();
@@ -60,12 +61,10 @@ describe('AuthServiceService', () => {
 
     // Update the mock to return the new token
     const oidcService = TestBed.inject(OidcSecurityService);
-    (oidcService.getAccessToken as jasmine.Spy).and.returnValue(of(newToken));
+    (oidcService.getAccessToken as Mock).mockReturnValue(of(newToken));
 
     // Check if $tokenChange is fired, too
-    service.$tokenChanged.subscribe(() => {
-      done();
-    });
+    service.$tokenChanged.subscribe(() => {});
 
     publicEventSubject.next({ type: EventTypes.NewAuthenticationResult });
     const tokenAfter = service.getEncodedToken();

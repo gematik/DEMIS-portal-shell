@@ -58,30 +58,9 @@
     </div>
   </main>
 </ng-template>
-
-@if (!FEATURE_FLAG_PORTAL_HEADER_FOOTER()) {
-  <div [class]="{ 'page-wrapper': isAuthenticated() }">
-    <gem-demis-max-height-content-container [elementSelectorsToSubtract]="['app-navbar', 'footer']">
-      <ng-container *ngTemplateOutlet="commonContent"/>
-    </gem-demis-max-height-content-container>
-
-    <footer class="footer_deprecated bottom-positioned">
-      <div class="EU-logo">
-        <img ngSrc="assets/images/EU-logo.jpg" [priority]="true" alt="Finanziert von der Europäischen Union" height="48"
-             width="185">
-      </div>
-      @if (isAuthenticated()) {
-        <div class="authenticated-as" id="start-username">Eingeloggt als {{ userInfo().username }}</div>
-      }
-    </footer>
+<gem-demis-max-height-content-container [elementSelectorsToSubtract]="['app-navbar']">
+  <div class="page-wrapper" [class]="isAuthenticated() ? 'logged-in' : 'logged-out'">
+    <ng-container *ngTemplateOutlet="commonContent"/>
+    <app-footer />
   </div>
-}
-
-@if (FEATURE_FLAG_PORTAL_HEADER_FOOTER()) {
-  <gem-demis-max-height-content-container [elementSelectorsToSubtract]="['app-navbar']">
-    <div class="page-wrapper" [class]="isAuthenticated() ? 'logged-in' : 'logged-out'">
-      <ng-container *ngTemplateOutlet="commonContent"/>
-      <app-footer />
-    </div>
-  </gem-demis-max-height-content-container>
-}
+</gem-demis-max-height-content-container>

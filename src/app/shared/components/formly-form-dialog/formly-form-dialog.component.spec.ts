@@ -15,6 +15,7 @@
     find details in the "Readme" file.
  */
 
+import { beforeEach, describe, expect, it, type MockedObject, vi } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
@@ -25,8 +26,8 @@ import { FormlyFormDialogProps, FormlyFormDialogService } from '../../../service
 describe('FormlyFormDialogComponent', () => {
   let component: FormlyFormDialogComponent;
   let fixture: ComponentFixture<FormlyFormDialogComponent>;
-  let formlyFormDialogServiceSpy: jasmine.SpyObj<FormlyFormDialogService>;
-  let liveAnnouncerSpy: jasmine.SpyObj<LiveAnnouncer>;
+  let formlyFormDialogServiceSpy: MockedObject<FormlyFormDialogService>;
+  let liveAnnouncerSpy: MockedObject<LiveAnnouncer>;
 
   const mockDialogData: FormlyFormDialogProps = {
     dialogId: 'test-dialog',
@@ -40,9 +41,13 @@ describe('FormlyFormDialogComponent', () => {
   };
 
   beforeEach(async () => {
-    formlyFormDialogServiceSpy = jasmine.createSpyObj('FormlyFormDialogService', ['closeDialog']);
-    liveAnnouncerSpy = jasmine.createSpyObj('LiveAnnouncer', ['announce']);
-    liveAnnouncerSpy.announce.and.returnValue(Promise.resolve());
+    formlyFormDialogServiceSpy = {
+      closeDialog: vi.fn().mockName('FormlyFormDialogService.closeDialog'),
+    } as unknown as MockedObject<FormlyFormDialogService>;
+    liveAnnouncerSpy = {
+      announce: vi.fn().mockName('LiveAnnouncer.announce'),
+    } as unknown as MockedObject<LiveAnnouncer>;
+    liveAnnouncerSpy.announce.mockReturnValue(Promise.resolve());
 
     await TestBed.configureTestingModule({
       imports: [FormlyFormDialogComponent],
@@ -68,7 +73,7 @@ describe('FormlyFormDialogComponent', () => {
     expect(component.postFormText).toContain(mockDialogData.postFormText);
     expect(component.cancelButtonText).toBe(mockDialogData.cancelButtonText);
     expect(component.acceptButtonText).toBe(mockDialogData.acceptButtonText);
-    expect(component.showAcceptButton).toBeTrue();
+    expect(component.showAcceptButton).toBe(true);
   });
 
   it('should call closeDialog with undefined when abort is called', async () => {
@@ -87,12 +92,12 @@ describe('FormlyFormDialogComponent', () => {
   describe('nextButtonDisabled', () => {
     it('should return true when form is invalid', () => {
       component.form.setErrors({ invalid: true });
-      expect(component.nextButtonDisabled()).toBeTrue();
+      expect(component.nextButtonDisabled()).toBe(true);
     });
 
     it('should return false when form is valid', () => {
       component.form.setErrors(null);
-      expect(component.nextButtonDisabled()).toBeFalse();
+      expect(component.nextButtonDisabled()).toBe(false);
     });
   });
 
@@ -124,7 +129,7 @@ describe('FormlyFormDialogComponent', () => {
 
       const newFixture = TestBed.createComponent(FormlyFormDialogComponent);
       const newComponent = newFixture.componentInstance;
-      expect(newComponent.showAcceptButton).toBeTrue();
+      expect(newComponent.showAcceptButton).toBe(true);
     });
   });
 
@@ -132,7 +137,7 @@ describe('FormlyFormDialogComponent', () => {
     it('should close dialog when externalValidation returns isValid: true', async () => {
       component.form.setErrors(null);
       component.model = { testField: 'testValue' };
-      component.submitValidation = jasmine.createSpy('externalValidation').and.resolveTo({ isValid: true });
+      component.submitValidation = vi.fn().mockResolvedValue({ isValid: true });
 
       await component.proceed();
 
@@ -146,7 +151,7 @@ describe('FormlyFormDialogComponent', () => {
       component.form.addControl('field1', new FormControl('value1'));
       component.form.addControl('field2', new FormControl('value2'));
 
-      component.submitValidation = jasmine.createSpy('externalValidation').and.resolveTo(false);
+      component.submitValidation = vi.fn().mockResolvedValue(false);
 
       await component.proceed();
 
@@ -159,7 +164,7 @@ describe('FormlyFormDialogComponent', () => {
       component.model = { field1: 'value1' };
       component.form.addControl('field1', new FormControl('value1'));
 
-      component.submitValidation = jasmine.createSpy('externalValidation').and.resolveTo(false);
+      component.submitValidation = vi.fn().mockResolvedValue(false);
 
       await component.proceed();
 
@@ -170,7 +175,7 @@ describe('FormlyFormDialogComponent', () => {
     it('should announce invalid inputs message on validation failure', async () => {
       component.form.setErrors(null);
       component.model = { field1: 'value1' };
-      component.submitValidation = jasmine.createSpy('externalValidation').and.resolveTo(false);
+      component.submitValidation = vi.fn().mockResolvedValue(false);
 
       await component.proceed();
 

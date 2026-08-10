@@ -15,6 +15,7 @@
     find details in the "Readme" file.
  */
 
+import { beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { NgTemplateOutlet } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -23,11 +24,11 @@ import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { MockBuilder, MockedComponentFixture, MockRender, MockService, ngMocks } from 'ng-mocks';
 import { NGXLogger } from 'ngx-logger';
 import { BehaviorSubject, of, Subject } from 'rxjs';
-import { TestSetup } from '../../test/test-setup';
 import { AuthService } from '../services/auth.service';
 import { AppConstants } from '../shared/app-constants';
 import { WelcomeTileComponent } from '../welcome-tile/welcome-tile.component';
 import { WelcomeComponent } from './welcome.component';
+import { TestFixtures } from '../../test/test-fixtures';
 
 describe('WelcomeComponent', () => {
   let fixture: MockedComponentFixture<WelcomeComponent>;
@@ -45,7 +46,7 @@ describe('WelcomeComponent', () => {
     return fixture.point.nativeElement.querySelector(selector);
   };
 
-  const errorSpy = jasmine.createSpy('error');
+  const errorSpy = vi.fn();
 
   beforeEach(() =>
     MockBuilder([WelcomeComponent, WelcomeTileComponent])
@@ -67,13 +68,13 @@ describe('WelcomeComponent', () => {
   );
   describe('Tests for tiles', () => {
     beforeEach(() => {
-      let config = TestSetup.CONFIG;
+      let config = TestFixtures.CONFIG;
       (window as any)['config'] = config;
     });
 
     it('should create', () => {
       createComponent();
-      spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').and.returnValue(of(''));
+      vi.spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').mockReturnValue(of(''));
       expect(component).toBeTruthy();
     });
 
@@ -91,10 +92,10 @@ describe('WelcomeComponent', () => {
 
     it('should open a expandable tile, then open another expandable tile and close the first one', () => {
       createComponent();
-      spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').and.returnValue(of(''));
+      vi.spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').mockReturnValue(of(''));
       fixture.point.injector.get(AuthService).$isAuthenticated = isAuthenticatedSubject;
 
-      spyOn(fixture.point.injector.get(AuthService), 'checkRole').and.callFake((role: string) => {
+      vi.spyOn(fixture.point.injector.get(AuthService), 'checkRole').mockImplementation((role: string) => {
         return [
           AppConstants.Roles.PATHOGEN_NOTIFICATION_SENDER,
           AppConstants.Roles.PATHOGEN_NOTIFICATION_NON_NOMINAL_SENDER,
@@ -133,12 +134,14 @@ describe('WelcomeComponent', () => {
       expect(component.expandedTileIndex()).not.toBe(nonNominalTileIndex);
     });
 
-    TestSetup.JWT_ROLES.forEach(parameter => {
+    TestFixtures.JWT_ROLES.forEach(parameter => {
       it(`check if role(s) ${parameter.roles.join(',')} shows tile ${parameter.tile}`, () => {
         createComponent();
-        spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').and.returnValue(of(''));
+        vi.spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').mockReturnValue(of(''));
         fixture.point.injector.get(AuthService).$isAuthenticated = isAuthenticatedSubject;
-        spyOn(fixture.point.injector.get(AuthService), 'checkRole').and.callFake((role: string) => parameter.roles.includes(role as AppConstants.Roles));
+        vi.spyOn(fixture.point.injector.get(AuthService), 'checkRole').mockImplementation((role: string) =>
+          parameter.roles.includes(role as AppConstants.Roles)
+        );
         fixture.point.injector.get(AuthService).$tokenChanged.next();
         ngMocks.flushTestBed();
         createComponent();
@@ -146,13 +149,11 @@ describe('WelcomeComponent', () => {
         expect(!!tile).toBeTruthy();
       });
 
-      it(`${!parameter.doNegativeTest ? 'deactivated -- ' : ''}check if tile ${parameter.tile} is removed if role(s) ${parameter.roles.join(
-        ','
-      )} is missing`, () => {
+      it(`${!parameter.doNegativeTest ? 'deactivated -- ' : ''}check if tile ${parameter.tile} is removed if role(s) ${parameter.roles.join(',')} is missing`, () => {
         if (parameter.doNegativeTest) {
           createComponent();
-          spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').and.returnValue(of(''));
-          spyOn(fixture.point.injector.get(AuthService), 'checkRole').and.returnValue(false);
+          vi.spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').mockReturnValue(of(''));
+          vi.spyOn(fixture.point.injector.get(AuthService), 'checkRole').mockReturnValue(false);
           fixture.point.injector.get(AuthService).$tokenChanged.next();
           ngMocks.flushTestBed();
           createComponent();
@@ -165,9 +166,9 @@ describe('WelcomeComponent', () => {
     [AppConstants.Roles.IGS_SEQUENCE_DATA_SENDER, AppConstants.Roles.IGS_NOTIFICATION_DATA_SENDER_FASTA_ONLY].forEach(presentRole => {
       it(`Should show title welcome-tile-sequence-notification if only ${presentRole} is present`, () => {
         createComponent();
-        spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').and.returnValue(of(''));
+        vi.spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').mockReturnValue(of(''));
         fixture.point.injector.get(AuthService).$isAuthenticated = isAuthenticatedSubject;
-        spyOn(fixture.point.injector.get(AuthService), 'checkRole').and.callFake(
+        vi.spyOn(fixture.point.injector.get(AuthService), 'checkRole').mockImplementation(
           (role: string) => presentRole === role || AppConstants.Roles.IGS_NOTIFICATION_DATA_SENDER === role
         );
         fixture.point.injector.get(AuthService).$tokenChanged.next();
@@ -179,15 +180,15 @@ describe('WelcomeComponent', () => {
     });
 
     it('should check portal config when there is a PORTAL_CONFIG_ERROR in session storage', () => {
-      spyOn(sessionStorage, 'getItem').and.callFake((key: string) => {
+      vi.spyOn(sessionStorage, 'getItem').mockImplementation((key: string) => {
         if (key === 'PORTAL_CONFIG_ERROR') {
           return 'something went wrong';
         }
         throw new Error('no key');
       });
       createComponent();
-      expect(errorSpy.calls.count()).withContext('should have been called once').toBe(1);
-      const args = errorSpy.calls.argsFor(0);
+      expect(vi.mocked(errorSpy).mock.calls.length, 'should have been called once').toBe(1);
+      const args = vi.mocked(errorSpy).mock.calls[0];
       expect(args[0].errorTitle()).toBe('Fehler beim Laden der Konfiguration');
       expect(args[0].errors().length).toBe(1);
       expect(args[0].errors()[0].message).toBe(
@@ -201,12 +202,12 @@ describe('WelcomeComponent', () => {
       (window as any)['config'].featureFlags.FEATURE_FLAG_PORTAL_ARE_ENABLED = true;
     });
 
-    TestSetup.JWT_ROLES_EXPANDABLE_TILES.forEach(({ id, roles, tile, subTiles, doNegativeTest, requireAllRoles }) => {
+    TestFixtures.JWT_ROLES_EXPANDABLE_TILES.forEach(({ id, roles, tile, subTiles, doNegativeTest, requireAllRoles }) => {
       it(`should show tile ${tile} and its subtiles when user has roles ${roles.join(', ')}`, async () => {
         createComponent();
-        spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').and.returnValue(of(''));
+        vi.spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').mockReturnValue(of(''));
         fixture.point.injector.get(AuthService).$isAuthenticated = isAuthenticatedSubject;
-        spyOn(fixture.point.injector.get(AuthService), 'checkRole').and.callFake((role: string) => roles.includes(role as AppConstants.Roles));
+        vi.spyOn(fixture.point.injector.get(AuthService), 'checkRole').mockImplementation((role: string) => roles.includes(role as AppConstants.Roles));
 
         fixture.point.injector.get(AuthService).$tokenChanged.next();
 
@@ -236,9 +237,9 @@ describe('WelcomeComponent', () => {
       if (doNegativeTest) {
         it(`should not show tile ${tile} when user does not have required roles`, async () => {
           createComponent();
-          spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').and.returnValue(of(''));
+          vi.spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').mockReturnValue(of(''));
           fixture.point.injector.get(AuthService).$isAuthenticated = isAuthenticatedSubject;
-          spyOn(fixture.point.injector.get(AuthService), 'checkRole').and.returnValue(false);
+          vi.spyOn(fixture.point.injector.get(AuthService), 'checkRole').mockReturnValue(false);
           fixture.point.injector.get(AuthService).$tokenChanged.next();
 
           ngMocks.flushTestBed();
@@ -257,9 +258,9 @@ describe('WelcomeComponent', () => {
         roles.forEach(requiredRole => {
           it(`should not show tile ${tile} when only ${requiredRole} role is present`, async () => {
             createComponent();
-            spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').and.returnValue(of(''));
+            vi.spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').mockReturnValue(of(''));
             fixture.point.injector.get(AuthService).$isAuthenticated = isAuthenticatedSubject;
-            spyOn(fixture.point.injector.get(AuthService), 'checkRole').and.callFake((role: string) => role === requiredRole);
+            vi.spyOn(fixture.point.injector.get(AuthService), 'checkRole').mockImplementation((role: string) => role === requiredRole);
             fixture.point.injector.get(AuthService).$tokenChanged.next();
 
             ngMocks.flushTestBed();
@@ -278,14 +279,14 @@ describe('WelcomeComponent', () => {
 
   describe('non-nominal follow-up feature flag tests', () => {
     beforeEach(() => {
-      (window as any)['config'] = JSON.parse(JSON.stringify(TestSetup.CONFIG));
+      (window as any)['config'] = JSON.parse(JSON.stringify(TestFixtures.CONFIG));
     });
 
     it('should show non-nominal follow-up sub-tiles when FEATURE_FLAG_FOLLOW_UP_7_3 is enabled', async () => {
       createComponent();
-      spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').and.returnValue(of(''));
+      vi.spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').mockReturnValue(of(''));
       fixture.point.injector.get(AuthService).$isAuthenticated = isAuthenticatedSubject;
-      spyOn(fixture.point.injector.get(AuthService), 'checkRole').and.callFake(
+      vi.spyOn(fixture.point.injector.get(AuthService), 'checkRole').mockImplementation(
         (role: string) =>
           role === AppConstants.Roles.PATHOGEN_NOTIFICATION_NON_NOMINAL_SENDER || role === AppConstants.Roles.DISEASE_NOTIFICATION_NON_NOMINAL_SENDER
       );
@@ -310,9 +311,9 @@ describe('WelcomeComponent', () => {
       // TODO remove test when FEATURE_FLAG_FOLLOW_UP_7_3 is removed
       (window as any)['config'].featureFlags.FEATURE_FLAG_FOLLOW_UP_7_3 = false;
       createComponent();
-      spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').and.returnValue(of(''));
+      vi.spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').mockReturnValue(of(''));
       fixture.point.injector.get(AuthService).$isAuthenticated = isAuthenticatedSubject;
-      spyOn(fixture.point.injector.get(AuthService), 'checkRole').and.callFake(
+      vi.spyOn(fixture.point.injector.get(AuthService), 'checkRole').mockImplementation(
         (role: string) =>
           role === AppConstants.Roles.PATHOGEN_NOTIFICATION_NON_NOMINAL_SENDER || role === AppConstants.Roles.DISEASE_NOTIFICATION_NON_NOMINAL_SENDER
       );

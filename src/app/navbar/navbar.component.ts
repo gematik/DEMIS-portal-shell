@@ -24,7 +24,6 @@ import { AuthService, KcConfigService } from 'src/app/services';
 import {
   AppConstants,
   FEATURE_FLAG_PORTAL_ARE_ENABLED,
-  FEATURE_FLAG_PORTAL_HEADER_FOOTER,
   FEATURE_FLAG_SURVEILLANCE_PROGRAM_ADMISSION_ENABLED,
   isAnonymousNotificationActivated,
   isNonNominalFollowUpNotificationActivated,
@@ -52,15 +51,12 @@ import { MatDivider } from '@angular/material/list';
     MatToolbar,
     MatButton,
     RouterLink,
-    MatTabNav,
-    MatTabLink,
     RouterLinkActive,
     MatMenuTrigger,
     MatIcon,
     MatMenu,
     MatMenuItem,
     MatTabNavPanel,
-    MatIconButton,
     AccessibleTextComponent,
     MatDivider,
   ],
@@ -331,7 +327,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   protected readonly isNonNominalNotificationActivated = isNonNominalNotificationActivated;
   protected readonly isNonNominalFollowUpNotificationActivated = isNonNominalFollowUpNotificationActivated;
-  protected readonly FEATURE_FLAG_PORTAL_HEADER_FOOTER = FEATURE_FLAG_PORTAL_HEADER_FOOTER;
   protected readonly isAnonymousNotificationActivated = isAnonymousNotificationActivated;
   protected readonly FEATURE_FLAG_SURVEILLANCE_PROGRAM_ADMISSION_ENABLED = FEATURE_FLAG_SURVEILLANCE_PROGRAM_ADMISSION_ENABLED;
   protected readonly FEATURE_FLAG_PORTAL_ARE_ENABLED = FEATURE_FLAG_PORTAL_ARE_ENABLED;

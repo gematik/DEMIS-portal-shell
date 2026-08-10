@@ -15,6 +15,7 @@
     find details in the "Readme" file.
  */
 
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { TestBed } from '@angular/core/testing';
@@ -70,13 +71,13 @@ describe('InfoBannerContentComponent', () => {
   });
 
   it('should convert markdown content to sanitized HTML', () => {
-    const convertToSanitizedHtmlSpy = spyOn(TestBed.inject(MarkdownService), 'convertToSanitizedHtml');
+    const convertToSanitizedHtmlSpy = vi.spyOn(TestBed.inject(MarkdownService), 'convertToSanitizedHtml');
     fixture.detectChanges();
     expect(convertToSanitizedHtmlSpy).toHaveBeenCalledWith(config.content);
   });
 
   it('should return true for isClosable if closable is true', () => {
-    expect(component.isClosable).toBeTrue();
+    expect(component.isClosable).toBe(true);
   });
 
   it('should return moreInfoUrl', () => {
@@ -90,15 +91,15 @@ describe('InfoBannerContentComponent', () => {
   });
 
   it('should return true for hasActions if closable or moreInfoUrl is present', () => {
-    expect(component.hasActions).toBeTrue();
+    expect(component.hasActions).toBe(true);
     fixture.componentInstance.config = { ...config, closable: false, moreInfo: undefined };
     fixture.detectChanges();
-    expect(component.hasActions).toBeFalse();
+    expect(component.hasActions).toBe(false);
   });
 
   it('should call closeBanner on onCloseBanner', async () => {
-    const onCloseBannerSpy = spyOn(component, 'onCloseBanner').and.callThrough();
-    const closeBannerSpy = spyOn(TestBed.inject(InfoBannerStorageService), 'closeBanner');
+    const onCloseBannerSpy = vi.spyOn(component, 'onCloseBanner');
+    const closeBannerSpy = vi.spyOn(TestBed.inject(InfoBannerStorageService), 'closeBanner');
     const closeBtn = await loader.getHarness(MatButtonHarness.with({ selector: `#demis-portal-banner-close-btn-${config.id}` }));
 
     await closeBtn.click();

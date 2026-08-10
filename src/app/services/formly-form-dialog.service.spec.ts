@@ -15,6 +15,7 @@
     find details in the "Readme" file.
  */
 
+import { beforeEach, describe, expect, it, type MockedObject, vi } from 'vitest';
 import { TestBed } from '@angular/core/testing';
 
 import { MockModule } from 'ng-mocks';
@@ -48,7 +49,7 @@ describe('FormlyFormDialogService', () => {
   });
 
   describe('FormDialogTests', () => {
-    let mockDialogRef: jasmine.SpyObj<MatDialogRef<FormlyFormDialogComponent>>;
+    let mockDialogRef: MockedObject<MatDialogRef<FormlyFormDialogComponent>>;
 
     const formDialogData: FormlyFormDialogProps = {
       dialogId: 'test-form-dialog',
@@ -89,12 +90,15 @@ describe('FormlyFormDialogService', () => {
     };
 
     beforeEach(() => {
-      mockDialogRef = jasmine.createSpyObj('MatDialogRef', ['close', 'afterClosed']);
+      mockDialogRef = {
+        close: vi.fn().mockName('MatDialogRef.close'),
+        afterClosed: vi.fn().mockName('MatDialogRef.afterClosed'),
+      };
     });
 
     describe('showFormDialog', () => {
       it('should open the MatDialog with FormlyFormDialogComponent and default style', () => {
-        const openSpy = spyOn(matDialog, 'open').and.returnValue(mockDialogRef);
+        const openSpy = vi.spyOn(matDialog, 'open').mockReturnValue(mockDialogRef);
         service.showFormlyFormDialog(formDialogData);
         expect(openSpy).toHaveBeenCalledWith(FormlyFormDialogComponent, {
           ariaLabelledBy: `${formDialogData.dialogId}-dialog-header`,
@@ -114,7 +118,7 @@ describe('FormlyFormDialogService', () => {
           ariaModal: true,
         };
 
-        const openSpy = spyOn(matDialog, 'open').and.returnValue(mockDialogRef);
+        const openSpy = vi.spyOn(matDialog, 'open').mockReturnValue(mockDialogRef);
         service.showFormlyFormDialog(formDialogData, customFormDialogStyle);
         expect(openSpy).toHaveBeenCalledWith(FormlyFormDialogComponent, {
           ariaLabelledBy: `${formDialogData.dialogId}-dialog-header`,
@@ -127,7 +131,7 @@ describe('FormlyFormDialogService', () => {
 
     describe('closeDialog', () => {
       it('should close the dialog with result when dialog exists', () => {
-        spyOn(matDialog, 'open').and.returnValue(mockDialogRef);
+        vi.spyOn(matDialog, 'open').mockReturnValue(mockDialogRef);
 
         const formDialogData: FormlyFormDialogProps = { dialogId: 'test_id', title: 'Test' };
         service.showFormlyFormDialog(formDialogData);
@@ -138,7 +142,7 @@ describe('FormlyFormDialogService', () => {
       });
 
       it('should close the dialog without result when no result provided', () => {
-        spyOn(matDialog, 'open').and.returnValue(mockDialogRef);
+        vi.spyOn(matDialog, 'open').mockReturnValue(mockDialogRef);
 
         const formDialogData: FormlyFormDialogProps = { dialogId: 'test_id', title: 'Test' };
         service.showFormlyFormDialog(formDialogData);
@@ -153,7 +157,7 @@ describe('FormlyFormDialogService', () => {
       });
 
       it('should reset dialogRef to null after closing', () => {
-        spyOn(matDialog, 'open').and.returnValue(mockDialogRef);
+        vi.spyOn(matDialog, 'open').mockReturnValue(mockDialogRef);
 
         const formDialogData: FormlyFormDialogProps = { dialogId: 'test_id', title: 'Test' };
         service.showFormlyFormDialog(formDialogData);
