@@ -18,9 +18,7 @@
 import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import {
   AppConstants,
-  FEATURE_FLAG_PORTAL_ACCESSIBILITY,
   FEATURE_FLAG_PORTAL_ARE_ENABLED,
-  FEATURE_FLAG_PORTAL_HEADER_FOOTER,
   isAnonymousNotificationActivated,
   isNonNominalFollowUpNotificationActivated,
   isNonNominalNotificationActivated,
@@ -30,7 +28,7 @@ import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/services';
 import { MaxHeightContentContainerComponent, MessageDialogService } from '@gematik/demis-portal-core-library';
 import { NGXLogger } from 'ngx-logger';
-import { NgOptimizedImage, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import { WelcomeTileComponent } from '../welcome-tile/welcome-tile.component';
 import { FooterComponent } from '../footer/footer.component';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
@@ -97,7 +95,7 @@ export declare type WelcomeTileConfig = {
   selector: 'app-welcome',
   templateUrl: './welcome.component.html',
   styleUrls: ['./welcome.component.scss'],
-  imports: [WelcomeTileComponent, MatButton, MatIcon, NgOptimizedImage, MaxHeightContentContainerComponent, FooterComponent, NgTemplateOutlet],
+  imports: [WelcomeTileComponent, MatButton, MatIcon, MaxHeightContentContainerComponent, FooterComponent, NgTemplateOutlet],
 })
 export class WelcomeComponent implements OnInit, OnDestroy {
   private readonly oidcSecurityService = inject(OidcSecurityService);
@@ -399,6 +397,4 @@ export class WelcomeComponent implements OnInit, OnDestroy {
   protected readonly isNonNominalNotificationActivated = isNonNominalNotificationActivated;
   protected readonly isNonNominalFollowUpNotificationActivated = isNonNominalFollowUpNotificationActivated;
   protected readonly isAnonymousNotificationActivated = isAnonymousNotificationActivated;
-  protected readonly FEATURE_FLAG_PORTAL_HEADER_FOOTER = FEATURE_FLAG_PORTAL_HEADER_FOOTER;
-  protected readonly FEATURE_FLAG_PORTAL_ACCESSIBILITY = FEATURE_FLAG_PORTAL_ACCESSIBILITY;
 }

@@ -15,6 +15,7 @@
     find details in the "Readme" file.
  */
 
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { TestBed } from '@angular/core/testing';
 import { MockBuilder, MockProvider } from 'ng-mocks';
 import { NGXLogger } from 'ngx-logger';
@@ -32,7 +33,7 @@ describe('InfoBannerStorageService', () => {
   let service: InfoBannerStorageService;
 
   beforeEach(() => {
-    spyOnProperty(environment, 'infoBanners', 'get').and.returnValue(TEST_INFO_BANNERS);
+    vi.spyOn(environment, 'infoBanners', 'get').mockReturnValue(TEST_INFO_BANNERS);
   });
 
   describe('With empty localStorage', () => {
@@ -120,7 +121,7 @@ describe('InfoBannerStorageService', () => {
     });
 
     it('should reset localStorage if stored data is invalid', () => {
-      const warnSpy = spyOn(TestBed.inject(NGXLogger), 'warn');
+      const warnSpy = vi.spyOn(TestBed.inject(NGXLogger), 'warn');
       service = TestBed.inject(InfoBannerStorageService);
       expect(service.bannersAlreadyClosed()).toEqual(new Set<string>([]));
       expect(warnSpy).toHaveBeenCalled();

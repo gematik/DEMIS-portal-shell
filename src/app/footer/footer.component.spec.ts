@@ -15,6 +15,7 @@
     find details in the "Readme" file.
  */
 
+import { beforeEach, describe, expect, it, type MockedObject, vi } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FooterComponent } from './footer.component';
 import { AuthService } from '../services';
@@ -24,18 +25,23 @@ import { BehaviorSubject } from 'rxjs';
 describe('FooterComponent', () => {
   let component: FooterComponent;
   let fixture: ComponentFixture<FooterComponent>;
-  let authService: jasmine.SpyObj<AuthService>;
-  let logger: jasmine.SpyObj<NGXLogger>;
+  let authService: MockedObject<AuthService>;
+  let logger: MockedObject<NGXLogger>;
   let tokenChangedSubject: BehaviorSubject<void>;
 
   beforeEach(async () => {
     tokenChangedSubject = new BehaviorSubject<void>(undefined);
 
-    const authServiceSpy = jasmine.createSpyObj('AuthService', ['getUsername', 'isAuthenticated', 'checkRole'], {
+    const authServiceSpy = {
+      getUsername: vi.fn().mockName('AuthService.getUsername'),
+      isAuthenticated: vi.fn().mockName('AuthService.isAuthenticated'),
+      checkRole: vi.fn().mockName('AuthService.checkRole'),
       $tokenChanged: tokenChangedSubject.asObservable(),
-    });
+    };
 
-    const loggerSpy = jasmine.createSpyObj('NGXLogger', ['debug']);
+    const loggerSpy = {
+      debug: vi.fn().mockName('NGXLogger.debug'),
+    };
 
     await TestBed.configureTestingModule({
       imports: [FooterComponent],
@@ -45,13 +51,13 @@ describe('FooterComponent', () => {
       ],
     }).compileComponents();
 
-    authService = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
-    logger = TestBed.inject(NGXLogger) as jasmine.SpyObj<NGXLogger>;
+    authService = TestBed.inject(AuthService) as MockedObject<AuthService>;
+    logger = TestBed.inject(NGXLogger) as MockedObject<NGXLogger>;
 
     // Set default return values
-    authService.getUsername.and.returnValue('testuser');
-    authService.isAuthenticated.and.returnValue(false);
-    authService.checkRole.and.returnValue(false);
+    authService.getUsername.mockReturnValue('testuser');
+    authService.isAuthenticated.mockReturnValue(false);
+    authService.checkRole.mockReturnValue(false);
 
     fixture = TestBed.createComponent(FooterComponent);
     component = fixture.componentInstance;
@@ -82,15 +88,15 @@ describe('FooterComponent', () => {
 
   describe('authentication status', () => {
     it('should not display username when not authenticated', () => {
-      authService.isAuthenticated.and.returnValue(false);
+      authService.isAuthenticated.mockReturnValue(false);
       fixture.detectChanges();
       const usernameDiv = fixture.nativeElement.querySelector('#start-username');
       expect(usernameDiv).toBeFalsy();
     });
 
     it('should display username when authenticated', () => {
-      authService.isAuthenticated.and.returnValue(true);
-      authService.getUsername.and.returnValue('john.doe');
+      authService.isAuthenticated.mockReturnValue(true);
+      authService.getUsername.mockReturnValue('john.doe');
       fixture.detectChanges();
       const usernameDiv = fixture.nativeElement.querySelector('#start-username');
       expect(usernameDiv).toBeTruthy();
@@ -98,8 +104,8 @@ describe('FooterComponent', () => {
     });
 
     it('should display unknown when username is not available', () => {
-      authService.isAuthenticated.and.returnValue(true);
-      authService.getUsername.and.returnValue(null);
+      authService.isAuthenticated.mockReturnValue(true);
+      authService.getUsername.mockReturnValue(null);
       fixture.detectChanges();
       const usernameDiv = fixture.nativeElement.querySelector('#start-username');
       expect(usernameDiv.textContent).toContain('unknown');
@@ -122,48 +128,59 @@ describe('FooterComponent', () => {
   });
 
   describe('lifecycle', () => {
-    it('should call refreshUserInfo on init', () => {
-      spyOn<any>(component, 'refreshUserInfo');
+    it('should populate userInfo on init', () => {
+      authService.isAuthenticated.mockReturnValue(true);
+      authService.getUsername.mockReturnValue('init.user');
       fixture.detectChanges();
-      expect(component['refreshUserInfo']).toHaveBeenCalled();
+
+      expect(component.userInfo().isAuthenticated).toBe(true);
+      expect(component.userInfo().username).toBe('init.user');
     });
 
-    it('should subscribe to token changes on init', () => {
-      const refreshUserInfoSpy = spyOn<any>(component, 'refreshUserInfo').and.callThrough();
+    it('should update userInfo when token changes', () => {
+      authService.isAuthenticated.mockReturnValue(false);
       fixture.detectChanges();
-      const callCountAfterInit = refreshUserInfoSpy.calls.count();
+      expect(component.isAuthenticated()).toBe(false);
+
+      authService.isAuthenticated.mockReturnValue(true);
+      authService.getUsername.mockReturnValue('new.user');
       tokenChangedSubject.next();
-      expect(refreshUserInfoSpy.calls.count()).toBeGreaterThan(callCountAfterInit);
+
+      expect(component.isAuthenticated()).toBe(true);
+      expect(component.userInfo().username).toBe('new.user');
     });
 
-    it('should unsubscribe on destroy', () => {
+    it('should stop updating userInfo after destroy', () => {
+      authService.isAuthenticated.mockReturnValue(false);
       fixture.detectChanges();
-      spyOn<any>(component['unsubscriber'], 'next');
-      spyOn<any>(component['unsubscriber'], 'complete');
+
       component.ngOnDestroy();
-      expect(component['unsubscriber'].next).toHaveBeenCalled();
-      expect(component['unsubscriber'].complete).toHaveBeenCalled();
+
+      authService.isAuthenticated.mockReturnValue(true);
+      authService.getUsername.mockReturnValue('after.destroy');
+      tokenChangedSubject.next();
+
+      expect(component.isAuthenticated()).toBe(false);
     });
   });
 
   describe('user info update', () => {
-    it('should update userInfo signal when refreshUserInfo is called', () => {
-      authService.isAuthenticated.and.returnValue(true);
-      authService.getUsername.and.returnValue('jane.smith');
-      fixture.detectChanges();
-
-      expect(component.userInfo().isAuthenticated).toBe(true);
-      expect(component.userInfo().username).toBe('jane.smith');
-    });
-
     it('should set isAuthenticated computed signal correctly', () => {
-      authService.isAuthenticated.and.returnValue(true);
+      authService.isAuthenticated.mockReturnValue(true);
       fixture.detectChanges();
       expect(component.isAuthenticated()).toBe(true);
 
-      authService.isAuthenticated.and.returnValue(false);
-      component['refreshUserInfo']();
+      authService.isAuthenticated.mockReturnValue(false);
+      tokenChangedSubject.next();
       expect(component.isAuthenticated()).toBe(false);
+    });
+
+    it('should fallback to unknown when username is null', () => {
+      authService.isAuthenticated.mockReturnValue(true);
+      authService.getUsername.mockReturnValue(null);
+      fixture.detectChanges();
+
+      expect(component.userInfo().username).toBe('unknown');
     });
   });
 });

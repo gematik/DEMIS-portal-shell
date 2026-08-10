@@ -58,8 +58,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "1.5mb",
-                  "maximumError": "2mb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "2.5mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -119,26 +119,7 @@
           }
         },
         "test": {
-          "builder": "@angular/build:karma",
-          "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
-            "tsConfig": "tsconfig.spec.json",
-            "inlineStyleLanguage": "scss",
-            "karmaConfig": "karma.conf.js",
-            "assets": ["src/favicon.ico", "src/assets"],
-            "styles": [
-              "node_modules/material-icons/iconfont/material-icons.css",
-              "node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "node_modules/@gematik/demis-portal-theme-library/demis-theme.css",
-              "node_modules/bootstrap/dist/css/bootstrap-grid.min.css",
-              "src/styles.scss"
-            ],
-            "scripts": [],
-            "codeCoverage": true,
-            "codeCoverageExclude": ["src/test/**/*"],
-            "preserveSymlinks": true,
-            "watch": false
-          }
+          "builder": "@@angular/build:unit-test"
         }
       }
     }

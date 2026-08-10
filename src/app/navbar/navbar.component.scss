@@ -2,71 +2,18 @@
   flex: 1 1 auto;
 }
 
-// sets submenu width to button width - DEPRECATED - can be removed when FEATURE_FLAG_PORTAL_HEADER_FOOTER is removed
-::ng-deep .menu-width_pathogen {
-  min-width: 336px !important;
-}
-
-::ng-deep .menu-width_disease {
-  min-width: 216px !important;
-}
-
 .mat-toolbar-row, .mat-toolbar-single-row {
   padding-right: 40px;
   padding-left: 23px; //40-17px from Logo left-margin
   background-color: var(--color-white);
 }
 
-.navbar-tab-group {
-  a {
-    font-family: Verdana, sans-serif;
-    font-size: 17px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 22px;
+.btn-navbar-auth,
+.menu-button {
+  font-size: 17px;
 
-    &:hover {
-      background-color: var(--color-neutral-lighter);
-    }
-  }
-
-  .navbar-menu-btn {
-    height: 48px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 21px;
-    padding-top: 3px;
-    font-size: 17px;
-  }
-
-  .mat-icon {
-    font-size: 24px;
-    margin-bottom: 8px;
-  }
-
-  #btn-burger-menu-in-navbar {
-    .mat-mdc-button-persistent-ripple {
-      border-radius: 0;
-    }
-  }
-
-  //"abmelden"/"anmelden"/"menu"
-  .btn-navbar-auth,
-  .menu-button {
-    font-size: 17px;
-
-    &:hover {
-      background-color: var(--color-neutral-lighter);
-    }
-  }
-
-  .active-tab {
-    font-weight: bold;
-  }
-
-  .inactive-tab {
-    border-bottom: 3px solid transparent;
+  &:hover {
+    background-color: var(--color-neutral-lighter);
   }
 }
 

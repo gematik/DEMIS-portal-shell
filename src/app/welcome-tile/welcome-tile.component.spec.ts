@@ -15,6 +15,7 @@
     find details in the "Readme" file.
  */
 
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { WelcomeTileComponent } from './welcome-tile.component';
 import { MockBuilder, MockedComponentFixture, MockRender } from 'ng-mocks';
 import { WelcomeTileConfig } from '../welcome/welcome.component';
@@ -31,7 +32,7 @@ describe('WelcomeTileComponent', () => {
   beforeEach(() => {
     return MockBuilder(WelcomeTileComponent).provide({
       provide: Router,
-      useValue: { navigateByUrl: jasmine.createSpy('navigateByUrl') },
+      useValue: { navigateByUrl: vi.fn() },
     });
   });
 
@@ -70,8 +71,8 @@ describe('WelcomeTileComponent', () => {
 
   describe('handleTileClick', () => {
     it('should navigate to destination when tile is expandable', () => {
-      spyOn(component, 'isTileExpandable').and.returnValue(true);
-      spyOn(component.toggle, 'emit');
+      vi.spyOn(component, 'isTileExpandable').mockReturnValue(true);
+      vi.spyOn(component.toggle, 'emit');
       component.config().destinationRouterLink = '/test-route';
 
       component.handleTileClick();
@@ -81,7 +82,7 @@ describe('WelcomeTileComponent', () => {
     });
 
     it('should navigate to destination when tile is not expandable', () => {
-      spyOn(component, 'isTileExpandable').and.returnValue(false);
+      vi.spyOn(component, 'isTileExpandable').mockReturnValue(false);
       component.config().destinationRouterLink = '/test-route';
 
       component.handleTileClick();
@@ -104,7 +105,7 @@ describe('WelcomeTileComponent', () => {
     it('should return chevron_right when tile is not expandable', () => {
       fixture.componentInstance.isExpanded = false;
       fixture.detectChanges();
-      spyOn(component, 'isTileExpandable').and.returnValue(false);
+      vi.spyOn(component, 'isTileExpandable').mockReturnValue(false);
 
       expect(component.getIconName()).toBe('chevron_right');
     });
@@ -112,7 +113,7 @@ describe('WelcomeTileComponent', () => {
     it('should return keyboard_arrow_up when tile is expandable and expanded', () => {
       fixture.componentInstance.isExpanded = true;
       fixture.detectChanges();
-      spyOn(component, 'isTileExpandable').and.returnValue(true);
+      vi.spyOn(component, 'isTileExpandable').mockReturnValue(true);
 
       expect(component.getIconName()).toBe('keyboard_arrow_up');
     });
@@ -120,7 +121,7 @@ describe('WelcomeTileComponent', () => {
     it('should return keyboard_arrow_down when tile is expandable and not expanded', () => {
       fixture.componentInstance.isExpanded = false;
       fixture.detectChanges();
-      spyOn(component, 'isTileExpandable').and.returnValue(true);
+      vi.spyOn(component, 'isTileExpandable').mockReturnValue(true);
 
       expect(component.getIconName()).toBe('keyboard_arrow_down');
     });
@@ -130,7 +131,7 @@ describe('WelcomeTileComponent', () => {
     it('should return chevron-right-logo when tile is not expandable', () => {
       fixture.componentInstance.isExpanded = false;
       fixture.detectChanges();
-      spyOn(component, 'isTileExpandable').and.returnValue(false);
+      vi.spyOn(component, 'isTileExpandable').mockReturnValue(false);
 
       expect(component.getIconType()).toBe('chevron-right-logo');
     });
@@ -138,7 +139,7 @@ describe('WelcomeTileComponent', () => {
     it('should return chevron-up-logo when tile is expandable and expanded', () => {
       fixture.componentInstance.isExpanded = true;
       fixture.detectChanges();
-      spyOn(component, 'isTileExpandable').and.returnValue(true);
+      vi.spyOn(component, 'isTileExpandable').mockReturnValue(true);
 
       expect(component.getIconType()).toBe('chevron-up-logo');
     });
@@ -146,7 +147,7 @@ describe('WelcomeTileComponent', () => {
     it('should return chevron-down-logo when tile is expandable and not expanded', () => {
       fixture.componentInstance.isExpanded = false;
       fixture.detectChanges();
-      spyOn(component, 'isTileExpandable').and.returnValue(true);
+      vi.spyOn(component, 'isTileExpandable').mockReturnValue(true);
 
       expect(component.getIconType()).toBe('chevron-down-logo');
     });

@@ -42,12 +42,6 @@
   text-align: left;
 }
 
-//deprecated: can be removed when FEATURE_FLAG_PORTAL_HEADER_FOOTER is removed
-.bottom-positioned {
-  position: absolute;
-  bottom: 0;
-}
-
 #btn-welcome-auth-login {
   margin-top: 2.5%;
   border: 1px solid black;
@@ -87,20 +81,6 @@
   height: 24px;
   font-size: 24px;
   font-weight: 700;
-}
-
-.footer_deprecated {
-  width: 100%;
-  z-index: 1;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  justify-content: space-between;
-
-  //still needed for deprecated footer but must not be there in new footer
-  .authenticated-as {
-    padding-right: 10px;
-  }
 }
 
 

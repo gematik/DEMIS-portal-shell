@@ -15,6 +15,7 @@
     find details in the "Readme" file.
  */
 
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { SecurityContext } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -57,7 +58,7 @@ describe('MarkdownService', () => {
   });
 
   it('should use DomSanitizer.sanitize with SecurityContext.HTML', () => {
-    spyOn(sanitizer, 'sanitize').and.callThrough();
+    vi.spyOn(sanitizer, 'sanitize');
     const markdown = '*test*';
     const convertedHtml = '<p><em>test</em></p>\n';
     service.convertToSanitizedHtml(markdown);

@@ -29,20 +29,12 @@ export function isNonNominalFollowUpNotificationActivated(): boolean {
   return environment.featureFlags?.FEATURE_FLAG_FOLLOW_UP_7_3 ?? false;
 }
 
-export function FEATURE_FLAG_PORTAL_HEADER_FOOTER(): boolean {
-  return environment.featureFlags?.FEATURE_FLAG_PORTAL_HEADER_FOOTER ?? false;
-}
-
 export function FEATURE_FLAG_SURVEILLANCE_PROGRAM_ADMISSION_ENABLED(): boolean {
   return environment.featureFlags?.FEATURE_FLAG_SURVEILLANCE_PROGRAM_ADMISSION_ENABLED ?? false;
 }
 
 export function FEATURE_FLAG_PORTAL_ARE_ENABLED(): boolean {
   return environment.featureFlags?.FEATURE_FLAG_PORTAL_ARE_ENABLED ?? false;
-}
-
-export function FEATURE_FLAG_PORTAL_ACCESSIBILITY(): boolean {
-  return environment.featureFlags?.FEATURE_FLAG_PORTAL_ACCESSIBILITY ?? false;
 }
 
 export function FEATURE_FLAG_FOOTER_LINKS_CORRECTION(): boolean {
@@ -113,7 +105,6 @@ export namespace AppConstants {
     PRIVACY_POLICY = 'Datenschutzerklärung',
     START_PAGE_LINK = 'Startseite',
     SUBMIT_BED_OCCUPANCY_LINK = 'Bettenbelegung',
-    SUPPORT_QUESTIONS_LINK = 'Supportanfragen', //can be removed when FEATURE_FLAG_PORTAL_HEADER_FOOTER is removed
     SUPPORT_FAQ_LINK = 'FAQ',
     CONTACT_SUPPORT = 'Kontakt/Support',
     SURVSTAT_LINK = 'Meldedaten abfragen',

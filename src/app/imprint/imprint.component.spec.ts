@@ -15,6 +15,7 @@
     find details in the "Readme" file.
  */
 
+import { beforeEach, describe, expect, it } from 'vitest';
 import { ImprintComponent } from './imprint.component';
 import { MockBuilder, MockedComponentFixture, MockRender, MockService } from 'ng-mocks';
 import { NGXLogger } from 'ngx-logger';

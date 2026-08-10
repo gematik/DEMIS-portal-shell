@@ -15,20 +15,11 @@
     find details in the "Readme" file.
  */
 
-import { beforeEach, describe, expect, it } from 'vitest';
-import { TestBed } from '@angular/core/testing';
+import '@angular/compiler';
+import '@analogjs/vitest-angular/setup-zone';
+import { setupTestBed } from '@analogjs/vitest-angular/setup-testbed';
 
-import { KcConfigService } from './kc-config.service';
-
-describe('KcConfigService', () => {
-  let service: KcConfigService;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(KcConfigService);
-  });
-
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+setupTestBed({
+  zoneless: false,
+  teardown: { destroyAfterEach: true },
 });

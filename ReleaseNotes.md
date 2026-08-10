@@ -2,6 +2,15 @@
 
 # Release portal-shell
 
+## Release 1.8.3
+- Add focus indicator for all MFs (text-fields and buttons)
+- Removed feature flag FEATURE_FLAG_PORTAL_HEADER_FOOTER: new header and footer are now always active
+- Fixed third party license collection
+- Removed FEATURE_FLAG_PORTAL_ACCESSIBILITY
+- Updated @gematik/demis-portal-theme-library to 1.3.1 for contrast improvements
+- Changed arrow color for enabled select inputs to primary theme color
+- Migrated from Karma/Jasmine to Vitest/Browser/Playwright for unit testing
+
 ## Release 1.8.2
 
 - Fixed styling errors for different spacings and diversity problems
@@ -99,7 +108,7 @@
 ## Release 1.4.1
 
 - Added sub-tiles and routing for §6.1 follow-up notification (FEATURE_FLAG_FOLLOW_UP_NOTIFICATION_PORTAL_DISEASE)
-- Added new footer (FEATURE_FLAG_PORTAL_HEADER_FOOTER)
+- Added new footer (FEATURE_FLAG_PORTAL_HEADER_FOOTER) - new redesigned footer with navigation links
 
 ## Release 1.4.0
 
