@@ -20,7 +20,7 @@ import { AppConstants } from 'src/app/shared/app-constants';
 import { isDevMode } from '@angular/core';
 import { LOGGER_CONFIG_FOR_DEV, LOGGER_CONFIG_FOR_PROD } from '@gematik/demis-portal-core-library';
 
-declare let window: any;
+declare let window: Window & { config?: unknown };
 
 interface IdentityProvider {
   baseUrl: string;
@@ -43,6 +43,11 @@ export interface FeatureFlags {
   FEATURE_FLAG_ANONYMOUS_NOTIFICATION?: boolean;
   FEATURE_FLAG_FOOTER_LINKS_CORRECTION?: boolean;
   FEATURE_FLAG_PRIVACY_POLICY_TEXT_CHANGE?: boolean;
+  FEATURE_FLAG_FOLLOW_UP_7_3?: boolean;
+  FEATURE_FLAG_SURVEILLANCE_PROGRAM_ADMISSION_ENABLED?: boolean;
+  FEATURE_FLAG_PORTAL_ARE_ENABLED?: boolean;
+  FEATURE_FLAG_PORTAL_BED_TEXT?: boolean;
+  [key: string]: boolean | undefined;
 }
 
 interface GatewayPaths {
@@ -151,8 +156,8 @@ export declare type StageIndicator = { [Property in keyof _StageIndicator]: _Sta
 
 export class DynamicEnvironment {
   public headers: HttpHeaders;
-  public local: boolean = false;
-  public pathToEnvironment: string = 'environment.json';
+  public local = false;
+  public pathToEnvironment = 'environment.json';
 
   constructor() {
     this.headers = new HttpHeaders({
@@ -161,7 +166,7 @@ export class DynamicEnvironment {
   }
 
   private get config(): Configuration {
-    return window.config;
+    return window.config as Configuration;
   }
 
   public get isLocal(): boolean {
@@ -237,8 +242,8 @@ export class DynamicEnvironment {
     };
   }
 
-  public get featureFlags(): any {
-    return this.config?.featureFlags;
+  public get featureFlags(): FeatureFlags {
+    return this.config?.featureFlags ?? {};
   }
 
   /**
@@ -275,7 +280,7 @@ export class DynamicEnvironment {
   }
 
   private get identityProviderDemis(): IdentityProvider | undefined {
-    const demisTenant = this.identityProviders?.filter(provider => provider.tenant === 'demis' && !provider.hasOwnProperty('clientId'));
+    const demisTenant = this.identityProviders?.filter(provider => provider.tenant === 'demis' && !Object.prototype.hasOwnProperty.call(provider, 'clientId'));
     return demisTenant ? demisTenant[0] : undefined;
   }
 

@@ -51,7 +51,7 @@
             <app-welcome-tile class="column" id="welcome-tile-{{ tile.config.id }}" [config]="tile.config"
                               [animated]="true"
                               [isExpanded]="expandedTileIndex() === index"
-                              (toggle)="changeExpandedStateForTile(index)"/>
+                              (toggleExpand)="changeExpandedStateForTile(index)"/>
           }
         }
       </div>

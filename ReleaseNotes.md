@@ -2,7 +2,14 @@
 
 # Release portal-shell
 
+## Release 1.8.4
+
+- Added "required field" information styling for all MFs
+- Added linter and fixed important linting issues
+
 ## Release 1.8.3
+
+- Changed text for bed occupancy tile (FEATURE_FLAG_PORTAL_BED_TEXT)
 - Add focus indicator for all MFs (text-fields and buttons)
 - Removed feature flag FEATURE_FLAG_PORTAL_HEADER_FOOTER: new header and footer are now always active
 - Fixed third party license collection
@@ -10,6 +17,7 @@
 - Updated @gematik/demis-portal-theme-library to 1.3.1 for contrast improvements
 - Changed arrow color for enabled select inputs to primary theme color
 - Migrated from Karma/Jasmine to Vitest/Browser/Playwright for unit testing
+- upgraded playwright to 1.62.1
 
 ## Release 1.8.2
 

@@ -68,7 +68,7 @@ describe('WelcomeComponent', () => {
   );
   describe('Tests for tiles', () => {
     beforeEach(() => {
-      let config = TestFixtures.CONFIG;
+      const config = TestFixtures.CONFIG;
       (window as any)['config'] = config;
     });
 

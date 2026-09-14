@@ -72,13 +72,13 @@ describe('WelcomeTileComponent', () => {
   describe('handleTileClick', () => {
     it('should navigate to destination when tile is expandable', () => {
       vi.spyOn(component, 'isTileExpandable').mockReturnValue(true);
-      vi.spyOn(component.toggle, 'emit');
+      vi.spyOn(component.toggleExpand, 'emit');
       component.config().destinationRouterLink = '/test-route';
 
       component.handleTileClick();
 
       expect(router.navigateByUrl).toHaveBeenCalledWith('/test-route');
-      expect(component.toggle.emit).not.toHaveBeenCalled();
+      expect(component.toggleExpand.emit).not.toHaveBeenCalled();
     });
 
     it('should navigate to destination when tile is not expandable', () => {

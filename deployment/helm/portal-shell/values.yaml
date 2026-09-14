@@ -51,6 +51,7 @@ config:
     FEATURE_FLAG_PORTAL_ARE_ENABLED: false
     FEATURE_FLAG_FOLLOW_UP_7_3: false
     FEATURE_FLAG_PRIVACY_POLICY_TEXT_CHANGE: false
+    FEATURE_FLAG_PORTAL_BED_TEXT: false
   ## Information Banners to be shown above the navigation bar in the portal
   ##
   ## E.g.

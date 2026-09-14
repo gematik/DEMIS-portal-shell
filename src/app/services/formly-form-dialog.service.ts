@@ -73,7 +73,7 @@ export class FormlyFormDialogService {
     return this.dialogRef.afterClosed();
   }
 
-  closeDialog(result?: any): void {
+  closeDialog(result?: unknown): void {
     if (this.dialogRef) {
       this.dialogRef.close(result);
       this.dialogRef = null;

@@ -22,5 +22,5 @@ import localeDeExtra from '@angular/common/locales/extra/de';
 // CONST:..................................
 
 /*** id: de-DE ***/
-export const LOCALE_ID_DE: string = 'de-DE';
+export const LOCALE_ID_DE = 'de-DE';
 registerLocaleData(localeDe, LOCALE_ID_DE, localeDeExtra);

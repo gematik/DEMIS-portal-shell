@@ -33,7 +33,7 @@ export class LocalStorageService implements Storage {
       return null;
     }
     const storageItem = localStorage.getItem(key);
-    return !!storageItem ? (JSON.parse(storageItem) as T) : null;
+    return storageItem ? (JSON.parse(storageItem) as T) : null;
   }
 
   removeItem(key: string): void {
@@ -52,11 +52,11 @@ export class LocalStorageService implements Storage {
     if (window.localStorage) {
       const storagItem = localStorage.getItem(key);
       const currentItems: string[] = storagItem ? JSON.parse(storagItem) : [];
-      let itemArray = [];
+      const itemArray = [];
       if (!currentItems?.includes(value as string)) {
         itemArray.push(value);
         if (currentItems) {
-          for (let v of currentItems) {
+          for (const v of currentItems) {
             itemArray.push(v);
           }
         }

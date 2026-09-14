@@ -25,7 +25,7 @@ import { AuthService } from './auth.service';
 export class AuthInterceptor implements HttpInterceptor {
   private readonly authService = inject(AuthService);
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     const token = this.authService.getEncodedToken();
 
     if (this.isTokenNeeded(req) && !!token) {
@@ -39,7 +39,7 @@ export class AuthInterceptor implements HttpInterceptor {
     }
   }
 
-  private isTokenNeeded(req: HttpRequest<any>) {
+  private isTokenNeeded(req: HttpRequest<unknown>) {
     const arr = [environment.pathToHospitalLocations, environment.pathToBedOccupancy, environment.pathToHospitalization, environment.pathToPathogen];
     return arr.some(url => req.url.includes(url));
   }

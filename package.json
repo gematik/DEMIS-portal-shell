@@ -1,9 +1,9 @@
 {
   "name": "portal-shell",
-  "version": "1.8.3-snapshot",
+  "version": "1.8.4-snapshot",
   "overrides": {
     "browserslist": "4.28.7",
-    "fast-uri": "3.1.5",
+    "fast-uri": "3.1.7",
     "watchpack": "2.5.2"
   },
   "scripts": {
@@ -20,7 +20,8 @@
     "fix-junit-time": "node scripts/fix-junit-time.mjs",
     "docker": "docker build -t europe-west3-docker.pkg.dev/gematik-all-infra-prod/demis-dev/portal-shell:latest .",
     "build:single-spa:portal-shell": "ng build portal-shell --configuration development",
-    "serve:single-spa:portal-shell": "ng s --project portal-shell --disable-host-check --port 4200 --live-reload false"
+    "serve:single-spa:portal-shell": "ng s --project portal-shell --disable-host-check --port 4200 --live-reload false",
+    "lint": "ng lint"
   },
   "private": true,
   "dependencies": {
@@ -53,28 +54,27 @@
   "devDependencies": {
     "@analogjs/vite-plugin-angular": "2.6.4",
     "@analogjs/vitest-angular": "2.6.4",
-    "@angular-eslint/builder": "21.4.0",
-    "@angular-eslint/eslint-plugin": "21.4.0",
-    "@angular-eslint/eslint-plugin-template": "21.4.0",
-    "@angular-eslint/schematics": "21.4.0",
-    "@angular-eslint/template-parser": "21.4.0",
     "@angular/build": "21.2.19",
     "@angular/cli": "21.2.19",
     "@angular/compiler-cli": "21.2.19",
+    "@eslint/js": "^10.0.1",
     "@types/jasmine": "6.0.0",
     "@types/luxon": "3.7.1",
     "@types/node": "25.9.3",
     "@types/systemjs": "6.15.4",
-    "@typescript-eslint/eslint-plugin": "8.61.1",
-    "@typescript-eslint/parser": "8.61.1",
     "@vitest/browser": "4.1.10",
     "@vitest/browser-playwright": "4.1.10",
     "@vitest/coverage-v8": "4.1.10",
-    "eslint": "9.39.2",
+    "angular-eslint": "21.4.0",
+    "eslint": "^10.0.2",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-prettier": "5.5.5",
+    "@angular-eslint/builder": "21.4.0",
     "ng-mocks": "14.15.3",
-    "playwright": "1.61.1",
+    "playwright": "1.62.1",
     "rimraf": "6.1.3",
     "typescript": "5.9.3",
+    "typescript-eslint": "8.69.0",
     "vitest": "4.1.10",
     "webpack": "5.107.2"
   },

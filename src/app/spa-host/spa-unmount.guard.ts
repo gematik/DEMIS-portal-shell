@@ -36,7 +36,7 @@ export class SpaUnmountGuard implements CanDeactivate<SpaHostComponent> {
       return true;
     }
 
-    return component.unmount().pipe(map(_ => true));
+    return component.unmount().pipe(map(() => true));
   }
 
   private extractAppDataFromRouteTree(routeFragment: ActivatedRouteSnapshot): string | undefined {

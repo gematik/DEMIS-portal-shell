@@ -28,8 +28,8 @@
   <mat-expansion-panel
     [id]="'tile-button-' + config().id" class="tile-button"
     [attr.aria-label]="config().titleTextRows.join(' ') + ' - ' + config().contentParagraphs[0]"
-    [attr.title]="config().tooltip" (click)="toggle.emit()" (keydown.enter)="toggle.emit()"
-    (keydown.space)="toggle.emit()" [expanded]="isExpanded()" hideToggle>
+    [attr.title]="config().tooltip" (click)="toggleExpand.emit()" (keydown.enter)="toggleExpand.emit()"
+    (keydown.space)="toggleExpand.emit()" [expanded]="isExpanded()" hideToggle>
     <mat-expansion-panel-header>
       <ng-container *ngTemplateOutlet="tileContent" />
     </mat-expansion-panel-header>

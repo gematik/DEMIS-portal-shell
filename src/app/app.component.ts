@@ -73,8 +73,8 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    let queryString = window.location.search;
-    let urlParams = new URLSearchParams(queryString);
+    const queryString = globalThis.location.search;
+    const urlParams = new URLSearchParams(queryString);
     const injectedToken = urlParams.get(this.TOKEN_PARAM);
     if (environment.featureFlags.CONFIG_TOKEN_INJECTION_ENABLED && !!injectedToken) {
       this.injectToken(injectedToken);

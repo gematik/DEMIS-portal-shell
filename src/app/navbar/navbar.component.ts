@@ -19,7 +19,7 @@ import { Component, inject, input, OnDestroy, OnInit, Signal } from '@angular/co
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
-import { filter, Observable, Subject, takeUntil, firstValueFrom } from 'rxjs';
+import { filter, firstValueFrom, Observable, Subject, takeUntil } from 'rxjs';
 import { AuthService, KcConfigService } from 'src/app/services';
 import {
   AppConstants,
@@ -35,9 +35,9 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { FormlyFormDialogProps, FormlyFormDialogService } from '../services/formly-form-dialog.service';
 import { InfoBannerSectionComponent } from '../info-banner-section/info-banner-section.component';
 import { MatToolbar } from '@angular/material/toolbar';
-import { MatButton, MatIconButton } from '@angular/material/button';
-import { MatTabNav, MatTabLink, MatTabNavPanel } from '@angular/material/tabs';
-import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MatButton } from '@angular/material/button';
+import { MatTabNavPanel } from '@angular/material/tabs';
+import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
 import { MatIcon } from '@angular/material/icon';
 import { AccessibleTextComponent } from '../shared/components/accessible-text/accessible-text.component';
 import { MatDivider } from '@angular/material/list';
@@ -73,25 +73,25 @@ export class NavbarComponent implements OnInit, OnDestroy {
   private readonly http = inject(HttpClient);
   readonly title = input<string>();
 
-  activeTab: string = '';
+  activeTab = '';
   isLoggedIn: Signal<boolean>;
 
   readonly C = AppConstants;
 
   readonly env = environment;
-  isPathogenTabActive: boolean = false;
-  isDiseaseTabActive: boolean = false;
-  hasBedOccupencySenderRole: boolean = false;
-  hasDiseaseNotificationSenderRole: boolean = false;
-  hasPathogenNotificationSenderRole: boolean = false;
-  hasIgsDataSenderRole: boolean = false;
-  hasIgsNotificationSenderRole: boolean = false;
-  hasAreNotificationSenderRole: boolean = false;
+  isPathogenTabActive = false;
+  isDiseaseTabActive = false;
+  hasBedOccupencySenderRole = false;
+  hasDiseaseNotificationSenderRole = false;
+  hasPathogenNotificationSenderRole = false;
+  hasIgsDataSenderRole = false;
+  hasIgsNotificationSenderRole = false;
+  hasAreNotificationSenderRole = false;
   // Nonnominal users always have both roles so there is no need to distinguish between pathogen and disease. Same goes for welcome tile
-  isNonNominalTabActive: boolean = false;
-  isAnonymousTabActive: boolean = false;
-  showNonNominalLinks: boolean = false;
-  showAnonymousLinks: boolean = false;
+  isNonNominalTabActive = false;
+  isAnonymousTabActive = false;
+  showNonNominalLinks = false;
+  showAnonymousLinks = false;
 
   readonly packageJson = inject(PackageJsonService);
 
@@ -128,8 +128,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   blurActiveMenuButtons(): void {
     const menuButtons = document.querySelectorAll('.navbar-menu-btn');
-    menuButtons.forEach((button: any) => {
-      if (button.blur) {
+    menuButtons.forEach(button => {
+      if (button instanceof HTMLElement) {
         button.blur();
       }
     });
@@ -200,7 +200,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     return true;
   }
 
-  private handleRegistrationSuccess(data: any): void {
+  private handleRegistrationSuccess(_data: unknown): void {
     this.oidcSecurityService.forceRefreshSession().subscribe({
       next: () => {
         this.showInfoDialog(
@@ -223,7 +223,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     });
   }
 
-  private requestSurveillanceAccess(data: any): Observable<any> {
+  private requestSurveillanceAccess(data: Record<string, unknown>): Observable<unknown> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${this.authService.getEncodedToken()}`,
