@@ -24,7 +24,7 @@ import { environment } from '../../environments/environment';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 export const kcAuthGuard = (next: ActivatedRouteSnapshot): boolean => {
-  if (next.data.hasOwnProperty('bypassFeatureFlag')) {
+  if (Object.hasOwn(next.data, 'bypassFeatureFlag')) {
     if (environment.featureFlags[next.data['bypassFeatureFlag']]) {
       return true;
     }

@@ -91,7 +91,7 @@ export class FormlyFormDialogComponent {
     if (!fields) {
       return [];
     }
-    return fields.map((field, index) => {
+    return fields.map(field => {
       field.props = field.props ?? {};
       return {
         ...field,
@@ -104,6 +104,7 @@ export class FormlyFormDialogComponent {
           ...field.validation,
           messages: {
             ...field.validation?.messages,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             externalValidation: (err: any) => err,
           },
         },
@@ -132,7 +133,8 @@ export class FormlyFormDialogComponent {
     Object.keys(this.form.controls).forEach(key => {
       const control = this.form.get(key);
       this.errorNamesToCleanOnChange?.forEach(errorName => {
-        const { [errorName]: removedError, ...remainingErrors } = control?.errors || {};
+        const controlErrors = control?.errors ?? {};
+        const remainingErrors = Object.fromEntries(Object.entries(controlErrors).filter(([key]) => key !== errorName));
         control?.setErrors(Object.keys(remainingErrors).length > 0 ? remainingErrors : null);
       });
     });

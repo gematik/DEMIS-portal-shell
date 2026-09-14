@@ -74,7 +74,7 @@ export class AuthService {
     this.oidcSecurityService
       .getAccessToken()
       .pipe(
-        catchError((err, caught) => {
+        catchError(err => {
           this.logger.error('Error getting JWT token:', err);
           // return empty string to reset token
           return of('');
@@ -89,7 +89,7 @@ export class AuthService {
     if (encodedToken) {
       this.token = this.jwtHelperService.decodeToken(encodedToken);
       this.encodedToken = encodedToken;
-      (window as any)['token'] = encodedToken;
+      (globalThis as unknown as Record<string, unknown>)['token'] = encodedToken;
     } else {
       this.resetToken();
     }
@@ -109,7 +109,7 @@ export class AuthService {
       return;
     }
     this.token = undefined;
-    (window as any)['token'] = undefined;
+    (globalThis as unknown as Record<string, unknown>)['token'] = undefined;
     this.encodedToken = '';
   }
 

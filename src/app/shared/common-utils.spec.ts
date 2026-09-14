@@ -15,24 +15,24 @@
     find details in the "Readme" file.
  */
 
-import { AbstractSecurityStorage } from 'angular-auth-oidc-client';
-import { Injectable } from '@angular/core';
+import { formatDate, getLocaleId } from '@angular/common';
+import { describe, expect, it } from 'vitest';
+import { LOCALE_ID_DE } from './common-utils';
 
-@Injectable()
-export class KcStorageService implements AbstractSecurityStorage {
-  read(key: string) {
-    return localStorage.getItem(key);
-  }
+describe('common-utils', () => {
+  it('exports LOCALE_ID_DE with value "de-DE"', () => {
+    expect(LOCALE_ID_DE).toBe('de-DE');
+  });
 
-  write(key: string, value: string): void {
-    localStorage.setItem(key, value);
-  }
+  it('registers the de-DE locale data on import', () => {
+    // getLocaleId throws if the locale data has not been registered.
+    expect(() => getLocaleId(LOCALE_ID_DE)).not.toThrow();
+    expect(getLocaleId(LOCALE_ID_DE)).toBe('de');
+  });
 
-  remove(key: string): void {
-    localStorage.removeItem(key);
-  }
-
-  clear(): void {
-    localStorage.clear();
-  }
-}
+  it('formats dates using the registered German locale', () => {
+    const date = new Date(2024, 0, 15); // 15. Januar 2024
+    const formatted = formatDate(date, 'longDate', LOCALE_ID_DE);
+    expect(formatted).toBe('15. Januar 2024');
+  });
+});

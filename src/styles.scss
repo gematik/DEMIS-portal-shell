@@ -20,6 +20,35 @@
   margin-bottom: 30px;
 }
 
+/* Shared form intro and required-field hint styles for microfrontends */
+.demis-form-intro {
+  display: block;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.demis-form-required-fields-hint-row {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.demis-form-required-fields-hint {
+  display: block;
+  width: 100%;
+  margin: 20px 0 0;
+  text-align: right !important;
+  font-size: 13px;
+  font-weight: normal;
+  color: var(--color-neutral-dark);
+}
+
+.demis-form-required-fields-hint-row .demis-form-required-fields-hint {
+  width: auto;
+  margin: 0;
+}
+
 .wide-tooltip {
   border-radius: 12px;
 }

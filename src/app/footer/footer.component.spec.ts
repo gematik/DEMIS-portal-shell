@@ -26,7 +26,6 @@ describe('FooterComponent', () => {
   let component: FooterComponent;
   let fixture: ComponentFixture<FooterComponent>;
   let authService: MockedObject<AuthService>;
-  let logger: MockedObject<NGXLogger>;
   let tokenChangedSubject: BehaviorSubject<void>;
 
   beforeEach(async () => {
@@ -52,7 +51,6 @@ describe('FooterComponent', () => {
     }).compileComponents();
 
     authService = TestBed.inject(AuthService) as MockedObject<AuthService>;
-    logger = TestBed.inject(NGXLogger) as MockedObject<NGXLogger>;
 
     // Set default return values
     authService.getUsername.mockReturnValue('testuser');

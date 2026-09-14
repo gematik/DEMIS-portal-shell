@@ -28,7 +28,7 @@ export class TypeGuardsService {
    * @param value The value to check.
    * @returns     True if the value is an array of strings, false otherwise.
    */
-  isStringArray(value: any): value is string[] {
+  isStringArray(value: unknown): value is string[] {
     return Array.isArray(value) && value.every(item => typeof item === 'string');
   }
 }

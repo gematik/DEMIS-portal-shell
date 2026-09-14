@@ -32,7 +32,7 @@ export class SpaHostComponent implements OnInit {
   @ViewChild('appContainer', { static: true })
   appContainerRef: ElementRef | undefined;
 
-  appName: string = '';
+  appName = '';
 
   ngOnInit() {
     this.appName = this.route.snapshot.data['app'];

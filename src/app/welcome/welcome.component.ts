@@ -38,7 +38,7 @@ import { UrlTree } from '@angular/router';
 import DISEASE_NON_NOMINAL = AppConstants.Titles.DISEASE_NON_NOMINAL;
 import DISEASE_NON_NOMINAL_FOLLOW_UP = AppConstants.Titles.DISEASE_NON_NOMINAL_FOLLOW_UP;
 
-declare type UserPermissions = {
+declare interface UserPermissions {
   hasBedOccupencySenderRole: boolean;
   hasPathogenNotificationRole: boolean;
   hasDiseaseNotificationSenderRole: boolean;
@@ -47,13 +47,13 @@ declare type UserPermissions = {
   hasAreNotificationSenderRole: boolean;
   hasNonNominalNotificationSenderRole: boolean;
   hasAnonymousSenderRole: boolean;
-};
+}
 
-declare type UserInfo = {
+declare interface UserInfo {
   isAuthenticated: boolean;
   username: string;
   permissions: UserPermissions;
-};
+}
 
 const INITIAL_USER_INFORMATION: UserInfo = {
   isAuthenticated: false,
@@ -70,17 +70,17 @@ const INITIAL_USER_INFORMATION: UserInfo = {
   },
 };
 
-export declare type WelcomeTileInfo = {
+export declare interface WelcomeTileInfo {
   config: WelcomeTileConfig;
   renderingCondition?: boolean;
-};
+}
 
-export declare type LogoImage = {
+export declare interface LogoImage {
   src: string;
   alt: string;
-};
+}
 
-export declare type WelcomeTileConfig = {
+export declare interface WelcomeTileConfig {
   id: string;
   titleTextRows: string[];
   tooltip: string;
@@ -89,7 +89,7 @@ export declare type WelcomeTileConfig = {
   contentParagraphs: string[];
   buttonLabel?: string;
   subTiles?: WelcomeTileInfo[];
-};
+}
 
 @Component({
   selector: 'app-welcome',
@@ -312,7 +312,9 @@ export class WelcomeComponent implements OnInit, OnDestroy {
             src: 'assets/images/bedoccupancy.svg',
             alt: 'Logo der Bettenbelegung Meldung',
           },
-          contentParagraphs: [AppConstants.InfoTexts.BED_OCCUPANCY],
+          contentParagraphs: [
+            environment.featureFlags?.FEATURE_FLAG_PORTAL_BED_TEXT ? AppConstants.InfoTexts.BED_OCCUPANCY : AppConstants.InfoTexts.BED_OCCUPANCY_DEPRECATED,
+          ],
           buttonLabel: 'Melden',
         },
       },

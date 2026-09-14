@@ -50,12 +50,12 @@ export function initIconLoaderService(iconLoaderService: IconLoaderService) {
 singleSpaStart();
 
 const appId = 'demis-notification-portal-mf-shell';
-const PORTAL_CONFIG_ERROR: string = 'PORTAL_CONFIG_ERROR';
+const PORTAL_CONFIG_ERROR = 'PORTAL_CONFIG_ERROR';
 
 fetch(environment.pathToEnvironment)
   .then(response => response.json())
   .then(config => {
-    (<any>window).config = config;
+    (window as unknown as { config: unknown }).config = config;
 
     sessionStorage.removeItem(PORTAL_CONFIG_ERROR);
 
@@ -109,7 +109,7 @@ fetch(environment.pathToEnvironment)
     })
       .then(module => {
         const rootZone = module.injector.get(NgZone);
-        const inner = (rootZone as any)['_inner'];
+        const inner = (rootZone as unknown as { _inner?: { _properties?: Record<string, boolean> } })._inner;
 
         if (inner?._properties) {
           inner._properties[appId] = true;

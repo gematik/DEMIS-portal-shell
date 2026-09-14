@@ -15,6 +15,7 @@
     find details in the "Readme" file.
  */
 
+/* eslint-disable @typescript-eslint/no-namespace */
 import { environment } from '../../environments/environment';
 
 export function isNonNominalNotificationActivated(): boolean {
@@ -113,7 +114,8 @@ export namespace AppConstants {
   export enum InfoTexts {
     ABOUT_UNAUTHENTICATED = 'Das Deutsche Elektronische Melde- und Informationssystem für den Infektionsschutz (DEMIS) ermöglicht bundesweit die elektronische Meldung gemäß Infektionsschutzgesetz (IfSG). Meldepflichtige Personen und Einrichtungen können im DEMIS-Meldeportal über ein Online-Formular Meldungen gemäß IfSG absetzen.',
     ABOUT_AUTHENTICATED = 'Über die unten aufgeführten Kacheln können Sie als meldepflichtige Person bzw. Einrichtung eine Meldung gemäß IfSG absetzen. Bitte klicken Sie auf die Ihrer Meldung entsprechenden Kachel.',
-    BED_OCCUPANCY = 'Meldung der Krankenhausbettenbelegung gemäß § 13 Abs. 7 IfSG',
+    BED_OCCUPANCY_DEPRECATED = 'Meldung der Krankenhausbettenbelegung gemäß § 13 Abs. 7 IfSG', // can be removed when FEATURE_FLAG_PORTAL_BED_TEXT is enabled
+    BED_OCCUPANCY = 'Meldung der Angaben zu nichtintensivmedizinischen somatischen Behandlungskapazitäten gemäß § 13 Abs. 7 Satz 1 Nr. 1 IfSG',
     DISEASE = 'Namentliche Meldung von Infektionskrankheiten (z.B. bei Verdacht, Erkrankung oder Tod) gemäß § 6 Abs. 1 Nr. 1 und 1a IfSG sowie § 6 Abs. 2 IfSG',
     DISEASE_SHORT = 'Meldung eines Nachweises von Infektionskrankheiten gemäß § 6 IfSG unter Angabe von Daten zur betroffenen Person',
     PATHOGEN = 'Namentliche Meldung eines Nachweises von Krankheitserregern (inkl. positiver Schnelltestergebnisse) gemäß § 7 Abs. 1 IfSG',

@@ -36,7 +36,7 @@ export class WelcomeTileComponent {
   readonly config = input.required<WelcomeTileConfig>();
   readonly animated = input<boolean>(false);
   readonly isExpanded = input(false);
-  readonly toggle = output<void>();
+  readonly toggleExpand = output<void>();
   readonly router = inject(Router);
 
   isTileExpandable(): boolean {

@@ -24,7 +24,7 @@ import { AppConstants } from 'src/app/shared/app-constants';
 import { environment } from '../../environments/environment';
 
 export const roleGuard: CanActivateFn = (next: ActivatedRouteSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree => {
-  if (next.data.hasOwnProperty('bypassFeatureFlag')) {
+  if (Object.hasOwn(next.data, 'bypassFeatureFlag')) {
     if (environment.featureFlags[next.data['bypassFeatureFlag']]) {
       return true;
     }
@@ -32,7 +32,7 @@ export const roleGuard: CanActivateFn = (next: ActivatedRouteSnapshot): Observab
   const authService = inject(AuthService);
   const toastrService = inject(ToastrService);
   let isAuthenticated = false;
-  if (!!next.data['role']) {
+  if (next.data['role']) {
     isAuthenticated = authService.checkRole(next.data['role']);
   }
   if (!isAuthenticated) {

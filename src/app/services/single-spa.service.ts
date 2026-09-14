@@ -24,9 +24,7 @@ import { tap } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class SingleSpaService {
-  private loadedParcels: {
-    [appName: string]: Parcel;
-  } = {};
+  private loadedParcels: Record<string, Parcel> = {};
 
   mount(appName: string, domElement: HTMLElement): Observable<unknown> {
     return from(System.import<ParcelConfig>(appName)).pipe(
