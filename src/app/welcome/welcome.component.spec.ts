@@ -53,7 +53,7 @@ describe('WelcomeComponent', () => {
       .keep(MaxHeightContentContainerComponent)
       .keep(NgTemplateOutlet)
       .mock(NGXLogger)
-      .mock(MessageDialogService, { error: errorSpy })
+      .mock(MessageDialogService, { showErrorDialog: errorSpy })
       .mock(MatCardModule)
       .mock(MatButtonModule)
       .provide({
@@ -189,9 +189,9 @@ describe('WelcomeComponent', () => {
       createComponent();
       expect(vi.mocked(errorSpy).mock.calls.length, 'should have been called once').toBe(1);
       const args = vi.mocked(errorSpy).mock.calls[0];
-      expect(args[0].errorTitle()).toBe('Fehler beim Laden der Konfiguration');
-      expect(args[0].errors().length).toBe(1);
-      expect(args[0].errors()[0].message).toBe(
+      expect(args[0].errorTitle).toBe('Fehler beim Laden der Konfiguration');
+      expect(args[0].errors.length).toBe(1);
+      expect(args[0].errors[0].text).toBe(
         'Achtung: Die Konfiguration konnte nicht geladen werden. Bitte die Anwendung neu starten. Falls der Fehler weiterhin auftritt, kontaktieren Sie bitte den Support.'
       );
     });

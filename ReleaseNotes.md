@@ -2,8 +2,12 @@
 
 # Release portal-shell
 
+## Release 1.8.5
+- Updated @gematik/demis-portal-core-library to 4.4.6 incl. a11y improvements of dialogs
+
 ## Release 1.8.4
 
+- Removed FEATURE_FLAG_PORTAL_PRIVACY_POLICY
 - Added "required field" information styling for all MFs
 - Added linter and fixed important linting issues
 
