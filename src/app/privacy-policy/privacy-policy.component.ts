@@ -18,7 +18,6 @@
 import { Component } from '@angular/core';
 import { MaxHeightContentContainerComponent } from '@gematik/demis-portal-core-library';
 import { FooterComponent } from '../footer/footer.component';
-import { FEATURE_FLAG_PRIVACY_POLICY_TEXT_CHANGE } from '../shared/app-constants';
 
 @Component({
   selector: 'app-privacy-policy',
@@ -27,6 +26,4 @@ import { FEATURE_FLAG_PRIVACY_POLICY_TEXT_CHANGE } from '../shared/app-constants
   templateUrl: './privacy-policy.component.html',
   styleUrls: ['./privacy-policy.component.scss'],
 })
-export class PrivacyPolicyComponent {
-  readonly isPrivacyPolicyTextChangeEnabled = FEATURE_FLAG_PRIVACY_POLICY_TEXT_CHANGE();
-}
+export class PrivacyPolicyComponent {}

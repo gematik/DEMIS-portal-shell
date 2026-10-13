@@ -383,13 +383,13 @@ export class WelcomeComponent implements OnInit, OnDestroy {
     const errorNotificationGateway = sessionStorage.getItem('PORTAL_CONFIG_ERROR');
 
     if (errorNotificationGateway != null) {
-      this.messageDialogService.error({
-        errorTitle: signal('Fehler beim Laden der Konfiguration'),
-        errors: signal([
-          new Error(
-            'Achtung: Die Konfiguration konnte nicht geladen werden. Bitte die Anwendung neu starten. Falls der Fehler weiterhin auftritt, kontaktieren Sie bitte den Support.'
-          ),
-        ]),
+      this.messageDialogService.showErrorDialog({
+        errorTitle: 'Fehler beim Laden der Konfiguration',
+        errors: [
+          {
+            text: 'Achtung: Die Konfiguration konnte nicht geladen werden. Bitte die Anwendung neu starten. Falls der Fehler weiterhin auftritt, kontaktieren Sie bitte den Support.',
+          },
+        ],
       });
     }
   }
