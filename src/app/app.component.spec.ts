@@ -29,6 +29,7 @@ import { ComponentInputs } from '../test/utils/input-signal-types';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { AuthService } from './services';
+import { NavigationStateStore } from './services/navigation-state.service';
 import { TestFixtures } from '../test/test-fixtures';
 
 // Mock component with automatic input handling
@@ -56,6 +57,7 @@ describe('AppComponent', () => {
 
   beforeEach(() =>
     MockBuilder(AppComponent)
+      .keep(NavigationStateStore)
       .replace(MaxHeightContentContainerComponent, MockMaxHeightContentContainerComponent)
       .mock(NavbarComponent)
       .mock(AuthService)

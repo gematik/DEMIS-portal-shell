@@ -30,6 +30,7 @@ import { MessageDialogService } from '@gematik/demis-portal-core-library';
 import { AuthService } from '../services';
 import { NavbarComponent } from './navbar.component';
 import { PackageJsonService } from '../services/package-json.service';
+import { KcConfigService } from '../services/kc-config.service';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AppConstants } from '../shared/app-constants';
 import { InfoBannerSectionComponent } from '../info-banner-section/info-banner-section.component';
@@ -79,6 +80,7 @@ describe('Navbar Test', () => {
       .keep(MatDividerModule)
       .keep(MatMenuModule)
       .keep(PackageJsonService)
+      .keep(KcConfigService)
       .keep(NoopAnimationsModule)
       .provide(MockProvider(OidcSecurityService))
       .provide({

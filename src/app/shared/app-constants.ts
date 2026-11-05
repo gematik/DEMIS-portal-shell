@@ -38,10 +38,6 @@ export function FEATURE_FLAG_PORTAL_ARE_ENABLED(): boolean {
   return environment.featureFlags?.FEATURE_FLAG_PORTAL_ARE_ENABLED ?? false;
 }
 
-export function FEATURE_FLAG_FOOTER_LINKS_CORRECTION(): boolean {
-  return environment.featureFlags?.FEATURE_FLAG_FOOTER_LINKS_CORRECTION ?? false;
-}
-
 export namespace AppConstants {
   export enum ShellPathSegments {
     ABOUT = 'about',
