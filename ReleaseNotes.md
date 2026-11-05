@@ -2,17 +2,24 @@
 
 # Release portal-shell
 
+## Release 1.8.6
+- Removed FEATURE_FLAG_FOOTER_LINKS_CORRECTION
+- Updated @gematik/demis-portal-core-library to 4.4.8
+- Adapted renovate.json
+- Added min-release-age to .npmrc
+- Updated minor/patch versions of dependencies
+- Fixes WCAG 2.5.3 for DEMIS-Support-Link in footer
+- Updated NGINX-Base-Image to 1.31.8 (alpine 3.24)
+
 ## Release 1.8.5
 - Updated @gematik/demis-portal-core-library to 4.4.6 incl. a11y improvements of dialogs
 
 ## Release 1.8.4
-
 - Removed FEATURE_FLAG_PORTAL_PRIVACY_POLICY
 - Added "required field" information styling for all MFs
 - Added linter and fixed important linting issues
 
 ## Release 1.8.3
-
 - Changed text for bed occupancy tile (FEATURE_FLAG_PORTAL_BED_TEXT)
 - Add focus indicator for all MFs (text-fields and buttons)
 - Removed feature flag FEATURE_FLAG_PORTAL_HEADER_FOOTER: new header and footer are now always active
@@ -24,7 +31,6 @@
 - upgraded playwright to 1.62.1
 
 ## Release 1.8.2
-
 - Fixed styling errors for different spacings and diversity problems
 - Updated @gematik/demis-portal-core-library to 4.2.4
 - Updated @gematik/demis-portal-theme-library to 1.2.0
@@ -32,12 +38,10 @@
 - Remove FF FEATURE_FLAG_PORTAL_LINK_SURVSTAT
 
 ## Release 1.8.0
-
 - Added new menu link to RKI survstat in burger menu (FEATURE_FLAG_PORTAL_LINK_SURVSTAT)
 - Changed text for ARE panel
 
 ## Release 1.7.3
-
 - Change of commissioner text on privacy policy page (FEATURE_FLAG_PORTAL_PRIVACY_POLICY)
 - Added correctly configurable logging
 - Updated @gematik/demis-portal-core-library to 4.2.0
@@ -49,24 +53,20 @@
 - Changed error and hint texts for request access to surveillance-systems
 
 ## Release 1.7.2
-
 - Added gematik logo in footer (FEATURE_FLAG_PORTAL_FOOTER_LOGO)
 - Fixed role check for ARE tile
 
 ## Release 1.7.1
-
 - Improved error handling for request access to surveillance programs
 - Accessibility for request access to surveillance programs dialog improved
 
 ## Release 1.7.0
-
 - Updated NGINX-Base-Image to 1.30.0
 - Added § 7.3 follow-up notification tiles and routing (FEATURE_FLAG_FOLLOW_UP_7_3)
 - Removed FEATURE_FLAG_FOLLOW_UP_NOTIFICATION_PORTAL_PATHOGEN and FEATURE_FLAG_FOLLOW_UP_NOTIFICATION_PORTAL_DISEASE
 - Added Feature Flags for ARE and Surveillance Program Admission to helm charts
 
 ## Release 1.6.0
-
 - Removed @single-spa-community/angular dependency
 - Updated NGINX-Base-Image to 1.29.7
 - Removed 7.3 disease anonymous notification tile and navbar
@@ -80,13 +80,11 @@
 - Improved styling on request surveillance access
 
 ## Release 1.5.1
-
 - Updated @gematik/demis-portal-theme-library to 1.1.2
 - Updated @gematik/demis-portal-core-library to 3.0.9
 - Changed mail address in accessibility statement
 
 ## Release 1.5.0
-
 - Added stylings and texts adaptions for welcome page
 - Added accessibility statement footer link (FEATURE_FLAG_PORTAL_ACCESSIBILITY)
 - Updated Angular to v21
@@ -96,14 +94,12 @@
 - Change imprint link and add ids in footer (FEATURE_FLAG_FOOTER_LINKS_CORRECTION)
 
 ## Release 1.4.4
-
 - Added alt and aria-label for DEMIS header logo
 - New texts on "homepage" (authenticated and unauthenticated) and "about" page
 - New contact/support page
 - Removed feature flag NEW_API_ENDPOINTS
 
 ## Release 1.4.3
-
 - Upgraded dependencies
 - Added stylings
 - Disabled Sandbox for ChromeHeadless browser to run karma tests in CI
@@ -114,16 +110,13 @@
 - Improved accessibility of welcome page in logged in state
 
 ## Release 1.4.2
-
 - Added new header (FEATURE_FLAG_PORTAL_HEADER_FOOTER)
 
 ## Release 1.4.1
-
 - Added sub-tiles and routing for §6.1 follow-up notification (FEATURE_FLAG_FOLLOW_UP_NOTIFICATION_PORTAL_DISEASE)
 - Added new footer (FEATURE_FLAG_PORTAL_HEADER_FOOTER) - new redesigned footer with navigation links
 
 ## Release 1.4.0
-
 - Fixed layout issues in the welcome component when information banners are displayed
 - Fixed layout issues with the footer and the tiles
 - Upgraded dependencies
@@ -134,23 +127,19 @@
 - Resolved focus issue with navbar menu buttons
 
 ## Release 1.3.0
-
 - Added sub-tiles and routing for §7.1 follow-up notification (FEATURE_FLAG_FOLLOW_UP_NOTIFICATION_PORTAL_PATHOGEN)
 - resized "Finanziert von der Europäischen Union" logo
 - Switched to the library implementation of the DEMIS theme using Portal-Theme
 - Add new API endpoints activated by feature flag FEATURE_FLAG_NEW_API_ENDPOINTS
 
 ## Release 1.2.7
-
 - Upgraded to Angular 19
 
 ## Release 1.2.6
-
 - logo and text adaptions for § 7.3
 - added "Finanziert von der Europäischen Union" logo to landing page
 
 ## Release 1.2.5
-
 - changed default color for input outlines and input labels
 - added functionality to show information banners above the top navigation bar (FEATURE_FLAG_PORTAL_INFOBANNER)
 - added functionality to show a stage indicator banner above the top navigation bar, to highlight dedicated stages (FEATURE_FLAG_PORTAL_INFOBANNER)
@@ -159,22 +148,18 @@
 - Routing for §7.3 notification (non nominal) to portal-pathogen & portal-disease
 
 ## Release 1.2.4
-
 - Updated Portal-Core Library version
 - Adjusted border-radius for some elements
 
 ## Release 1.2.3
-
 - Updated ospo-resources for adding additional notes and disclaimer
 - Added sub-tiles for non-nominal notification (FEATURE_FLAG_NON_NOMINAL_NOTIFICATION)
 - Adjusted navbar styling and colors
 
 ## Release 1.2.2
-
 - Add new font and background color
 
 ## Release 1.2.1
-
 - New wording for igs tile
 
 ## Release 1.2.0

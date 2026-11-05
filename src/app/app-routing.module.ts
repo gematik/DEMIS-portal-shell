@@ -38,10 +38,6 @@ export const unprotectedRoutes: Routes = [
     component: PrivacyPolicyComponent,
   },
   {
-    path: AppConstants.PathSegments.SITE_NOTICE, // can be removed when FeatureFlag FOOTER_LINKS_CORRECTION is removed
-    component: ImprintComponent,
-  },
-  {
     path: AppConstants.PathSegments.IMPRINT,
     component: ImprintComponent,
   },
