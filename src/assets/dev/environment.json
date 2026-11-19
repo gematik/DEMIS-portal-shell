@@ -1,14 +1,5 @@
 {
   "production": false,
-  "pathToGateway": "/gateway/notification",
-  "gatewayPaths": {
-    "laboratory": "/api/ng/notification/laboratory",
-    "hospitalization": "/api/ng/notification/hospitalization",
-    "bedOccupancy": "/api/ng/reports/bedOccupancy",
-    "hospitalLocations": "/api/ng/services/hospital-locations",
-    "pathogen": "/api/ng/notification/pathogen",
-    "disease": "/api/ng/notification/disease"
-  },
   "identityProviders": [
     {
       "baseUrl": "https://auth.ingress.local",

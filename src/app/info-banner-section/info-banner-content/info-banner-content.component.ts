@@ -18,8 +18,8 @@
 import { Component, inject, input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MarkdownService } from '@gematik/demis-portal-core-library';
 import { InfoBannerStorageService } from 'src/app/services/info-banner-storage.service';
-import { MarkdownService } from 'src/app/services/markdown.service';
 import { InfoBannerConfig, InfoBannerType } from 'src/environments/dynamic-environment';
 
 @Component({

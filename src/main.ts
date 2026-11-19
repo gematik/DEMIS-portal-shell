@@ -28,8 +28,7 @@ import { IconLoaderService } from 'src/app/shared/services/icon-loader.service';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { LOCALE_ID_DE } from 'src/app/shared/common-utils';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
-import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { AuthInterceptor } from 'src/app/services/auth.interceptor';
+import { provideHttpClient } from '@angular/common/http';
 import { KcStorageService } from 'src/app/services/kc-storage.service';
 import { provideToastr } from 'ngx-toastr';
 import { LoggerModule } from 'ngx-logger';
@@ -55,7 +54,7 @@ const PORTAL_CONFIG_ERROR = 'PORTAL_CONFIG_ERROR';
 fetch(environment.pathToEnvironment)
   .then(response => response.json())
   .then(config => {
-    (window as unknown as { config: unknown }).config = config;
+    environment.setConfig(config);
 
     sessionStorage.removeItem(PORTAL_CONFIG_ERROR);
 
@@ -92,11 +91,6 @@ fetch(environment.pathToEnvironment)
           useValue: { appearance: 'outline' },
         },
         {
-          provide: HTTP_INTERCEPTORS,
-          useClass: AuthInterceptor,
-          multi: true,
-        },
-        {
           provide: AbstractSecurityStorage,
           useClass: KcStorageService,
         },
@@ -104,7 +98,7 @@ fetch(environment.pathToEnvironment)
           const initializerFn = initIconLoaderService(inject(IconLoaderService));
           return initializerFn();
         }),
-        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClient(),
       ],
     })
       .then(module => {

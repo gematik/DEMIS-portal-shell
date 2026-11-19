@@ -29,6 +29,7 @@ import { AppConstants } from '../shared/app-constants';
 import { WelcomeTileComponent } from '../welcome-tile/welcome-tile.component';
 import { WelcomeComponent } from './welcome.component';
 import { TestFixtures } from '../../test/test-fixtures';
+import { environment } from '../../environments/environment';
 
 describe('WelcomeComponent', () => {
   let fixture: MockedComponentFixture<WelcomeComponent>;
@@ -68,8 +69,7 @@ describe('WelcomeComponent', () => {
   );
   describe('Tests for tiles', () => {
     beforeEach(() => {
-      const config = TestFixtures.CONFIG;
-      (window as any)['config'] = config;
+      environment.setConfig(structuredClone(TestFixtures.CONFIG));
     });
 
     it('should create', () => {
@@ -199,7 +199,7 @@ describe('WelcomeComponent', () => {
 
   describe('test tiles with subtiles', () => {
     beforeAll(() => {
-      (window as any)['config'].featureFlags.FEATURE_FLAG_PORTAL_ARE_ENABLED = true;
+      environment.featureFlags.FEATURE_FLAG_PORTAL_ARE_ENABLED = true;
     });
 
     TestFixtures.JWT_ROLES_EXPANDABLE_TILES.forEach(({ id, roles, tile, subTiles, doNegativeTest, requireAllRoles }) => {
@@ -279,7 +279,7 @@ describe('WelcomeComponent', () => {
 
   describe('non-nominal follow-up feature flag tests', () => {
     beforeEach(() => {
-      (window as any)['config'] = JSON.parse(JSON.stringify(TestFixtures.CONFIG));
+      environment.setConfig(structuredClone(TestFixtures.CONFIG));
     });
 
     it('should show non-nominal follow-up sub-tiles when FEATURE_FLAG_FOLLOW_UP_7_3 is enabled', async () => {
@@ -309,7 +309,7 @@ describe('WelcomeComponent', () => {
 
     it('should not show non-nominal follow-up sub-tiles when FEATURE_FLAG_FOLLOW_UP_7_3 is disabled', async () => {
       // TODO remove test when FEATURE_FLAG_FOLLOW_UP_7_3 is removed
-      (window as any)['config'].featureFlags.FEATURE_FLAG_FOLLOW_UP_7_3 = false;
+      environment.featureFlags.FEATURE_FLAG_FOLLOW_UP_7_3 = false;
       createComponent();
       vi.spyOn(fixture.point.injector.get(OidcSecurityService), 'getAccessToken').mockReturnValue(of(''));
       fixture.point.injector.get(AuthService).$isAuthenticated = isAuthenticatedSubject;

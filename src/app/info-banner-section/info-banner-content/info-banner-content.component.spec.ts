@@ -20,9 +20,9 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { TestBed } from '@angular/core/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
+import { MarkdownService } from '@gematik/demis-portal-core-library';
 import { MockBuilder, MockedComponentFixture, MockProvider, MockRender } from 'ng-mocks';
 import { InfoBannerStorageService } from 'src/app/services/info-banner-storage.service';
-import { MarkdownService } from 'src/app/services/markdown.service';
 import { InfoBannerConfig } from 'src/environments/dynamic-environment';
 import { InfoBannerContentComponent } from './info-banner-content.component';
 
