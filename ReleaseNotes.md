@@ -2,6 +2,10 @@
 
 # Release portal-shell
 
+## Release 1.8.7
+- Updated minor/patch versions of dependencies
+- Removed legacy code
+
 ## Release 1.8.6
 - Removed FEATURE_FLAG_FOOTER_LINKS_CORRECTION
 - Updated @gematik/demis-portal-core-library to 4.4.8

@@ -38,6 +38,7 @@ import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { FormlyFormDialogProps, FormlyFormDialogService } from '../services/formly-form-dialog.service';
 import { AccessibleTextComponent } from '../shared/components/accessible-text/accessible-text.component';
 import { TestFixtures } from 'src/test/test-fixtures';
+import { environment } from 'src/environments/environment';
 
 describe('Navbar Test', () => {
   let component: NavbarComponent;
@@ -47,7 +48,7 @@ describe('Navbar Test', () => {
   const routerEvents = new ReplaySubject<NavigationEnd>(1);
   MockInstance.scope('case');
 
-  (window as any)['config'] = TestFixtures.CONFIG;
+  beforeEach(() => environment.setConfig(structuredClone(TestFixtures.CONFIG)));
 
   const createComponent = () => {
     fixture = MockRender(NavbarComponent);
@@ -101,7 +102,7 @@ describe('Navbar Test', () => {
 
   describe('new navbar', () => {
     beforeEach(() => {
-      (window as any)['config'].featureFlags.FEATURE_FLAG_FOLLOW_UP_7_3 = true;
+      environment.featureFlags.FEATURE_FLAG_FOLLOW_UP_7_3 = true;
     });
     it('should create', () => {
       createComponent();
@@ -240,7 +241,7 @@ describe('Navbar Test', () => {
     });
 
     it('should display the non-nominal follow-up menu items when FEATURE_FLAG_FOLLOW_UP_7_3 is enabled', async () => {
-      (window as any)['config'].featureFlags.FEATURE_FLAG_FOLLOW_UP_7_3 = true;
+      environment.featureFlags.FEATURE_FLAG_FOLLOW_UP_7_3 = true;
       createComponent();
       fixture.detectChanges();
       const authService = fixture.point.injector.get(AuthService);
@@ -268,7 +269,7 @@ describe('Navbar Test', () => {
 
     it('should not display the non-nominal follow-up menu items when FEATURE_FLAG_FOLLOW_UP_7_3 is disabled', async () => {
       // TODO remove test when FEATURE_FLAG_FOLLOW_UP_7_3 is removed
-      (window as any)['config'].featureFlags.FEATURE_FLAG_FOLLOW_UP_7_3 = false;
+      environment.featureFlags.FEATURE_FLAG_FOLLOW_UP_7_3 = false;
       createComponent();
       fixture.detectChanges();
       const authService = fixture.point.injector.get(AuthService);
@@ -295,7 +296,7 @@ describe('Navbar Test', () => {
     });
 
     it('should navigate to pathogen non-nominal follow-up on click', async () => {
-      (window as any)['config'].featureFlags.FEATURE_FLAG_FOLLOW_UP_7_3 = true;
+      environment.featureFlags.FEATURE_FLAG_FOLLOW_UP_7_3 = true;
       createComponent();
       fixture.detectChanges();
       const authService = fixture.point.injector.get(AuthService);
@@ -327,7 +328,7 @@ describe('Navbar Test', () => {
     });
 
     it('should navigate to disease non-nominal follow-up on click', async () => {
-      (window as any)['config'].featureFlags.FEATURE_FLAG_FOLLOW_UP_7_3 = true;
+      environment.featureFlags.FEATURE_FLAG_FOLLOW_UP_7_3 = true;
       createComponent();
       fixture.detectChanges();
       const authService = fixture.point.injector.get(AuthService);
@@ -433,7 +434,7 @@ describe('Navbar Test', () => {
 
     describe('visibility buttons depending on feature flags FEATURE_FLAG_SURVEILLANCE_PROGRAM & FEATURE_FLAG_PORTAL_ARE_ENABLED', () => {
       it('should show register surveillance program button when FEATURE_FLAG_SURVEILLANCE_PROGRAM is enabled', () => {
-        (window as any)['config'].featureFlags.FEATURE_FLAG_SURVEILLANCE_PROGRAM_ADMISSION_ENABLED = true;
+        environment.featureFlags.FEATURE_FLAG_SURVEILLANCE_PROGRAM_ADMISSION_ENABLED = true;
 
         const burgerButton = fixture.point.nativeElement.querySelector('#btn-burger-menu-in-navbar');
         burgerButton.click();
@@ -444,7 +445,7 @@ describe('Navbar Test', () => {
       });
 
       it('should not display register surveillance program button when FEATURE_FLAG_SURVEILLANCE_PROGRAM is disabled', () => {
-        (window as any)['config'].featureFlags.FEATURE_FLAG_SURVEILLANCE_PROGRAM_ADMISSION_ENABLED = false;
+        environment.featureFlags.FEATURE_FLAG_SURVEILLANCE_PROGRAM_ADMISSION_ENABLED = false;
 
         const burgerButton = fixture.point.nativeElement.querySelector('#btn-burger-menu-in-navbar');
         burgerButton.click();
@@ -455,7 +456,7 @@ describe('Navbar Test', () => {
       });
 
       it('should show are link when FEATURE_FLAG_PORTAL_ARE_ENABLED is enabled', () => {
-        (window as any)['config'].featureFlags.FEATURE_FLAG_PORTAL_ARE_ENABLED = true;
+        environment.featureFlags.FEATURE_FLAG_PORTAL_ARE_ENABLED = true;
 
         const burgerButton = fixture.point.nativeElement.querySelector('#btn-burger-menu-in-navbar');
         burgerButton.click();
@@ -466,7 +467,7 @@ describe('Navbar Test', () => {
       });
 
       it('should not display are link when FEATURE_FLAG_PORTAL_ARE_ENABLED is disabled', () => {
-        (window as any)['config'].featureFlags.FEATURE_FLAG_PORTAL_ARE_ENABLED = false;
+        environment.featureFlags.FEATURE_FLAG_PORTAL_ARE_ENABLED = false;
 
         const burgerButton = fixture.point.nativeElement.querySelector('#btn-burger-menu-in-navbar');
         burgerButton.click();
@@ -477,7 +478,7 @@ describe('Navbar Test', () => {
       });
 
       it('should not display are link when FEATURE_FLAG_PORTAL_ARE_ENABLED is disabled', () => {
-        (window as any)['config'].featureFlags.FEATURE_FLAG_PORTAL_ARE_ENABLED = true;
+        environment.featureFlags.FEATURE_FLAG_PORTAL_ARE_ENABLED = true;
         component.hasAreNotificationSenderRole = false;
         fixture.detectChanges();
 

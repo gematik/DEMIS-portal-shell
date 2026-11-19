@@ -20,8 +20,6 @@ import { AppConstants } from 'src/app/shared/app-constants';
 import { isDevMode } from '@angular/core';
 import { LOGGER_CONFIG_FOR_DEV, LOGGER_CONFIG_FOR_PROD } from '@gematik/demis-portal-core-library';
 
-declare let window: Window & { config?: unknown };
-
 interface IdentityProvider {
   baseUrl: string;
   tenant: string;
@@ -48,25 +46,8 @@ export interface FeatureFlags {
   [key: string]: boolean | undefined;
 }
 
-interface GatewayPaths {
-  laboratory: string;
-  hospitalization: string;
-  bedOccupancy: string;
-  hospitalLocations: string;
-  pathogen: string;
-}
-
-interface IgsPaths {
-  sequenceFileUpload: string;
-  sequenceFileDelete: string;
-  sequenceNotification: string;
-}
-
 export interface Configuration {
   production: boolean;
-  pathToGateway: string;
-  gatewayPaths: GatewayPaths;
-  igsPaths: IgsPaths;
   identityProviders: IdentityProvider[];
   featureFlags: FeatureFlags;
   infoBanners: EnvFileInfoBannerConfig[];
@@ -153,6 +134,7 @@ declare type _StageIndicator = _StageIndicatorRequired & _StageIndicatorProperti
 export declare type StageIndicator = { [Property in keyof _StageIndicator]: _StageIndicator[Property] };
 
 export class DynamicEnvironment {
+  private config?: Partial<Configuration>;
   public headers: HttpHeaders;
   public local = false;
   public pathToEnvironment = 'environment.json';
@@ -163,8 +145,8 @@ export class DynamicEnvironment {
     });
   }
 
-  private get config(): Configuration {
-    return window.config as Configuration;
+  public setConfig(config: Partial<Configuration>): void {
+    this.config = config;
   }
 
   public get isLocal(): boolean {
@@ -192,28 +174,12 @@ export class DynamicEnvironment {
    * values.yaml > environment.json > defaultConfig
    */
   public get ngxLoggerConfig(): NgxLoggerConfig {
-    return this.config?.ngxLoggerConfig ? this.config?.ngxLoggerConfig : this.defaultLoggerConfiguration;
-  }
-
-  public get pathToHospitalization(): string {
-    return this.gatewayPaths?.hospitalization;
-  }
-
-  public get pathToBedOccupancy(): string {
-    return this.gatewayPaths?.bedOccupancy;
-  }
-
-  public get pathToHospitalLocations(): string {
-    return this.gatewayPaths?.hospitalLocations;
-  }
-
-  public get pathToPathogen(): string {
-    return this.gatewayPaths?.pathogen;
+    return this.config?.ngxLoggerConfig ?? this.defaultLoggerConfiguration;
   }
 
   // identity providers
 
-  private get identityProviders(): IdentityProvider[] {
+  private get identityProviders(): IdentityProvider[] | undefined {
     return this.config?.identityProviders;
   }
 
@@ -249,14 +215,11 @@ export class DynamicEnvironment {
    */
   public get infoBanners(): InfoBannerConfig[] {
     if (this.config?.infoBanners) {
-      return this.config?.infoBanners.map(
-        bannerConfig =>
-          ({
-            ...bannerConfig,
-            closable: bannerConfig.closable ?? true,
-            shownIn: bannerConfig.shownIn ?? 'all',
-          }) as InfoBannerConfig
-      );
+      return this.config?.infoBanners.map(bannerConfig => ({
+        ...bannerConfig,
+        closable: bannerConfig.closable ?? true,
+        shownIn: bannerConfig.shownIn ?? 'all',
+      }));
     }
 
     return [];
@@ -290,9 +253,5 @@ export class DynamicEnvironment {
   private get demisPortalIssuer(): string | undefined {
     const demisPortalIssuer = this.issuersDemisPortal?.filter(l => l.includes('PORTAL'));
     return demisPortalIssuer ? demisPortalIssuer[0] : undefined;
-  }
-
-  private get gatewayPaths(): GatewayPaths {
-    return this.config?.gatewayPaths;
   }
 }

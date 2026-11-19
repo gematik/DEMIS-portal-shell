@@ -34,14 +34,6 @@ config:
       meldungDNS: https://meldung.ingress.local
       issuers:
         - https://auth.ingress.local/realms/PORTAL
-  pathToGateway: ../gateway/notification
-  gatewayPaths:
-    laboratory: /api/ng/notification/laboratory
-    hospitalization: /api/ng/notification/hospitalization
-    bedOccupancy: /api/ng/reports/bedOccupancy
-    hospitalLocations: /api/ng/services/hospital-locations
-    pathogen: /api/ng/notification/pathogen
-    disease: /api/ng/notification/disease
   files: { }
   featureFlags:
     FEATURE_FLAG_NON_NOMINAL_NOTIFICATION: false

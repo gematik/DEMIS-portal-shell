@@ -16,7 +16,6 @@
  */
 
 export * from './auth.guard';
-export * from './auth.interceptor';
 export * from './auth.service';
 export * from './kc-config.service';
 export * from './kc-storage.service';

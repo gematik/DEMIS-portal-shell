@@ -31,6 +31,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { AuthService } from './services';
 import { NavigationStateStore } from './services/navigation-state.service';
 import { TestFixtures } from '../test/test-fixtures';
+import { environment } from '../environments/environment';
 
 // Mock component with automatic input handling
 @Component({
@@ -53,7 +54,7 @@ describe('AppComponent', () => {
     },
   };
 
-  beforeEach(() => ((window as any)['config'] = TestFixtures.CONFIG));
+  beforeEach(() => environment.setConfig(structuredClone(TestFixtures.CONFIG)));
 
   beforeEach(() =>
     MockBuilder(AppComponent)
